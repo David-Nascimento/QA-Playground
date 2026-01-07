@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Shifting Content</title>
+  <link rel="stylesheet" href="../../css/styles.css">
+  <style>
+    #shift {
+      transition: margin-left 0.5s;
+      margin-left: 0;
+    }
+    #shift.shifted {
+      margin-left: 100px;
+    }
+  </style>
+  <script>
+    function shiftContent() {
+      document.getElementById('shift').classList.toggle('shifted');
+    }
+  </script>
+</head>
+<body>
+  <h1>Shifting Content</h1>
+  <button onclick="shiftContent()">Mover Conteúdo</button>
+  <div id="shift" style="background:#222;padding:20px;color:#fff;width:200px;">Conteúdo que se move</div>
+  <a href="../../index.html">Voltar</a>
+</body>
+</html>

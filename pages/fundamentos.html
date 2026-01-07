@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Fundamentos — QA Playground</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../index.html" class="et-logo" aria-label="Início">
+          <img src="../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../index.html">Início</a></li>
+            <li><a href="fundamentos.html" aria-current="page">Fundamentos</a></li>
+            <li><a href="tabelas.html">Tabelas</a></li>
+            <li><a href="interacoes.html">Interações</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Fundamentos</h2>
+          <div class="section-desc">Elementos básicos para testes manuais e automação. Cada elemento possui <code>id</code> e <code>data-testid</code> para facilitar localização e automação.</div>
+        </div>
+
+        <div class="subsections">
+          <div class="subsection">
+            <h3>Inputs & Controls</h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="nome">Nome</label>
+                <input id="nome" data-testid="input-nome" placeholder="Digite seu nome" />
+                <div class="hint">Campo simples para testar localização por <code>id</code> e <code>data-testid</code>.</div>
+              </div>
+
+              <div class="form-group">
+                <label>Gênero</label>
+                <div role="radiogroup" aria-labelledby="genero-label" class="radio-group" data-testid="radiogroup-genero">
+                  <label><input type="radio" name="genero" value="m" data-testid="radio-m"> Masculino</label>
+                  <label><input type="radio" name="genero" value="f" data-testid="radio-f"> Feminino</label>
+                  <label><input type="radio" name="genero" value="o" data-testid="radio-o"> Outro</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="agree">Aceita os termos?</label>
+                <label class="radio-group" style="align-items: center; gap: 8px;">
+                  <input id="agree" data-testid="checkbox-aceite" type="checkbox" />
+                  <span>Sim, aceito os termos</span>
+                </label>
+              </div>
+
+              <div class="form-group">
+                <label for="toggle-notif">Notificações</label>
+                <label class="switch">
+                  <input id="toggle-notif" type="checkbox" data-testid="toggle-notif">
+                  <span class="slider"></span>
+                </label>
+                <div class="hint">Toggle switch para ativar/desativar notificações</div>
+              </div>
+
+              <div class="form-full">
+                <button id="btn-salvar" data-testid="btn-salvar" class="btn">Salvar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Select, Textarea & Upload</h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="pais">País</label>
+                <select id="pais" data-testid="select-pais">
+                  <option value="">-- selecione --</option>
+                  <option value="br">Brasil</option>
+                  <option value="pt">Portugal</option>
+                  <option value="us">Estados Unidos</option>
+                  <option value="es">Espanha</option>
+                  <option value="fr">França</option>
+                </select>
+                <div class="error" id="pais-error" aria-live="polite" style="display:none"></div>
+              </div>
+
+              <div class="form-group form-full">
+                <label for="obs">Observações</label>
+                <textarea id="obs" data-testid="textarea-obs" rows="4" placeholder="Digite suas observações aqui..."></textarea>
+              </div>
+
+              <div class="form-group form-full">
+                <label for="arquivo">Envio de arquivo (ex.: imagem)</label>
+                <input id="arquivo" data-testid="input-arquivo" type="file" accept="image/*" />
+                <div id="arquivo-nome" class="hint" aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection" style="margin-top: var(--spacing-lg);">
+          <h3>Elementos Dinâmicos</h3>
+          <p class="muted">Conteúdo que aparece/desaparece, delays e loading simulado.</p>
+          <div class="controls">
+            <button id="btn-toggle-extra" data-testid="btn-toggle-extra" class="btn">Mostrar/Ocultar</button>
+            <button id="btn-load" data-testid="btn-load" class="btn btn-secondary">Simular Carregamento (2s)</button>
+          </div>
+          <div id="extra" data-testid="extra" style="display:none; margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <strong>Elemento exibido dinamicamente!</strong> Este elemento pode ser usado para testar waits e validações de visibilidade.
+          </div>
+          <div id="spinner" style="display:none; margin-top: var(--spacing-md); padding: var(--spacing-md); text-align: center; color: var(--accent);">
+            <strong>Carregando...</strong> ⏳
+          </div>
+        </div>
+
+        <div class="subsection" style="margin-top: var(--spacing-lg);">
+          <h3>Validação de Formulário</h3>
+          <p class="muted">Teste validações e mensagens de erro.</p>
+          <button id="btn-validate" data-testid="btn-validate" class="btn">Validar Formulário</button>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../js/app.js"></script>
+    <script>
+      // Interações da página
+      document.getElementById('btn-salvar').addEventListener('click', () => {
+        window.showToast('Dados salvos (simulação)');
+      });
+
+      document.getElementById('arquivo').addEventListener('change', function() {
+        const el = document.getElementById('arquivo-nome');
+        const f = this.files && this.files[0];
+        if (f) {
+          const sizeKB = Math.round(f.size / 1024);
+          el.textContent = `Arquivo selecionado: ${f.name} (${sizeKB} KB)`;
+          el.style.color = 'var(--success)';
+        } else {
+          el.textContent = 'Nenhum arquivo selecionado';
+          el.style.color = 'var(--muted)';
+        }
+      });
+
+      document.getElementById('btn-toggle-extra').addEventListener('click', () => {
+        const ex = document.getElementById('extra');
+        const isVisible = ex.style.display !== 'none';
+        ex.style.display = isVisible ? 'none' : 'block';
+        window.showToast(isVisible ? 'Elemento ocultado' : 'Elemento exibido');
+      });
+
+      document.getElementById('btn-load').addEventListener('click', () => {
+        const sp = document.getElementById('spinner');
+        sp.style.display = 'block';
+        document.getElementById('btn-load').disabled = true;
+        
+        setTimeout(() => {
+          sp.style.display = 'none';
+          document.getElementById('btn-load').disabled = false;
+          window.showToast('Carregamento concluído!');
+        }, 2000);
+      });
+
+      document.getElementById('btn-validate').addEventListener('click', () => {
+        const pais = document.getElementById('pais');
+        const err = document.getElementById('pais-error');
+        
+        if (!pais.value) {
+          err.style.display = 'block';
+          err.textContent = 'Selecione um país antes de prosseguir.';
+          pais.closest('.form-group').classList.add('error');
+          return;
+        }
+        
+        err.style.display = 'none';
+        pais.closest('.form-group').classList.remove('error');
+        window.showToast('Validação OK! País selecionado: ' + pais.options[pais.selectedIndex].text);
+      });
+
+      // Feedback do toggle
+      document.getElementById('toggle-notif').addEventListener('change', function() {
+        window.showToast(this.checked ? 'Notificações ativadas' : 'Notificações desativadas');
+      });
+    </script>
+  </body>
+</html>

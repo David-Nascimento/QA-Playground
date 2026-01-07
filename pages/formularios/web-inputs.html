@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Web Inputs — QA Playground</title>
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="../fundamentos.html">Fundamentos</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="web-inputs.html" aria-current="page">Web Inputs</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Web Inputs</h2>
+          <div class="section-desc">Teste diferentes tipos de campos de entrada HTML. Pratique automação e validação de todos os tipos de inputs disponíveis.</div>
+        </div>
+
+        <div class="subsections">
+          <div class="subsection">
+            <h3>Tipos de Input HTML</h3>
+            <form id="web-inputs-form" data-testid="form-web-inputs">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="input-text">Texto</label>
+                  <input type="text" id="input-text" name="input-text" data-testid="input-text" placeholder="Digite um texto" />
+                  <div class="hint">Campo de texto simples</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="input-email">E-mail</label>
+                  <input type="email" id="input-email" name="input-email" data-testid="input-email" placeholder="exemplo@email.com" />
+                  <div class="hint">Validação automática de formato de email</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="input-password">Senha</label>
+                  <input type="password" id="input-password" name="input-password" data-testid="input-password" placeholder="Digite sua senha" />
+                  <div class="hint">Campo oculto para senhas</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="input-number">Número</label>
+                  <input type="number" id="input-number" name="input-number" data-testid="input-number" placeholder="123" min="0" max="1000" />
+                  <div class="hint">Aceita apenas números (0-1000)</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="input-date">Data</label>
+                  <input type="date" id="input-date" name="input-date" data-testid="input-date" />
+                  <div class="hint">Seletor de data nativo do navegador</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="input-time">Hora</label>
+                  <input type="time" id="input-time" name="input-time" data-testid="input-time" />
+                  <div class="hint">Seletor de hora</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="input-color">Cor</label>
+                  <input type="color" id="input-color" name="input-color" data-testid="input-color" value="#7aa874" />
+                  <div class="hint">Seletor de cor</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="input-range">Range</label>
+                  <input type="range" id="input-range" name="input-range" data-testid="input-range" min="0" max="100" value="50" />
+                  <div class="hint">Valor: <span id="range-value">50</span></div>
+                </div>
+
+                <div class="form-group form-full">
+                  <label for="input-checkbox">
+                    <input type="checkbox" id="input-checkbox" name="input-checkbox" data-testid="input-checkbox" />
+                    Aceito os termos e condições
+                  </label>
+                </div>
+
+                <div class="form-full">
+                  <button type="submit" class="btn" data-testid="btn-enviar">Enviar Formulário</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="subsection">
+            <h3>Resultado do Formulário</h3>
+            <div id="result" data-testid="resultado-formulario" style="min-height: 100px; padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p class="muted">Preencha o formulário e clique em "Enviar" para ver os dados aqui.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../js/app.js"></script>
+    <script>
+      // Range value display
+      const rangeInput = document.getElementById('input-range');
+      const rangeValue = document.getElementById('range-value');
+      
+      rangeInput.addEventListener('input', function() {
+        rangeValue.textContent = this.value;
+      });
+
+      // Form submission
+      document.getElementById('web-inputs-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const data = {
+          texto: document.getElementById('input-text').value,
+          email: document.getElementById('input-email').value,
+          senha: document.getElementById('input-password').value ? '***' : '',
+          numero: document.getElementById('input-number').value,
+          data: document.getElementById('input-date').value,
+          hora: document.getElementById('input-time').value,
+          cor: document.getElementById('input-color').value,
+          range: document.getElementById('input-range').value,
+          aceito: document.getElementById('input-checkbox').checked
+        };
+        
+        const resultEl = document.getElementById('result');
+        resultEl.innerHTML = `
+          <strong style="color: var(--accent); margin-bottom: var(--spacing-sm); display: block;">✅ Dados do Formulário:</strong>
+          <pre style="margin: 0; color: var(--text); font-size: var(--font-size-sm);">${JSON.stringify(data, null, 2)}</pre>
+        `;
+        resultEl.style.color = 'var(--text)';
+        
+        window.showToast('Formulário enviado com sucesso!');
+      });
+    </script>
+  </body>
+</html>

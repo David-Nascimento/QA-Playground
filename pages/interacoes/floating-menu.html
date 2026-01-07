@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Floating Menu — QA Playground</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
+  <style>
+    .floating-menu {position:fixed;top:40px;right:40px;background:#222;color:#fff;padding:16px 24px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.18);z-index:1000;}
+    @media (max-width:600px){.floating-menu{right:10px;top:10px;padding:10px 14px;}}
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>Floating Menu</h1>
+    <p>Valide menus flutuantes e fixos na tela.</p>
+    <div class="floating-menu" data-testid="floating-menu">Menu Flutuante</div>
+    <p style="margin-top:300px;">Role a página para ver o menu fixo.</p>
+  </main>
+</body>
+</html>

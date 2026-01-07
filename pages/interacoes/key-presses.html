@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Key Presses — QA Playground</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Key Presses</h1>
+    <p>Teste eventos de teclado e atalhos.</p>
+    <input type="text" id="key-input" data-testid="key-input" placeholder="Digite algo ou pressione uma tecla..." style="width:100%;max-width:320px;" />
+    <div id="key-result" style="margin-top:16px;"></div>
+  </main>
+  <script>
+    document.getElementById('key-input').addEventListener('keydown', function(e) {
+      document.getElementById('key-result').textContent = 'Tecla pressionada: ' + e.key + ' (código: ' + e.code + ')';
+    });
+  </script>
+</body>
+</html>

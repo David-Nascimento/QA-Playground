@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Typos — QA Playground</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Typos</h1>
+    <p>Valide mensagens de erro e digitação em campos de texto.</p>
+    <form id="typo-form">
+      <div class="form-group">
+        <label for="typo-input">Digite "QA Playground" corretamente:</label>
+        <input type="text" id="typo-input" data-testid="typo-input" />
+      </div>
+      <button type="submit" class="btn">Validar</button>
+    </form>
+    <div id="typo-feedback" style="margin-top:16px;"></div>
+  </main>
+  <script>
+    document.getElementById('typo-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const val = document.getElementById('typo-input').value;
+      if(val === 'QA Playground') {
+        document.getElementById('typo-feedback').innerHTML = '<span style="color:green">Correto!</span>';
+      } else {
+        document.getElementById('typo-feedback').innerHTML = '<span style="color:red">Há um erro de digitação.</span>';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>ID Dinâmico</title>
+  <link rel="stylesheet" href="../../css/styles.css">
+  <script>
+    function gerarId() {
+      const id = 'id-' + Math.floor(Math.random()*10000);
+      document.getElementById('dinamico').id = id;
+      document.getElementById('novoId').innerText = 'Novo ID: ' + id;
+    }
+  </script>
+</head>
+<body>
+  <h1>ID Dinâmico</h1>
+  <div id="dinamico" style="background:#222;color:#fff;padding:10px;">Elemento com ID dinâmico</div>
+  <button onclick="gerarId()">Gerar novo ID</button>
+  <div id="novoId"></div>
+  <a href="../../index.html">Voltar</a>
+</body>
+</html>

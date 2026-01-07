@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Large & Deep DOM — QA Playground</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Large & Deep DOM</h1>
+    <p>Teste automação em um DOM extenso, com muitos elementos e profundidade de aninhamento.</p>
+    <div id="large-dom">
+      <ul>
+        <li>Nível 1
+          <ul>
+            <li>Nível 2
+              <ul>
+                <li>Nível 3
+                  <ul>
+                    <li>Nível 4
+                      <ul>
+                        <li>Nível 5</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <div style="margin-top:16px;">
+        <button class="btn" data-testid="btn-find">Encontrar elemento profundo</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

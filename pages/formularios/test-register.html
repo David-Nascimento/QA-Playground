@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Test Register — QA Playground</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Página de Cadastro</h1>
+    <p>Teste o cadastro de usuários. Todos os campos são obrigatórios.</p>
+    <form id="register-form">
+      <div class="form-group">
+        <label for="reg-nome">Nome</label>
+        <input type="text" id="reg-nome" name="reg-nome" data-testid="reg-nome" required />
+      </div>
+      <div class="form-group">
+        <label for="reg-email">E-mail</label>
+        <input type="email" id="reg-email" name="reg-email" data-testid="reg-email" required />
+      </div>
+      <div class="form-group">
+        <label for="reg-senha">Senha</label>
+        <input type="password" id="reg-senha" name="reg-senha" data-testid="reg-senha" required />
+      </div>
+      <button type="submit" class="btn">Cadastrar</button>
+    </form>
+    <div id="register-feedback" style="margin-top:20px;"></div>
+  </main>
+  <script>
+    document.getElementById('register-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nome = document.getElementById('reg-nome').value;
+      const email = document.getElementById('reg-email').value;
+      const senha = document.getElementById('reg-senha').value;
+      if(nome && email && senha) {
+        document.getElementById('register-feedback').innerHTML = '<span style="color:green">Cadastro realizado!</span>';
+      } else {
+        document.getElementById('register-feedback').innerHTML = '<span style="color:red">Preencha todos os campos.</span>';
+      }
+    });
+  </script>
+</body>
+</html>

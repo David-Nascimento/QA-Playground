@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tabela Dinâmica — QA Playground</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Tabela Dinâmica</h1>
+    <p>Valide tabelas com dados dinâmicos. Adicione, edite e remova linhas para praticar automação de tabelas.</p>
+    <table id="dynamic-table" border="1" style="width:100%;margin-bottom:16px;">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-testid="row">
+          <td>Maria</td>
+          <td>maria@email.com</td>
+          <td><button onclick="removeRow(this)">Remover</button></td>
+        </tr>
+        <tr data-testid="row">
+          <td>João</td>
+          <td>joao@email.com</td>
+          <td><button onclick="removeRow(this)">Remover</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <form id="add-row-form" style="display:flex;gap:8px;">
+      <input type="text" id="nome" placeholder="Nome" required data-testid="input-nome" />
+      <input type="email" id="email" placeholder="E-mail" required data-testid="input-email" />
+      <button type="submit" class="btn">Adicionar</button>
+    </form>
+  </main>
+  <script>
+    function removeRow(btn) {
+      btn.closest('tr').remove();
+    }
+    document.getElementById('add-row-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nome = document.getElementById('nome').value;
+      const email = document.getElementById('email').value;
+      const tbody = document.querySelector('#dynamic-table tbody');
+      const tr = document.createElement('tr');
+      tr.setAttribute('data-testid','row');
+      tr.innerHTML = `<td>${nome}</td><td>${email}</td><td><button onclick="removeRow(this)">Remover</button></td>`;
+      tbody.appendChild(tr);
+      this.reset();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Upload e Download — QA Playground</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../index.html" class="et-logo" aria-label="Início">
+          <img src="../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../index.html">Início</a></li>
+            <li><a href="arquivos.html" aria-current="page">Arquivos</a></li>
+            <li><a href="fundamentos.html">Fundamentos</a></li>
+            <li><a href="tabelas.html">Tabelas</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Upload e Download de Arquivos</h2>
+          <div class="section-desc">Pratique testes de upload e download de arquivos. Valide seleção, envio, tamanho e formatos de arquivos.</div>
+        </div>
+
+        <div class="subsections">
+          <div class="subsection">
+            <h3>Upload de Arquivo</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Selecione um arquivo para upload (aceita imagens).</p>
+            <div class="form-group">
+              <label for="file-input">Selecionar arquivo</label>
+              <input 
+                id="file-input" 
+                type="file" 
+                data-testid="file-input"
+                accept="image/*,application/pdf,.doc,.docx"
+              />
+              <div class="hint">Formatos aceitos: Imagens, PDF, DOC, DOCX</div>
+              <div id="file-info" class="hint" aria-live="polite" style="margin-top: var(--spacing-sm);"></div>
+            </div>
+            
+            <div id="file-preview" style="margin-top: var(--spacing-md); display: none;">
+              <strong>Preview:</strong>
+              <div id="preview-content" style="margin-top: var(--spacing-sm);"></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Download de Arquivo</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Teste o download de arquivos simulados.</p>
+            <div class="controls">
+              <button id="btn-download" class="btn" data-testid="btn-download">Baixar Arquivo Exemplo (TXT)</button>
+              <button id="btn-download-json" class="btn btn-secondary" data-testid="btn-download-json">Baixar JSON</button>
+            </div>
+            <div id="download-status" class="hint" style="margin-top: var(--spacing-sm);"></div>
+          </div>
+        </div>
+
+        <div class="subsection" style="margin-top: var(--spacing-lg);">
+          <h3>Informações para Testes</h3>
+          <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+            <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+              <li>Validar seleção de arquivo</li>
+              <li>Verificar informações do arquivo (nome, tamanho, tipo)</li>
+              <li>Testar upload de diferentes formatos</li>
+              <li>Validar limites de tamanho</li>
+              <li>Testar download de arquivos</li>
+              <li>Verificar que arquivos foram baixados corretamente</li>
+            </ul>
+            
+            <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+            <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+              <li><code>data-testid="file-input"</code></li>
+              <li><code>data-testid="btn-download"</code></li>
+              <li><code>data-testid="btn-download-json"</code></li>
+              <li><code>data-testid="file-info"</code></li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../js/app.js"></script>
+    <script>
+      // Upload
+      document.getElementById('file-input').addEventListener('change', function() {
+        const f = this.files && this.files[0];
+        const info = document.getElementById('file-info');
+        const preview = document.getElementById('file-preview');
+        const previewContent = document.getElementById('preview-content');
+        
+        if (!f) {
+          info.textContent = 'Nenhum arquivo selecionado';
+          info.style.color = 'var(--muted)';
+          preview.style.display = 'none';
+          return;
+        }
+        
+        const sizeKB = Math.round(f.size / 1024);
+        const sizeMB = (f.size / (1024 * 1024)).toFixed(2);
+        const sizeText = sizeKB < 1024 ? `${sizeKB} KB` : `${sizeMB} MB`;
+        
+        info.innerHTML = `
+          <strong style="color: var(--accent);">✅ Arquivo selecionado:</strong><br>
+          Nome: ${f.name}<br>
+          Tamanho: ${sizeText}<br>
+          Tipo: ${f.type || 'Não especificado'}
+        `;
+        info.style.color = 'var(--text)';
+        
+        // Preview para imagens
+        if (f.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            previewContent.innerHTML = `<img src="${e.target.result}" style="max-width: 300px; border-radius: var(--border-radius-md); margin-top: var(--spacing-sm);" alt="Preview" />`;
+            preview.style.display = 'block';
+          };
+          reader.readAsDataURL(f);
+        } else {
+          preview.style.display = 'none';
+        }
+        
+        window.showToast(`Arquivo "${f.name}" selecionado (${sizeText})`);
+      });
+
+      // Download TXT
+      document.getElementById('btn-download').addEventListener('click', () => {
+        const content = `Arquivo de exemplo gerado em ${new Date().toLocaleString('pt-BR')}\n\nEste é um arquivo de teste para validação de downloads.\n\nQA Playground - Projeto educacional.`;
+        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'exemplo-qa-playground.txt';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        
+        document.getElementById('download-status').textContent = 'Download iniciado: exemplo-qa-playground.txt';
+        document.getElementById('download-status').style.color = 'var(--accent)';
+        window.showToast('Download iniciado com sucesso!');
+      });
+
+      // Download JSON
+      document.getElementById('btn-download-json').addEventListener('click', () => {
+        const data = {
+          timestamp: new Date().toISOString(),
+          projeto: 'QA Playground',
+          versao: '1.0.0',
+          dados: [
+            { id: 1, nome: 'Exemplo 1', valor: 100 },
+            { id: 2, nome: 'Exemplo 2', valor: 200 }
+          ]
+        };
+        
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'dados-exemplo.json';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        
+        document.getElementById('download-status').textContent = 'Download iniciado: dados-exemplo.json';
+        document.getElementById('download-status').style.color = 'var(--accent)';
+        window.showToast('Download JSON iniciado com sucesso!');
+      });
+    </script>
+  </body>
+</html>

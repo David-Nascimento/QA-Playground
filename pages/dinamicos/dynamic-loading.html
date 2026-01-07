@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic Loading</title>
+  <link rel="stylesheet" href="../../css/styles.css">
+  <script>
+    function carregarConteudo() {
+      document.getElementById('carregar').innerHTML = '<span>Carregando...</span>';
+      setTimeout(function() {
+        document.getElementById('carregar').innerHTML = '<strong>Conteúdo carregado dinamicamente!</strong>';
+      }, 2000);
+    }
+  </script>
+</head>
+<body>
+  <h1>Dynamic Loading</h1>
+  <button onclick="carregarConteudo()">Carregar Conteúdo</button>
+  <div id="carregar"></div>
+  <a href="../../index.html">Voltar</a>
+</body>
+</html>

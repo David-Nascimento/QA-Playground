@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dropdown List — QA Playground</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Dropdown List</h1>
+    <p>Teste listas suspensas e seleção de opções.</p>
+    <select id="dropdown" data-testid="dropdown">
+      <option value="">Selecione uma opção</option>
+      <option value="opcao1">Opção 1</option>
+      <option value="opcao2">Opção 2</option>
+      <option value="opcao3">Opção 3</option>
+    </select>
+    <div id="dropdown-result" style="margin-top:16px;"></div>
+  </main>
+  <script>
+    document.getElementById('dropdown').addEventListener('change', function() {
+      document.getElementById('dropdown-result').textContent = this.value ? 'Selecionado: ' + this.value : '';
+    });
+  </script>
+</body>
+</html>

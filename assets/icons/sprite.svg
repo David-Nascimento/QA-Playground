@@ -1,0 +1,40 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="icon-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <desc>Três linhas horizontais que representam o botão de abrir/fechar menu</desc>
+    <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </symbol>
+  <symbol id="icon-fundamentos" viewBox="0 0 24 24">
+    <title>Fundamentos</title>
+    <desc>Ícone representando a seção Fundamentos (três linhas)</desc>
+    <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </symbol>
+  <symbol id="icon-formularios" viewBox="0 0 24 24">
+    <title>Formulários</title>
+    <desc>Ícone representando formulários (blocos)</desc>
+    <path d="M4 6h16v4H4zM4 12h16v6H4z" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-tabelas" viewBox="0 0 24 24">
+    <title>Tabelas</title>
+    <desc>Ícone de tabela com linhas e colunas</desc>
+    <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.4" fill="none"/>
+    <path d="M7 8h10M7 12h10M7 16h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+  </symbol>
+  <symbol id="icon-dinamicos" viewBox="0 0 24 24">
+    <title>Dinâmicos</title>
+    <desc>Ícone para elementos dinâmicos e interativos</desc>
+    <path d="M12 2l1.5 3 3 .5-2.2 2 .5 3L12 10l-2.8 1.5.5-3L7.5 5.5 10.5 5 12 2z" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-interacoes" viewBox="0 0 24 24">
+    <title>Interações</title>
+    <desc>Ícone para ações de interação (clique, drag, etc.)</desc>
+    <path d="M3 3l18 9-18 9V3z" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-arquivos" viewBox="0 0 24 24">
+    <title>Arquivos</title>
+    <desc>Ícone de documento para uploads e downloads</desc>
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+    <path d="M14 2v6h6" stroke="currentColor" stroke-width="1.2" fill="none"/>
+  </symbol>
+</svg>

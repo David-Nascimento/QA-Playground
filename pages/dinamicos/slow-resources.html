@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Slow Resources — QA Playground</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Slow Resources</h1>
+    <p>Simule recursos lentos e teste o comportamento da aplicação.</p>
+    <button id="btn-load" class="btn" data-testid="btn-load">Carregar recurso lento</button>
+    <div id="slow-result" style="margin-top:16px;"></div>
+  </main>
+  <script>
+    document.getElementById('btn-load').onclick = function() {
+      document.getElementById('slow-result').textContent = 'Carregando...';
+      setTimeout(()=>{
+        document.getElementById('slow-result').textContent = 'Recurso carregado!';
+      }, 4000);
+    };
+  </script>
+</body>
+</html>

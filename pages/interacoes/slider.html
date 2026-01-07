@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Horizontal Slider — QA Playground</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Horizontal Slider</h1>
+    <p>Valide sliders horizontais e valores dinâmicos.</p>
+    <input type="range" id="slider" min="0" max="100" value="50" data-testid="slider" />
+    <span id="slider-value">50</span>
+  </main>
+  <script>
+    document.getElementById('slider').addEventListener('input', function() {
+      document.getElementById('slider-value').textContent = this.value;
+    });
+  </script>
+</body>
+</html>

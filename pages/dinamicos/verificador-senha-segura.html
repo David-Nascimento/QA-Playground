@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Verificador de Senha Segura</title>
+  <link rel="stylesheet" href="../../css/styles.css">
+  <script>
+    function verificarSenha() {
+      const senha = document.getElementById('senha').value;
+      let msg = '';
+      if (senha.length < 8) msg = 'Senha muito curta!';
+      else if (!/[A-Z]/.test(senha)) msg = 'Inclua uma letra maiúscula!';
+      else if (!/[0-9]/.test(senha)) msg = 'Inclua um número!';
+      else if (!/[!@#$%^&*]/.test(senha)) msg = 'Inclua um caractere especial!';
+      else msg = 'Senha forte!';
+      document.getElementById('resultado').innerText = msg;
+    }
+  </script>
+</head>
+<body>
+  <h1>Verificador de Senha Segura</h1>
+  <input type="password" id="senha" placeholder="Digite sua senha">
+  <button onclick="verificarSenha()">Verificar</button>
+  <div id="resultado"></div>
+  <a href="../../index.html">Voltar</a>
+</body>
+</html>
