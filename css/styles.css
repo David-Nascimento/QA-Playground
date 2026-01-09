@@ -336,8 +336,17 @@ a:focus-visible {
 
 .card .btn {
   margin-top: auto;
-      width: 100%;
+  width: 100%;
   text-align: center;
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  box-shadow: none;
+}
+/* Adiciona hover para botão dentro do card */
+.card .btn:hover {
+  background: var(--accent);
+  color: #fff;
 }
 
 /* === Buttons === */

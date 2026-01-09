@@ -30,11 +30,36 @@
     <main class="container">
       <section class="section">
         <div class="section-header">
-          <h2>Web Inputs</h2>
-          <div class="section-desc">Teste diferentes tipos de campos de entrada HTML. Pratique automação e validação de todos os tipos de inputs disponíveis.</div>
+          <h2>Entradas de Formulário (Web Inputs)</h2>
+          <div class="section-desc">Pratique com diferentes tipos de campos de entrada HTML. Esta página é ideal para testar automação e validação de todos os tipos de inputs disponíveis no HTML5, incluindo texto, email, senha, número, data, hora, cor, range e checkbox.</div>
         </div>
 
         <div class="subsections">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar preenchimento de diferentes tipos de campos em formulários web</li>
+                <li>Validar comportamento de inputs HTML5 nativos (text, email, password, number, date, time, color, range)</li>
+                <li>Praticar automação de preenchimento de formulários com Selenium, Cypress ou Playwright</li>
+                <li>Validar valores mínimos e máximos em campos numéricos</li>
+                <li>Testar seletores de data e hora nativos do navegador</li>
+                <li>Validar seleção de cores e valores de range (slider)</li>
+                <li>Testar interação com checkboxes e validação de estados</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Como Utilizar:</strong></p>
+              <ol style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Preencha os diferentes tipos de campos disponíveis no formulário</li>
+                <li>Teste validações nativas (ex: email deve ter formato válido, número deve estar entre min e max)</li>
+                <li>Interaja com o seletor de cor e o slider de range</li>
+                <li>Marque/desmarque o checkbox de termos</li>
+                <li>Clique em "Enviar Formulário" para ver os dados coletados</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
           <div class="subsection">
             <h3>Tipos de Input HTML</h3>
             <form id="web-inputs-form" data-testid="form-web-inputs">
@@ -105,6 +130,36 @@
             <h3>Resultado do Formulário</h3>
             <div id="result" data-testid="resultado-formulario" style="min-height: 100px; padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
               <p class="muted">Preencha o formulário e clique em "Enviar" para ver os dados aqui.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="form-web-inputs"</code> - Formulário principal</li>
+                <li><code>data-testid="input-text"</code> - Campo de texto</li>
+                <li><code>data-testid="input-email"</code> - Campo de email</li>
+                <li><code>data-testid="input-password"</code> - Campo de senha</li>
+                <li><code>data-testid="input-number"</code> - Campo numérico (min: 0, max: 1000)</li>
+                <li><code>data-testid="input-date"</code> - Seletor de data</li>
+                <li><code>data-testid="input-time"</code> - Seletor de hora</li>
+                <li><code>data-testid="input-color"</code> - Seletor de cor</li>
+                <li><code>data-testid="input-range"</code> - Slider de range (0-100)</li>
+                <li><code>data-testid="input-checkbox"</code> - Checkbox de termos</li>
+                <li><code>data-testid="btn-enviar"</code> - Botão de envio</li>
+                <li><code>data-testid="resultado-formulario"</code> - Área de resultado</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplo de Teste Automatizado:</strong></p>
+              <pre style="background: rgba(0,0,0,0.05); padding: var(--spacing-sm); border-radius: var(--border-radius-sm); font-size: var(--font-size-sm); overflow-x: auto;"><code>// Cypress
+cy.get('[data-testid="input-email"]').type('teste@exemplo.com')
+cy.get('[data-testid="input-password"]').type('senha123')
+cy.get('[data-testid="input-number"]').type('50')
+cy.get('[data-testid="input-checkbox"]').check()
+cy.get('[data-testid="btn-enviar"]').click()
+cy.get('[data-testid="resultado-formulario"]').should('be.visible')</code></pre>
             </div>
           </div>
         </div>

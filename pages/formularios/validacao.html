@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Validação de Formulário — QA Playground</title>
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="../fundamentos.html">Fundamentos</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="validacao.html" aria-current="page">Validação</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Validação de Formulário</h2>
+          <div class="section-desc">Pratique diferentes tipos de validação: HTML5 nativa, JavaScript customizado, validação em tempo real e no submit. Todos os elementos possuem <code>id</code> e <code>data-testid</code> para facilitar testes automatizados.</div>
+        </div>
+
+        <div class="subsections">
+          <!-- Validação HTML5 Nativa -->
+          <div class="subsection">
+            <h3>Validação HTML5 Nativa</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Validação usando atributos HTML5 nativos (required, type, pattern, min, max).</p>
+            <form id="form-html5" novalidate>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="html5-nome">Nome (required)</label>
+                  <input 
+                    type="text" 
+                    id="html5-nome" 
+                    name="html5-nome" 
+                    data-testid="html5-nome"
+                    required
+                    placeholder="Digite seu nome"
+                  />
+                  <div class="hint">Campo obrigatório - validação HTML5</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="html5-email">E-mail (type="email")</label>
+                  <input 
+                    type="email" 
+                    id="html5-email" 
+                    name="html5-email" 
+                    data-testid="html5-email"
+                    required
+                    placeholder="seu@exemplo.com"
+                  />
+                  <div class="hint">Validação automática de formato de email</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="html5-url">URL (type="url")</label>
+                  <input 
+                    type="url" 
+                    id="html5-url" 
+                    name="html5-url" 
+                    data-testid="html5-url"
+                    placeholder="https://exemplo.com"
+                  />
+                  <div class="hint">Validação automática de formato de URL</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="html5-tel">Telefone (pattern)</label>
+                  <input 
+                    type="tel" 
+                    id="html5-tel" 
+                    name="html5-tel" 
+                    data-testid="html5-tel"
+                    pattern="[0-9]{10,11}"
+                    placeholder="11999999999"
+                  />
+                  <div class="hint">Pattern: 10 ou 11 dígitos numéricos</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="html5-number">Número (min/max)</label>
+                  <input 
+                    type="number" 
+                    id="html5-number" 
+                    name="html5-number" 
+                    data-testid="html5-number"
+                    min="1"
+                    max="100"
+                    placeholder="Entre 1 e 100"
+                  />
+                  <div class="hint">Valor entre 1 e 100</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="html5-date">Data (min/max)</label>
+                  <input 
+                    type="date" 
+                    id="html5-date" 
+                    name="html5-date" 
+                    data-testid="html5-date"
+                    min="2020-01-01"
+                    max="2030-12-31"
+                  />
+                  <div class="hint">Data entre 2020 e 2030</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="html5-password">Senha (minlength)</label>
+                  <input 
+                    type="password" 
+                    id="html5-password" 
+                    name="html5-password" 
+                    data-testid="html5-password"
+                    minlength="6"
+                    placeholder="Mínimo 6 caracteres"
+                  />
+                  <div class="hint">Mínimo 6 caracteres</div>
+                </div>
+
+                <div class="form-group form-full">
+                  <button type="submit" id="btn-html5" data-testid="btn-html5" class="btn">Validar HTML5</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Validação JavaScript Customizada -->
+          <div class="subsection">
+            <h3>Validação JavaScript Customizada</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Validação com regras customizadas e mensagens de erro personalizadas.</p>
+            <form id="form-custom" novalidate>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="custom-cpf">CPF (Validação Customizada)</label>
+                  <input 
+                    type="text" 
+                    id="custom-cpf" 
+                    name="custom-cpf" 
+                    data-testid="custom-cpf"
+                    placeholder="000.000.000-00"
+                    maxlength="14"
+                    aria-describedby="custom-cpf-error custom-cpf-hint"
+                  />
+                  <div class="hint" id="custom-cpf-hint">Formato: 000.000.000-00</div>
+                  <div class="error" id="custom-cpf-error" aria-live="polite" style="display:none"></div>
+                </div>
+
+                <div class="form-group">
+                  <label for="custom-senha">Senha (Regras Complexas)</label>
+                  <input 
+                    type="password" 
+                    id="custom-senha" 
+                    name="custom-senha" 
+                    data-testid="custom-senha"
+                    placeholder="Mínimo 8 caracteres"
+                    aria-describedby="custom-senha-error custom-senha-hint"
+                  />
+                  <div class="hint" id="custom-senha-hint">Mínimo 8 caracteres, 1 letra maiúscula, 1 número</div>
+                  <div class="error" id="custom-senha-error" aria-live="polite" style="display:none"></div>
+                  <div id="senha-requirements" style="margin-top: var(--spacing-xs); font-size: var(--font-size-sm);"></div>
+                </div>
+
+                <div class="form-group">
+                  <label for="custom-confirmar">Confirmar Senha</label>
+                  <input 
+                    type="password" 
+                    id="custom-confirmar" 
+                    name="custom-confirmar" 
+                    data-testid="custom-confirmar"
+                    placeholder="Digite a senha novamente"
+                    aria-describedby="custom-confirmar-error custom-confirmar-hint"
+                  />
+                  <div class="hint" id="custom-confirmar-hint">As senhas devem ser iguais</div>
+                  <div class="error" id="custom-confirmar-error" aria-live="polite" style="display:none"></div>
+                </div>
+
+                <div class="form-group">
+                  <label for="custom-idade">Idade (Validação de Faixa)</label>
+                  <input 
+                    type="number" 
+                    id="custom-idade" 
+                    name="custom-idade" 
+                    data-testid="custom-idade"
+                    placeholder="Entre 18 e 120"
+                    aria-describedby="custom-idade-error custom-idade-hint"
+                  />
+                  <div class="hint" id="custom-idade-hint">Idade entre 18 e 120 anos</div>
+                  <div class="error" id="custom-idade-error" aria-live="polite" style="display:none"></div>
+                </div>
+
+                <div class="form-group">
+                  <label for="custom-usuario">Usuário (Validação de Formato)</label>
+                  <input 
+                    type="text" 
+                    id="custom-usuario" 
+                    name="custom-usuario" 
+                    data-testid="custom-usuario"
+                    placeholder="3-20 caracteres, apenas letras e números"
+                    aria-describedby="custom-usuario-error custom-usuario-hint"
+                  />
+                  <div class="hint" id="custom-usuario-hint">3-20 caracteres, apenas letras e números</div>
+                  <div class="error" id="custom-usuario-error" aria-live="polite" style="display:none"></div>
+                </div>
+
+                <div class="form-group form-full">
+                  <label class="radio-group" style="align-items: center; gap: 8px;">
+                    <input 
+                      type="checkbox" 
+                      id="custom-termos" 
+                      name="custom-termos" 
+                      data-testid="custom-termos"
+                      required
+                    />
+                    <span>Aceito os termos e condições</span>
+                  </label>
+                  <div class="error" id="custom-termos-error" aria-live="polite" style="display:none"></div>
+                </div>
+
+                <div class="form-group form-full">
+                  <button type="submit" id="btn-custom" data-testid="btn-custom" class="btn">Validar Customizado</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Validação em Tempo Real -->
+          <div class="subsection">
+            <h3>Validação em Tempo Real</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Validação que ocorre enquanto o usuário digita (on input) e ao sair do campo (on blur).</p>
+            <form id="form-tempo-real" novalidate>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="realtime-email">E-mail (Validação em Tempo Real)</label>
+                  <input 
+                    type="email" 
+                    id="realtime-email" 
+                    name="realtime-email" 
+                    data-testid="realtime-email"
+                    placeholder="seu@exemplo.com"
+                    aria-describedby="realtime-email-error realtime-email-hint"
+                  />
+                  <div class="hint" id="realtime-email-hint">Validação ao sair do campo</div>
+                  <div class="error" id="realtime-email-error" aria-live="polite" style="display:none"></div>
+                </div>
+
+                <div class="form-group">
+                  <label for="realtime-phone">Telefone (Validação ao Digitar)</label>
+                  <input 
+                    type="tel" 
+                    id="realtime-phone" 
+                    name="realtime-phone" 
+                    data-testid="realtime-phone"
+                    placeholder="(00) 00000-0000"
+                    maxlength="15"
+                    aria-describedby="realtime-phone-error realtime-phone-hint"
+                  />
+                  <div class="hint" id="realtime-phone-hint">Formato: (00) 00000-0000</div>
+                  <div class="error" id="realtime-phone-error" aria-live="polite" style="display:none"></div>
+                </div>
+
+                <div class="form-group">
+                  <label for="realtime-username">Nome de Usuário (Validação Contínua)</label>
+                  <input 
+                    type="text" 
+                    id="realtime-username" 
+                    name="realtime-username" 
+                    data-testid="realtime-username"
+                    placeholder="3-15 caracteres"
+                    aria-describedby="realtime-username-error realtime-username-hint"
+                  />
+                  <div class="hint" id="realtime-username-hint">Validação enquanto digita</div>
+                  <div class="error" id="realtime-username-error" aria-live="polite" style="display:none"></div>
+                  <div id="username-status" style="margin-top: var(--spacing-xs); font-size: var(--font-size-sm);"></div>
+                </div>
+
+                <div class="form-group form-full">
+                  <button type="submit" id="btn-realtime" data-testid="btn-realtime" class="btn">Validar Tempo Real</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Validação Condicional -->
+          <div class="subsection">
+            <h3>Validação Condicional</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Campos que se tornam obrigatórios ou mudam validação baseado em outros campos.</p>
+            <form id="form-condicional" novalidate>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="cond-tipo">Tipo de Conta</label>
+                  <select 
+                    id="cond-tipo" 
+                    name="cond-tipo" 
+                    data-testid="cond-tipo"
+                    aria-describedby="cond-tipo-hint"
+                  >
+                    <option value="">Selecione</option>
+                    <option value="pessoa-fisica">Pessoa Física</option>
+                    <option value="pessoa-juridica">Pessoa Jurídica</option>
+                  </select>
+                  <div class="hint" id="cond-tipo-hint">Selecione o tipo de conta</div>
+                </div>
+
+                <div class="form-group" id="cond-cpf-group" style="display:none;">
+                  <label for="cond-cpf">CPF (Obrigatório se Pessoa Física)</label>
+                  <input 
+                    type="text" 
+                    id="cond-cpf" 
+                    name="cond-cpf" 
+                    data-testid="cond-cpf"
+                    placeholder="000.000.000-00"
+                    maxlength="14"
+                    aria-describedby="cond-cpf-error cond-cpf-hint"
+                  />
+                  <div class="hint" id="cond-cpf-hint">Aparece apenas para Pessoa Física</div>
+                  <div class="error" id="cond-cpf-error" aria-live="polite" style="display:none"></div>
+                </div>
+
+                <div class="form-group" id="cond-cnpj-group" style="display:none;">
+                  <label for="cond-cnpj">CNPJ (Obrigatório se Pessoa Jurídica)</label>
+                  <input 
+                    type="text" 
+                    id="cond-cnpj" 
+                    name="cond-cnpj" 
+                    data-testid="cond-cnpj"
+                    placeholder="00.000.000/0000-00"
+                    maxlength="18"
+                    aria-describedby="cond-cnpj-error cond-cnpj-hint"
+                  />
+                  <div class="hint" id="cond-cnpj-hint">Aparece apenas para Pessoa Jurídica</div>
+                  <div class="error" id="cond-cnpj-error" aria-live="polite" style="display:none"></div>
+                </div>
+
+                <div class="form-group form-full">
+                  <label class="radio-group" style="align-items: center; gap: 8px;">
+                    <input 
+                      type="checkbox" 
+                      id="cond-newsletter" 
+                      name="cond-newsletter" 
+                      data-testid="cond-newsletter"
+                    />
+                    <span>Desejo receber newsletter</span>
+                  </label>
+                </div>
+
+                <div class="form-group" id="cond-email-newsletter-group" style="display:none;">
+                  <label for="cond-email-newsletter">E-mail para Newsletter (Obrigatório se marcado)</label>
+                  <input 
+                    type="email" 
+                    id="cond-email-newsletter" 
+                    name="cond-email-newsletter" 
+                    data-testid="cond-email-newsletter"
+                    placeholder="seu@exemplo.com"
+                    aria-describedby="cond-email-newsletter-error cond-email-newsletter-hint"
+                  />
+                  <div class="hint" id="cond-email-newsletter-hint">Obrigatório se newsletter estiver marcado</div>
+                  <div class="error" id="cond-email-newsletter-error" aria-live="polite" style="display:none"></div>
+                </div>
+
+                <div class="form-group form-full">
+                  <button type="submit" id="btn-condicional" data-testid="btn-condicional" class="btn">Validar Condicional</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Tipos de Validação:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><strong>HTML5 Nativa:</strong> required, type, pattern, min, max, minlength</li>
+                <li><strong>JavaScript Customizada:</strong> Regras complexas e mensagens personalizadas</li>
+                <li><strong>Tempo Real:</strong> Validação on input e on blur</li>
+                <li><strong>Condicional:</strong> Campos que aparecem/validam baseado em outros campos</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="html5-nome"</code>, <code>data-testid="html5-email"</code>, etc.</li>
+                <li><code>data-testid="custom-cpf"</code>, <code>data-testid="custom-senha"</code>, etc.</li>
+                <li><code>data-testid="realtime-email"</code>, <code>data-testid="realtime-phone"</code>, etc.</li>
+                <li><code>data-testid="cond-tipo"</code>, <code>data-testid="cond-cpf"</code>, etc.</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Dados de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>CPF válido: 123.456.789-00</li>
+                <li>Senha forte: Min8Char1!</li>
+                <li>Usuário válido: usuario123</li>
+                <li>E-mail válido: teste@exemplo.com</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../js/app.js"></script>
+    <script>
+      // Funções auxiliares
+      function maskCPF(value) {
+        return value
+          .replace(/\D/g, '')
+          .replace(/(\d{3})(\d)/, '$1.$2')
+          .replace(/(\d{3})(\d)/, '$1.$2')
+          .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+      }
+
+      function maskCNPJ(value) {
+        return value
+          .replace(/\D/g, '')
+          .replace(/(\d{2})(\d)/, '$1.$2')
+          .replace(/(\d{3})(\d)/, '$1.$2')
+          .replace(/(\d{3})(\d)/, '$1/$2')
+          .replace(/(\d{4})(\d)/, '$1-$2');
+      }
+
+      function maskTelefone(value) {
+        return value
+          .replace(/\D/g, '')
+          .replace(/(\d{2})(\d)/, '($1) $2')
+          .replace(/(\d{5})(\d{4})$/, '$1-$2');
+      }
+
+      function validateCPF(cpf) {
+        cpf = cpf.replace(/\D/g, '');
+        if (cpf.length !== 11) return false;
+        if (/^(\d)\1+$/.test(cpf)) return false;
+        return true;
+      }
+
+      function validateCNPJ(cnpj) {
+        cnpj = cnpj.replace(/\D/g, '');
+        return cnpj.length === 14;
+      }
+
+      function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      // Validação HTML5
+      document.getElementById('form-html5').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const form = this;
+        if (form.checkValidity()) {
+          window.showToast('Validação HTML5: Todos os campos válidos!');
+        } else {
+          window.showToast('Validação HTML5: Verifique os campos obrigatórios.');
+          form.reportValidity();
+        }
+      });
+
+      // Validação Customizada
+      document.getElementById('form-custom').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        ['custom-cpf', 'custom-senha', 'custom-confirmar', 'custom-idade', 'custom-usuario', 'custom-termos'].forEach(field => {
+          window.clearFieldError(field);
+        });
+        
+        let isValid = true;
+        
+        // CPF
+        const cpf = document.getElementById('custom-cpf').value;
+        if (cpf && !validateCPF(cpf)) {
+          window.setFieldError('custom-cpf', 'CPF inválido.');
+          isValid = false;
+        }
+        
+        // Senha
+        const senha = document.getElementById('custom-senha').value;
+        if (senha) {
+          if (senha.length < 8) {
+            window.setFieldError('custom-senha', 'Senha deve ter no mínimo 8 caracteres.');
+            isValid = false;
+          } else if (!/[A-Z]/.test(senha)) {
+            window.setFieldError('custom-senha', 'Senha deve conter pelo menos uma letra maiúscula.');
+            isValid = false;
+          } else if (!/\d/.test(senha)) {
+            window.setFieldError('custom-senha', 'Senha deve conter pelo menos um número.');
+            isValid = false;
+          }
+        }
+        
+        // Confirmar senha
+        const confirmar = document.getElementById('custom-confirmar').value;
+        if (senha && confirmar && senha !== confirmar) {
+          window.setFieldError('custom-confirmar', 'As senhas não coincidem.');
+          isValid = false;
+        }
+        
+        // Idade
+        const idade = parseInt(document.getElementById('custom-idade').value);
+        if (document.getElementById('custom-idade').value) {
+          if (idade < 18 || idade > 120) {
+            window.setFieldError('custom-idade', 'Idade deve estar entre 18 e 120 anos.');
+            isValid = false;
+          }
+        }
+        
+        // Usuário
+        const usuario = document.getElementById('custom-usuario').value;
+        if (usuario) {
+          if (usuario.length < 3 || usuario.length > 20) {
+            window.setFieldError('custom-usuario', 'Usuário deve ter entre 3 e 20 caracteres.');
+            isValid = false;
+          } else if (!/^[a-zA-Z0-9]+$/.test(usuario)) {
+            window.setFieldError('custom-usuario', 'Usuário deve conter apenas letras e números.');
+            isValid = false;
+          }
+        }
+        
+        // Termos
+        if (!document.getElementById('custom-termos').checked) {
+          const errorDiv = document.getElementById('custom-termos-error');
+          errorDiv.textContent = 'Você deve aceitar os termos.';
+          errorDiv.style.display = 'block';
+          isValid = false;
+        }
+        
+        if (isValid) {
+          window.showToast('Validação Customizada: Todos os campos válidos!');
+        }
+      });
+
+      // Requisitos de senha em tempo real
+      document.getElementById('custom-senha').addEventListener('input', function() {
+        const senha = this.value;
+        const reqDiv = document.getElementById('senha-requirements');
+        const requirements = [
+          { test: senha.length >= 8, text: 'Mínimo 8 caracteres' },
+          { test: /[A-Z]/.test(senha), text: '1 letra maiúscula' },
+          { test: /\d/.test(senha), text: '1 número' }
+        ];
+        
+        reqDiv.innerHTML = requirements.map(req => 
+          `<span style="color: ${req.test ? 'var(--accent)' : 'var(--muted)'}; margin-right: var(--spacing-sm);">${req.test ? '✓' : '○'} ${req.text}</span>`
+        ).join('');
+      });
+
+      // Validação em Tempo Real
+      document.getElementById('realtime-email').addEventListener('blur', function() {
+        const email = this.value.trim();
+        if (email && !validateEmail(email)) {
+          window.setFieldError('realtime-email', 'Formato de email inválido.');
+        } else {
+          window.clearFieldError('realtime-email');
+        }
+      });
+
+      document.getElementById('realtime-phone').addEventListener('input', function(e) {
+        e.target.value = maskTelefone(e.target.value);
+        const phone = e.target.value.replace(/\D/g, '');
+        if (phone && phone.length < 10) {
+          window.setFieldError('realtime-phone', 'Telefone incompleto.');
+        } else {
+          window.clearFieldError('realtime-phone');
+        }
+      });
+
+      document.getElementById('realtime-username').addEventListener('input', function() {
+        const username = this.value;
+        const statusDiv = document.getElementById('username-status');
+        
+        if (!username) {
+          statusDiv.innerHTML = '';
+          window.clearFieldError('realtime-username');
+          return;
+        }
+        
+        if (username.length < 3) {
+          window.setFieldError('realtime-username', 'Mínimo 3 caracteres.');
+          statusDiv.innerHTML = '<span style="color: var(--muted);">Muito curto</span>';
+        } else if (username.length > 15) {
+          window.setFieldError('realtime-username', 'Máximo 15 caracteres.');
+          statusDiv.innerHTML = '<span style="color: var(--muted);">Muito longo</span>';
+        } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+          window.setFieldError('realtime-username', 'Apenas letras e números.');
+          statusDiv.innerHTML = '<span style="color: var(--muted);">Caracteres inválidos</span>';
+        } else {
+          window.clearFieldError('realtime-username');
+          statusDiv.innerHTML = '<span style="color: var(--accent);">✓ Válido</span>';
+        }
+      });
+
+      document.getElementById('form-tempo-real').addEventListener('submit', function(e) {
+        e.preventDefault();
+        window.showToast('Validação em Tempo Real: Formulário processado!');
+      });
+
+      // Validação Condicional
+      document.getElementById('cond-tipo').addEventListener('change', function() {
+        const tipo = this.value;
+        const cpfGroup = document.getElementById('cond-cpf-group');
+        const cnpjGroup = document.getElementById('cond-cnpj-group');
+        
+        cpfGroup.style.display = tipo === 'pessoa-fisica' ? 'flex' : 'none';
+        cnpjGroup.style.display = tipo === 'pessoa-juridica' ? 'flex' : 'none';
+        
+        if (tipo !== 'pessoa-fisica') {
+          document.getElementById('cond-cpf').value = '';
+          window.clearFieldError('cond-cpf');
+        }
+        if (tipo !== 'pessoa-juridica') {
+          document.getElementById('cond-cnpj').value = '';
+          window.clearFieldError('cond-cnpj');
+        }
+      });
+
+      document.getElementById('cond-newsletter').addEventListener('change', function() {
+        const emailGroup = document.getElementById('cond-email-newsletter-group');
+        emailGroup.style.display = this.checked ? 'flex' : 'none';
+        if (!this.checked) {
+          document.getElementById('cond-email-newsletter').value = '';
+          window.clearFieldError('cond-email-newsletter');
+        }
+      });
+
+      // Máscaras
+      document.getElementById('custom-cpf').addEventListener('input', function(e) {
+        e.target.value = maskCPF(e.target.value);
+      });
+
+      document.getElementById('cond-cpf').addEventListener('input', function(e) {
+        e.target.value = maskCPF(e.target.value);
+      });
+
+      document.getElementById('cond-cnpj').addEventListener('input', function(e) {
+        e.target.value = maskCNPJ(e.target.value);
+      });
+
+      document.getElementById('form-condicional').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let isValid = true;
+        const tipo = document.getElementById('cond-tipo').value;
+        
+        if (tipo === 'pessoa-fisica') {
+          const cpf = document.getElementById('cond-cpf').value;
+          if (!cpf) {
+            window.setFieldError('cond-cpf', 'CPF é obrigatório para Pessoa Física.');
+            isValid = false;
+          } else if (!validateCPF(cpf)) {
+            window.setFieldError('cond-cpf', 'CPF inválido.');
+            isValid = false;
+          }
+        }
+        
+        if (tipo === 'pessoa-juridica') {
+          const cnpj = document.getElementById('cond-cnpj').value;
+          if (!cnpj) {
+            window.setFieldError('cond-cnpj', 'CNPJ é obrigatório para Pessoa Jurídica.');
+            isValid = false;
+          } else if (!validateCNPJ(cnpj)) {
+            window.setFieldError('cond-cnpj', 'CNPJ inválido.');
+            isValid = false;
+          }
+        }
+        
+        if (document.getElementById('cond-newsletter').checked) {
+          const email = document.getElementById('cond-email-newsletter').value.trim();
+          if (!email) {
+            window.setFieldError('cond-email-newsletter', 'E-mail é obrigatório se newsletter estiver marcado.');
+            isValid = false;
+          } else if (!validateEmail(email)) {
+            window.setFieldError('cond-email-newsletter', 'Formato de email inválido.');
+            isValid = false;
+          }
+        }
+        
+        if (isValid) {
+          window.showToast('Validação Condicional: Todos os campos válidos!');
+        }
+      });
+    </script>
+  </body>
+</html>
+

@@ -29,11 +29,38 @@
     <main class="container">
       <section class="section">
         <div class="section-header">
-          <h2>Tabelas Dinâmicas</h2>
-          <div class="section-desc">Pratique testes em tabelas com conteúdo dinâmico, operações CRUD e validação de dados. Ideal para testar automação de interações com listas e tabelas.</div>
+          <h2>Tabela Dinâmica</h2>
+          <div class="section-desc">Pratique testes em tabelas com conteúdo dinâmico, operações CRUD (Create, Read, Update, Delete) e validação de dados. Esta página é ideal para testar automação de interações com listas e tabelas, incluindo adicionar, visualizar e remover itens.</div>
         </div>
 
         <div class="subsections">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar operações CRUD (Criar, Ler, Atualizar, Deletar) em tabelas dinâmicas</li>
+                <li>Validar adição de novos itens em listas e tabelas</li>
+                <li>Testar remoção de itens e validação de estado vazio</li>
+                <li>Validar contagem de linhas e estrutura da tabela</li>
+                <li>Praticar automação de interações com elementos dinâmicos (que aparecem/desaparecem)</li>
+                <li>Testar validação de dados em tabelas (IDs, datas, textos)</li>
+                <li>Validar comportamento com caracteres especiais e textos longos</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Como Utilizar:</strong></p>
+              <ol style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Digite um nome no campo de entrada</li>
+                <li>Clique em "Adicionar" ou pressione Enter para adicionar um item à tabela</li>
+                <li>Valide que o item foi adicionado com ID, nome e data de criação</li>
+                <li>Teste adicionar múltiplos itens e verifique a contagem</li>
+                <li>Clique em "Excluir" em qualquer linha para remover o item</li>
+                <li>Valide que a mensagem de tabela vazia aparece quando não há itens</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
           <div class="subsection">
             <h3>CRUD Simples</h3>
             <p class="muted" style="margin-bottom: var(--spacing-md);">Adicione, visualize e remova itens da tabela.</p>
@@ -76,27 +103,38 @@
             </div>
           </div>
 
-          <div class="subsection">
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
             <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Adicionar novos itens à tabela</li>
-                <li>Validar que o item foi adicionado corretamente</li>
-                <li>Verificar contagem de linhas</li>
-                <li>Remover itens da tabela</li>
+                <li>Validar que o item foi adicionado corretamente (ID, nome, data)</li>
+                <li>Verificar contagem de linhas na tabela</li>
+                <li>Remover itens da tabela e validar remoção</li>
                 <li>Validar mensagem quando a tabela está vazia</li>
                 <li>Testar com caracteres especiais nos nomes</li>
+                <li>Testar adição rápida de múltiplos itens</li>
               </ul>
               
               <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
-                <li><code>data-testid="input-nome-tabela"</code></li>
-                <li><code>data-testid="btn-adicionar"</code></li>
-                <li><code>data-testid="tabela-dados"</code></li>
-                <li><code>data-testid="tbody-dados"</code></li>
-                <li><code>data-testid="btn-excluir-[id]"</code> (por linha)</li>
+                <li><code>data-testid="input-nome-tabela"</code> - Campo de entrada</li>
+                <li><code>data-testid="btn-adicionar"</code> - Botão para adicionar item</li>
+                <li><code>data-testid="tabela-dados"</code> - Tabela principal</li>
+                <li><code>data-testid="tbody-dados"</code> - Corpo da tabela</li>
+                <li><code>data-testid="linha-[id]"</code> - Cada linha da tabela</li>
+                <li><code>data-testid="btn-excluir-[id]"</code> - Botão de excluir por linha</li>
               </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplo de Teste Automatizado:</strong></p>
+              <pre style="background: rgba(0,0,0,0.05); padding: var(--spacing-sm); border-radius: var(--border-radius-sm); font-size: var(--font-size-sm); overflow-x: auto;"><code>// Cypress
+cy.get('[data-testid="input-nome-tabela"]').type('Item Teste')
+cy.get('[data-testid="btn-adicionar"]').click()
+cy.get('[data-testid="tabela-dados"]').should('be.visible')
+cy.get('[data-testid="tbody-dados"] tr').should('have.length', 1)
+cy.get('[data-testid="btn-excluir-1"]').click()
+cy.get('[data-testid="tbody-dados"] tr').should('have.length', 0)</code></pre>
             </div>
           </div>
         </div>
