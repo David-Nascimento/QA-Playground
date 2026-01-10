@@ -498,6 +498,12 @@ textarea {
   gap: var(--spacing-lg);
 }
 
+.subsections-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
 .subsection {
   background: var(--surface);
   padding: var(--spacing-lg);
