@@ -1,340 +1,155 @@
-# 🧪 QA Playground
+# QA Playground
 
-> Plataforma educacional 100% em português para prática de QA Manual e Automação de Testes
+## Sobre o projeto
 
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
+O **QA Playground** é um projeto educacional criado para **simular cenários reais de aplicações web**, com foco em **testes manuais, automação de testes e análise de qualidade de software**.
 
----
+O objetivo não é ensinar uma ferramenta específica, mas fornecer um **ambiente estável, previsível e bem estruturado**, onde profissionais de QA possam **praticar técnicas, estratégias e raciocínio de teste** próximos do que é encontrado em projetos reais.
 
-## 📋 Sobre o Projeto
-
-O **QA Playground** é uma plataforma web completa e moderna criada especificamente para servir como ambiente de prática e aprendizado em **Quality Assurance (QA)**, **Testes Manuais** e **Automação de Testes**. 
-
-Este projeto foi desenvolvido com foco em educação, oferecendo mais de **60 páginas interativas** organizadas por níveis de dificuldade (Júnior, Pleno e Sênior), permitindo que iniciantes e profissionais evoluam suas habilidades de forma estruturada e prática.
-
-### 🎯 Características Principais
-
-- ✅ **100% em Português** - Conteúdo totalmente em português brasileiro
-- 🎨 **Design Moderno** - Interface limpa e responsiva com suporte a tema claro/escuro
-- 📱 **Totalmente Responsivo** - Funciona perfeitamente em desktop, tablet e mobile
-- 🔍 **Elementos Identificáveis** - Todos os elementos possuem `id` e `data-testid` para facilitar automação
-- 📚 **Organizado por Níveis** - Conteúdo estruturado do básico ao avançado
-- 🎯 **Cenários Realistas** - Desafios baseados em situações reais de QA
-- 🚀 **Zero Dependências** - Apenas HTML, CSS e JavaScript puro
+Todo o projeto é desenvolvido em **HTML, CSS e JavaScript puro**, sem backend ou dependências externas, justamente para manter o foco no comportamento da aplicação e nas regras de negócio.
 
 ---
 
-## 🎓 Níveis de Dificuldade
+## Proposta
 
-### 🟢 Nível Júnior
-Conceitos básicos de QA, automação e validação de elementos simples.
+O QA Playground se propõe a ser um **ambiente de prática contínua**, permitindo que o usuário:
 
-**Conteúdo:**
-- Formulários básicos (Login, Registro, Recuperação de Senha)
-- Inputs HTML (text, email, password, checkbox, radio)
-- Tabelas simples
-- Validações básicas de formulário
-- Elementos interativos simples
+* Execute testes manuais baseados em regras de negócio;
+* Crie cenários de teste e BDD focados em comportamento observável;
+* Pratique automação web com diferentes ferramentas e abordagens;
+* Treine análise de requisitos, exploração e pensamento crítico em QA;
+* Utilize o projeto como parte de um portfólio profissional.
 
-### 🟡 Nível Pleno
-Cenários intermediários, manipulação dinâmica, tabelas, arquivos e interações mais complexas.
-
-**Conteúdo:**
-- Tabelas com paginação e ordenação
-- Upload e download de arquivos
-- Drag & Drop
-- Autocomplete
-- Elementos dinâmicos (aparecer/desaparecer)
-- Notificações e mensagens
-- Tooltips e hover effects
-
-### 🔴 Nível Sênior
-Desafios avançados, automação complexa, manipulação de DOM, APIs, autenticação e cenários reais de QA.
-
-**Conteúdo:**
-- Shadow DOM
-- Challenging DOM (classes dinâmicas)
-- Infinite Scroll
-- JavaScript Dialogs (alert, confirm, prompt)
-- OAuth 2.0 e autenticação
-- API REST mockada
-- Cypress spies, stubs e clocks
-- Testes flaky
-- E-commerce simulado
-- E muito mais...
+O projeto foi pensado para ser simples de executar, mas **rico em detalhes**, pois são esses detalhes que fazem a diferença em testes de qualidade.
 
 ---
 
-## 🚀 Como Executar
+## Público-alvo
 
-### Pré-requisitos
+Este projeto é indicado para:
 
-- Navegador moderno (Chrome, Firefox, Edge, Safari)
-- Servidor HTTP local (opcional, mas recomendado)
-
-### Opção 1: Servidor HTTP Local (Recomendado)
-
-#### Python 3
-```bash
-# Navegue até a pasta do projeto
-cd qa-playground
-
-# Execute o servidor HTTP
-python -m http.server 8000
-
-# Abra no navegador
-# http://localhost:8000
-```
-
-#### Node.js (http-server)
-```bash
-# Instale o http-server globalmente (se ainda não tiver)
-npm install -g http-server
-
-# Execute na pasta do projeto
-http-server -p 8000
-
-# Abra no navegador
-# http://localhost:8000
-```
-
-#### VS Code (Live Server)
-1. Instale a extensão **Live Server** no VS Code
-2. Clique com o botão direito em `index.html`
-3. Selecione "Open with Live Server"
-
-### Opção 2: Abrir Diretamente
-> ⚠️ Algumas funcionalidades podem não funcionar devido a restrições de segurança do navegador.
-
-1. Abra o arquivo `index.html` no navegador
-2. Pronto! O projeto está rodando
+* Profissionais de QA que desejam praticar ou evoluir em testes manuais e automação;
+* Pessoas iniciantes em automação que precisam de um ambiente controlado para aprendizado;
+* Estudantes e pessoas em transição de carreira para a área de QA;
+* Recrutadores e líderes técnicos que queiram avaliar a abordagem de testes de um candidato.
 
 ---
 
-## 📁 Estrutura do Projeto
+## Estrutura do projeto
 
-```
-qa-playground/
-│
-├── index.html                 # Página inicial
-├── README.md                  # Documentação
-│
-├── css/
-│   └── styles.css            # Design system e estilos
-│
-├── js/
-│   └── app.js                # Tema, validações e helpers
-│
-├── assets/
-│   └── icons/                # Ícones SVG do projeto
-│
-└── pages/
-    ├── fundamentos.html      # Elementos básicos
-    ├── formularios.html      # Índice de formulários
-    │   └── formularios/
-    │       ├── login.html
-    │       ├── test-login.html
-    │       ├── web-inputs.html
-    │       └── ...
-    │
-    ├── tabelas.html          # Tabelas e listas
-    │   └── tabelas/
-    │       ├── dynamic.html
-    │       └── dynamic-pagination.html
-    │
-    ├── interacoes.html       # Interações avançadas
-    │   └── interacoes/
-    │       ├── cypress.html
-    │       ├── hovers.html
-    │       ├── slider.html
-    │       └── ...
-    │
-    ├── dinamicos.html        # Elementos dinâmicos
-    │   └── dinamicos/
-    │       ├── challenging-dom.html
-    │       ├── shadow-dom.html
-    │       ├── infinite-scroll.html
-    │       └── ... (40+ páginas)
-    │
-    ├── arquivos.html         # Upload/Download
-    ├── api.html              # API Playground mock
-    └── ...
-```
+O QA Playground é organizado em **cenários com níveis de complexidade progressivos**, permitindo uma evolução natural:
+
+### Nível Júnior
+
+* Formulários simples
+* Validações básicas
+* Regras de negócio diretas
+* Ideal para testes manuais e primeiros scripts de automação
+
+### Nível Pleno
+
+* Elementos dinâmicos
+* Tabelas e manipulação de dados
+* Upload e download de arquivos
+* Cenários mais próximos de sistemas corporativos
+
+### Nível Sênior
+
+* Desafios avançados de automação
+* Elementos complexos (ex.: Shadow DOM)
+* Simulações de autenticação
+* Comportamentos que exigem maior análise e estratégia de teste
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Características principais
 
-- **HTML5** - Estrutura semântica e acessível
-- **CSS3** - Design system moderno com variáveis CSS
-- **JavaScript (ES6+)** - Funcionalidades interativas sem dependências
-- **Font Inter** - Tipografia moderna e legível
-
----
-
-## ✨ Funcionalidades
-
-### 🎨 Design System
-- **Tema Claro/Escuro** - Alternância suave com persistência no localStorage
-- **Design Responsivo** - Mobile-first, funciona em todos os dispositivos
-- **Variáveis CSS** - Fácil customização de cores e espaçamentos
-- **Componentes Padronizados** - Botões, formulários, cards e tabelas consistentes
-
-### 🔍 Elementos para Testes
-- **data-testid** - Atributos específicos para localização em testes
-- **IDs únicos** - Todos os elementos interativos possuem IDs
-- **Mensagens previsíveis** - Textos consistentes para facilitar assertions
-- **Estrutura semântica** - HTML semântico para melhor acessibilidade
-
-### 📚 Documentação Integrada
-- **Informações de Teste** - Cada página possui seção com elementos identificáveis
-- **Cenários Sugeridos** - Exemplos de casos de teste por página
-- **Credenciais de Teste** - Dados fornecidos para validação
+* Conteúdo 100% em português
+* Interface simples e objetiva
+* Elementos com identificadores estáveis (id e data-testid)
+* Cenários pensados para testes manuais e automação
+* Sem backend e sem dependências externas
+* Execução fácil em ambiente local
 
 ---
 
-## 🎯 Casos de Uso
+## Tecnologias utilizadas
 
-### Para Iniciantes
-- Aprender conceitos básicos de QA
-- Praticar testes manuais
-- Entender estrutura de formulários web
-- Familiarizar-se com elementos HTML
-
-### Para Desenvolvedores de Automação
-- Praticar seletores CSS/XPath
-- Testar estratégias de wait
-- Lidar com elementos dinâmicos
-- Automatizar cenários complexos
-
-### Para Estudantes
-- Criar portfólio de projetos
-- Preparar-se para entrevistas
-- Aprender boas práticas de QA
-- Desenvolver casos de teste
+* **HTML5** – estrutura semântica
+* **CSS3** – layout e responsividade
+* **JavaScript (ES6+)** – comportamento e regras de negócio
 
 ---
 
-## 🧪 Ferramentas de Teste Suportadas
+## Como executar
 
-Este playground é compatível com todas as principais ferramentas de automação:
+O projeto pode ser executado de forma simples:
 
-- ✅ **Cypress** - Testes end-to-end modernos
-- ✅ **Playwright** - Automação multi-navegador
-- ✅ **Selenium** - Framework tradicional
-- ✅ **WebdriverIO** - Framework Node.js
-- ✅ **TestCafe** - Sem necessidade de drivers
-- ✅ **Puppeteer** - Controle de Chrome headless
+1. Utilizando um servidor HTTP local (ex.: Python ou Node.js);
+2. Usando a extensão Live Server no Visual Studio Code;
+3. Abrindo os arquivos HTML diretamente no navegador (com possíveis limitações).
 
----
-
-## 📖 Exemplos de Uso
-
-### Exemplo com Cypress
-
-```javascript
-describe('Login Page', () => {
-  it('deve fazer login com sucesso', () => {
-    cy.visit('http://localhost:8000/pages/formularios/login.html');
-    cy.get('[data-testid="input-email"]').type('teste@qaplayground.com');
-    cy.get('[data-testid="input-senha"]').type('senha123');
-    cy.get('[data-testid="btn-login"]').click();
-    cy.get('.toast').should('contain', 'sucesso');
-  });
-});
-```
-
-### Exemplo com Playwright
-
-```javascript
-test('deve adicionar item na tabela', async ({ page }) => {
-  await page.goto('http://localhost:8000/pages/tabelas.html');
-  await page.fill('[data-testid="input-nome-tabela"]', 'Novo Item');
-  await page.click('[data-testid="btn-adicionar"]');
-  await expect(page.locator('[data-testid="tbody-dados"]')).toContainText('Novo Item');
-});
-```
+Nenhuma configuração adicional é necessária.
 
 ---
 
-## 🗺️ Roadmap
+## Uso em QA e Automação
 
-### ✅ Implementado
-- [x] Design system completo
-- [x] Tema claro/escuro
-- [x] +60 páginas interativas
-- [x] Organização por níveis
-- [x] Responsividade completa
-- [x] Elementos identificáveis
-- [x] API Playground mock
+O QA Playground pode ser utilizado com qualquer ferramenta de automação web, como:
 
-### 🚧 Em Planejamento
-- [ ] Suíte de testes exemplo (Cypress/Playwright)
-- [ ] Cenários BDD em Gherkin
-- [ ] Documentação de API
-- [ ] Modo desafio avançado
-- [ ] Trilha de aprendizado guiada
-- [ ] Integração com CI/CD
+* Selenium
+* Playwright
+* Cypress
+* Robot Framework
+
+Também é adequado para:
+
+* Criação de casos de teste
+* Escrita de cenários BDD
+* Testes exploratórios
+* Exercícios de análise de qualidade e estratégia de testes
 
 ---
 
-## 🤝 Contribuindo
+## Boas práticas esperadas ao testar este projeto
 
-Contribuições são muito bem-vindas! Este é um projeto educacional e toda ajuda é valiosa.
+O QA Playground foi concebido para incentivar **boas práticas de qualidade**, indo além da simples execução de fluxos positivos.
 
-### Como Contribuir
+Ao utilizar este projeto, espera-se que o profissional de QA:
 
-1. **Fork** o projeto
-2. Crie uma **branch** para sua feature (`git checkout -b feature/NovaFeature`)
-3. **Commit** suas mudanças (`git commit -m 'Adiciona nova feature'`)
-4. **Push** para a branch (`git push origin feature/NovaFeature`)
-5. Abra um **Pull Request**
+* Analise regras de negócio antes de iniciar a execução de testes;
+* Identifique cenários positivos, negativos e de borda;
+* Questione comportamentos implícitos e decisões da aplicação;
+* Priorize testes com base em risco e impacto;
+* Documente cenários e resultados de forma clara e objetiva;
+* Construa automações focadas em legibilidade, manutenção e confiabilidade.
 
-### Áreas para Contribuir
+### Uso raso
 
-- 🐛 **Correção de bugs**
-- 📚 **Novas páginas de treino**
-- 📖 **Melhorias na documentação**
-- 🎨 **Melhorias de design**
-- 🧪 **Novos desafios de automação**
-- 🌐 **Traduções**
+Um uso raso do projeto normalmente se limita a:
 
----
+* Executar apenas o fluxo feliz;
+* Automatizar cenários sem análise prévia;
+* Criar scripts frágeis, dependentes de estrutura visual;
+* Ignorar validações, mensagens e comportamentos alternativos;
+* Focar apenas em quantidade de testes.
 
-## 📝 Licença
+### Uso maduro
 
-Este projeto é de código aberto e está disponível para uso educacional e de aprendizado.
+Um uso maduro do QA Playground demonstra:
 
----
+* Entendimento das regras de negócio envolvidas;
+* Cobertura consciente de cenários relevantes e críticos;
+* Exploração de comportamentos inesperados ou inconsistentes;
+* Automação pensada para evolução do projeto;
+* Clareza na comunicação de riscos, limitações e achados.
 
-## 🙏 Agradecimentos
-
-- Comunidade de QA brasileira
-- Contribuidores e usuários do projeto
-- Todas as pessoas que testam e melhoram este playground
-
----
-
-## 📞 Suporte
-
-- 📧 **Issues**: Abra uma issue no GitHub
-- 💬 **Discussões**: Participe das discussões do projeto
-- 📚 **Documentação**: Consulte a documentação em cada página
+Essa diferença de abordagem é intencional e faz parte da proposta do projeto: **avaliar como o profissional pensa qualidade**, não apenas se consegue automatizar.
 
 ---
 
-## ⭐ Estrelas
+## Autor
 
-Se este projeto foi útil para você, considere dar uma ⭐ no repositório!
+Desenvolvido por **David Nascimento**, com foco em prática real de QA, aprendizado contínuo e construção de portfólio profissional.
 
 ---
-
-<div align="center">
-
-**Desenvolvido com ❤️ para a comunidade QA brasileira**
-
-[🔝 Voltar ao topo](#-qa-playground)
-
-</div>
