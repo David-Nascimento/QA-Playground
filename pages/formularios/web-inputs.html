@@ -152,14 +152,75 @@
                 <li><code>data-testid="resultado-formulario"</code> - Área de resultado</li>
               </ul>
 
-              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplo de Teste Automatizado:</strong></p>
-              <pre style="background: rgba(0,0,0,0.05); padding: var(--spacing-sm); border-radius: var(--border-radius-sm); font-size: var(--font-size-sm); overflow-x: auto;"><code>// Cypress
-cy.get('[data-testid="input-email"]').type('teste@exemplo.com')
-cy.get('[data-testid="input-password"]').type('senha123')
-cy.get('[data-testid="input-number"]').type('50')
-cy.get('[data-testid="input-checkbox"]').check()
-cy.get('[data-testid="btn-enviar"]').click()
-cy.get('[data-testid="resultado-formulario"]').should('be.visible')</code></pre>
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);">
+                <strong>Exemplos de Teste Automatizado:</strong>
+              </p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+              // Cypress
+              cy.get('[data-testid="input-email"]').type('teste@exemplo.com')
+              cy.get('[data-testid="input-password"]').type('senha123')
+              cy.get('[data-testid="input-number"]').type('50')
+              cy.get('[data-testid="input-checkbox"]').check()
+              cy.get('[data-testid="btn-enviar"]').click()
+              cy.get('[data-testid="resultado-formulario"]').should('be.visible')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+              // Playwright
+              await page.getByTestId('input-email').fill('teste@exemplo.com')
+              await page.getByTestId('input-password').fill('senha123')
+              await page.getByTestId('input-number').fill('50')
+              await page.getByTestId('input-checkbox').check()
+              await page.getByTestId('btn-enviar').click()
+              await expect(page.getByTestId('resultado-formulario')).toBeVisible()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+              // Selenium Java
+              driver.findElement(By.cssSelector("[data-testid='input-email']")).sendKeys("teste@exemplo.com");
+              driver.findElement(By.cssSelector("[data-testid='input-password']")).sendKeys("senha123");
+              driver.findElement(By.cssSelector("[data-testid='input-number']")).sendKeys("50");
+              driver.findElement(By.cssSelector("[data-testid='input-checkbox']")).click();
+              driver.findElement(By.cssSelector("[data-testid='btn-enviar']")).click();
+                </code></pre>
+              
+              <pre id="tab-capybara" class="test-code"><code>
+                # Capybara (Ruby)
+                visit '/web-inputs.html'
+                
+                fill_in 'input-email', with: 'teste@exemplo.com'
+                fill_in 'input-password', with: 'senha123'
+                fill_in 'input-number', with: '50'
+                
+                find('[data-testid="input-checkbox"]').click
+                find('[data-testid="btn-enviar"]').click
+                
+                expect(page).to have_selector('[data-testid="resultado-formulario"]')
+              </code></pre>
+                  
+              
+                <pre id="tab-robot" class="test-code"><code>
+              *** Test Cases ***
+              Preencher formulario web inputs
+                  Input Text    css:[data-testid="input-email"]    teste@exemplo.com
+                  Input Text    css:[data-testid="input-password"] senha123
+                  Input Text    css:[data-testid="input-number"]   50
+                  Click Element css:[data-testid="input-checkbox"]
+                  Click Element css:[data-testid="btn-enviar"]
+                </code></pre>
+              
+              </div>              
             </div>
           </div>
         </div>
@@ -208,6 +269,19 @@ cy.get('[data-testid="resultado-formulario"]').should('be.visible')</code></pre>
         resultEl.style.color = 'var(--text)';
         
         window.showToast('Formulário enviado com sucesso!');
+      });
+
+      const tabs = document.querySelectorAll('.test-tab');
+      const contents = document.querySelectorAll('.test-code');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          contents.forEach(c => c.classList.remove('active'));
+
+          tab.classList.add('active');
+          document.getElementById(tab.dataset.target).classList.add('active');
+        });
       });
     </script>
   </body>

@@ -746,3 +746,37 @@ textarea:focus-visible {
   outline: 3px solid var(--accent);
 }
 
+.test-tabs {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.test-tab {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+}
+
+.test-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.test-code {
+  display: none;
+  background: rgba(0,0,0,0.05);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
+  overflow-x: auto;
+}
+
+.test-code.active {
+  display: block;
+}
