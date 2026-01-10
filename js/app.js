@@ -1,156 +1,183 @@
-// Dropdown menus para Fundamentos e Avançado
-document.addEventListener('DOMContentLoaded', function(){
-  document.querySelectorAll('.nav-dropdown').forEach(function(dd){
-    var btn = dd.querySelector('.dropdown-toggle');
-    var menu = dd.querySelector('.dropdown-menu');
-    if(!btn || !menu) return;
-    function close(){
-      dd.classList.remove('open');
-      btn.setAttribute('aria-expanded','false');
-    }
-    btn.addEventListener('click', function(e){
-      e.stopPropagation();
-      var open = dd.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if(open) menu.querySelector('a')?.focus();
-    });
-    btn.addEventListener('keydown', function(e){
-      if(e.key==='ArrowDown'||e.key==='Enter'||e.key===' '){
-        e.preventDefault();
-        dd.classList.add('open');
-        btn.setAttribute('aria-expanded','true');
-        menu.querySelector('a')?.focus();
-      }
-      if(e.key==='Escape'){close();btn.focus();}
-    });
-    menu.addEventListener('keydown', function(e){
-      if(e.key==='Escape'){close();btn.focus();}
-    });
-    document.addEventListener('click', function(e){
-      if(!dd.contains(e.target)) close();
-    });
-  });
-});
-// Tema: alterna light/dark e persiste em localStorage
 (() => {
-  const themeKey = 'qaplay-theme';
+  /* =========================================================
+   * DROPDOWNS
+   * ========================================================= */
+  function initDropdowns() {
+    const dropdowns = document.querySelectorAll('.nav-dropdown');
 
-  function applyTheme(t){
+    function closeAll(except = null) {
+      dropdowns.forEach(dd => {
+        if (dd !== except) {
+          dd.classList.remove('open');
+          const btn = dd.querySelector('.dropdown-toggle');
+          btn?.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    dropdowns.forEach(dd => {
+      const btn = dd.querySelector('.dropdown-toggle');
+      const menu = dd.querySelector('.dropdown-menu');
+      if (!btn || !menu) return;
+
+      btn.setAttribute('aria-expanded', 'false');
+
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = dd.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(isOpen));
+        if (isOpen) {
+          closeAll(dd);
+          menu.querySelector('a')?.focus();
+        }
+      });
+
+      btn.addEventListener('keydown', e => {
+        if (['Enter', ' '].includes(e.key)) {
+          e.preventDefault();
+          dd.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          menu.querySelector('a')?.focus();
+        }
+
+        if (e.key === 'Escape') {
+          dd.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.focus();
+        }
+      });
+
+      menu.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          dd.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.focus();
+        }
+      });
+    });
+
+    document.addEventListener('click', () => closeAll());
+  }
+
+  /* =========================================================
+   * TEMA (LIGHT / DARK)
+   * ========================================================= */
+  const THEME_KEY = 'qaplay-theme';
+
+  function getTheme() {
+    const saved = localStorage.getItem(THEME_KEY);
+    if (saved) return saved;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  }
+
+  function applyTheme(theme) {
     const html = document.documentElement;
-    html.setAttribute('data-theme', t);
-    
-    // Atualiza variáveis CSS diretamente
-    if(t === 'dark'){
-      html.style.setProperty('--bg', '#0f1112');
-      html.style.setProperty('--surface', '#111416');
-      html.style.setProperty('--text', '#e6e6e6');
-      html.style.setProperty('--muted', '#9a9a9a');
-      html.style.setProperty('--accent', '#6fb56f');
-      html.style.setProperty('--accent-2', '#cfa16a');
-      html.style.setProperty('--shadow-sm', '0 1px 2px rgba(0, 0, 0, 0.2)');
-      html.style.setProperty('--shadow-md', '0 4px 8px rgba(0, 0, 0, 0.3)');
-      html.style.setProperty('--shadow-lg', '0 12px 24px rgba(0, 0, 0, 0.4)');
-    } else {
-      html.style.setProperty('--bg', '#fbf9f6');
-      html.style.setProperty('--surface', '#ffffff');
-      html.style.setProperty('--text', '#2b2b2b');
-      html.style.setProperty('--muted', '#6b6b6b');
-      html.style.setProperty('--accent', '#7aa874');
-      html.style.setProperty('--accent-2', '#d6a35f');
-      html.style.setProperty('--shadow-sm', '0 1px 2px rgba(0, 0, 0, 0.04)');
-      html.style.setProperty('--shadow-md', '0 4px 8px rgba(0, 0, 0, 0.08)');
-      html.style.setProperty('--shadow-lg', '0 12px 24px rgba(0, 0, 0, 0.12)');
-    }
-    
-    // Atualiza ícone do botão
+    html.setAttribute('data-theme', theme);
+
     const btn = document.getElementById('theme-toggle');
-    if(btn) {
-      btn.textContent = t === 'dark' ? '🌙' : '🌞';
+    if (btn) {
+      btn.textContent = theme === 'dark' ? '🌙' : '🌞';
+      btn.setAttribute(
+        'aria-label',
+        theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'
+      );
     }
   }
 
-  function getCurrentTheme(){
-    const saved = localStorage.getItem(themeKey);
-    if(saved) return saved;
-    // Se não houver preferência salva, usa a preferência do sistema
-    if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
-      return 'dark';
-    }
-    return 'light';
-  }
-
-  function toggleTheme(){
-    const current = getCurrentTheme();
-    const next = current === 'dark' ? 'light' : 'dark';
-    localStorage.setItem(themeKey, next);
+  function toggleTheme() {
+    const next = getTheme() === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
     applyTheme(next);
   }
 
-  // Aplica tema ao carregar
-  const initialTheme = getCurrentTheme();
-  applyTheme(initialTheme);
+  function initTheme() {
+    applyTheme(getTheme());
 
-  // Adiciona event listener ao botão quando o DOM estiver pronto
-  document.addEventListener('DOMContentLoaded', function(){
     const btn = document.getElementById('theme-toggle');
-    if(btn){
+    if (btn) {
       btn.addEventListener('click', toggleTheme);
     }
-  });
-
-  // Também adiciona listener imediatamente caso o botão já exista
-  const btn = document.getElementById('theme-toggle');
-  if(btn && !btn.hasAttribute('data-theme-listener')){
-    btn.setAttribute('data-theme-listener', 'true');
-    btn.addEventListener('click', toggleTheme);
   }
 
-  // Responsive nav toggle
-  if(navToggle && mainNav){
-    // initialize tooltip text
-    if(!navToggle.hasAttribute('data-tooltip')) navToggle.setAttribute('data-tooltip','Abrir menu');
+  /* =========================================================
+   * MENU RESPONSIVO
+   * ========================================================= */
+  function initResponsiveNav() {
+    const navToggle = document.getElementById('nav-toggle');
+    const mainNav = document.getElementById('main-nav');
 
-    navToggle.addEventListener('click', ()=>{
+    if (!navToggle || !mainNav) return;
+
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('data-tooltip', 'Abrir menu');
+
+    navToggle.addEventListener('click', () => {
       const open = mainNav.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      navToggle.setAttribute('data-tooltip', open ? 'Fechar menu' : 'Abrir menu');
+      navToggle.setAttribute('aria-expanded', String(open));
+      navToggle.setAttribute(
+        'data-tooltip',
+        open ? 'Fechar menu' : 'Abrir menu'
+      );
     });
-    // keyboard: toggle on Enter/Space
-    navToggle.addEventListener('keydown', (e)=>{
-      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); navToggle.click(); }
+
+    navToggle.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        navToggle.click();
+      }
     });
   }
 
-  // Inicializa tema
-  applyTheme(currentTheme());
-
-  // Demo: toast para ações (ex.: enviar formulário)
-  window.showToast = (msg) => {
-    let t = document.querySelector('.toast');
-    if(!t){ t = document.createElement('div'); t.className = 'toast'; document.body.appendChild(t);}    
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(()=>t.classList.remove('show'), 2800);
+  /* =========================================================
+   * HELPERS GLOBAIS (INTENCIONAL)
+   * ========================================================= */
+  window.showToast = msg => {
+    let toast = document.querySelector('.toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.className = 'toast';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2800);
   };
-  
-  // Helpers para validação de campos (utilitários simples para uso nas páginas)
+
   window.setFieldError = (fieldId, message) => {
-    const el = document.getElementById(fieldId);
-    const grp = el ? el.closest('.form-group') : null;
-    if(grp) grp.classList.add('error');
-    const err = document.getElementById(fieldId + '-error');
-    if(err){ err.style.display = 'block'; err.textContent = message; }
+    const field = document.getElementById(fieldId);
+    const group = field?.closest('.form-group');
+    const error = document.getElementById(`${fieldId}-error`);
+
+    group?.classList.add('error');
+    if (error) {
+      error.textContent = message;
+      error.style.display = 'block';
+    }
   };
 
-  window.clearFieldError = (fieldId) => {
-    const el = document.getElementById(fieldId);
-    const grp = el ? el.closest('.form-group') : null;
-    if(grp) grp.classList.remove('error');
-    const err = document.getElementById(fieldId + '-error');
-    if(err){ err.style.display = 'none'; err.textContent = ''; }
+  window.clearFieldError = fieldId => {
+    const field = document.getElementById(fieldId);
+    const group = field?.closest('.form-group');
+    const error = document.getElementById(`${fieldId}-error`);
+
+    group?.classList.remove('error');
+    if (error) {
+      error.textContent = '';
+      error.style.display = 'none';
+    }
   };
 
-  window.validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
+  window.validateEmail = email =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  /* =========================================================
+   * BOOTSTRAP
+   * ========================================================= */
+  document.addEventListener('DOMContentLoaded', () => {
+    initDropdowns();
+    initTheme();
+    initResponsiveNav();
+  });
 })();
