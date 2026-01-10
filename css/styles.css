@@ -97,10 +97,14 @@ html[data-theme="light"] {
 }
 
 /* === Reset & Base Styles === */
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+body, h1, h2, h3, p {
   margin: 0;
-  padding: 0;
 }
 
 html, body {
@@ -728,11 +732,11 @@ textarea {
 }
 
 /* === Focus Visible (Acessibilidade) === */
-*:focus {
-  outline-offset: 3px;
-}
-
-*:not(:focus-visible) {
-  outline: none;
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--accent);
 }
 
