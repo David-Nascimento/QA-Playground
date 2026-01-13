@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cars Showroom</title>
+  <link rel="stylesheet" href="../../../css/styles.css">
+  <script>
+    function mostrarCarro(modelo) {
+      document.getElementById('detalhes').innerText = 'Você selecionou: ' + modelo;
+    }
+  </script>
+</head>
+<body>
+  <h1>Cars Showroom</h1>
+  <select onchange="mostrarCarro(this.value)">
+    <option value="">Selecione um carro</option>
+    <option value="Sedan">Sedan</option>
+    <option value="SUV">SUV</option>
+    <option value="Hatch">Hatch</option>
+  </select>
+  <div id="detalhes"></div>
+  <a href="../../../index.html">Voltar</a>
+</body>
+</html>

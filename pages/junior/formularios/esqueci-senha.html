@@ -1,0 +1,516 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Esqueci Minha Senha — QA Playground</title>
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="../../fundamentos.html">Fundamentos</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="esqueci-senha.html" aria-current="page">Recuperar Senha</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Recuperação de Senha</h2>
+          <div class="section-desc">Pratique o fluxo completo de recuperação de senha: solicitação, código de verificação e redefinição. Todos os elementos possuem <code>id</code> e <code>data-testid</code> para facilitar testes automatizados.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <!-- Etapa 1: Solicitar recuperação -->
+          <div class="subsection" id="etapa-solicitar" data-testid="etapa-solicitar">
+            <h3>Etapa 1: Solicitar Recuperação</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Digite o e-mail cadastrado para receber o código de recuperação.</p>
+            <form id="form-solicitar" novalidate>
+              <div class="form-grid">
+                <div class="form-group form-full">
+                  <label for="email-recuperacao">E-mail cadastrado</label>
+                  <input 
+                    type="email" 
+                    id="email-recuperacao" 
+                    name="email-recuperacao" 
+                    data-testid="input-email-recuperacao"
+                    placeholder="seu@exemplo.com"
+                    required
+                    aria-describedby="email-recuperacao-error email-recuperacao-hint"
+                  />
+                  <div class="hint" id="email-recuperacao-hint">Digite o e-mail usado no cadastro</div>
+                  <div class="error" id="email-recuperacao-error" aria-live="polite" style="display:none"></div>
+                </div>
+
+                <div class="form-group form-full">
+                  <button type="submit" id="btn-enviar-codigo" data-testid="btn-enviar-codigo" class="btn">Enviar Código de Recuperação</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Etapa 2: Verificar código -->
+          <div class="subsection" id="etapa-codigo" data-testid="etapa-codigo" style="display:none;">
+            <h3>Etapa 2: Verificar Código</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Enviamos um código de 6 dígitos para <strong id="email-exibido"></strong>. 
+              Digite o código abaixo.
+            </p>
+            <form id="form-codigo" novalidate>
+              <div class="form-grid">
+                <div class="form-group form-full">
+                  <label for="codigo-verificacao">Código de Verificação</label>
+                  <input 
+                    type="text" 
+                    id="codigo-verificacao" 
+                    name="codigo-verificacao" 
+                    data-testid="input-codigo-verificacao"
+                    placeholder="000000"
+                    maxlength="6"
+                    required
+                    aria-describedby="codigo-verificacao-error codigo-verificacao-hint"
+                  />
+                  <div class="hint" id="codigo-verificacao-hint">Código de 6 dígitos enviado por e-mail</div>
+                  <div class="error" id="codigo-verificacao-error" aria-live="polite" style="display:none"></div>
+                </div>
+
+                <div class="form-group form-full" style="display: flex; gap: var(--spacing-sm); align-items: center; justify-content: center;">
+                  <button type="submit" id="btn-verificar-codigo" data-testid="btn-verificar-codigo" class="btn">Verificar Código</button>
+                  <button type="button" id="btn-reenviar-codigo" data-testid="btn-reenviar-codigo" class="btn btn-secondary">Reenviar Código</button>
+                </div>
+              </div>
+            </form>
+            <div id="timer-reenvio" style="text-align: center; margin-top: var(--spacing-md); color: var(--muted); font-size: var(--font-size-sm);"></div>
+          </div>
+
+          <!-- Etapa 3: Nova senha -->
+          <div class="subsection" id="etapa-nova-senha" data-testid="etapa-nova-senha" style="display:none;">
+            <h3>Etapa 3: Definir Nova Senha</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Crie uma nova senha segura para sua conta.</p>
+            <form id="form-nova-senha" novalidate>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="nova-senha">Nova Senha</label>
+                  <input 
+                    type="password" 
+                    id="nova-senha" 
+                    name="nova-senha" 
+                    data-testid="input-nova-senha"
+                    placeholder="Mínimo 8 caracteres"
+                    required
+                    aria-describedby="nova-senha-error nova-senha-hint"
+                  />
+                  <div class="hint" id="nova-senha-hint">Mínimo 8 caracteres, incluindo letras e números</div>
+                  <div class="error" id="nova-senha-error" aria-live="polite" style="display:none"></div>
+                  <div id="nova-senha-strength" style="margin-top: var(--spacing-xs); font-size: var(--font-size-sm);"></div>
+                </div>
+
+                <div class="form-group">
+                  <label for="confirmar-nova-senha">Confirmar Nova Senha</label>
+                  <input 
+                    type="password" 
+                    id="confirmar-nova-senha" 
+                    name="confirmar-nova-senha" 
+                    data-testid="input-confirmar-nova-senha"
+                    placeholder="Digite a senha novamente"
+                    required
+                    aria-describedby="confirmar-nova-senha-error confirmar-nova-senha-hint"
+                  />
+                  <div class="hint" id="confirmar-nova-senha-hint">As senhas devem ser iguais</div>
+                  <div class="error" id="confirmar-nova-senha-error" aria-live="polite" style="display:none"></div>
+                </div>
+
+                <div class="form-group form-full">
+                  <button type="submit" id="btn-redefinir-senha" data-testid="btn-redefinir-senha" class="btn">Redefinir Senha</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Etapa 4: Sucesso -->
+          <div class="subsection" id="etapa-sucesso" data-testid="etapa-sucesso" style="display:none;">
+            <div style="text-align: center; padding: var(--spacing-xl);">
+              <div style="font-size: 4rem; margin-bottom: var(--spacing-md);">✅</div>
+              <h3 style="color: var(--accent); margin-bottom: var(--spacing-sm);">Senha Redefinida com Sucesso!</h3>
+              <p class="muted" style="margin-bottom: var(--spacing-lg);">
+                Sua senha foi alterada com sucesso. Agora você pode fazer login com sua nova senha.
+              </p>
+              <a href="login.html" id="btn-voltar-login" data-testid="btn-voltar-login" class="btn">Fazer Login</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection" style="margin-top: var(--spacing-lg);">
+          <h3>Informações para Testes</h3>
+          <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <p style="margin-bottom: var(--spacing-sm);"><strong>Fluxo de Teste:</strong></p>
+            <ol style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+              <li>Digite um e-mail válido (ex: teste@exemplo.com)</li>
+              <li>Clique em "Enviar Código de Recuperação"</li>
+              <li>Digite o código: <code>123456</code> (código de teste)</li>
+              <li>Defina uma nova senha (mínimo 8 caracteres com letras e números)</li>
+              <li>Confirme a nova senha</li>
+            </ol>
+            
+            <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+            <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+              <li><code>data-testid="etapa-solicitar"</code></li>
+              <li><code>data-testid="input-email-recuperacao"</code></li>
+              <li><code>data-testid="btn-enviar-codigo"</code></li>
+              <li><code>data-testid="etapa-codigo"</code></li>
+              <li><code>data-testid="input-codigo-verificacao"</code></li>
+              <li><code>data-testid="btn-verificar-codigo"</code></li>
+              <li><code>data-testid="etapa-nova-senha"</code></li>
+              <li><code>data-testid="input-nova-senha"</code></li>
+              <li><code>data-testid="btn-redefinir-senha"</code></li>
+              <li><code>data-testid="etapa-sucesso"</code></li>
+            </ul>
+
+            <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Código de Teste:</strong></p>
+            <p style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+              Use o código <code style="background: rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px;">123456</code> para testes automatizados.
+            </p>
+
+            <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress
+cy.get('[data-testid="input-email-recuperacao"]').type('teste@exemplo.com')
+cy.get('[data-testid="btn-enviar-codigo"]').click()
+cy.get('[data-testid="input-codigo-verificacao"]').type('123456')
+cy.get('[data-testid="btn-verificar-codigo"]').click()
+cy.get('[data-testid="input-nova-senha"]').type('NovaSenha123')
+cy.get('[data-testid="input-confirmar-nova-senha"]').type('NovaSenha123')
+cy.get('[data-testid="btn-redefinir-senha"]').click()
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright
+await page.getByTestId('input-email-recuperacao').fill('teste@exemplo.com')
+await page.getByTestId('btn-enviar-codigo').click()
+await page.getByTestId('input-codigo-verificacao').fill('123456')
+await page.getByTestId('btn-verificar-codigo').click()
+await page.getByTestId('input-nova-senha').fill('NovaSenha123')
+await page.getByTestId('input-confirmar-nova-senha').fill('NovaSenha123')
+await page.getByTestId('btn-redefinir-senha').click()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium Java
+driver.findElement(By.cssSelector("[data-testid='input-email-recuperacao']")).sendKeys("teste@exemplo.com");
+driver.findElement(By.cssSelector("[data-testid='btn-enviar-codigo']")).click();
+driver.findElement(By.cssSelector("[data-testid='input-codigo-verificacao']")).sendKeys("123456");
+driver.findElement(By.cssSelector("[data-testid='btn-verificar-codigo']")).click();
+driver.findElement(By.cssSelector("[data-testid='input-nova-senha']")).sendKeys("NovaSenha123");
+driver.findElement(By.cssSelector("[data-testid='input-confirmar-nova-senha']")).sendKeys("NovaSenha123");
+driver.findElement(By.cssSelector("[data-testid='btn-redefinir-senha']")).click();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby)
+fill_in 'email-recuperacao', with: 'teste@exemplo.com'
+click_button 'Enviar Código'
+fill_in 'codigo-verificacao', with: '123456'
+click_button 'Verificar Código'
+fill_in 'nova-senha', with: 'NovaSenha123'
+fill_in 'confirmar-nova-senha', with: 'NovaSenha123'
+click_button 'Redefinir Senha'
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Recuperar senha
+    Input Text    css:[data-testid="input-email-recuperacao"]    teste@exemplo.com
+    Click Element css:[data-testid="btn-enviar-codigo"]
+    Input Text    css:[data-testid="input-codigo-verificacao"]    123456
+    Click Element css:[data-testid="btn-verificar-codigo"]
+    Input Text    css:[data-testid="input-nova-senha"]    NovaSenha123
+    Input Text    css:[data-testid="input-confirmar-nova-senha"]    NovaSenha123
+    Click Element css:[data-testid="btn-redefinir-senha"]
+                </code></pre>
+              
+              </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <p class="muted">
+            Lembrou sua senha? <a href="login.html" data-testid="link-login" style="color: var(--accent);">Fazer login</a>
+          </p>
+          <a href="../../index.html" class="btn btn-secondary" style="margin-top: var(--spacing-md);">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../js/app.js"></script>
+    <script>
+      // Código de teste (para automação)
+      const CODIGO_TESTE = '123456';
+      let emailRecuperacao = '';
+      let timerInterval = null;
+      let tempoRestante = 60;
+
+      // Validação de email
+      function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      // Validação de senha
+      function validatePassword(password) {
+        if (password.length < 8) return { valid: false, message: 'Senha deve ter no mínimo 8 caracteres.' };
+        if (!/[a-zA-Z]/.test(password)) return { valid: false, message: 'Senha deve conter pelo menos uma letra.' };
+        if (!/\d/.test(password)) return { valid: false, message: 'Senha deve conter pelo menos um número.' };
+        return { valid: true };
+      }
+
+      // Força da senha
+      function getPasswordStrength(password) {
+        if (!password) return { strength: 0, text: '', color: '' };
+        
+        let strength = 0;
+        if (password.length >= 8) strength++;
+        if (password.length >= 12) strength++;
+        if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+        if (/\d/.test(password)) strength++;
+        if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+        const levels = [
+          { text: 'Muito fraca', color: '#e74c3c' },
+          { text: 'Fraca', color: '#e67e22' },
+          { text: 'Média', color: '#f39c12' },
+          { text: 'Forte', color: '#27ae60' },
+          { text: 'Muito forte', color: '#2ecc71' }
+        ];
+
+        return levels[Math.min(strength, 4)];
+      }
+
+      // Atualizar força da senha em tempo real
+      document.getElementById('nova-senha').addEventListener('input', function() {
+        const password = this.value;
+        const strengthDiv = document.getElementById('nova-senha-strength');
+        const strength = getPasswordStrength(password);
+        
+        if (password) {
+          strengthDiv.innerHTML = `<span style="color: ${strength.color}; font-weight: 600;">Força: ${strength.text}</span>`;
+        } else {
+          strengthDiv.innerHTML = '';
+        }
+      });
+
+      // Máscara para código (apenas números)
+      document.getElementById('codigo-verificacao').addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/\D/g, '');
+      });
+
+      // Função para mostrar etapa
+      function mostrarEtapa(etapa) {
+        document.querySelectorAll('.subsection').forEach(el => {
+          el.style.display = 'none';
+        });
+        document.getElementById(etapa).style.display = 'block';
+      }
+
+      // Função para iniciar timer de reenvio
+      function iniciarTimer() {
+        tempoRestante = 60;
+        const timerDiv = document.getElementById('timer-reenvio');
+        const btnReenviar = document.getElementById('btn-reenviar-codigo');
+        
+        btnReenviar.disabled = true;
+        
+        if (timerInterval) clearInterval(timerInterval);
+        
+        timerInterval = setInterval(() => {
+          tempoRestante--;
+          if (tempoRestante > 0) {
+            timerDiv.textContent = `Você pode solicitar um novo código em ${tempoRestante} segundos.`;
+          } else {
+            clearInterval(timerInterval);
+            timerDiv.textContent = '';
+            btnReenviar.disabled = false;
+          }
+        }, 1000);
+      }
+
+      // Etapa 1: Solicitar recuperação
+      document.getElementById('form-solicitar').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        window.clearFieldError('email-recuperacao');
+        
+        const email = document.getElementById('email-recuperacao').value.trim();
+        
+        if (!email) {
+          window.setFieldError('email-recuperacao', 'Email é obrigatório.');
+          return;
+        }
+        
+        if (!validateEmail(email)) {
+          window.setFieldError('email-recuperacao', 'Formato de email inválido.');
+          return;
+        }
+        
+        emailRecuperacao = email;
+        document.getElementById('email-exibido').textContent = email;
+        
+        // Simular envio de código
+        document.getElementById('btn-enviar-codigo').disabled = true;
+        document.getElementById('btn-enviar-codigo').textContent = 'Enviando...';
+        
+        setTimeout(() => {
+          window.showToast('Código de recuperação enviado! Use o código 123456 para testes.');
+          mostrarEtapa('etapa-codigo');
+          iniciarTimer();
+          document.getElementById('btn-enviar-codigo').disabled = false;
+          document.getElementById('btn-enviar-codigo').textContent = 'Enviar Código de Recuperação';
+        }, 1500);
+      });
+
+      // Etapa 2: Verificar código
+      document.getElementById('form-codigo').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        window.clearFieldError('codigo-verificacao');
+        
+        const codigo = document.getElementById('codigo-verificacao').value.trim();
+        
+        if (!codigo) {
+          window.setFieldError('codigo-verificacao', 'Código é obrigatório.');
+          return;
+        }
+        
+        if (codigo.length !== 6) {
+          window.setFieldError('codigo-verificacao', 'Código deve ter 6 dígitos.');
+          return;
+        }
+        
+        // Verificar código (aceita código de teste ou qualquer código de 6 dígitos)
+        if (codigo === CODIGO_TESTE || codigo.length === 6) {
+          window.showToast('Código verificado com sucesso!');
+          mostrarEtapa('etapa-nova-senha');
+          if (timerInterval) clearInterval(timerInterval);
+        } else {
+          window.setFieldError('codigo-verificacao', 'Código inválido. Use 123456 para testes.');
+        }
+      });
+
+      // Reenviar código
+      document.getElementById('btn-reenviar-codigo').addEventListener('click', function() {
+        if (this.disabled) return;
+        
+        this.disabled = true;
+        this.textContent = 'Reenviando...';
+        
+        setTimeout(() => {
+          window.showToast('Código reenviado! Use o código 123456 para testes.');
+          this.textContent = 'Reenviar Código';
+          iniciarTimer();
+        }, 1000);
+      });
+
+      // Etapa 3: Nova senha
+      document.getElementById('form-nova-senha').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        window.clearFieldError('nova-senha');
+        window.clearFieldError('confirmar-nova-senha');
+        
+        const novaSenha = document.getElementById('nova-senha').value;
+        const confirmarSenha = document.getElementById('confirmar-nova-senha').value;
+        
+        if (!novaSenha) {
+          window.setFieldError('nova-senha', 'Nova senha é obrigatória.');
+          return;
+        }
+        
+        const passwordValidation = validatePassword(novaSenha);
+        if (!passwordValidation.valid) {
+          window.setFieldError('nova-senha', passwordValidation.message);
+          return;
+        }
+        
+        if (!confirmarSenha) {
+          window.setFieldError('confirmar-nova-senha', 'Confirmação de senha é obrigatória.');
+          return;
+        }
+        
+        if (novaSenha !== confirmarSenha) {
+          window.setFieldError('confirmar-nova-senha', 'As senhas não coincidem.');
+          return;
+        }
+        
+        // Simular redefinição de senha
+        document.getElementById('btn-redefinir-senha').disabled = true;
+        document.getElementById('btn-redefinir-senha').textContent = 'Redefinindo...';
+        
+        setTimeout(() => {
+          window.showToast('Senha redefinida com sucesso!');
+          mostrarEtapa('etapa-sucesso');
+        }, 1500);
+      });
+
+      // Validação em tempo real
+      document.getElementById('email-recuperacao').addEventListener('blur', function() {
+        const email = this.value.trim();
+        if (email && !validateEmail(email)) {
+          window.setFieldError('email-recuperacao', 'Formato de email inválido.');
+        } else {
+          window.clearFieldError('email-recuperacao');
+        }
+      });
+
+      document.getElementById('confirmar-nova-senha').addEventListener('blur', function() {
+        const novaSenha = document.getElementById('nova-senha').value;
+        const confirmarSenha = this.value;
+        if (confirmarSenha && novaSenha !== confirmarSenha) {
+          window.setFieldError('confirmar-nova-senha', 'As senhas não coincidem.');
+        } else {
+          window.clearFieldError('confirmar-nova-senha');
+        }
+      });
+
+      const tabs = document.querySelectorAll('.test-tab');
+      const contents = document.querySelectorAll('.test-code');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          contents.forEach(c => c.classList.remove('active'));
+
+          tab.classList.add('active');
+          document.getElementById(tab.dataset.target).classList.add('active');
+        });
+      });
+    </script>
+  </body>
+</html>
+

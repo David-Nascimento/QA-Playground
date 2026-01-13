@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cookie Consent Alert</title>
+  <link rel="stylesheet" href="../../../css/styles.css">
+  <style>
+    #cookieConsent {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #222;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      z-index: 1000;
+    }
+  </style>
+  <script>
+    window.onload = function() {
+      if (!localStorage.getItem('cookieAccepted')) {
+        document.getElementById('cookieConsent').style.display = 'block';
+      }
+    };
+    function aceitarCookies() {
+      localStorage.setItem('cookieAccepted', 'true');
+      document.getElementById('cookieConsent').style.display = 'none';
+    }
+  </script>
+</head>
+<body>
+  <h1>Cookie Consent Alert</h1>
+  <div id="cookieConsent">
+    Este site utiliza cookies para melhorar sua experiência.
+    <button onclick="aceitarCookies()">Aceitar</button>
+  </div>
+  <a href="../../../index.html">Voltar</a>
+</body>
+</html>

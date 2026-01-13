@@ -1,0 +1,39 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JQuery UI Menus — QA Playground</title>
+  <link rel="stylesheet" href="../../../css/styles.css" />
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>JQuery UI Menus</h1>
+    <p>Valide menus e navegação com JQuery UI.</p>
+    <ul id="menu">
+      <li>Arquivo
+        <ul>
+          <li>Novo</li>
+          <li>Abrir</li>
+          <li>Salvar</li>
+        </ul>
+      </li>
+      <li>Editar
+        <ul>
+          <li>Copiar</li>
+          <li>Colar</li>
+        </ul>
+      </li>
+      <li>Ajuda</li>
+    </ul>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  <script>
+    $(function() {
+      $("#menu").menu();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Tabela com Paginação Dinâmica — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="../../fundamentos.html">Fundamentos</a></li>
+            <li><a href="../../junior/formularios/">Formulários</a></li>
+            <li><a href="index.html">Tabelas (Pleno)</a></li>
+            <li><a href="../interacoes/">Interações (Pleno)</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Tabela com Paginação Dinâmica</h2>
+          <div class="section-desc">Pratique testes em tabelas com paginação dinâmica. Esta página é ideal para testar automação de navegação entre páginas, validação de dados em diferentes páginas e controle de paginação em tabelas extensas.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar navegação entre páginas de uma tabela paginada</li>
+                <li>Validar que os dados corretos são exibidos em cada página</li>
+                <li>Testar botões de navegação (Anterior, Próxima, Primeira, Última)</li>
+                <li>Validar informações de paginação (página atual, total de páginas, total de itens)</li>
+                <li>Praticar automação de espera por elementos que aparecem após mudança de página</li>
+                <li>Testar validação de dados em diferentes páginas da tabela</li>
+                <li>Validar comportamento quando não há dados ou apenas uma página</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Como Utilizar:</strong></p>
+              <ol style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Observe a tabela com dados paginados (10 itens por página)</li>
+                <li>Use os botões "Anterior" e "Próxima" para navegar entre páginas</li>
+                <li>Valide que os dados mudam corretamente ao navegar</li>
+                <li>Verifique as informações de paginação (página atual e total)</li>
+                <li>Teste os limites (primeira e última página)</li>
+                <li>Valide que os botões são desabilitados quando apropriado</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Tabela Paginada</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Navegue entre as páginas da tabela usando os controles de paginação.</p>
+            
+            <div style="overflow-x: auto; margin-bottom: var(--spacing-md);">
+              <table class="table" id="pag-table" data-testid="tabela-paginada">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Cargo</th>
+                  </tr>
+                </thead>
+                <tbody data-testid="tbody-paginada">
+                  <!-- Itens serão inseridos aqui dinamicamente -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="controls" style="display: flex; align-items: center; justify-content: center; gap: var(--spacing-md); flex-wrap: wrap;">
+              <button 
+                id="btn-prev" 
+                class="btn btn-secondary"
+                data-testid="btn-pagina-anterior"
+                disabled
+              >
+                ← Anterior
+              </button>
+              
+              <div id="page-info" data-testid="info-paginacao" style="padding: var(--spacing-sm) var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); font-weight: 600; min-width: 150px; text-align: center;">
+                Página 1 de 1
+              </div>
+              
+              <button 
+                id="btn-next" 
+                class="btn btn-secondary"
+                data-testid="btn-pagina-proxima"
+              >
+                Próxima →
+              </button>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--spacing-md); color: var(--muted); font-size: var(--font-size-sm);">
+              <span id="total-items" data-testid="total-itens">Total: 0 itens</span>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Navegar para a próxima página e validar dados</li>
+                <li>Navegar para a página anterior e validar dados</li>
+                <li>Validar que os botões são desabilitados nas extremidades</li>
+                <li>Verificar informações de paginação (página atual, total)</li>
+                <li>Validar contagem total de itens</li>
+                <li>Testar navegação rápida entre múltiplas páginas</li>
+                <li>Validar que os dados mudam corretamente ao navegar</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="tabela-paginada"</code> - Tabela principal</li>
+                <li><code>data-testid="tbody-paginada"</code> - Corpo da tabela</li>
+                <li><code>data-testid="btn-pagina-anterior"</code> - Botão página anterior</li>
+                <li><code>data-testid="btn-pagina-proxima"</code> - Botão página próxima</li>
+                <li><code>data-testid="info-paginacao"</code> - Informações de paginação</li>
+                <li><code>data-testid="total-itens"</code> - Total de itens</li>
+                <li><code>data-testid="linha-pag-[id]"</code> - Cada linha da tabela</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress
+cy.get('[data-testid="tabela-paginada"]').should('be.visible')
+cy.get('[data-testid="tbody-paginada"] tr').should('have.length', 10)
+cy.get('[data-testid="btn-pagina-proxima"]').click()
+cy.get('[data-testid="info-paginacao"]').should('contain', 'Página 2')
+cy.get('[data-testid="tbody-paginada"] tr').should('have.length', 10)
+cy.get('[data-testid="btn-pagina-anterior"]').click()
+cy.get('[data-testid="info-paginacao"]').should('contain', 'Página 1')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright
+await expect(page.getByTestId('tabela-paginada')).toBeVisible()
+await expect(page.locator('[data-testid="tbody-paginada"] tr')).toHaveCount(10)
+await page.getByTestId('btn-pagina-proxima').click()
+await expect(page.getByTestId('info-paginacao')).toContainText('Página 2')
+await expect(page.locator('[data-testid="tbody-paginada"] tr')).toHaveCount(10)
+await page.getByTestId('btn-pagina-anterior').click()
+await expect(page.getByTestId('info-paginacao')).toContainText('Página 1')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium Java
+WebElement tabela = driver.findElement(By.cssSelector("[data-testid='tabela-paginada']"));
+assert tabela.isDisplayed();
+List&lt;WebElement&gt; linhas = driver.findElements(By.cssSelector("[data-testid='tbody-paginada'] tr"));
+assert linhas.size() == 10;
+driver.findElement(By.cssSelector("[data-testid='btn-pagina-proxima']")).click();
+WebElement info = driver.findElement(By.cssSelector("[data-testid='info-paginacao']"));
+assert info.getText().contains("Página 2");
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby)
+expect(page).to have_selector('[data-testid="tabela-paginada"]')
+expect(page).to have_selector('[data-testid="tbody-paginada"] tr', count: 10)
+find('[data-testid="btn-pagina-proxima"]').click
+expect(find('[data-testid="info-paginacao"]')).to have_content('Página 2')
+expect(page).to have_selector('[data-testid="tbody-paginada"] tr', count: 10)
+find('[data-testid="btn-pagina-anterior"]').click
+expect(find('[data-testid="info-paginacao"]')).to have_content('Página 1')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Navegar entre paginas da tabela
+    Element Should Be Visible    css:[data-testid="tabela-paginada"]
+    Page Should Contain Element    css:[data-testid="tbody-paginada"] tr    limit=10
+    Click Element css:[data-testid="btn-pagina-proxima"]
+    Element Should Contain    css:[data-testid="info-paginacao"]    Página 2
+    Page Should Contain Element    css:[data-testid="tbody-paginada"] tr    limit=10
+    Click Element css:[data-testid="btn-pagina-anterior"]
+    Element Should Contain    css:[data-testid="info-paginacao"]    Página 1
+                </code></pre>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      // Dados de exemplo
+      const data = Array.from({length: 53}, (_, i) => ({
+        id: i + 1,
+        nome: `Usuário ${i + 1}`,
+        email: `usuario${i + 1}@exemplo.com`,
+        cargo: i % 3 === 0 ? 'Desenvolvedor' : i % 3 === 1 ? 'QA' : 'Designer'
+      }));
+
+      let currentPage = 1;
+      const itemsPerPage = 10;
+      const totalPages = Math.ceil(data.length / itemsPerPage);
+
+      const tbody = document.querySelector('[data-testid="tbody-paginada"]');
+      const btnPrev = document.getElementById('btn-prev');
+      const btnNext = document.getElementById('btn-next');
+      const pageInfo = document.getElementById('page-info');
+      const totalItems = document.getElementById('total-items');
+
+      function renderTable() {
+        tbody.innerHTML = '';
+        
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const pageData = data.slice(start, end);
+
+        pageData.forEach((item, index) => {
+          const tr = document.createElement('tr');
+          tr.setAttribute('data-testid', `linha-pag-${item.id}`);
+          tr.innerHTML = `
+            <td>${item.id}</td>
+            <td>${item.nome}</td>
+            <td>${item.email}</td>
+            <td>${item.cargo}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        // Atualizar informações de paginação
+        pageInfo.textContent = `Página ${currentPage} de ${totalPages}`;
+        totalItems.textContent = `Total: ${data.length} itens`;
+
+        // Atualizar estado dos botões
+        btnPrev.disabled = currentPage === 1;
+        btnNext.disabled = currentPage === totalPages;
+
+        // Atualizar aria-labels
+        btnPrev.setAttribute('aria-label', currentPage === 1 ? 'Primeira página' : `Ir para página ${currentPage - 1}`);
+        btnNext.setAttribute('aria-label', currentPage === totalPages ? 'Última página' : `Ir para página ${currentPage + 1}`);
+      }
+
+      btnPrev.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderTable();
+          window.showToast(`Navegando para página ${currentPage}`);
+        }
+      });
+
+      btnNext.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderTable();
+          window.showToast(`Navegando para página ${currentPage}`);
+        }
+      });
+
+      // Inicializar tabela
+      renderTable();
+
+      const tabs = document.querySelectorAll('.test-tab');
+      const contents = document.querySelectorAll('.test-code');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          contents.forEach(c => c.classList.remove('active'));
+
+          tab.classList.add('active');
+          document.getElementById(tab.dataset.target).classList.add('active');
+        });
+      });
+    </script>
+  </body>
+</html>

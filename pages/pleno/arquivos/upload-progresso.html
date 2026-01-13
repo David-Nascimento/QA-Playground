@@ -1,0 +1,348 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Upload com Progresso — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="../../fundamentos.html">Fundamentos</a></li>
+            <li><a href="../../junior/formularios/">Formulários</a></li>
+            <li><a href="../tabelas/">Tabelas (Pleno)</a></li>
+            <li><a href="index.html">Interações (Pleno)</a></li>
+            <li><a href="../arquivos/">Arquivos (Pleno)</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Upload com Progresso</h2>
+          <div class="section-desc">Pratique testes de upload com barra de progresso. Esta página é ideal para testar automação de uploads com feedback visual, validação de progresso e simulação de uploads longos.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar upload com barra de progresso</li>
+                <li>Validar atualização de progresso em tempo real</li>
+                <li>Praticar automação de espera por progresso</li>
+                <li>Testar cancelamento de upload</li>
+                <li>Validar estados de upload (iniciando, em progresso, concluído, erro)</li>
+                <li>Testar uploads de diferentes tamanhos</li>
+                <li>Validar mensagens de status durante o upload</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Como Utilizar:</strong></p>
+              <ol style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Selecione um arquivo para upload</li>
+                <li>Clique em "Iniciar Upload" para começar o processo</li>
+                <li>Observe a barra de progresso sendo atualizada</li>
+                <li>Veja as mensagens de status mudando durante o upload</li>
+                <li>Teste o botão "Cancelar" durante o upload</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Upload com Barra de Progresso</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Selecione um arquivo e inicie o upload para ver o progresso.</p>
+            
+            <div class="form-group">
+              <label for="file-input-progress">Selecionar arquivo</label>
+              <input 
+                id="file-input-progress" 
+                type="file" 
+                data-testid="file-input-progress"
+              />
+            </div>
+
+            <div class="controls" style="margin-top: var(--spacing-md);">
+              <button id="btn-start-upload" class="btn" data-testid="btn-start-upload" disabled>Iniciar Upload</button>
+              <button id="btn-cancel-upload" class="btn btn-secondary" data-testid="btn-cancel-upload" disabled>Cancelar</button>
+            </div>
+
+            <div id="upload-status" data-testid="upload-status" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); min-height: 100px; display: none;">
+              <div style="margin-bottom: var(--spacing-md);">
+                <strong id="status-text" data-testid="status-text" style="color: var(--accent);">Aguardando...</strong>
+              </div>
+              
+              <div style="margin-bottom: var(--spacing-sm);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: var(--spacing-xs); font-size: var(--font-size-sm);">
+                  <span id="progress-text" data-testid="progress-text">0%</span>
+                  <span id="speed-text" data-testid="speed-text"></span>
+                </div>
+                <div style="width: 100%; height: 24px; background: var(--border); border-radius: var(--border-radius-md); overflow: hidden;">
+                  <div 
+                    id="progress-bar" 
+                    data-testid="progress-bar"
+                    style="height: 100%; background: var(--accent); width: 0%; transition: width 0.3s ease; display: flex; align-items: center; justify-content: center; color: white; font-size: var(--font-size-sm); font-weight: 600;"
+                  >
+                    <span id="progress-percent" data-testid="progress-percent">0%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div id="file-details" data-testid="file-details" style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-sm);"></div>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Iniciar upload e validar progresso</li>
+                <li>Validar atualização da barra de progresso</li>
+                <li>Testar cancelamento de upload</li>
+                <li>Validar mensagens de status</li>
+                <li>Testar upload completo e validação de conclusão</li>
+                <li>Validar informações de arquivo durante upload</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="file-input-progress"</code> - Campo de seleção</li>
+                <li><code>data-testid="btn-start-upload"</code> - Botão iniciar upload</li>
+                <li><code>data-testid="btn-cancel-upload"</code> - Botão cancelar</li>
+                <li><code>data-testid="upload-status"</code> - Área de status</li>
+                <li><code>data-testid="progress-bar"</code> - Barra de progresso</li>
+                <li><code>data-testid="progress-text"</code> - Texto de progresso</li>
+                <li><code>data-testid="status-text"</code> - Mensagem de status</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Testar upload com progresso
+cy.get('[data-testid="file-input-progress"]').selectFile('cypress/fixtures/example.jpg')
+cy.get('[data-testid="btn-start-upload"]').should('not.be.disabled').click()
+cy.get('[data-testid="upload-status"]').should('be.visible')
+cy.get('[data-testid="status-text"]').should('contain', 'Enviando')
+cy.get('[data-testid="progress-bar"]', { timeout: 10000 }).should('have.attr', 'style').and('contain', '100%')
+cy.get('[data-testid="status-text"]').should('contain', 'Concluído')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Testar upload com progresso
+await page.getByTestId('file-input-progress').setInputFiles('tests/fixtures/example.jpg')
+await expect(page.getByTestId('btn-start-upload')).toBeEnabled()
+await page.getByTestId('btn-start-upload').click()
+await expect(page.getByTestId('upload-status')).toBeVisible()
+await expect(page.getByTestId('status-text')).toContainText('Enviando')
+await expect(page.getByTestId('progress-bar')).toHaveAttribute('style', /100%/, { timeout: 10000 })
+await expect(page.getByTestId('status-text')).toContainText('Concluído')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium Java - Testar upload com progresso
+WebElement fileInput = driver.findElement(By.cssSelector("[data-testid='file-input-progress']"));
+fileInput.sendKeys(System.getProperty("user.dir") + "/src/test/resources/example.jpg");
+WebElement startBtn = driver.findElement(By.cssSelector("[data-testid='btn-start-upload']"));
+assert startBtn.isEnabled();
+startBtn.click();
+WebElement status = driver.findElement(By.cssSelector("[data-testid='upload-status']"));
+assert status.isDisplayed();
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+wait.until(ExpectedConditions.textToBePresentInElement(
+  driver.findElement(By.cssSelector("[data-testid='status-text']")), "Concluído"
+));
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Testar upload com progresso
+attach_file('file-input-progress', Rails.root.join('spec/fixtures/example.jpg'))
+expect(find('[data-testid="btn-start-upload"]')).to be_enabled
+find('[data-testid="btn-start-upload"]').click
+expect(find('[data-testid="upload-status"]')).to be_visible
+expect(find('[data-testid="status-text"]')).to have_content('Enviando')
+expect(find('[data-testid="progress-bar"]')).to have_style('width: 100%')
+expect(find('[data-testid="status-text"]')).to have_content('Concluído')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Testar upload com progresso
+    Choose File    css:[data-testid="file-input-progress"]    ${CURDIR}/example.jpg
+    Element Should Be Enabled    css:[data-testid="btn-start-upload"]
+    Click Element    css:[data-testid="btn-start-upload"]
+    Element Should Be Visible    css:[data-testid="upload-status"]
+    Element Should Contain    css:[data-testid="status-text"]    Enviando
+    Wait Until Element Contains    css:[data-testid="status-text"]    Concluído    timeout=10s
+    Element Should Contain    css:[data-testid="progress-text"]    100%
+                </code></pre>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      const fileInput = document.getElementById('file-input-progress');
+      const startBtn = document.getElementById('btn-start-upload');
+      const cancelBtn = document.getElementById('btn-cancel-upload');
+      const uploadStatus = document.getElementById('upload-status');
+      const statusText = document.getElementById('status-text');
+      const progressBar = document.getElementById('progress-bar');
+      const progressText = document.getElementById('progress-text');
+      const progressPercent = document.getElementById('progress-percent');
+      const speedText = document.getElementById('speed-text');
+      const fileDetails = document.getElementById('file-details');
+      let uploadInterval = null;
+      let currentProgress = 0;
+      let selectedFile = null;
+
+      fileInput.addEventListener('change', function() {
+        selectedFile = this.files[0];
+        if (selectedFile) {
+          startBtn.disabled = false;
+          const sizeText = selectedFile.size < 1024 ? selectedFile.size + ' B' : 
+                         selectedFile.size < 1024 * 1024 ? Math.round(selectedFile.size / 1024) + ' KB' : 
+                         (selectedFile.size / (1024 * 1024)).toFixed(2) + ' MB';
+          fileDetails.textContent = `Arquivo: ${selectedFile.name} (${sizeText})`;
+          window.showToast('Arquivo selecionado');
+        } else {
+          startBtn.disabled = true;
+        }
+      });
+
+      function formatFileSize(bytes) {
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + ' KB';
+        return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+      }
+
+      function startUpload() {
+        if (!selectedFile) return;
+
+        uploadStatus.style.display = 'block';
+        startBtn.disabled = true;
+        cancelBtn.disabled = false;
+        currentProgress = 0;
+        statusText.textContent = 'Enviando...';
+        statusText.style.color = 'var(--accent)';
+
+        // Simular upload com progresso
+        uploadInterval = setInterval(() => {
+          currentProgress += Math.random() * 15 + 5; // Incremento aleatório entre 5-20%
+          
+          if (currentProgress >= 100) {
+            currentProgress = 100;
+            clearInterval(uploadInterval);
+            statusText.textContent = '✅ Upload concluído com sucesso!';
+            statusText.style.color = 'var(--accent)';
+            startBtn.disabled = false;
+            cancelBtn.disabled = true;
+            window.showToast('Upload concluído!');
+          }
+
+          progressBar.style.width = currentProgress + '%';
+          progressPercent.textContent = Math.round(currentProgress) + '%';
+          progressText.textContent = Math.round(currentProgress) + '%';
+          
+          // Simular velocidade de upload
+          const speed = Math.random() * 500 + 100; // KB/s
+          speedText.textContent = speed.toFixed(0) + ' KB/s';
+        }, 200);
+      }
+
+      function cancelUpload() {
+        if (uploadInterval) {
+          clearInterval(uploadInterval);
+          uploadInterval = null;
+        }
+        currentProgress = 0;
+        progressBar.style.width = '0%';
+        progressPercent.textContent = '0%';
+        progressText.textContent = '0%';
+        statusText.textContent = 'Upload cancelado';
+        statusText.style.color = 'var(--muted)';
+        startBtn.disabled = false;
+        cancelBtn.disabled = true;
+        window.showToast('Upload cancelado');
+      }
+
+      startBtn.addEventListener('click', startUpload);
+      cancelBtn.addEventListener('click', cancelUpload);
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
+</html>

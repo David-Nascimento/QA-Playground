@@ -1,0 +1,267 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Botões de Rádio — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="../../fundamentos.html">Fundamentos</a></li>
+            <li><a href="../interacoes.html" aria-current="page">Interações</a></li>
+            <li><a href="../tabelas.html">Tabelas</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Botões de Rádio</h2>
+          <div class="section-desc">Pratique a seleção de opções exclusivas com radio buttons. Esta página é ideal para testar seleção única, validação de grupos de opções e automação de interações com elementos radio HTML. Apenas uma opção pode ser selecionada por vez em cada grupo.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar seleção de opções exclusivas em grupos de radio buttons</li>
+                <li>Validar que apenas uma opção pode estar selecionada por grupo</li>
+                <li>Praticar automação de seleção por valor, label ou data-testid</li>
+                <li>Testar mudança de seleção entre opções do mesmo grupo</li>
+                <li>Validar estado inicial (nenhuma opção selecionada ou opção padrão)</li>
+                <li>Testar múltiplos grupos de radio buttons na mesma página</li>
+                <li>Validar feedback visual e eventos de mudança</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Como Utilizar:</strong></p>
+              <ol style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Clique em uma opção de radio button em qualquer grupo</li>
+                <li>Valide que apenas uma opção está selecionada por grupo</li>
+                <li>Teste selecionar outra opção no mesmo grupo e verifique que a anterior é desmarcada</li>
+                <li>Interaja com diferentes grupos de radio buttons simultaneamente</li>
+                <li>Valide o feedback visual e as mensagens de seleção</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Seleção de Gênero</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Selecione uma opção de gênero. Apenas uma opção pode estar selecionada.</p>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Gênero</label>
+                <div role="radiogroup" aria-labelledby="genero-label" class="radio-group" data-testid="radiogroup-genero">
+                  <label><input type="radio" name="genero" value="m" data-testid="radio-masculino"> Masculino</label>
+                  <label><input type="radio" name="genero" value="f" data-testid="radio-feminino"> Feminino</label>
+                  <label><input type="radio" name="genero" value="o" data-testid="radio-outro"> Outro</label>
+                  <label><input type="radio" name="genero" value="p" data-testid="radio-prefiro-nao-dizer"> Prefiro não dizer</label>
+                </div>
+                <div id="genero-result" class="hint" style="margin-top: var(--spacing-sm);"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Seleção de Experiência</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Selecione seu nível de experiência em QA.</p>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Nível de Experiência</label>
+                <div role="radiogroup" class="radio-group" data-testid="radiogroup-experiencia">
+                  <label><input type="radio" name="experiencia" value="junior" data-testid="radio-junior"> Júnior</label>
+                  <label><input type="radio" name="experiencia" value="pleno" data-testid="radio-pleno"> Pleno</label>
+                  <label><input type="radio" name="experiencia" value="senior" data-testid="radio-senior"> Sênior</label>
+                </div>
+                <div id="experiencia-result" class="hint" style="margin-top: var(--spacing-sm);"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Seleção de Preferência de Teste</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Qual sua preferência principal para testes?</p>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Preferência</label>
+                <div role="radiogroup" class="radio-group" data-testid="radiogroup-preferencia">
+                  <label><input type="radio" name="preferencia" value="manual" data-testid="radio-manual"> Testes Manuais</label>
+                  <label><input type="radio" name="preferencia" value="automatizado" data-testid="radio-automatizado"> Testes Automatizados</label>
+                  <label><input type="radio" name="preferencia" value="ambos" data-testid="radio-ambos"> Ambos</label>
+                </div>
+                <div id="preferencia-result" class="hint" style="margin-top: var(--spacing-sm);"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Selecionar uma opção de rádio</li>
+                <li>Validar que apenas uma opção pode estar selecionada por grupo</li>
+                <li>Verificar estado selecionado de cada opção</li>
+                <li>Testar mudança de seleção entre opções</li>
+                <li>Validar valores e labels de cada opção</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="radiogroup-genero"</code></li>
+                <li><code>data-testid="radio-masculino"</code>, <code>data-testid="radio-feminino"</code>, etc.</li>
+                <li><code>data-testid="radiogroup-experiencia"</code></li>
+                <li><code>data-testid="radiogroup-preferencia"</code></li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress
+cy.get('[data-testid="radio-masculino"]').check()
+cy.get('[data-testid="radio-masculino"]').should('be.checked')
+cy.get('[data-testid="radio-junior"]').check()
+cy.get('[data-testid="radio-automatizado"]').check()
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright
+await page.getByTestId('radio-masculino').check()
+await expect(page.getByTestId('radio-masculino')).toBeChecked()
+await page.getByTestId('radio-junior').check()
+await page.getByTestId('radio-automatizado').check()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium Java
+driver.findElement(By.cssSelector("[data-testid='radio-masculino']")).click();
+driver.findElement(By.cssSelector("[data-testid='radio-junior']")).click();
+driver.findElement(By.cssSelector("[data-testid='radio-automatizado']")).click();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby)
+choose 'radio-masculino'
+find('[data-testid="radio-junior"]').click
+find('[data-testid="radio-automatizado"]').click
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Selecionar radio buttons
+    Click Element    css:[data-testid="radio-masculino"]
+    Click Element    css:[data-testid="radio-junior"]
+    Click Element    css:[data-testid="radio-automatizado"]
+                </code></pre>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      // Feedback para seleção de gênero
+      const generoRadios = document.querySelectorAll('input[name="genero"]');
+      const generoResult = document.getElementById('genero-result');
+      
+      generoRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+          const labels = {
+            'm': 'Masculino',
+            'f': 'Feminino',
+            'o': 'Outro',
+            'p': 'Prefiro não dizer'
+          };
+          generoResult.textContent = `Selecionado: ${labels[this.value]}`;
+          generoResult.style.color = 'var(--accent)';
+          window.showToast(`Gênero selecionado: ${labels[this.value]}`);
+        });
+      });
+
+      // Feedback para seleção de experiência
+      const experienciaRadios = document.querySelectorAll('input[name="experiencia"]');
+      const experienciaResult = document.getElementById('experiencia-result');
+      
+      experienciaRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+          const labels = {
+            'junior': 'Júnior',
+            'pleno': 'Pleno',
+            'senior': 'Sênior'
+          };
+          experienciaResult.textContent = `Selecionado: ${labels[this.value]}`;
+          experienciaResult.style.color = 'var(--accent)';
+          window.showToast(`Experiência selecionada: ${labels[this.value]}`);
+        });
+      });
+
+      // Feedback para seleção de preferência
+      const preferenciaRadios = document.querySelectorAll('input[name="preferencia"]');
+      const preferenciaResult = document.getElementById('preferencia-result');
+      
+      preferenciaRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+          const labels = {
+            'manual': 'Testes Manuais',
+            'automatizado': 'Testes Automatizados',
+            'ambos': 'Ambos'
+          };
+          preferenciaResult.textContent = `Selecionado: ${labels[this.value]}`;
+          preferenciaResult.style.color = 'var(--accent)';
+          window.showToast(`Preferência selecionada: ${labels[this.value]}`);
+        });
+      });
+
+      const tabs = document.querySelectorAll('.test-tab');
+      const contents = document.querySelectorAll('.test-code');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          contents.forEach(c => c.classList.remove('active'));
+
+          tab.classList.add('active');
+          document.getElementById(tab.dataset.target).classList.add('active');
+        });
+      });
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,484 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Tabela de Dados Ordenáveis — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="../../fundamentos.html">Fundamentos</a></li>
+            <li><a href="../../junior/formularios/">Formulários</a></li>
+            <li><a href="index.html">Tabelas (Pleno)</a></li>
+            <li><a href="../interacoes/">Interações (Pleno)</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Tabela de Dados Ordenáveis</h2>
+          <div class="section-desc">Pratique testes em tabelas com ordenação e filtros. Esta página é ideal para testar automação de ordenação de colunas, validação de dados ordenados e filtragem de informações em tabelas complexas.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar ordenação de colunas (ascendente e descendente)</li>
+                <li>Validar que os dados são ordenados corretamente</li>
+                <li>Testar filtros de busca em tabelas</li>
+                <li>Validar múltiplas ordenações (clicar em diferentes colunas)</li>
+                <li>Praticar automação de interações com cabeçalhos clicáveis</li>
+                <li>Testar validação de dados após ordenação</li>
+                <li>Validar comportamento com dados vazios ou nulos</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Como Utilizar:</strong></p>
+              <ol style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Clique nos cabeçalhos das colunas para ordenar (Nome, Email, Idade, Salário)</li>
+                <li>Observe que a ordenação alterna entre ascendente e descendente</li>
+                <li>Use o campo de busca para filtrar os dados da tabela</li>
+                <li>Valide que os dados são ordenados corretamente</li>
+                <li>Teste combinação de filtro e ordenação</li>
+                <li>Valide indicadores visuais de ordenação (setas)</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Filtro e Ordenação</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Use o campo de busca para filtrar e clique nos cabeçalhos para ordenar.</p>
+            
+            <div class="form-group" style="margin-bottom: var(--spacing-md);">
+              <input 
+                type="text" 
+                id="search-input" 
+                placeholder="Buscar por nome, email ou cargo..." 
+                data-testid="input-busca"
+                style="width: 100%; max-width: 500px;"
+              />
+            </div>
+
+            <div style="overflow-x: auto; margin-bottom: var(--spacing-md);">
+              <table class="table" id="sortable-table" data-testid="tabela-ordenavel">
+                <thead>
+                  <tr>
+                    <th 
+                      data-sort="nome" 
+                      data-testid="th-nome"
+                      class="sortable-header"
+                      style="cursor: pointer; user-select: none;"
+                    >
+                      Nome <span id="sort-nome" class="sort-indicator"></span>
+                    </th>
+                    <th 
+                      data-sort="email" 
+                      data-testid="th-email"
+                      class="sortable-header"
+                      style="cursor: pointer; user-select: none;"
+                    >
+                      Email <span id="sort-email" class="sort-indicator"></span>
+                    </th>
+                    <th 
+                      data-sort="idade" 
+                      data-testid="th-idade"
+                      class="sortable-header"
+                      style="cursor: pointer; user-select: none;"
+                    >
+                      Idade <span id="sort-idade" class="sort-indicator"></span>
+                    </th>
+                    <th 
+                      data-sort="salario" 
+                      data-testid="th-salario"
+                      class="sortable-header"
+                      style="cursor: pointer; user-select: none;"
+                    >
+                      Salário <span id="sort-salario" class="sort-indicator"></span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody data-testid="tbody-ordenavel">
+                  <!-- Itens serão inseridos aqui dinamicamente -->
+                </tbody>
+              </table>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--spacing-md); color: var(--muted); font-size: var(--font-size-sm);">
+              <span id="total-filtered" data-testid="total-filtrado">Mostrando 10 de 10 itens</span>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Ordenar por nome (ascendente e descendente)</li>
+                <li>Ordenar por email (ascendente e descendente)</li>
+                <li>Ordenar por idade (ascendente e descendente)</li>
+                <li>Ordenar por salário (ascendente e descendente)</li>
+                <li>Validar que os dados são ordenados corretamente</li>
+                <li>Filtrar dados usando o campo de busca</li>
+                <li>Combinar filtro e ordenação</li>
+                <li>Validar contagem de itens filtrados</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="input-busca"</code> - Campo de busca</li>
+                <li><code>data-testid="tabela-ordenavel"</code> - Tabela principal</li>
+                <li><code>data-testid="tbody-ordenavel"</code> - Corpo da tabela</li>
+                <li><code>data-testid="th-nome"</code> - Cabeçalho coluna Nome</li>
+                <li><code>data-testid="th-email"</code> - Cabeçalho coluna Email</li>
+                <li><code>data-testid="th-idade"</code> - Cabeçalho coluna Idade</li>
+                <li><code>data-testid="th-salario"</code> - Cabeçalho coluna Salário</li>
+                <li><code>data-testid="total-filtrado"</code> - Contador de itens filtrados</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Ordenar por nome (ascendente)
+cy.get('[data-testid="th-nome"]').click()
+cy.get('[data-testid="tbody-ordenavel"] tr').first().should('contain', 'Ana Silva')
+cy.get('[data-testid="tbody-ordenavel"] tr').should('have.length', 10)
+
+// Ordenar por nome (descendente)
+cy.get('[data-testid="th-nome"]').click()
+cy.get('[data-testid="tbody-ordenavel"] tr').first().should('contain', 'Julia Ferreira')
+
+// Filtrar dados
+cy.get('[data-testid="input-busca"]').clear().type('Silva')
+cy.get('[data-testid="tbody-ordenavel"] tr').should('have.length', 1)
+cy.get('[data-testid="tbody-ordenavel"] tr').first().should('contain', 'Ana Silva')
+cy.get('[data-testid="total-filtrado"]').should('contain', 'Mostrando 1 de 10')
+
+// Limpar filtro
+cy.get('[data-testid="input-busca"]').clear()
+cy.get('[data-testid="tbody-ordenavel"] tr').should('have.length', 10)
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Ordenar por nome (ascendente)
+await page.getByTestId('th-nome').click()
+await expect(page.locator('[data-testid="tbody-ordenavel"] tr').first()).toContainText('Ana Silva')
+await expect(page.locator('[data-testid="tbody-ordenavel"] tr')).toHaveCount(10)
+
+// Ordenar por nome (descendente)
+await page.getByTestId('th-nome').click()
+await expect(page.locator('[data-testid="tbody-ordenavel"] tr').first()).toContainText('Julia Ferreira')
+
+// Filtrar dados
+await page.getByTestId('input-busca').fill('Silva')
+await expect(page.locator('[data-testid="tbody-ordenavel"] tr')).toHaveCount(1)
+await expect(page.locator('[data-testid="tbody-ordenavel"] tr').first()).toContainText('Ana Silva')
+await expect(page.getByTestId('total-filtrado')).toContainText('Mostrando 1 de 10')
+
+// Limpar filtro
+await page.getByTestId('input-busca').fill('')
+await expect(page.locator('[data-testid="tbody-ordenavel"] tr')).toHaveCount(10)
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium Java - Ordenar por nome (ascendente)
+driver.findElement(By.cssSelector("[data-testid='th-nome']")).click();
+Thread.sleep(500); // Aguardar ordenação
+WebElement firstRow = driver.findElements(By.cssSelector("[data-testid='tbody-ordenavel'] tr")).get(0);
+assert firstRow.getText().contains("Ana Silva");
+List&lt;WebElement&gt; rows = driver.findElements(By.cssSelector("[data-testid='tbody-ordenavel'] tr"));
+assert rows.size() == 10;
+
+// Ordenar por nome (descendente)
+driver.findElement(By.cssSelector("[data-testid='th-nome']")).click();
+Thread.sleep(500); // Aguardar ordenação
+firstRow = driver.findElements(By.cssSelector("[data-testid='tbody-ordenavel'] tr")).get(0);
+assert firstRow.getText().contains("Julia Ferreira");
+
+// Filtrar dados
+WebElement searchInput = driver.findElement(By.cssSelector("[data-testid='input-busca']"));
+searchInput.clear();
+searchInput.sendKeys("Silva");
+Thread.sleep(500); // Aguardar filtro
+rows = driver.findElements(By.cssSelector("[data-testid='tbody-ordenavel'] tr"));
+assert rows.size() == 1;
+assert rows.get(0).getText().contains("Ana Silva");
+WebElement total = driver.findElement(By.cssSelector("[data-testid='total-filtrado']"));
+assert total.getText().contains("Mostrando 1 de 10");
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Ordenar por nome (ascendente)
+find('[data-testid="th-nome"]').click
+expect(first('[data-testid="tbody-ordenavel"] tr')).to have_content('Ana Silva')
+expect(page).to have_selector('[data-testid="tbody-ordenavel"] tr', count: 10)
+
+# Ordenar por nome (descendente)
+find('[data-testid="th-nome"]').click
+expect(first('[data-testid="tbody-ordenavel"] tr')).to have_content('Julia Ferreira')
+
+# Filtrar dados
+fill_in 'input-busca', with: 'Silva'
+expect(page).to have_selector('[data-testid="tbody-ordenavel"] tr', count: 1)
+expect(first('[data-testid="tbody-ordenavel"] tr')).to have_content('Ana Silva')
+expect(find('[data-testid="total-filtrado"]')).to have_content('Mostrando 1 de 10')
+
+# Limpar filtro
+fill_in 'input-busca', with: ''
+expect(page).to have_selector('[data-testid="tbody-ordenavel"] tr', count: 10)
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Ordenar tabela por nome ascendente
+    Click Element    css:[data-testid="th-nome"]
+    Wait Until Element Contains    css:[data-testid="tbody-ordenavel"] tr:first-child    Ana Silva
+    Page Should Contain Element    css:[data-testid="tbody-ordenavel"] tr    limit=10
+
+Ordenar tabela por nome descendente
+    Click Element    css:[data-testid="th-nome"]
+    Wait Until Element Contains    css:[data-testid="tbody-ordenavel"] tr:first-child    Julia Ferreira
+
+Filtrar dados da tabela
+    Input Text    css:[data-testid="input-busca"]    Silva
+    Wait Until Page Contains Element    css:[data-testid="tbody-ordenavel"] tr    timeout=2s
+    Page Should Contain Element    css:[data-testid="tbody-ordenavel"] tr    limit=1
+    Element Should Contain    css:[data-testid="tbody-ordenavel"] tr:first-child    Ana Silva
+    Element Should Contain    css:[data-testid="total-filtrado"]    Mostrando 1 de 10
+
+Limpar filtro
+    Clear Element Text    css:[data-testid="input-busca"]
+    Page Should Contain Element    css:[data-testid="tbody-ordenavel"] tr    limit=10
+                </code></pre>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      // Dados de exemplo
+      const originalData = [
+        { nome: 'Ana Silva', email: 'ana@email.com', idade: 28, salario: 5000 },
+        { nome: 'Bruno Santos', email: 'bruno@email.com', idade: 32, salario: 7500 },
+        { nome: 'Carlos Oliveira', email: 'carlos@email.com', idade: 25, salario: 4500 },
+        { nome: 'Diana Costa', email: 'diana@email.com', idade: 30, salario: 6000 },
+        { nome: 'Eduardo Lima', email: 'eduardo@email.com', idade: 27, salario: 5500 },
+        { nome: 'Fernanda Souza', email: 'fernanda@email.com', idade: 29, salario: 6500 },
+        { nome: 'Gabriel Alves', email: 'gabriel@email.com', idade: 35, salario: 8000 },
+        { nome: 'Helena Martins', email: 'helena@email.com', idade: 26, salario: 4800 },
+        { nome: 'Igor Rocha', email: 'igor@email.com', idade: 31, salario: 7000 },
+        { nome: 'Julia Ferreira', email: 'julia@email.com', idade: 24, salario: 4200 }
+      ];
+
+      let currentData = [...originalData];
+      let currentSort = { column: null, direction: 'asc' };
+
+      const tbody = document.querySelector('[data-testid="tbody-ordenavel"]');
+      const searchInput = document.getElementById('search-input');
+      const totalFiltered = document.getElementById('total-filtrado');
+
+      function renderTable() {
+        tbody.innerHTML = '';
+        
+        currentData.forEach((item, index) => {
+          const tr = document.createElement('tr');
+          tr.setAttribute('data-testid', `linha-ordenavel-${index}`);
+          tr.innerHTML = `
+            <td>${item.nome}</td>
+            <td>${item.email}</td>
+            <td>${item.idade}</td>
+            <td>R$ ${item.salario.toLocaleString('pt-BR')}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        totalFiltered.textContent = `Mostrando ${currentData.length} de ${originalData.length} itens`;
+        updateSortIndicators();
+      }
+
+      function updateSortIndicators() {
+        // Limpar todos os indicadores
+        document.querySelectorAll('.sort-indicator').forEach(indicator => {
+          indicator.textContent = '';
+        });
+
+        if (currentSort.column) {
+          const indicator = document.getElementById(`sort-${currentSort.column}`);
+          if (indicator) {
+            indicator.textContent = currentSort.direction === 'asc' ? ' ↑' : ' ↓';
+          }
+        }
+      }
+
+      function applySort() {
+        if (!currentSort.column) {
+          renderTable();
+          return;
+        }
+
+        currentData.sort((a, b) => {
+          let aVal = a[currentSort.column];
+          let bVal = b[currentSort.column];
+
+          // Tratamento para strings
+          if (typeof aVal === 'string') {
+            aVal = aVal.toLowerCase();
+            bVal = bVal.toLowerCase();
+          }
+
+          if (currentSort.direction === 'asc') {
+            return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+          } else {
+            return aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
+          }
+        });
+
+        renderTable();
+      }
+
+      function sortTable(column) {
+        if (currentSort.column === column) {
+          // Alternar direção se mesma coluna
+          currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+        } else {
+          // Nova coluna, começar ascendente
+          currentSort.column = column;
+          currentSort.direction = 'asc';
+        }
+
+        applySort();
+        window.showToast(`Ordenado por ${column} (${currentSort.direction === 'asc' ? 'crescente' : 'decrescente'})`);
+      }
+
+      function filterTable(searchTerm) {
+        const term = searchTerm.toLowerCase().trim();
+        
+        if (!term) {
+          currentData = [...originalData];
+        } else {
+          currentData = originalData.filter(item => 
+            item.nome.toLowerCase().includes(term) ||
+            item.email.toLowerCase().includes(term) ||
+            item.idade.toString().includes(term) ||
+            item.salario.toString().includes(term)
+          );
+        }
+
+        // Reaplicar ordenação se houver (preservando direção)
+        applySort();
+      }
+
+      searchInput.addEventListener('input', (e) => {
+        filterTable(e.target.value);
+      });
+
+      // Adicionar event listeners aos cabeçalhos clicáveis
+      document.querySelectorAll('.sortable-header').forEach(header => {
+        header.addEventListener('click', () => {
+          const column = header.dataset.sort;
+          if (column) {
+            sortTable(column);
+          }
+        });
+      });
+
+      // Inicializar tabela
+      renderTable();
+    </script>
+    
+    <script>
+      // Inicializar abas de teste automatizado usando delegação de eventos
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          // Usar delegação de eventos no container
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            // Remover active de todas as abas
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            
+            // Remover active de todos os conteúdos
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            // Adicionar active na aba clicada
+            clickedTab.classList.add('active');
+            
+            // Adicionar active no conteúdo correspondente
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        // Inicializar quando DOM estiver pronto
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+    <style>
+      .sort-indicator {
+        color: var(--accent);
+        font-weight: bold;
+        margin-left: 4px;
+      }
+    </style>
+  </body>
+</html>

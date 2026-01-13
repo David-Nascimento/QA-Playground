@@ -1,0 +1,276 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Key Presses — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="../../../fundamentos.html">Fundamentos</a></li>
+            <li><a href="../../../junior/formularios/">Formulários</a></li>
+            <li><a href="../tabelas/">Tabelas (Pleno)</a></li>
+            <li><a href="index.html">Interações (Pleno)</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Key Presses</h2>
+          <div class="section-desc">Pratique testes de eventos de teclado e atalhos. Esta página é ideal para testar automação de pressionamento de teclas, validação de atalhos de teclado e captura de eventos keydown, keyup e keypress.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar eventos de teclado (keydown, keyup, keypress)</li>
+                <li>Validar atalhos de teclado (Ctrl+C, Ctrl+V, Enter, Esc, etc.)</li>
+                <li>Praticar automação de digitação e pressionamento de teclas</li>
+                <li>Testar combinações de teclas (Shift, Ctrl, Alt)</li>
+                <li>Validar captura de códigos de teclas e caracteres</li>
+                <li>Testar teclas especiais (Arrow keys, Tab, Space, etc.)</li>
+                <li>Validar comportamento com diferentes layouts de teclado</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Como Utilizar:</strong></p>
+              <ol style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Clique no campo de entrada abaixo</li>
+                <li>Digite qualquer texto ou pressione teclas especiais</li>
+                <li>Observe as informações exibidas sobre a tecla pressionada</li>
+                <li>Teste diferentes teclas e combinações</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Campo de Teste de Teclado</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Digite ou pressione teclas no campo abaixo para ver os eventos capturados.</p>
+            
+            <div class="form-group">
+              <label for="key-input">Campo de entrada</label>
+              <input 
+                type="text" 
+                id="key-input" 
+                data-testid="key-input" 
+                placeholder="Digite algo ou pressione uma tecla..." 
+                style="width: 100%; max-width: 500px;"
+              />
+            </div>
+
+            <div id="key-result" data-testid="key-result" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); min-height: 60px;">
+              <p class="muted">Pressione uma tecla para ver as informações...</p>
+            </div>
+
+            <div style="margin-top: var(--spacing-md);">
+              <h4 style="margin-bottom: var(--spacing-sm);">Teclas de Teste Rápido:</h4>
+              <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
+                <button class="btn btn-secondary" data-testid="btn-test-enter" onclick="testKey('Enter')">Testar Enter</button>
+                <button class="btn btn-secondary" data-testid="btn-test-esc" onclick="testKey('Escape')">Testar Esc</button>
+                <button class="btn btn-secondary" data-testid="btn-test-tab" onclick="testKey('Tab')">Testar Tab</button>
+                <button class="btn btn-secondary" data-testid="btn-test-space" onclick="testKey(' ')">Testar Space</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Pressionar teclas individuais e validar captura</li>
+                <li>Testar atalhos de teclado (Ctrl+C, Ctrl+V, etc.)</li>
+                <li>Validar teclas especiais (Enter, Esc, Tab, Arrow keys)</li>
+                <li>Testar combinações de teclas (Shift, Ctrl, Alt)</li>
+                <li>Validar códigos de teclas e caracteres capturados</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="key-input"</code> - Campo de entrada</li>
+                <li><code>data-testid="key-result"</code> - Área de resultado</li>
+                <li><code>data-testid="btn-test-enter"</code> - Botão testar Enter</li>
+                <li><code>data-testid="btn-test-esc"</code> - Botão testar Esc</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Testar teclas
+cy.get('[data-testid="key-input"]').type('Hello{enter}')
+cy.get('[data-testid="key-result"]').should('contain', 'Enter')
+cy.get('[data-testid="key-input"]').clear().type('{esc}')
+cy.get('[data-testid="key-result"]').should('contain', 'Escape')
+cy.get('[data-testid="key-input"]').clear().type('Teste')
+cy.get('[data-testid="key-result"]').should('contain', 'Teste')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Testar teclas
+await page.getByTestId('key-input').fill('Hello')
+await page.getByTestId('key-input').press('Enter')
+await expect(page.getByTestId('key-result')).toContainText('Enter')
+await page.getByTestId('key-input').press('Escape')
+await expect(page.getByTestId('key-result')).toContainText('Escape')
+await page.getByTestId('key-input').fill('Teste')
+await expect(page.getByTestId('key-result')).toContainText('Teste')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium Java - Testar teclas
+WebElement input = driver.findElement(By.cssSelector("[data-testid='key-input']"));
+input.sendKeys("Hello");
+input.sendKeys(Keys.ENTER);
+WebElement result = driver.findElement(By.cssSelector("[data-testid='key-result']"));
+assert result.getText().contains("Enter");
+input.clear();
+input.sendKeys(Keys.ESCAPE);
+assert result.getText().contains("Escape");
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Testar teclas
+fill_in 'key-input', with: 'Hello'
+find('[data-testid="key-input"]').native.send_keys(:return)
+expect(find('[data-testid="key-result"]')).to have_content('Enter')
+find('[data-testid="key-input"]').set('')
+find('[data-testid="key-input"]').native.send_keys(:escape)
+expect(find('[data-testid="key-result"]')).to have_content('Escape')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Testar tecla Enter
+    Input Text    css:[data-testid="key-input"]    Hello
+    Press Keys    css:[data-testid="key-input"]    RETURN
+    Element Should Contain    css:[data-testid="key-result"]    Enter
+
+Testar tecla Escape
+    Press Keys    css:[data-testid="key-input"]    ESCAPE
+    Element Should Contain    css:[data-testid="key-result"]    Escape
+                </code></pre>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      const keyInput = document.getElementById('key-input');
+      const keyResult = document.getElementById('key-result');
+
+      function displayKeyInfo(e) {
+        const key = e.key;
+        const code = e.code;
+        const keyCode = e.keyCode || e.which;
+        const ctrlKey = e.ctrlKey ? 'Sim' : 'Não';
+        const shiftKey = e.shiftKey ? 'Sim' : 'Não';
+        const altKey = e.altKey ? 'Sim' : 'Não';
+
+        keyResult.innerHTML = `
+          <div style="margin-bottom: var(--spacing-sm);">
+            <strong style="color: var(--accent);">Tecla Pressionada:</strong>
+          </div>
+          <div style="font-size: var(--font-size-sm); line-height: 1.8;">
+            <div><strong>Key:</strong> <code>${key}</code></div>
+            <div><strong>Code:</strong> <code>${code}</code></div>
+            <div><strong>KeyCode:</strong> <code>${keyCode}</code></div>
+            <div><strong>Ctrl:</strong> ${ctrlKey}</div>
+            <div><strong>Shift:</strong> ${shiftKey}</div>
+            <div><strong>Alt:</strong> ${altKey}</div>
+          </div>
+        `;
+      }
+
+      keyInput.addEventListener('keydown', displayKeyInfo);
+
+      function testKey(key) {
+        keyInput.focus();
+        const event = new KeyboardEvent('keydown', {
+          key: key,
+          code: key === 'Enter' ? 'Enter' : key === 'Escape' ? 'Escape' : key === 'Tab' ? 'Tab' : 'Space',
+          keyCode: key === 'Enter' ? 13 : key === 'Escape' ? 27 : key === 'Tab' ? 9 : 32
+        });
+        keyInput.dispatchEvent(event);
+      }
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
+</html>

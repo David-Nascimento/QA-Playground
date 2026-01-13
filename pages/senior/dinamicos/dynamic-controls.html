@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic Controls</title>
+  <link rel="stylesheet" href="../../../css/styles.css">
+  <script>
+    function toggleInput() {
+      const input = document.getElementById('inputDinamico');
+      input.disabled = !input.disabled;
+    }
+    function toggleCheckbox() {
+      const cb = document.getElementById('cbDinamico');
+      cb.style.display = cb.style.display === 'none' ? 'inline' : 'none';
+    }
+  </script>
+</head>
+<body>
+  <h1>Dynamic Controls</h1>
+  <button onclick="toggleInput()">Habilitar/Desabilitar Input</button>
+  <input id="inputDinamico" type="text" disabled>
+  <br><br>
+  <button onclick="toggleCheckbox()">Mostrar/Esconder Checkbox</button>
+  <input id="cbDinamico" type="checkbox" style="display:inline">
+  <a href="../../../index.html">Voltar</a>
+</body>
+</html>

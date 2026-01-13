@@ -1,0 +1,987 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>OTP: One Time Password — QA Playground</title>
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      .otp-input {
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius-md);
+        background: var(--surface);
+        color: var(--text);
+        transition: all var(--transition);
+      }
+      
+      .otp-input:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(122, 168, 116, 0.2);
+        outline: none;
+      }
+      
+      .otp-input:invalid {
+        border-color: #e74c3c;
+      }
+      
+      .otp-input.otp-error {
+        border-color: #e74c3c;
+        background-color: rgba(231, 76, 60, 0.1);
+        animation: shake 0.3s;
+      }
+      
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="../../fundamentos.html">Fundamentos</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="otp.html" aria-current="page">OTP</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>OTP: One Time Password</h2>
+          <div class="section-desc">Pratique fluxos de autenticação com código temporário (OTP). Teste diferentes formatos, timers de expiração, reenvio e validação. Todos os elementos possuem <code>id</code> e <code>data-testid</code> para facilitar testes automatizados.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <!-- OTP por Email -->
+          <div class="subsection">
+            <h3>OTP por Email (6 dígitos)</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Solicite e valide um código OTP enviado por email.</p>
+            
+            <!-- Etapa 1: Solicitar OTP -->
+            <div id="otp-email-solicitar" data-testid="otp-email-solicitar">
+              <form id="form-otp-email-solicitar" novalidate>
+                <div class="form-grid">
+                  <div class="form-group form-full">
+                    <label for="otp-email">E-mail</label>
+                    <input 
+                      type="email" 
+                      id="otp-email" 
+                      name="otp-email" 
+                      data-testid="input-otp-email"
+                      placeholder="seu@exemplo.com"
+                      required
+                      aria-describedby="otp-email-error otp-email-hint"
+                    />
+                    <div class="hint" id="otp-email-hint">Digite seu e-mail para receber o código OTP</div>
+                    <div class="error" id="otp-email-error" aria-live="polite" style="display:none"></div>
+                  </div>
+
+                  <div class="form-group form-full">
+                    <button type="submit" id="btn-solicitar-otp-email" data-testid="btn-solicitar-otp-email" class="btn">Enviar Código OTP</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Etapa 2: Validar OTP -->
+            <div id="otp-email-validar" data-testid="otp-email-validar" style="display:none;">
+              <p class="muted" style="margin-bottom: var(--spacing-md);">
+                Código enviado para <strong id="otp-email-exibido"></strong>
+              </p>
+              <form id="form-otp-email-validar" novalidate>
+                <div class="form-grid">
+                  <div class="form-group form-full">
+                    <label for="otp-email-codigo">Código OTP (6 dígitos)</label>
+                    <div style="display: flex; gap: var(--spacing-sm); justify-content: center; margin-bottom: var(--spacing-sm);">
+                      <input 
+                        type="text" 
+                        id="otp-email-1" 
+                        data-testid="otp-email-1"
+                        maxlength="1"
+                        class="otp-input"
+                        style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; font-weight: 600;"
+                        required
+                      />
+                      <input 
+                        type="text" 
+                        id="otp-email-2" 
+                        data-testid="otp-email-2"
+                        maxlength="1"
+                        class="otp-input"
+                        style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; font-weight: 600;"
+                        required
+                      />
+                      <input 
+                        type="text" 
+                        id="otp-email-3" 
+                        data-testid="otp-email-3"
+                        maxlength="1"
+                        class="otp-input"
+                        style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; font-weight: 600;"
+                        required
+                      />
+                      <input 
+                        type="text" 
+                        id="otp-email-4" 
+                        data-testid="otp-email-4"
+                        maxlength="1"
+                        class="otp-input"
+                        style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; font-weight: 600;"
+                        required
+                      />
+                      <input 
+                        type="text" 
+                        id="otp-email-5" 
+                        data-testid="otp-email-5"
+                        maxlength="1"
+                        class="otp-input"
+                        style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; font-weight: 600;"
+                        required
+                      />
+                      <input 
+                        type="text" 
+                        id="otp-email-6" 
+                        data-testid="otp-email-6"
+                        maxlength="1"
+                        class="otp-input"
+                        style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; font-weight: 600;"
+                        required
+                      />
+                    </div>
+                    <div class="hint" id="otp-email-codigo-hint">Digite o código de 6 dígitos recebido por email</div>
+                    <div class="error" id="otp-email-codigo-error" aria-live="polite" style="display:none"></div>
+                    <div id="otp-email-timer" style="text-align: center; margin-top: var(--spacing-sm); color: var(--muted); font-size: var(--font-size-sm);"></div>
+                  </div>
+
+                  <div class="form-group form-full" style="display: flex; gap: var(--spacing-sm); justify-content: center;">
+                    <button type="submit" id="btn-validar-otp-email" data-testid="btn-validar-otp-email" class="btn">Validar Código</button>
+                    <button type="button" id="btn-reenviar-otp-email" data-testid="btn-reenviar-otp-email" class="btn btn-secondary">Reenviar</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Etapa 3: Sucesso -->
+            <div id="otp-email-sucesso" data-testid="otp-email-sucesso" style="display:none;">
+              <div style="text-align: center; padding: var(--spacing-xl);">
+                <div style="font-size: 4rem; margin-bottom: var(--spacing-md);">✅</div>
+                <h3 style="color: var(--accent); margin-bottom: var(--spacing-sm);">Código OTP Validado!</h3>
+                <p class="muted">Autenticação realizada com sucesso.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- OTP por SMS -->
+          <div class="subsection">
+            <h3>OTP por SMS (4 dígitos)</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Solicite e valide um código OTP enviado por SMS.</p>
+            
+            <!-- Etapa 1: Solicitar OTP -->
+            <div id="otp-sms-solicitar" data-testid="otp-sms-solicitar">
+              <form id="form-otp-sms-solicitar" novalidate>
+                <div class="form-grid">
+                  <div class="form-group form-full">
+                    <label for="otp-telefone">Telefone</label>
+                    <input 
+                      type="tel" 
+                      id="otp-telefone" 
+                      name="otp-telefone" 
+                      data-testid="input-otp-telefone"
+                      placeholder="(00) 00000-0000"
+                      maxlength="15"
+                      required
+                      aria-describedby="otp-telefone-error otp-telefone-hint"
+                    />
+                    <div class="hint" id="otp-telefone-hint">Digite seu telefone para receber o código OTP por SMS</div>
+                    <div class="error" id="otp-telefone-error" aria-live="polite" style="display:none"></div>
+                  </div>
+
+                  <div class="form-group form-full">
+                    <button type="submit" id="btn-solicitar-otp-sms" data-testid="btn-solicitar-otp-sms" class="btn">Enviar Código OTP</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Etapa 2: Validar OTP -->
+            <div id="otp-sms-validar" data-testid="otp-sms-validar" style="display:none;">
+              <p class="muted" style="margin-bottom: var(--spacing-md);">
+                Código enviado para <strong id="otp-telefone-exibido"></strong>
+              </p>
+              <form id="form-otp-sms-validar" novalidate>
+                <div class="form-grid">
+                  <div class="form-group form-full">
+                    <label for="otp-sms-codigo">Código OTP (4 dígitos)</label>
+                    <div style="display: flex; gap: var(--spacing-sm); justify-content: center; margin-bottom: var(--spacing-sm);">
+                      <input 
+                        type="text" 
+                        id="otp-sms-1" 
+                        data-testid="otp-sms-1"
+                        maxlength="1"
+                        class="otp-input"
+                        style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; font-weight: 600;"
+                        required
+                      />
+                      <input 
+                        type="text" 
+                        id="otp-sms-2" 
+                        data-testid="otp-sms-2"
+                        maxlength="1"
+                        class="otp-input"
+                        style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; font-weight: 600;"
+                        required
+                      />
+                      <input 
+                        type="text" 
+                        id="otp-sms-3" 
+                        data-testid="otp-sms-3"
+                        maxlength="1"
+                        class="otp-input"
+                        style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; font-weight: 600;"
+                        required
+                      />
+                      <input 
+                        type="text" 
+                        id="otp-sms-4" 
+                        data-testid="otp-sms-4"
+                        maxlength="1"
+                        class="otp-input"
+                        style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; font-weight: 600;"
+                        required
+                      />
+                    </div>
+                    <div class="hint" id="otp-sms-codigo-hint">Digite o código de 4 dígitos recebido por SMS</div>
+                    <div class="error" id="otp-sms-codigo-error" aria-live="polite" style="display:none"></div>
+                    <div id="otp-sms-timer" style="text-align: center; margin-top: var(--spacing-sm); color: var(--muted); font-size: var(--font-size-sm);"></div>
+                  </div>
+
+                  <div class="form-group form-full" style="display: flex; gap: var(--spacing-sm); justify-content: center;">
+                    <button type="submit" id="btn-validar-otp-sms" data-testid="btn-validar-otp-sms" class="btn">Validar Código</button>
+                    <button type="button" id="btn-reenviar-otp-sms" data-testid="btn-reenviar-otp-sms" class="btn btn-secondary">Reenviar</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Etapa 3: Sucesso -->
+            <div id="otp-sms-sucesso" data-testid="otp-sms-sucesso" style="display:none;">
+              <div style="text-align: center; padding: var(--spacing-xl);">
+                <div style="font-size: 4rem; margin-bottom: var(--spacing-md);">✅</div>
+                <h3 style="color: var(--accent); margin-bottom: var(--spacing-sm);">Código OTP Validado!</h3>
+                <p class="muted">Autenticação realizada com sucesso.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- OTP Campo Único -->
+          <div class="subsection">
+            <h3>OTP Campo Único (6 dígitos)</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Alternativa com campo único para entrada do código completo.</p>
+            
+            <form id="form-otp-unico" novalidate>
+              <div class="form-grid">
+                <div class="form-group form-full">
+                  <label for="otp-unico-codigo">Código OTP</label>
+                  <input 
+                    type="text" 
+                    id="otp-unico-codigo" 
+                    name="otp-unico-codigo" 
+                    data-testid="input-otp-unico-codigo"
+                    placeholder="000000"
+                    maxlength="6"
+                    style="text-align: center; font-size: 1.5rem; font-weight: 600; letter-spacing: 0.5rem;"
+                    required
+                    aria-describedby="otp-unico-codigo-error otp-unico-codigo-hint"
+                  />
+                  <div class="hint" id="otp-unico-codigo-hint">Digite o código de 6 dígitos</div>
+                  <div class="error" id="otp-unico-codigo-error" aria-live="polite" style="display:none"></div>
+                </div>
+
+                <div class="form-group form-full">
+                  <button type="submit" id="btn-validar-otp-unico" data-testid="btn-validar-otp-unico" class="btn">Validar Código</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Códigos de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><strong>OTP Email (6 dígitos):</strong> <code>123456</code></li>
+                <li><strong>OTP SMS (4 dígitos):</strong> <code>1234</code></li>
+                <li><strong>OTP Campo Único:</strong> <code>123456</code></li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Fluxo de Teste:</strong></p>
+              <ol style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Digite um e-mail ou telefone válido</li>
+                <li>Clique em "Enviar Código OTP"</li>
+                <li>Digite o código de teste correspondente</li>
+                <li>Clique em "Validar Código"</li>
+                <li>Teste o timer de expiração (60 segundos)</li>
+                <li>Teste o botão de reenvio</li>
+              </ol>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="input-otp-email"</code>, <code>data-testid="otp-email-1"</code> até <code>otp-email-6</code></li>
+                <li><code>data-testid="input-otp-telefone"</code>, <code>data-testid="otp-sms-1"</code> até <code>otp-sms-4</code></li>
+                <li><code>data-testid="input-otp-unico-codigo"</code></li>
+                <li><code>data-testid="btn-solicitar-otp-email"</code>, <code>data-testid="btn-validar-otp-email"</code>, etc.</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Cenários de Validação para Testes:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><strong>Email:</strong> Campo vazio, formato inválido, sem @, sem ponto, muito curto</li>
+                <li><strong>Telefone:</strong> Campo vazio, incompleto, muito longo, DDD inválido, caracteres não numéricos</li>
+                <li><strong>OTP Email (6 dígitos):</strong> Campo vazio, incompleto, caracteres não numéricos, código incorreto</li>
+                <li><strong>OTP SMS (4 dígitos):</strong> Campo vazio, incompleto, caracteres não numéricos, código incorreto</li>
+                <li><strong>OTP Campo Único:</strong> Campo vazio, incompleto, muito longo, caracteres não numéricos, código incorreto</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Recursos:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Auto-focus entre campos OTP</li>
+                <li>Timer de expiração (60 segundos)</li>
+                <li>Reenvio de código com timer</li>
+                <li>Validação em tempo real (on input e on blur)</li>
+                <li>Suporte a colar código completo</li>
+                <li>Mensagens de erro específicas para cada tipo de erro</li>
+                <li>Feedback visual com animação de erro</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress
+cy.get('[data-testid="input-otp-email"]').type('teste@exemplo.com')
+cy.get('[data-testid="btn-solicitar-otp-email"]').click()
+cy.get('[data-testid="otp-email-1"]').type('1')
+cy.get('[data-testid="otp-email-2"]').type('2')
+cy.get('[data-testid="otp-email-3"]').type('3')
+cy.get('[data-testid="otp-email-4"]').type('4')
+cy.get('[data-testid="otp-email-5"]').type('5')
+cy.get('[data-testid="otp-email-6"]').type('6')
+cy.get('[data-testid="btn-validar-otp-email"]').click()
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright
+await page.getByTestId('input-otp-email').fill('teste@exemplo.com')
+await page.getByTestId('btn-solicitar-otp-email').click()
+await page.getByTestId('otp-email-1').fill('1')
+await page.getByTestId('otp-email-2').fill('2')
+await page.getByTestId('otp-email-3').fill('3')
+await page.getByTestId('otp-email-4').fill('4')
+await page.getByTestId('otp-email-5').fill('5')
+await page.getByTestId('otp-email-6').fill('6')
+await page.getByTestId('btn-validar-otp-email').click()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium Java
+driver.findElement(By.cssSelector("[data-testid='input-otp-email']")).sendKeys("teste@exemplo.com");
+driver.findElement(By.cssSelector("[data-testid='btn-solicitar-otp-email']")).click();
+driver.findElement(By.cssSelector("[data-testid='otp-email-1']")).sendKeys("1");
+driver.findElement(By.cssSelector("[data-testid='otp-email-2']")).sendKeys("2");
+driver.findElement(By.cssSelector("[data-testid='otp-email-3']")).sendKeys("3");
+driver.findElement(By.cssSelector("[data-testid='otp-email-4']")).sendKeys("4");
+driver.findElement(By.cssSelector("[data-testid='otp-email-5']")).sendKeys("5");
+driver.findElement(By.cssSelector("[data-testid='otp-email-6']")).sendKeys("6");
+driver.findElement(By.cssSelector("[data-testid='btn-validar-otp-email']")).click();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby)
+fill_in 'input-otp-email', with: 'teste@exemplo.com'
+click_button 'Enviar Código'
+fill_in 'otp-email-1', with: '1'
+fill_in 'otp-email-2', with: '2'
+fill_in 'otp-email-3', with: '3'
+fill_in 'otp-email-4', with: '4'
+fill_in 'otp-email-5', with: '5'
+fill_in 'otp-email-6', with: '6'
+click_button 'Validar Código'
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Validar OTP
+    Input Text    css:[data-testid="input-otp-email"]    teste@exemplo.com
+    Click Element css:[data-testid="btn-solicitar-otp-email"]
+    Input Text    css:[data-testid="otp-email-1"]    1
+    Input Text    css:[data-testid="otp-email-2"]    2
+    Input Text    css:[data-testid="otp-email-3"]    3
+    Input Text    css:[data-testid="otp-email-4"]    4
+    Input Text    css:[data-testid="otp-email-5"]    5
+    Input Text    css:[data-testid="otp-email-6"]    6
+    Click Element css:[data-testid="btn-validar-otp-email"]
+                </code></pre>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../js/app.js"></script>
+    <script>
+      // Códigos de teste
+      const CODIGO_OTP_EMAIL = '123456';
+      const CODIGO_OTP_SMS = '1234';
+      const CODIGO_OTP_UNICO = '123456';
+
+      // Timers
+      let timerEmail = null;
+      let timerSMS = null;
+      let tempoRestanteEmail = 60;
+      let tempoRestanteSMS = 60;
+
+      // Funções auxiliares
+      function maskTelefone(value) {
+        return value
+          .replace(/\D/g, '')
+          .replace(/(\d{2})(\d)/, '($1) $2')
+          .replace(/(\d{5})(\d{4})$/, '$1-$2');
+      }
+
+      function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      // Função para configurar auto-focus em campos OTP
+      function setupOTPAutoFocus(inputs) {
+        inputs.forEach((input, index) => {
+          input.addEventListener('input', function(e) {
+            const value = e.target.value.replace(/\D/g, '');
+            e.target.value = value;
+            
+            if (value && index < inputs.length - 1) {
+              inputs[index + 1].focus();
+            }
+          });
+
+          input.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !e.target.value && index > 0) {
+              inputs[index - 1].focus();
+            }
+          });
+
+          // Suporte a colar código completo
+          input.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, inputs.length);
+            pasted.split('').forEach((char, i) => {
+              if (inputs[i]) {
+                inputs[i].value = char;
+              }
+            });
+            if (pasted.length === inputs.length) {
+              inputs[inputs.length - 1].focus();
+            } else {
+              inputs[pasted.length]?.focus();
+            }
+          });
+        });
+      }
+
+      // Função para obter código OTP dos campos individuais
+      function getOTPCode(inputs) {
+        return inputs.map(input => input.value).join('');
+      }
+
+      // Função para iniciar timer
+      function iniciarTimer(tipo) {
+        const timerDiv = document.getElementById(`otp-${tipo}-timer`);
+        const btnReenviar = document.getElementById(`btn-reenviar-otp-${tipo}`);
+        let tempoRestante = tipo === 'email' ? tempoRestanteEmail : tempoRestanteSMS;
+        
+        btnReenviar.disabled = true;
+        
+        if (tipo === 'email' && timerEmail) clearInterval(timerEmail);
+        if (tipo === 'sms' && timerSMS) clearInterval(timerSMS);
+        
+        const interval = setInterval(() => {
+          tempoRestante--;
+          if (tempoRestante > 0) {
+            timerDiv.textContent = `Código expira em ${tempoRestante} segundos`;
+            if (tipo === 'email') tempoRestanteEmail = tempoRestante;
+            if (tipo === 'sms') tempoRestanteSMS = tempoRestante;
+          } else {
+            clearInterval(interval);
+            timerDiv.textContent = 'Código expirado. Solicite um novo código.';
+            btnReenviar.disabled = false;
+            if (tipo === 'email') timerEmail = null;
+            if (tipo === 'sms') timerSMS = null;
+          }
+        }, 1000);
+
+        if (tipo === 'email') timerEmail = interval;
+        if (tipo === 'sms') timerSMS = interval;
+      }
+
+      // Função para validar campos OTP individuais
+      function validarCampoOTP(input, index, totalCampos) {
+        const valor = input.value.replace(/\D/g, '');
+        input.value = valor;
+        
+        // Remove classe de erro se houver
+        input.classList.remove('otp-error');
+        
+        if (valor && !/^\d$/.test(valor)) {
+          input.classList.add('otp-error');
+          return false;
+        }
+        return true;
+      }
+
+      // OTP por Email
+      const emailInputs = [
+        document.getElementById('otp-email-1'),
+        document.getElementById('otp-email-2'),
+        document.getElementById('otp-email-3'),
+        document.getElementById('otp-email-4'),
+        document.getElementById('otp-email-5'),
+        document.getElementById('otp-email-6')
+      ];
+      setupOTPAutoFocus(emailInputs);
+
+      // Validação em tempo real dos campos OTP de email
+      emailInputs.forEach((input, index) => {
+        input.addEventListener('input', function() {
+          validarCampoOTP(this, index, 6);
+          window.clearFieldError('otp-email-codigo');
+        });
+        
+        input.addEventListener('blur', function() {
+          if (this.value && !/^\d$/.test(this.value)) {
+            this.classList.add('otp-error');
+            window.setFieldError('otp-email-codigo', 'Apenas números são permitidos.');
+          }
+        });
+      });
+
+      // Validação de email em tempo real
+      document.getElementById('otp-email').addEventListener('input', function() {
+        const email = this.value.trim();
+        if (email && !validateEmail(email)) {
+          window.setFieldError('otp-email', 'Formato de email inválido. Exemplo: usuario@exemplo.com');
+        } else {
+          window.clearFieldError('otp-email');
+        }
+      });
+
+      document.getElementById('otp-email').addEventListener('blur', function() {
+        const email = this.value.trim();
+        if (!email) {
+          window.setFieldError('otp-email', 'Email é obrigatório.');
+        } else if (!validateEmail(email)) {
+          window.setFieldError('otp-email', 'Formato de email inválido. Exemplo: usuario@exemplo.com');
+        } else {
+          window.clearFieldError('otp-email');
+        }
+      });
+
+      document.getElementById('form-otp-email-solicitar').addEventListener('submit', function(e) {
+        e.preventDefault();
+        window.clearFieldError('otp-email');
+        
+        const email = document.getElementById('otp-email').value.trim();
+        
+        // Validações específicas
+        if (!email) {
+          window.setFieldError('otp-email', 'Email é obrigatório.');
+          return;
+        }
+        
+        if (email.length < 5) {
+          window.setFieldError('otp-email', 'Email muito curto. Mínimo 5 caracteres.');
+          return;
+        }
+        
+        if (!email.includes('@')) {
+          window.setFieldError('otp-email', 'Email deve conter o símbolo @.');
+          return;
+        }
+        
+        if (!email.includes('.')) {
+          window.setFieldError('otp-email', 'Email deve conter um ponto (.) após o @.');
+          return;
+        }
+        
+        if (email.startsWith('@') || email.endsWith('@')) {
+          window.setFieldError('otp-email', 'Email inválido. O @ não pode estar no início ou fim.');
+          return;
+        }
+        
+        if (!validateEmail(email)) {
+          window.setFieldError('otp-email', 'Formato de email inválido. Exemplo: usuario@exemplo.com');
+          return;
+        }
+        
+        document.getElementById('btn-solicitar-otp-email').disabled = true;
+        document.getElementById('btn-solicitar-otp-email').textContent = 'Enviando...';
+        
+        setTimeout(() => {
+          document.getElementById('otp-email-exibido').textContent = email;
+          document.getElementById('otp-email-solicitar').style.display = 'none';
+          document.getElementById('otp-email-validar').style.display = 'block';
+          emailInputs[0].focus();
+          iniciarTimer('email');
+          tempoRestanteEmail = 60;
+          window.showToast('Código OTP enviado! Use 123456 para testes.');
+          document.getElementById('btn-solicitar-otp-email').disabled = false;
+          document.getElementById('btn-solicitar-otp-email').textContent = 'Enviar Código OTP';
+        }, 1500);
+      });
+
+      document.getElementById('form-otp-email-validar').addEventListener('submit', function(e) {
+        e.preventDefault();
+        window.clearFieldError('otp-email-codigo');
+        
+        const codigo = getOTPCode(emailInputs);
+        
+        // Validações específicas
+        if (codigo.length === 0) {
+          window.setFieldError('otp-email-codigo', 'Código é obrigatório. Digite o código de 6 dígitos.');
+          emailInputs[0].focus();
+          return;
+        }
+        
+        if (codigo.length < 6) {
+          window.setFieldError('otp-email-codigo', `Código incompleto. Faltam ${6 - codigo.length} dígito(s).`);
+          emailInputs[codigo.length].focus();
+          return;
+        }
+        
+        // Verificar se contém apenas números
+        if (!/^\d{6}$/.test(codigo)) {
+          window.setFieldError('otp-email-codigo', 'Código deve conter apenas números.');
+          emailInputs.forEach(input => {
+            if (!/^\d$/.test(input.value)) {
+              input.classList.add('otp-error');
+            }
+          });
+          return;
+        }
+        
+        if (codigo === CODIGO_OTP_EMAIL) {
+          window.showToast('Código OTP validado com sucesso!');
+          document.getElementById('otp-email-validar').style.display = 'none';
+          document.getElementById('otp-email-sucesso').style.display = 'block';
+          if (timerEmail) clearInterval(timerEmail);
+        } else {
+          window.setFieldError('otp-email-codigo', 'Código inválido. Use 123456 para testes.');
+          emailInputs.forEach(input => {
+            input.value = '';
+            input.classList.add('otp-error');
+          });
+          emailInputs[0].focus();
+        }
+      });
+
+      document.getElementById('btn-reenviar-otp-email').addEventListener('click', function() {
+        if (this.disabled) return;
+        this.disabled = true;
+        this.textContent = 'Reenviando...';
+        
+        setTimeout(() => {
+          emailInputs.forEach(input => input.value = '');
+          emailInputs[0].focus();
+          iniciarTimer('email');
+          tempoRestanteEmail = 60;
+          window.showToast('Código reenviado! Use 123456 para testes.');
+          this.textContent = 'Reenviar';
+        }, 1000);
+      });
+
+      // OTP por SMS
+      const smsInputs = [
+        document.getElementById('otp-sms-1'),
+        document.getElementById('otp-sms-2'),
+        document.getElementById('otp-sms-3'),
+        document.getElementById('otp-sms-4')
+      ];
+      setupOTPAutoFocus(smsInputs);
+
+      // Validação em tempo real dos campos OTP de SMS
+      smsInputs.forEach((input, index) => {
+        input.addEventListener('input', function() {
+          validarCampoOTP(this, index, 4);
+          window.clearFieldError('otp-sms-codigo');
+        });
+        
+        input.addEventListener('blur', function() {
+          if (this.value && !/^\d$/.test(this.value)) {
+            this.classList.add('otp-error');
+            window.setFieldError('otp-sms-codigo', 'Apenas números são permitidos.');
+          }
+        });
+      });
+
+      // Validação de telefone em tempo real
+      document.getElementById('otp-telefone').addEventListener('input', function(e) {
+        e.target.value = maskTelefone(e.target.value);
+        const telefone = e.target.value.replace(/\D/g, '');
+        
+        window.clearFieldError('otp-telefone');
+        
+        if (telefone && telefone.length > 0) {
+          if (telefone.length < 10) {
+            window.setFieldError('otp-telefone', `Telefone incompleto. Faltam ${10 - telefone.length} dígito(s).`);
+          } else if (telefone.length > 11) {
+            window.setFieldError('otp-telefone', 'Telefone inválido. Máximo 11 dígitos.');
+          } else if (!/^\d+$/.test(telefone)) {
+            window.setFieldError('otp-telefone', 'Telefone deve conter apenas números.');
+          } else {
+            window.clearFieldError('otp-telefone');
+          }
+        }
+      });
+
+      document.getElementById('otp-telefone').addEventListener('blur', function() {
+        const telefone = this.value.replace(/\D/g, '');
+        
+        if (!telefone) {
+          window.setFieldError('otp-telefone', 'Telefone é obrigatório.');
+        } else if (telefone.length < 10) {
+          window.setFieldError('otp-telefone', `Telefone incompleto. Mínimo 10 dígitos. Faltam ${10 - telefone.length} dígito(s).`);
+        } else if (telefone.length > 11) {
+          window.setFieldError('otp-telefone', 'Telefone inválido. Máximo 11 dígitos.');
+        } else if (!/^\d+$/.test(telefone)) {
+          window.setFieldError('otp-telefone', 'Telefone deve conter apenas números.');
+        } else {
+          window.clearFieldError('otp-telefone');
+        }
+      });
+
+      document.getElementById('form-otp-sms-solicitar').addEventListener('submit', function(e) {
+        e.preventDefault();
+        window.clearFieldError('otp-telefone');
+        
+        const telefone = document.getElementById('otp-telefone').value.replace(/\D/g, '');
+        
+        // Validações específicas
+        if (!telefone) {
+          window.setFieldError('otp-telefone', 'Telefone é obrigatório.');
+          return;
+        }
+        
+        if (telefone.length < 10) {
+          window.setFieldError('otp-telefone', `Telefone incompleto. Mínimo 10 dígitos. Faltam ${10 - telefone.length} dígito(s).`);
+          return;
+        }
+        
+        if (telefone.length > 11) {
+          window.setFieldError('otp-telefone', 'Telefone inválido. Máximo 11 dígitos.');
+          return;
+        }
+        
+        if (!/^\d+$/.test(telefone)) {
+          window.setFieldError('otp-telefone', 'Telefone deve conter apenas números.');
+          return;
+        }
+        
+        // Validação de DDD
+        const ddd = telefone.substring(0, 2);
+        if (ddd < 11 || ddd > 99) {
+          window.setFieldError('otp-telefone', 'DDD inválido. Deve estar entre 11 e 99.');
+          return;
+        }
+        
+        document.getElementById('btn-solicitar-otp-sms').disabled = true;
+        document.getElementById('btn-solicitar-otp-sms').textContent = 'Enviando...';
+        
+        setTimeout(() => {
+          document.getElementById('otp-telefone-exibido').textContent = document.getElementById('otp-telefone').value;
+          document.getElementById('otp-sms-solicitar').style.display = 'none';
+          document.getElementById('otp-sms-validar').style.display = 'block';
+          smsInputs[0].focus();
+          iniciarTimer('sms');
+          tempoRestanteSMS = 60;
+          window.showToast('Código OTP enviado! Use 1234 para testes.');
+          document.getElementById('btn-solicitar-otp-sms').disabled = false;
+          document.getElementById('btn-solicitar-otp-sms').textContent = 'Enviar Código OTP';
+        }, 1500);
+      });
+
+      document.getElementById('form-otp-sms-validar').addEventListener('submit', function(e) {
+        e.preventDefault();
+        window.clearFieldError('otp-sms-codigo');
+        
+        const codigo = getOTPCode(smsInputs);
+        
+        // Validações específicas
+        if (codigo.length === 0) {
+          window.setFieldError('otp-sms-codigo', 'Código é obrigatório. Digite o código de 4 dígitos.');
+          smsInputs[0].focus();
+          return;
+        }
+        
+        if (codigo.length < 4) {
+          window.setFieldError('otp-sms-codigo', `Código incompleto. Faltam ${4 - codigo.length} dígito(s).`);
+          smsInputs[codigo.length].focus();
+          return;
+        }
+        
+        // Verificar se contém apenas números
+        if (!/^\d{4}$/.test(codigo)) {
+          window.setFieldError('otp-sms-codigo', 'Código deve conter apenas números.');
+          smsInputs.forEach(input => {
+            if (!/^\d$/.test(input.value)) {
+              input.classList.add('otp-error');
+            }
+          });
+          return;
+        }
+        
+        if (codigo === CODIGO_OTP_SMS) {
+          window.showToast('Código OTP validado com sucesso!');
+          document.getElementById('otp-sms-validar').style.display = 'none';
+          document.getElementById('otp-sms-sucesso').style.display = 'block';
+          if (timerSMS) clearInterval(timerSMS);
+        } else {
+          window.setFieldError('otp-sms-codigo', 'Código inválido. Use 1234 para testes.');
+          smsInputs.forEach(input => {
+            input.value = '';
+            input.classList.add('otp-error');
+          });
+          smsInputs[0].focus();
+        }
+      });
+
+      document.getElementById('btn-reenviar-otp-sms').addEventListener('click', function() {
+        if (this.disabled) return;
+        this.disabled = true;
+        this.textContent = 'Reenviando...';
+        
+        setTimeout(() => {
+          smsInputs.forEach(input => input.value = '');
+          smsInputs[0].focus();
+          iniciarTimer('sms');
+          tempoRestanteSMS = 60;
+          window.showToast('Código reenviado! Use 1234 para testes.');
+          this.textContent = 'Reenviar';
+        }, 1000);
+      });
+
+      // OTP Campo Único
+      document.getElementById('otp-unico-codigo').addEventListener('input', function(e) {
+        const valor = e.target.value.replace(/\D/g, '');
+        e.target.value = valor;
+        
+        window.clearFieldError('otp-unico-codigo');
+        
+        if (valor.length > 0 && valor.length < 6) {
+          window.setFieldError('otp-unico-codigo', `Código incompleto. Faltam ${6 - valor.length} dígito(s).`);
+        } else if (valor.length > 6) {
+          window.setFieldError('otp-unico-codigo', 'Código deve ter no máximo 6 dígitos.');
+          e.target.value = valor.slice(0, 6);
+        } else if (valor.length === 6 && !/^\d{6}$/.test(valor)) {
+          window.setFieldError('otp-unico-codigo', 'Código deve conter apenas números.');
+        } else {
+          window.clearFieldError('otp-unico-codigo');
+        }
+      });
+
+      document.getElementById('otp-unico-codigo').addEventListener('blur', function() {
+        const codigo = this.value;
+        
+        if (!codigo) {
+          window.setFieldError('otp-unico-codigo', 'Código é obrigatório.');
+        } else if (codigo.length < 6) {
+          window.setFieldError('otp-unico-codigo', `Código incompleto. Faltam ${6 - codigo.length} dígito(s).`);
+        } else if (codigo.length > 6) {
+          window.setFieldError('otp-unico-codigo', 'Código deve ter no máximo 6 dígitos.');
+        } else if (!/^\d{6}$/.test(codigo)) {
+          window.setFieldError('otp-unico-codigo', 'Código deve conter apenas números.');
+        } else {
+          window.clearFieldError('otp-unico-codigo');
+        }
+      });
+
+      document.getElementById('form-otp-unico').addEventListener('submit', function(e) {
+        e.preventDefault();
+        window.clearFieldError('otp-unico-codigo');
+        
+        const codigo = document.getElementById('otp-unico-codigo').value;
+        
+        // Validações específicas
+        if (!codigo) {
+          window.setFieldError('otp-unico-codigo', 'Código é obrigatório.');
+          return;
+        }
+        
+        if (codigo.length < 6) {
+          window.setFieldError('otp-unico-codigo', `Código incompleto. Faltam ${6 - codigo.length} dígito(s).`);
+          return;
+        }
+        
+        if (codigo.length > 6) {
+          window.setFieldError('otp-unico-codigo', 'Código deve ter no máximo 6 dígitos.');
+          return;
+        }
+        
+        if (!/^\d{6}$/.test(codigo)) {
+          window.setFieldError('otp-unico-codigo', 'Código deve conter apenas números.');
+          return;
+        }
+        
+        if (codigo === CODIGO_OTP_UNICO) {
+          window.showToast('Código OTP validado com sucesso!');
+          document.getElementById('otp-unico-codigo').value = '';
+        } else {
+          window.setFieldError('otp-unico-codigo', 'Código inválido. Use 123456 para testes.');
+        }
+      });
+      const tabs = document.querySelectorAll('.test-tab');
+      const contents = document.querySelectorAll('.test-code');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          contents.forEach(c => c.classList.remove('active'));
+
+          tab.classList.add('active');
+          document.getElementById(tab.dataset.target).classList.add('active');
+        });
+      });
+    </script>
+  </body>
+</html>
+

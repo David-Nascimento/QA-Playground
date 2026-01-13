@@ -1,0 +1,21 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shadow DOM — QA Playground</title>
+  <link rel="stylesheet" href="../../../css/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Shadow DOM</h1>
+    <p>Teste automação e inspeção em componentes com Shadow DOM.</p>
+    <div id="shadow-host"></div>
+  </main>
+  <script>
+    const host = document.getElementById('shadow-host');
+    const shadow = host.attachShadow({mode:'open'});
+    shadow.innerHTML = `<button id='shadow-btn' data-testid='shadow-btn'>Botão no Shadow DOM</button><div id='shadow-content'>Conteúdo interno</div>`;
+  </script>
+</body>
+</html>

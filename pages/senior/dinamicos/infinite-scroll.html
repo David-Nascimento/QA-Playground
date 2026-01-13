@@ -1,0 +1,33 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Infinite Scroll — QA Playground</title>
+  <link rel="stylesheet" href="../../../css/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Infinite Scroll</h1>
+    <p>Valide carregamento infinito de conteúdo ao rolar a página.</p>
+    <ul id="scroll-list"></ul>
+  </main>
+  <script>
+    let count = 0;
+    function addItems() {
+      const ul = document.getElementById('scroll-list');
+      for(let i=0;i<10;i++){
+        const li = document.createElement('li');
+        li.textContent = 'Item '+(++count);
+        ul.appendChild(li);
+      }
+    }
+    window.addEventListener('scroll', function() {
+      if(window.innerHeight + window.scrollY >= document.body.offsetHeight-10) {
+        addItems();
+      }
+    });
+    addItems();
+  </script>
+</body>
+</html>

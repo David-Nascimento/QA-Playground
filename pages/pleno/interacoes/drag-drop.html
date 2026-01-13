@@ -1,0 +1,400 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Drag and Drop — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="fundamentos.html">Fundamentos</a></li>
+            <li><a href="formularios.html">Formulários</a></li>
+            <li><a href="tabelas-pleno-index.html">Tabelas (Pleno)</a></li>
+            <li><a href="interacoes-pleno-index.html">Interações (Pleno)</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Drag and Drop</h2>
+          <div class="section-desc">Pratique testes de arrastar e soltar elementos. Esta página é ideal para testar automação de drag & drop, validação de elementos arrastáveis, zonas de soltura e interações complexas de mouse.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar arrastar elementos de uma posição para outra</li>
+                <li>Validar zonas de soltura (drop zones)</li>
+                <li>Praticar automação de drag & drop em diferentes frameworks</li>
+                <li>Testar múltiplos elementos arrastáveis</li>
+                <li>Validar feedback visual durante o arraste</li>
+                <li>Testar eventos de hover, double click e right click</li>
+                <li>Validar estados antes e depois do drop</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Como Utilizar:</strong></p>
+              <ol style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Arraste o elemento "Arraste-me" até a zona de soltura</li>
+                <li>Observe o feedback visual durante o arraste</li>
+                <li>Solte o elemento na zona de soltura</li>
+                <li>Valide que o drop foi detectado corretamente</li>
+                <li>Teste também hover, double click e right click nos outros elementos</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Drag & Drop</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Arraste o elemento arrastável até a zona de soltura.</p>
+            
+            <div style="display: flex; gap: var(--spacing-lg); align-items: center; flex-wrap: wrap; margin-bottom: var(--spacing-lg);">
+              <div 
+                id="drag-item" 
+                draggable="true"
+                data-testid="item-arrastavel"
+                style="padding: var(--spacing-lg); background: var(--accent); color: white; border-radius: var(--border-radius-md); cursor: grab; user-select: none; min-width: 150px; text-align: center; font-weight: 600; transition: all 0.3s ease;"
+              >
+                Arraste-me
+              </div>
+              <div style="font-size: var(--font-size-lg); color: var(--muted);">→</div>
+              <div 
+                id="drop-zone" 
+                data-testid="zona-soltura"
+                style="padding: var(--spacing-xl); border: 2px dashed rgba(122, 168, 116, 0.3); border-radius: var(--border-radius-md); min-width: 250px; text-align: center; background: var(--surface); transition: all 0.3s ease;"
+              >
+                <div id="drop-text" data-testid="drop-text">Solte aqui</div>
+              </div>
+            </div>
+
+            <div id="drop-status" data-testid="drop-status" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); min-height: 50px;">
+              <p class="muted">Nenhum item foi solto ainda...</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Outras Interações</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Teste também hover, double click e right click.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-md);">
+              <div 
+                id="hover-box" 
+                data-testid="box-hover"
+                style="padding: var(--spacing-lg); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md); text-align: center; cursor: pointer; transition: all 0.3s ease; background: var(--surface);"
+              >
+                <strong>Passe o mouse aqui</strong>
+                <div id="hover-status" data-testid="hover-status" class="muted" style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm);"></div>
+              </div>
+              
+              <div 
+                id="dbl" 
+                data-testid="box-double-click"
+                style="padding: var(--spacing-lg); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md); text-align: center; cursor: pointer; transition: all 0.3s ease; background: var(--surface);"
+              >
+                <strong>Dê dois cliques aqui</strong>
+                <div id="dbl-status" data-testid="dbl-status" class="muted" style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm);"></div>
+              </div>
+              
+              <div 
+                id="ctx" 
+                data-testid="box-right-click"
+                style="padding: var(--spacing-lg); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md); text-align: center; cursor: pointer; transition: all 0.3s ease; background: var(--surface);"
+              >
+                <strong>Clique com o botão direito</strong>
+                <div id="ctx-status" data-testid="ctx-status" class="muted" style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm);"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Arrastar elemento de origem para zona de soltura</li>
+                <li>Validar que drop foi detectado corretamente</li>
+                <li>Testar feedback visual durante o arraste</li>
+                <li>Validar estados antes e depois do drop</li>
+                <li>Testar hover, double click e right click</li>
+                <li>Validar múltiplos elementos arrastáveis</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="item-arrastavel"</code> - Elemento arrastável</li>
+                <li><code>data-testid="zona-soltura"</code> - Zona de soltura</li>
+                <li><code>data-testid="drop-text"</code> - Texto da zona de soltura</li>
+                <li><code>data-testid="drop-status"</code> - Status do drop</li>
+                <li><code>data-testid="box-hover"</code> - Caixa de hover</li>
+                <li><code>data-testid="box-double-click"</code> - Caixa de double click</li>
+                <li><code>data-testid="box-right-click"</code> - Caixa de right click</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Testar drag and drop
+cy.get('[data-testid="item-arrastavel"]').trigger('mousedown', { which: 1 })
+cy.get('[data-testid="zona-soltura"]').trigger('mousemove').trigger('mouseup')
+cy.get('[data-testid="drop-text"]').should('contain', 'Item solto')
+cy.get('[data-testid="drop-status"]').should('contain', 'Drop detectado')
+
+// Testar hover
+cy.get('[data-testid="box-hover"]').trigger('mouseover')
+cy.get('[data-testid="hover-status"]').should('contain', 'Mouse sobre')
+
+// Testar double click
+cy.get('[data-testid="box-double-click"]').dblclick()
+cy.get('[data-testid="dbl-status"]').should('contain', 'Double click')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Testar drag and drop
+await page.getByTestId('item-arrastavel').dragTo(page.getByTestId('zona-soltura'))
+await expect(page.getByTestId('drop-text')).toContainText('Item solto')
+await expect(page.getByTestId('drop-status')).toContainText('Drop detectado')
+
+// Testar hover
+await page.getByTestId('box-hover').hover()
+await expect(page.getByTestId('hover-status')).toContainText('Mouse sobre')
+
+// Testar double click
+await page.getByTestId('box-double-click').dblclick()
+await expect(page.getByTestId('dbl-status')).toContainText('Double click')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium Java - Testar drag and drop
+WebElement source = driver.findElement(By.cssSelector("[data-testid='item-arrastavel']"));
+WebElement target = driver.findElement(By.cssSelector("[data-testid='zona-soltura']"));
+Actions actions = new Actions(driver);
+actions.dragAndDrop(source, target).perform();
+WebElement dropText = driver.findElement(By.cssSelector("[data-testid='drop-text']"));
+assert dropText.getText().contains("Item solto");
+
+// Testar hover
+WebElement hoverBox = driver.findElement(By.cssSelector("[data-testid='box-hover']"));
+actions.moveToElement(hoverBox).perform();
+WebElement hoverStatus = driver.findElement(By.cssSelector("[data-testid='hover-status']"));
+assert hoverStatus.getText().contains("Mouse sobre");
+
+// Testar double click
+WebElement dblBox = driver.findElement(By.cssSelector("[data-testid='box-double-click']"));
+actions.doubleClick(dblBox).perform();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Testar drag and drop
+source = find('[data-testid="item-arrastavel"]')
+target = find('[data-testid="zona-soltura"]')
+source.drag_to(target)
+expect(find('[data-testid="drop-text"]')).to have_content('Item solto')
+expect(find('[data-testid="drop-status"]')).to have_content('Drop detectado')
+
+# Testar hover
+find('[data-testid="box-hover"]').hover
+expect(find('[data-testid="hover-status"]')).to have_content('Mouse sobre')
+
+# Testar double click
+find('[data-testid="box-double-click"]').double_click
+expect(find('[data-testid="dbl-status"]')).to have_content('Double click')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Testar drag and drop
+    Drag And Drop    css:[data-testid="item-arrastavel"]    css:[data-testid="zona-soltura"]
+    Element Should Contain    css:[data-testid="drop-text"]    Item solto
+    Element Should Contain    css:[data-testid="drop-status"]    Drop detectado
+
+Testar hover
+    Mouse Over    css:[data-testid="box-hover"]
+    Element Should Contain    css:[data-testid="hover-status"]    Mouse sobre
+
+Testar double click
+    Double Click Element    css:[data-testid="box-double-click"]
+    Element Should Contain    css:[data-testid="dbl-status"]    Double click
+                </code></pre>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      // Drag & Drop
+      const drag = document.getElementById('drag-item');
+      const drop = document.getElementById('drop-zone');
+      const dropText = document.getElementById('drop-text');
+      const dropStatus = document.getElementById('drop-status');
+      
+      drag.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', 'dragged');
+        drag.style.opacity = '0.5';
+        drag.style.cursor = 'grabbing';
+        drag.style.transform = 'scale(0.95)';
+      });
+      
+      drag.addEventListener('dragend', () => {
+        drag.style.opacity = '1';
+        drag.style.cursor = 'grab';
+        drag.style.transform = 'scale(1)';
+      });
+      
+      drop.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        drop.style.borderColor = 'var(--accent)';
+        drop.style.background = 'rgba(122, 168, 116, 0.05)';
+        drop.style.borderStyle = 'dashed';
+      });
+      
+      drop.addEventListener('dragleave', () => {
+        drop.style.borderColor = 'rgba(122, 168, 116, 0.3)';
+        drop.style.background = 'var(--surface)';
+      });
+      
+      drop.addEventListener('drop', (e) => {
+        e.preventDefault();
+        drop.style.borderColor = 'var(--accent)';
+        drop.style.borderStyle = 'solid';
+        drop.style.background = 'rgba(122, 168, 116, 0.1)';
+        dropText.textContent = 'Item solto! ✅';
+        dropText.style.color = 'var(--accent)';
+        dropText.style.fontWeight = '600';
+        dropStatus.innerHTML = '<strong style="color: var(--accent);">✅ Drop detectado com sucesso!</strong>';
+        window.showToast('Drop detectado com sucesso!');
+      });
+
+      // Hover Box
+      const hoverBox = document.getElementById('hover-box');
+      const hoverStatus = document.getElementById('hover-status');
+      
+      hoverBox.addEventListener('mouseenter', () => {
+        hoverBox.style.background = 'rgba(122, 168, 116, 0.1)';
+        hoverBox.style.borderColor = 'var(--accent)';
+        hoverBox.style.transform = 'translateY(-2px)';
+        hoverStatus.textContent = 'Mouse sobre o elemento';
+        hoverStatus.style.color = 'var(--accent)';
+      });
+      
+      hoverBox.addEventListener('mouseleave', () => {
+        hoverBox.style.background = 'var(--surface)';
+        hoverBox.style.borderColor = 'rgba(122, 168, 116, 0.2)';
+        hoverBox.style.transform = 'translateY(0)';
+        hoverStatus.textContent = '';
+      });
+
+      // Double Click
+      const dbl = document.getElementById('dbl');
+      const dblStatus = document.getElementById('dbl-status');
+      let clickCount = 0;
+      let clickTimer;
+      
+      dbl.addEventListener('click', () => {
+        clickCount++;
+        clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => {
+          if (clickCount === 2) {
+            dbl.style.background = 'rgba(122, 168, 116, 0.15)';
+            dbl.style.borderColor = 'var(--accent)';
+            dblStatus.textContent = 'Double click detectado!';
+            dblStatus.style.color = 'var(--accent)';
+            window.showToast('Double click detectado');
+          }
+          clickCount = 0;
+        }, 300);
+      });
+
+      // Right Click
+      const ctx = document.getElementById('ctx');
+      const ctxStatus = document.getElementById('ctx-status');
+      
+      ctx.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        ctx.style.background = 'rgba(214, 163, 95, 0.15)';
+        ctx.style.borderColor = 'var(--accent-2, #d6a35f)';
+        ctxStatus.textContent = 'Right click detectado!';
+        ctxStatus.style.color = 'var(--accent-2, #d6a35f)';
+        window.showToast('Right click detectado');
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
+</html>

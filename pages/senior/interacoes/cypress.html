@@ -1,0 +1,44 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cypress Spies, Stubs e Clocks — QA Playground</title>
+  <link rel="stylesheet" href="../../../css/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Cypress Spies, Stubs e Clocks</h1>
+    <p>Pratique técnicas avançadas de automação com Cypress: espiões, stubs e manipulação de tempo.</p>
+    <h2>Exemplo de Função para Espionar</h2>
+    <button id="btn-alert" data-testid="btn-alert">Disparar alerta</button>
+    <h2>Exemplo de XHR para Stub</h2>
+    <button id="btn-xhr" data-testid="btn-xhr">Buscar dados simulados</button>
+    <div id="xhr-result" style="margin-top:10px;"></div>
+    <h2>Exemplo de Clock/Timer</h2>
+    <button id="btn-timer" data-testid="btn-timer">Iniciar timer de 3s</button>
+    <div id="timer-result" style="margin-top:10px;"></div>
+  </main>
+  <script>
+    // Função para espiar com Cypress
+    document.getElementById('btn-alert').onclick = function() {
+      alert('Alerta disparado!');
+    };
+    // Simulação de XHR para stub
+    document.getElementById('btn-xhr').onclick = function() {
+      fetch('https://jsonplaceholder.typicode.com/users/1')
+        .then(r=>r.json())
+        .then(data=>{
+          document.getElementById('xhr-result').innerHTML = 'Nome: '+data.name+'<br>Email: '+data.email;
+        });
+    };
+    // Timer para clock
+    document.getElementById('btn-timer').onclick = function() {
+      document.getElementById('timer-result').textContent = 'Aguardando...';
+      setTimeout(()=>{
+        document.getElementById('timer-result').textContent = 'Timer finalizado!';
+      }, 3000);
+    };
+  </script>
+</body>
+</html>

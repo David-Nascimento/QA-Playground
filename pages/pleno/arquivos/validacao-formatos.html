@@ -1,0 +1,369 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Validação de Formatos — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="../../fundamentos.html">Fundamentos</a></li>
+            <li><a href="../../junior/formularios/">Formulários</a></li>
+            <li><a href="../tabelas/">Tabelas (Pleno)</a></li>
+            <li><a href="index.html">Interações (Pleno)</a></li>
+            <li><a href="../arquivos/">Arquivos (Pleno)</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Validação de Formatos</h2>
+          <div class="section-desc">Pratique testes de validação de formatos de arquivo. Esta página é ideal para testar automação de validação de tipos de arquivo, mensagens de erro para formatos inválidos e limites de tamanho.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar validação de formatos aceitos</li>
+                <li>Validar mensagens de erro para formatos inválidos</li>
+                <li>Praticar automação de validação de tipos de arquivo</li>
+                <li>Testar limites de tamanho de arquivo</li>
+                <li>Validar diferentes tipos de arquivo (imagens, documentos, etc.)</li>
+                <li>Testar validação de extensões de arquivo</li>
+                <li>Validar feedback visual de validação</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Como Utilizar:</strong></p>
+              <ol style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Selecione diferentes tipos de arquivo nos campos abaixo</li>
+                <li>Observe as mensagens de validação para formatos aceitos e rejeitados</li>
+                <li>Teste arquivos que excedem o tamanho máximo</li>
+                <li>Valide que mensagens de erro aparecem corretamente</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Validação por Tipo</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Teste validação de diferentes formatos de arquivo.</p>
+            
+            <div style="display: flex; flex-direction: column; gap: var(--spacing-lg);">
+              <div class="form-group">
+                <label for="file-images">Apenas Imagens (JPG, PNG, GIF)</label>
+                <input 
+                  id="file-images" 
+                  type="file" 
+                  data-testid="file-images"
+                  accept="image/jpeg,image/png,image/gif"
+                />
+                <div id="validation-images" data-testid="validation-images" class="hint" style="margin-top: var(--spacing-sm);"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="file-documents">Apenas Documentos (PDF, DOC, DOCX)</label>
+                <input 
+                  id="file-documents" 
+                  type="file" 
+                  data-testid="file-documents"
+                  accept="application/pdf,.doc,.docx"
+                />
+                <div id="validation-documents" data-testid="validation-documents" class="hint" style="margin-top: var(--spacing-sm);"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="file-csv">Apenas CSV</label>
+                <input 
+                  id="file-csv" 
+                  type="file" 
+                  data-testid="file-csv"
+                  accept=".csv,text/csv"
+                />
+                <div id="validation-csv" data-testid="validation-csv" class="hint" style="margin-top: var(--spacing-sm);"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Validação de Tamanho</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Teste validação de tamanho máximo de arquivo (máximo 5MB).</p>
+            
+            <div class="form-group">
+              <label for="file-size">Arquivo com Limite de Tamanho (máx. 5MB)</label>
+              <input 
+                id="file-size" 
+                type="file" 
+                data-testid="file-size"
+              />
+              <div class="hint">Tamanho máximo permitido: 5 MB</div>
+              <div id="validation-size" data-testid="validation-size" class="hint" style="margin-top: var(--spacing-sm);"></div>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar upload de formatos aceitos</li>
+                <li>Validar mensagens de erro para formatos inválidos</li>
+                <li>Testar arquivos que excedem tamanho máximo</li>
+                <li>Validar diferentes tipos de validação (tipo, tamanho)</li>
+                <li>Testar múltiplas validações simultaneamente</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="file-images"</code> - Campo imagens</li>
+                <li><code>data-testid="file-documents"</code> - Campo documentos</li>
+                <li><code>data-testid="file-csv"</code> - Campo CSV</li>
+                <li><code>data-testid="file-size"</code> - Campo com limite de tamanho</li>
+                <li><code>data-testid="validation-images"</code> - Mensagem validação imagens</li>
+                <li><code>data-testid="validation-documents"</code> - Mensagem validação documentos</li>
+                <li><code>data-testid="validation-size"</code> - Mensagem validação tamanho</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Testar validação de formatos
+// Formato válido
+cy.get('[data-testid="file-images"]').selectFile('cypress/fixtures/example.jpg')
+cy.get('[data-testid="validation-images"]').should('contain', 'válido')
+
+// Formato inválido (simulado)
+cy.get('[data-testid="file-images"]').selectFile('cypress/fixtures/example.pdf')
+cy.get('[data-testid="validation-images"]').should('contain', 'inválido')
+
+// Tamanho excedido
+cy.get('[data-testid="file-size"]').selectFile('cypress/fixtures/large-file.jpg')
+cy.get('[data-testid="validation-size"]').should('contain', 'excede')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Testar validação de formatos
+// Formato válido
+await page.getByTestId('file-images').setInputFiles('tests/fixtures/example.jpg')
+await expect(page.getByTestId('validation-images')).toContainText('válido')
+
+// Formato inválido
+await page.getByTestId('file-images').setInputFiles('tests/fixtures/example.pdf')
+await expect(page.getByTestId('validation-images')).toContainText('inválido')
+
+// Tamanho excedido
+await page.getByTestId('file-size').setInputFiles('tests/fixtures/large-file.jpg')
+await expect(page.getByTestId('validation-size')).toContainText('excede')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium Java - Testar validação de formatos
+WebElement fileInput = driver.findElement(By.cssSelector("[data-testid='file-images']"));
+String validFile = System.getProperty("user.dir") + "/src/test/resources/example.jpg";
+fileInput.sendKeys(validFile);
+Thread.sleep(500);
+WebElement validation = driver.findElement(By.cssSelector("[data-testid='validation-images']"));
+assert validation.getText().contains("válido");
+
+// Testar formato inválido
+fileInput.clear();
+String invalidFile = System.getProperty("user.dir") + "/src/test/resources/example.pdf";
+fileInput.sendKeys(invalidFile);
+Thread.sleep(500);
+assert validation.getText().contains("inválido");
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Testar validação de formatos
+# Formato válido
+attach_file('file-images', Rails.root.join('spec/fixtures/example.jpg'))
+expect(find('[data-testid="validation-images"]')).to have_content('válido')
+
+# Formato inválido
+attach_file('file-images', Rails.root.join('spec/fixtures/example.pdf'))
+expect(find('[data-testid="validation-images"]')).to have_content('inválido')
+
+# Tamanho excedido
+attach_file('file-size', Rails.root.join('spec/fixtures/large-file.jpg'))
+expect(find('[data-testid="validation-size"]')).to have_content('excede')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Testar formato válido
+    Choose File    css:[data-testid="file-images"]    ${CURDIR}/example.jpg
+    Element Should Contain    css:[data-testid="validation-images"]    válido
+
+Testar formato inválido
+    Choose File    css:[data-testid="file-images"]    ${CURDIR}/example.pdf
+    Element Should Contain    css:[data-testid="validation-images"]    inválido
+
+Testar tamanho excedido
+    Choose File    css:[data-testid="file-size"]    ${CURDIR}/large-file.jpg
+    Element Should Contain    css:[data-testid="validation-size"]    excede
+                </code></pre>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+
+      function validateFile(file, acceptTypes, validationElement) {
+        if (!file) {
+          validationElement.textContent = '';
+          validationElement.className = 'hint';
+          return;
+        }
+
+        const fileSize = file.size;
+        const fileType = file.type;
+        const fileName = file.name;
+        const fileExtension = fileName.split('.').pop().toLowerCase();
+
+        // Validar tipo
+        let isValidType = false;
+        if (acceptTypes) {
+          const acceptedTypes = acceptTypes.split(',').map(t => t.trim());
+          isValidType = acceptedTypes.some(type => {
+            if (type.startsWith('.')) {
+              return fileExtension === type.substring(1);
+            }
+            if (type.includes('*')) {
+              const baseType = type.split('/')[0];
+              return fileType.startsWith(baseType + '/');
+            }
+            return fileType === type;
+          });
+        } else {
+          isValidType = true; // Sem restrição de tipo
+        }
+
+        // Validar tamanho
+        const isValidSize = fileSize <= MAX_SIZE;
+
+        if (!isValidType) {
+          validationElement.innerHTML = '<span style="color: var(--error, #dc3545);">❌ Formato inválido. Tipo de arquivo não aceito.</span>';
+          validationElement.className = 'error';
+          return;
+        }
+
+        if (!isValidSize) {
+          validationElement.innerHTML = '<span style="color: var(--error, #dc3545);">❌ Arquivo muito grande. Tamanho máximo: 5MB.</span>';
+          validationElement.className = 'error';
+          return;
+        }
+
+        const sizeText = fileSize < 1024 ? fileSize + ' B' : 
+                       fileSize < 1024 * 1024 ? Math.round(fileSize / 1024) + ' KB' : 
+                       (fileSize / (1024 * 1024)).toFixed(2) + ' MB';
+
+        validationElement.innerHTML = `<span style="color: var(--accent);">✅ Arquivo válido: ${fileName} (${sizeText})</span>`;
+        validationElement.className = 'hint';
+      }
+
+      document.getElementById('file-images').addEventListener('change', function() {
+        const file = this.files[0];
+        const validation = document.getElementById('validation-images');
+        validateFile(file, 'image/jpeg,image/png,image/gif', validation);
+      });
+
+      document.getElementById('file-documents').addEventListener('change', function() {
+        const file = this.files[0];
+        const validation = document.getElementById('validation-documents');
+        validateFile(file, 'application/pdf,.doc,.docx', validation);
+      });
+
+      document.getElementById('file-csv').addEventListener('change', function() {
+        const file = this.files[0];
+        const validation = document.getElementById('validation-csv');
+        validateFile(file, '.csv,text/csv', validation);
+      });
+
+      document.getElementById('file-size').addEventListener('change', function() {
+        const file = this.files[0];
+        const validation = document.getElementById('validation-size');
+        validateFile(file, null, validation);
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
+</html>
