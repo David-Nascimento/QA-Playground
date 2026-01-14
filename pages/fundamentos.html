@@ -3,9 +3,150 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Fundamentos — QA Playground</title>
+    <title>Fundamentos de Testes — QA Playground</title>
     <link rel="stylesheet" href="../css/styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      .search-container {
+        position: sticky;
+        top: calc(var(--header-height) + var(--spacing-md));
+        background: var(--surface);
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-md);
+        box-shadow: var(--shadow-sm);
+        margin-bottom: var(--spacing-lg);
+        z-index: 100;
+      }
+      .search-input {
+        width: 100%;
+        padding: var(--spacing-sm) var(--spacing-md);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius-md);
+        font-size: var(--font-size-base);
+        background: var(--surface);
+        color: var(--text);
+      }
+      .search-input:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(122, 168, 116, 0.1);
+        outline: none;
+      }
+      .content-section {
+        margin-bottom: var(--spacing-xl);
+        padding: var(--spacing-lg);
+        background: var(--surface);
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-sm);
+        transition: opacity 0.3s ease;
+      }
+      .content-section.hidden {
+        display: none;
+      }
+      .content-section h3 {
+        color: var(--accent);
+        margin-top: 0;
+        padding-bottom: var(--spacing-sm);
+        border-bottom: 2px solid rgba(122, 168, 116, 0.2);
+      }
+      .content-section h4 {
+        color: var(--text);
+        margin-top: var(--spacing-lg);
+        margin-bottom: var(--spacing-md);
+        font-size: var(--font-size-lg);
+      }
+      .content-card {
+        background: rgba(0, 0, 0, 0.02);
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-md);
+        border-left: 4px solid var(--accent);
+        margin-bottom: var(--spacing-md);
+      }
+      .content-card h5 {
+        margin-top: 0;
+        color: var(--accent);
+        font-size: var(--font-size-base);
+      }
+      .link-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .link-list li {
+        padding: var(--spacing-sm) 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      }
+      .link-list li:last-child {
+        border-bottom: none;
+      }
+      .link-list a {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        color: var(--accent);
+        text-decoration: none;
+        transition: color var(--transition);
+      }
+      .link-list a:hover {
+        color: var(--accent-2);
+        text-decoration: underline;
+      }
+      .link-list a::before {
+        content: '🔗';
+        font-size: 1.2em;
+      }
+      .badge-cert {
+        display: inline-block;
+        padding: 4px 12px;
+        background: var(--accent);
+        color: white;
+        border-radius: var(--border-radius-sm);
+        font-size: var(--font-size-sm);
+        font-weight: 600;
+        margin-left: var(--spacing-sm);
+      }
+      .highlight-text {
+        background: rgba(255, 248, 200, 0.3);
+        padding: 2px 6px;
+        border-radius: var(--border-radius-sm);
+        font-weight: 600;
+      }
+      .no-results {
+        text-align: center;
+        padding: var(--spacing-xl);
+        color: var(--muted);
+        display: none;
+      }
+      .no-results.show {
+        display: block;
+      }
+      .toc {
+        background: var(--surface);
+        padding: var(--spacing-lg);
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-sm);
+        margin-bottom: var(--spacing-xl);
+      }
+      .toc h3 {
+        margin-top: 0;
+        color: var(--accent);
+      }
+      .toc ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .toc li {
+        padding: var(--spacing-xs) 0;
+      }
+      .toc a {
+        color: var(--text);
+        text-decoration: none;
+        transition: color var(--transition);
+      }
+      .toc a:hover {
+        color: var(--accent);
+      }
+    </style>
   </head>
   <body>
     <header class="et-header">
@@ -16,10 +157,7 @@
         <nav class="et-nav" aria-label="Navegação principal">
           <ul class="et-nav-list">
             <li><a href="../index.html">Início</a></li>
-            <li><a href="fundamentos.html" aria-current="page">Fundamentos</a></li>
-            <li><a href="junior/formularios/">Formulários</a></li>
-            <li><a href="junior/tabelas/">Tabelas</a></li>
-            <li><a href="junior/interacoes/">Interações</a></li>
+            <li><a href="tools/xpath-css-tester.html">XPath e CSS Tester</a></li>
             <li class="nav-dropdown">
               <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
               <ul class="dropdown-menu">
@@ -39,101 +177,640 @@
     <main class="container">
       <section class="section">
         <div class="section-header">
-          <h2>Fundamentos</h2>
-          <div class="section-desc">Elementos básicos para testes manuais e automação. Cada elemento possui <code>id</code> e <code>data-testid</code> para facilitar localização e automação.</div>
+          <h2>Fundamentos de Testes de Software</h2>
+          <div class="section-desc">Guia completo sobre fundamentos de testes baseado em ISTQB, práticas de estudo e técnicas para encontrar e reportar bugs. Ideal para novos QAs que estão começando na área.</div>
         </div>
 
-        <div class="subsections">
-          <div class="subsection">
-            <h3>Inputs & Controls</h3>
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="nome">Nome</label>
-                <input id="nome" data-testid="input-nome" placeholder="Digite seu nome" />
-                <div class="hint">Campo simples para testar localização por <code>id</code> e <code>data-testid</code>.</div>
-              </div>
+        <!-- Busca por Texto -->
+        <div class="search-container">
+          <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar conteúdo..." aria-label="Buscar conteúdo" />
+          <div id="noResults" class="no-results">
+            <p>Nenhum resultado encontrado. Tente outros termos de busca.</p>
+          </div>
+        </div>
 
-              <div class="form-group">
-                <label>Gênero</label>
-                <div role="radiogroup" aria-labelledby="genero-label" class="radio-group" data-testid="radiogroup-genero">
-                  <label><input type="radio" name="genero" value="m" data-testid="radio-m"> Masculino</label>
-                  <label><input type="radio" name="genero" value="f" data-testid="radio-f"> Feminino</label>
-                  <label><input type="radio" name="genero" value="o" data-testid="radio-o"> Outro</label>
-                </div>
-              </div>
+        <!-- Índice -->
+        <div class="toc">
+          <h3>Índice</h3>
+          <ul>
+            <li><a href="#bstqb">Fundamentos ISTQB</a></li>
+            <li><a href="#piramide">Pirâmide de Testes</a></li>
+            <li><a href="#estudar">Como Estudar</a></li>
+            <li><a href="#praticar">Como Praticar</a></li>
+            <li><a href="#seguir">Como Seguir com Testes</a></li>
+            <li><a href="#o-que-testar">O Que Testar</a></li>
+            <li><a href="#como-testar">Como Testar</a></li>
+            <li><a href="#encontrar-bugs">Como Encontrar Bugs</a></li>
+            <li><a href="#reportar-bugs">Como Reportar Bugs</a></li>
+            <li><a href="#links-uteis">Links e Documentos Úteis</a></li>
+          </ul>
+        </div>
 
-              <div class="form-group">
-                <label for="agree">Aceita os termos?</label>
-                <label class="radio-group" style="align-items: center; gap: 8px;">
-                  <input id="agree" data-testid="checkbox-aceite" type="checkbox" />
-                  <span>Sim, aceito os termos</span>
-                </label>
-              </div>
+        <!-- Fundamentos ISTQB -->
+        <div id="bstqb" class="content-section" data-searchable>
+          <h3>Fundamentos de Testes (Baseado em ISTQB)</h3>
+          
+          <div class="content-card">
+            <h5>O que é Teste de Software?</h5>
+            <p>Segundo o <span class="highlight-text">ISTQB (International Software Testing Qualifications Board)</span>, teste de software é o processo que consiste em atividades de ciclo de vida do desenvolvimento, tanto estáticas quanto dinâmicas, preocupadas com o planejamento, preparação e avaliação de software e produtos de trabalho relacionados para determinar se eles satisfazem os requisitos especificados, para demonstrar que são adequados para o propósito e para detectar defeitos.</p>
+          </div>
 
-              <div class="form-group">
-                <label for="toggle-notif">Notificações</label>
-                <label class="switch">
-                  <input id="toggle-notif" type="checkbox" data-testid="toggle-notif">
-                  <span class="slider"></span>
-                </label>
-                <div class="hint">Toggle switch para ativar/desativar notificações</div>
-              </div>
+          <h4>Princípios Fundamentais de Testes (ISTQB)</h4>
+          
+          <div class="content-card">
+            <h5>1. Teste Mostra a Presença de Defeitos</h5>
+            <p>Os testes podem mostrar que existem defeitos, mas não podem provar que não existem defeitos. Testar reduz a probabilidade de defeitos não descobertos, mas mesmo que nenhum defeito seja encontrado, não é uma prova de correção.</p>
+            <p><strong>Exemplo prático:</strong> Se você testar um formulário de login 100 vezes e não encontrar bugs, isso não garante que não há bugs. Pode haver um bug que só ocorre em uma combinação específica de condições.</p>
+          </div>
 
-              <div class="form-full">
-                <button id="btn-salvar" data-testid="btn-salvar" class="btn">Salvar</button>
+          <div class="content-card">
+            <h5>2. Teste Exaustivo é Impossível</h5>
+            <p>Exceto para casos triviais, testar todas as combinações de entradas e pré-condições não é viável. Em vez de testar exaustivamente, use análise de risco e priorização para focar nos testes mais importantes.</p>
+            <p><strong>Exemplo prático:</strong> Um campo de senha com 8 caracteres pode ter 95^8 combinações possíveis. Testar todas seria impraticável. Foque em casos de borda, validações e cenários críticos.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>3. Teste Antecipado Economiza Tempo e Dinheiro</h5>
+            <p>Para encontrar defeitos cedo, as atividades de teste devem começar o mais cedo possível no ciclo de vida do desenvolvimento de software ou do sistema, e devem ser focadas em objetivos definidos.</p>
+            <p><strong>Exemplo prático:</strong> Encontrar um bug na fase de requisitos custa muito menos do que encontrá-lo em produção. Revise requisitos, faça testes estáticos de código, e teste desde o início.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>4. Defeitos se Agrupam</h5>
+            <p>Um pequeno número de módulos contém a maioria dos defeitos descobertos durante o pré-lançamento, ou mostra a maioria das falhas operacionais.</p>
+            <p><strong>Exemplo prático:</strong> Se você encontrar vários bugs em um módulo de pagamento, é provável que haja mais bugs lá. Foque testes adicionais nessa área.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>5. Cuidado com o Paradoxo do Pesticida</h5>
+            <p>Se os mesmos testes forem repetidos várias vezes, eventualmente esses testes não encontrarão mais novos defeitos. Para detectar novos defeitos, os casos de teste precisam ser regularmente revisados e atualizados.</p>
+            <p><strong>Exemplo prático:</strong> Se você sempre testa os mesmos 10 casos de teste, pare de encontrar bugs. Adicione testes exploratórios, novos cenários e casos de borda.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>6. Teste Depende do Contexto</h5>
+            <p>O teste é feito de forma diferente em contextos diferentes. Por exemplo, software de segurança crítica é testado de forma diferente de um site de e-commerce.</p>
+            <p><strong>Exemplo prático:</strong> Um aplicativo bancário precisa de testes rigorosos de segurança, enquanto um blog pode focar mais em usabilidade e performance.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>7. Ausência de Erros é uma Ilusão</h5>
+            <p>Encontrar e corrigir defeitos não ajuda se o sistema construído não for utilizável e não atender às necessidades e expectativas dos usuários.</p>
+            <p><strong>Exemplo prático:</strong> Você pode ter um sistema sem bugs técnicos, mas se ele não resolver o problema do usuário ou for difícil de usar, ainda é um fracasso.</p>
+          </div>
+
+          <h4>Níveis de Teste (ISTQB)</h4>
+          
+          <div class="content-card">
+            <h5>Teste de Componente (Unit Testing)</h5>
+            <p>Testa componentes individuais ou módulos do software. Geralmente feito por desenvolvedores.</p>
+            <p><strong>Exemplo:</strong> Testar uma função que calcula desconto, verificando se retorna o valor correto para diferentes entradas.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>Teste de Integração</h5>
+            <p>Testa a interação entre componentes ou sistemas. Verifica se as interfaces funcionam corretamente.</p>
+            <p><strong>Exemplo:</strong> Testar se o módulo de autenticação se comunica corretamente com o módulo de perfil do usuário.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>Teste de Sistema</h5>
+            <p>Testa o sistema completo e integrado. Verifica se atende aos requisitos funcionais e não-funcionais.</p>
+            <p><strong>Exemplo:</strong> Testar todo o fluxo de compra em um e-commerce, desde a seleção do produto até o pagamento.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>Teste de Aceitação</h5>
+            <p>Testa se o sistema atende aos critérios de aceitação do usuário. Pode ser UAT (User Acceptance Testing) ou AT (Acceptance Testing).</p>
+            <p><strong>Exemplo:</strong> Usuários finais testam o sistema em ambiente de produção para validar se atende suas necessidades.</p>
+          </div>
+
+          <h4 id="piramide">A Pirâmide de Testes</h4>
+          
+          <div class="content-card">
+            <h5>Conceito da Pirâmide</h5>
+            <p>A <span class="highlight-text">Pirâmide de Testes</span> é um modelo conceitual que representa a distribuição ideal de testes em diferentes níveis. Foi popularizada por Mike Cohn e é amplamente adotada na indústria de software.</p>
+            <p>A pirâmide sugere que devemos ter:</p>
+            <ul>
+              <li><strong>Muitos testes de unidade</strong> (base da pirâmide) - rápidos, baratos, fáceis de manter</li>
+              <li><strong>Alguns testes de integração</strong> (meio da pirâmide) - testam interações entre componentes</li>
+              <li><strong>Poucos testes end-to-end</strong> (topo da pirâmide) - lentos, caros, mas validam o sistema completo</li>
+            </ul>
+          </div>
+
+          <!-- Representação Visual da Pirâmide -->
+          <div style="margin: var(--spacing-xl) 0; display: flex; justify-content: center; align-items: flex-end; min-height: 300px;">
+            <div style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 500px;">
+              <!-- Topo: Testes E2E -->
+              <div style="background: var(--accent); color: white; padding: var(--spacing-md) var(--spacing-lg); border-radius: var(--border-radius-md) var(--border-radius-md) 0 0; width: 200px; text-align: center; margin-bottom: 2px;">
+                <strong>Testes E2E</strong>
+                <div style="font-size: var(--font-size-sm); margin-top: var(--spacing-xs);">Poucos</div>
+              </div>
+              
+              <!-- Meio: Testes de Integração -->
+              <div style="background: var(--accent-2); color: white; padding: var(--spacing-md) var(--spacing-lg); width: 300px; text-align: center; margin-bottom: 2px;">
+                <strong>Testes de Integração</strong>
+                <div style="font-size: var(--font-size-sm); margin-top: var(--spacing-xs);">Alguns</div>
+              </div>
+              
+              <!-- Base: Testes de Unidade -->
+              <div style="background: var(--success); color: white; padding: var(--spacing-md) var(--spacing-lg); border-radius: 0 0 var(--border-radius-md) var(--border-radius-md); width: 400px; text-align: center;">
+                <strong>Testes de Unidade</strong>
+                <div style="font-size: var(--font-size-sm); margin-top: var(--spacing-xs);">Muitos</div>
               </div>
             </div>
           </div>
 
-          <div class="subsection">
-            <h3>Select, Textarea & Upload</h3>
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="pais">País</label>
-                <select id="pais" data-testid="select-pais">
-                  <option value="">-- selecione --</option>
-                  <option value="br">Brasil</option>
-                  <option value="pt">Portugal</option>
-                  <option value="us">Estados Unidos</option>
-                  <option value="es">Espanha</option>
-                  <option value="fr">França</option>
-                </select>
-                <div class="error" id="pais-error" aria-live="polite" style="display:none"></div>
-              </div>
+          <div class="content-card">
+            <h5>Por que a Pirâmide?</h5>
+            <p><strong>Velocidade:</strong> Testes de unidade são muito mais rápidos que testes E2E. Você pode executar milhares em segundos.</p>
+            <p><strong>Custo:</strong> Testes de unidade são mais baratos de criar e manter. Eles não dependem de infraestrutura complexa.</p>
+            <p><strong>Feedback Rápido:</strong> Quando um teste de unidade falha, você sabe exatamente onde está o problema. Testes E2E podem falhar por várias razões.</p>
+            <p><strong>Manutenibilidade:</strong> Testes de unidade são mais estáveis e menos propensos a quebrar quando a UI muda.</p>
+          </div>
 
-              <div class="form-group form-full">
-                <label for="obs">Observações</label>
-                <textarea id="obs" data-testid="textarea-obs" rows="4" placeholder="Digite suas observações aqui..."></textarea>
-              </div>
+          <div class="content-card">
+            <h5>Características de Cada Nível</h5>
+            
+            <h6 style="color: var(--success); margin-top: var(--spacing-md);">Base: Testes de Unidade</h6>
+            <ul>
+              <li><strong>Quantidade:</strong> Muitos (70-80% dos testes)</li>
+              <li><strong>Velocidade:</strong> Muito rápidos (milissegundos)</li>
+              <li><strong>Custo:</strong> Baixo</li>
+              <li><strong>Escopo:</strong> Componente isolado</li>
+              <li><strong>Responsável:</strong> Desenvolvedores</li>
+              <li><strong>Exemplo:</strong> Testar uma função que calcula o total de um carrinho de compras</li>
+            </ul>
 
-              <div class="form-group form-full">
-                <label for="arquivo">Envio de arquivo (ex.: imagem)</label>
-                <input id="arquivo" data-testid="input-arquivo" type="file" accept="image/*" />
-                <div id="arquivo-nome" class="hint" aria-live="polite"></div>
-              </div>
-            </div>
+            <h6 style="color: var(--accent-2); margin-top: var(--spacing-md);">Meio: Testes de Integração</h6>
+            <ul>
+              <li><strong>Quantidade:</strong> Alguns (15-20% dos testes)</li>
+              <li><strong>Velocidade:</strong> Moderados (segundos)</li>
+              <li><strong>Custo:</strong> Médio</li>
+              <li><strong>Escopo:</strong> Múltiplos componentes trabalhando juntos</li>
+              <li><strong>Responsável:</strong> Desenvolvedores e QAs</li>
+              <li><strong>Exemplo:</strong> Testar se o módulo de autenticação se comunica corretamente com o banco de dados</li>
+            </ul>
+
+            <h6 style="color: var(--accent); margin-top: var(--spacing-md);">Topo: Testes End-to-End</h6>
+            <ul>
+              <li><strong>Quantidade:</strong> Poucos (5-10% dos testes)</li>
+              <li><strong>Velocidade:</strong> Lentos (minutos)</li>
+              <li><strong>Custo:</strong> Alto</li>
+              <li><strong>Escopo:</strong> Sistema completo</li>
+              <li><strong>Responsável:</strong> QAs</li>
+              <li><strong>Exemplo:</strong> Testar o fluxo completo de compra em um e-commerce, do login até o recebimento do produto</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h5>Anti-padrões: O que Evitar</h5>
+            
+            <h6 style="color: var(--danger); margin-top: var(--spacing-md);">Pirâmide Invertida (Ice Cream Cone)</h6>
+            <p>Muitos testes E2E e poucos testes de unidade. Isso resulta em:</p>
+            <ul>
+              <li>Suíte de testes lenta</li>
+              <li>Alto custo de manutenção</li>
+              <li>Feedback tardio</li>
+              <li>Testes frágeis que quebram facilmente</li>
+            </ul>
+
+            <h6 style="color: var(--warning); margin-top: var(--spacing-md);">Cilindro (Cylinder)</h6>
+            <p>Mesma quantidade de testes em todos os níveis. Isso não é eficiente porque:</p>
+            <ul>
+              <li>Testes E2E são mais caros e lentos</li>
+              <li>Você não está aproveitando a velocidade dos testes de unidade</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h5>Como Aplicar a Pirâmide na Prática</h5>
+            <ol>
+              <li><strong>Comece pela base:</strong> Escreva testes de unidade para cada nova funcionalidade</li>
+              <li><strong>Adicione testes de integração:</strong> Teste como os componentes trabalham juntos</li>
+              <li><strong>Complete com E2E:</strong> Adicione alguns testes E2E para validar fluxos críticos</li>
+              <li><strong>Revise regularmente:</strong> Se você tem muitos testes E2E, considere mover alguns para testes de unidade ou integração</li>
+              <li><strong>Mantenha o equilíbrio:</strong> A pirâmide é um guia, não uma regra rígida. Adapte ao seu contexto</li>
+            </ol>
+          </div>
+
+          <h4>Tipos de Teste (ISTQB)</h4>
+          
+          <div class="content-card">
+            <h5>Testes Funcionais</h5>
+            <p>Avaliam se o software faz o que deveria fazer, testando funcionalidades e requisitos.</p>
+            <p><strong>Exemplo:</strong> Testar se o botão "Adicionar ao carrinho" realmente adiciona o produto ao carrinho.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>Testes Não-Funcionais</h5>
+            <p>Avaliam características como performance, usabilidade, segurança, confiabilidade.</p>
+            <p><strong>Exemplo:</strong> Testar se a página carrega em menos de 3 segundos, ou se o sistema suporta 1000 usuários simultâneos.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>Testes Estruturais (Caixa Branca)</h5>
+            <p>Baseados na estrutura interna do código. Testam caminhos de execução, condições, loops.</p>
+            <p><strong>Exemplo:</strong> Garantir que todas as branches de um if/else sejam testadas, ou que todos os loops sejam executados.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>Testes Baseados em Experiência</h5>
+            <p>Baseados no conhecimento e experiência do testador. Incluem testes exploratórios e ad-hoc.</p>
+            <p><strong>Exemplo:</strong> Explorar o sistema livremente, tentando quebrá-lo de formas criativas baseadas em experiência anterior.</p>
           </div>
         </div>
 
-        <div class="subsection" style="margin-top: var(--spacing-lg);">
-          <h3>Elementos Dinâmicos</h3>
-          <p class="muted">Conteúdo que aparece/desaparece, delays e loading simulado.</p>
-          <div class="controls">
-            <button id="btn-toggle-extra" data-testid="btn-toggle-extra" class="btn">Mostrar/Ocultar</button>
-            <button id="btn-load" data-testid="btn-load" class="btn btn-secondary">Simular Carregamento (2s)</button>
+        <!-- Como Estudar -->
+        <div id="estudar" class="content-section" data-searchable>
+          <h3>Como Estudar</h3>
+
+          <div class="content-card">
+            <h5>1. Defina um Cronograma</h5>
+            <p>Estabeleça um plano de estudos com metas diárias ou semanais. Consistência é mais importante que intensidade.</p>
+            <p><strong>Dica:</strong> Reserve pelo menos 1-2 horas por dia para estudos.</p>
           </div>
-          <div id="extra" data-testid="extra" style="display:none; margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
-            <strong>Elemento exibido dinamicamente!</strong> Este elemento pode ser usado para testar waits e validações de visibilidade.
+
+          <div class="content-card">
+            <h5>2. Use Técnicas de Aprendizado Ativo</h5>
+            <ul>
+              <li><strong>Feynman Technique:</strong> Explique os conceitos em suas próprias palavras</li>
+              <li><strong>Pomodoro:</strong> Estude em blocos de 25 minutos com pausas de 5 minutos</li>
+              <li><strong>Mapas Mentais:</strong> Crie visualizações dos conceitos e suas relações</li>
+              <li><strong>Flashcards:</strong> Use para memorizar termos e definições importantes</li>
+            </ul>
           </div>
-          <div id="spinner" style="display:none; margin-top: var(--spacing-md); padding: var(--spacing-md); text-align: center; color: var(--accent);">
-            <strong>Carregando...</strong> ⏳
+
+          <div class="content-card">
+            <h5>3. Pratique com Projetos Reais</h5>
+            <p>Aplique o que aprendeu em projetos práticos. Crie casos de teste, execute testes manuais e automatize cenários simples.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>4. Revise Regularmente</h5>
+            <p>Faça revisões periódicas do conteúdo estudado. A repetição espaçada ajuda a consolidar o aprendizado na memória de longo prazo.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>5. Ensine Outros</h5>
+            <p>Uma das melhores formas de aprender é ensinar. Compartilhe conhecimento em blogs, fóruns ou grupos de estudo.</p>
           </div>
         </div>
 
-        <div class="subsection" style="margin-top: var(--spacing-lg);">
-          <h3>Validação de Formulário</h3>
-          <p class="muted">Teste validações e mensagens de erro.</p>
-          <button id="btn-validate" data-testid="btn-validate" class="btn">Validar Formulário</button>
+        <!-- Como Praticar -->
+        <div id="praticar" class="content-section" data-searchable>
+          <h3>Como Praticar</h3>
+
+          <div class="content-card">
+            <h5>1. Use Projetos Open Source</h5>
+            <p>Contribua com testes em projetos open source. Isso oferece experiência real e você pode adicionar ao seu portfólio.</p>
+            <p><strong>Plataformas recomendadas:</strong> GitHub, GitLab, SourceForge</p>
+          </div>
+
+          <div class="content-card">
+            <h5>2. Crie Seu Próprio Projeto de Testes</h5>
+            <p>Desenvolva um projeto pessoal focado em testes. Pode ser um framework de testes, ferramentas de automação ou um playground como este.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>3. Pratique em Sites de Demonstração</h5>
+            <p>Use sites como este QA Playground, The Internet, Sauce Demo, ou outros ambientes de prática para testar diferentes cenários.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>4. Participe de Desafios e Competições</h5>
+            <p>Junte-se a comunidades que promovem desafios de testes. Isso ajuda a desenvolver habilidades de resolução de problemas.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>5. Automatize Cenários Comuns</h5>
+            <p>Pratique automação criando scripts para cenários comuns como login, cadastro, busca, etc. Use diferentes ferramentas (Selenium, Playwright, Cypress).</p>
+          </div>
+        </div>
+
+        <!-- Como Seguir com Testes -->
+        <div id="seguir" class="content-section" data-searchable>
+          <h3>Como Seguir com Testes</h3>
+
+          <div class="content-card">
+            <h5>1. Construa uma Base Sólida</h5>
+            <p>Domine os fundamentos antes de avançar para tópicos complexos. Entenda bem conceitos como casos de teste, bugs, tipos de teste, etc.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>2. Escolha uma Especialização</h5>
+            <p>Após dominar o básico, escolha uma área para se especializar:</p>
+            <ul>
+              <li><strong>Testes Manuais:</strong> Foco em análise e execução manual</li>
+              <li><strong>Automação:</strong> Desenvolvimento de frameworks e scripts</li>
+              <li><strong>Performance:</strong> Testes de carga, stress e volume</li>
+              <li><strong>Segurança:</strong> Testes de segurança e vulnerabilidades</li>
+              <li><strong>Mobile:</strong> Testes em aplicativos móveis</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h5>3. Aprenda Ferramentas Relevantes</h5>
+            <p>Familiarize-se com ferramentas populares na área escolhida. Para automação, aprenda Selenium, Playwright, ou Cypress. Para gerenciamento, Jira, TestRail, ou Zephyr.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>4. Participe de Comunidades</h5>
+            <p>Junte-se a comunidades de QA, participe de meetups, webinars e conferências. Networking é essencial para crescimento profissional.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>5. Mantenha-se Atualizado</h5>
+            <p>A área de testes evolui constantemente. Leia blogs, siga especialistas no LinkedIn, assista vídeos e mantenha-se atualizado com novas tendências.</p>
+          </div>
+        </div>
+
+        <!-- O Que Testar -->
+        <div id="o-que-testar" class="content-section" data-searchable>
+          <h3>O Que Testar</h3>
+
+          <h4>Funcionalidade</h4>
+          <div class="content-card">
+            <h5>Testes Funcionais</h5>
+            <ul>
+              <li>Validação de regras de negócio</li>
+              <li>Fluxos de usuário completos</li>
+              <li>Integração entre módulos</li>
+              <li>APIs e endpoints</li>
+              <li>Validações de formulários</li>
+            </ul>
+          </div>
+
+          <h4>Interface e Usabilidade</h4>
+          <div class="content-card">
+            <h5>Testes de UI/UX</h5>
+            <ul>
+              <li>Layout e responsividade</li>
+              <li>Acessibilidade (WCAG)</li>
+              <li>Navegação e usabilidade</li>
+              <li>Compatibilidade entre navegadores</li>
+              <li>Design system e consistência visual</li>
+            </ul>
+          </div>
+
+          <h4>Performance</h4>
+          <div class="content-card">
+            <h5>Testes de Performance</h5>
+            <ul>
+              <li>Tempo de resposta</li>
+              <li>Capacidade e carga</li>
+              <li>Stress e volume</li>
+              <li>Escalabilidade</li>
+              <li>Uso de recursos (CPU, memória, rede)</li>
+            </ul>
+          </div>
+
+          <h4>Segurança</h4>
+          <div class="content-card">
+            <h5>Testes de Segurança</h5>
+            <ul>
+              <li>Autenticação e autorização</li>
+              <li>Injeção SQL e XSS</li>
+              <li>Dados sensíveis</li>
+              <li>HTTPS e criptografia</li>
+              <li>Vulnerabilidades conhecidas (OWASP Top 10)</li>
+            </ul>
+          </div>
+
+          <h4>Qualidade de Código</h4>
+          <div class="content-card">
+            <h5>Testes de Código</h5>
+            <ul>
+              <li>Cobertura de código</li>
+              <li>Análise estática</li>
+              <li>Code smells</li>
+              <li>Padrões e convenções</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Como Testar -->
+        <div id="como-testar" class="content-section" data-searchable>
+          <h3>Como Testar</h3>
+
+          <h4>Planejamento</h4>
+          <div class="content-card">
+            <h5>1. Entenda os Requisitos</h5>
+            <p>Leia e compreenda completamente os requisitos antes de começar a testar. Identifique ambiguidades e esclareça dúvidas com o time.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>2. Crie Casos de Teste</h5>
+            <p>Documente casos de teste cobrindo:</p>
+            <ul>
+              <li>Cenários positivos (happy path)</li>
+              <li>Cenários negativos (validações e erros)</li>
+              <li>Casos de borda (edge cases)</li>
+              <li>Casos extremos (boundary values)</li>
+            </ul>
+          </div>
+
+          <h4>Execução</h4>
+          <div class="content-card">
+            <h5>3. Execute Testes Sistematicamente</h5>
+            <p>Siga seus casos de teste, mas também esteja aberto a testes exploratórios. Às vezes, os melhores bugs são encontrados fora do script.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>4. Documente Evidências</h5>
+            <p>Capture screenshots, logs, vídeos e outros artefatos que comprovem o comportamento observado. Isso é essencial para reportar bugs.</p>
+          </div>
+
+          <h4>Técnicas de Teste</h4>
+          <div class="content-card">
+            <h5>Técnicas de Caixa Preta</h5>
+            <ul>
+              <li><strong>Particionamento de Equivalência:</strong> Agrupar entradas similares</li>
+              <li><strong>Análise de Valor Limite:</strong> Testar valores nos limites</li>
+              <li><strong>Tabela de Decisão:</strong> Combinar condições e ações</li>
+              <li><strong>Casos de Uso:</strong> Testar fluxos de usuário</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h5>Técnicas de Caixa Branca</h5>
+            <ul>
+              <li><strong>Cobertura de Declarações:</strong> Cada linha executada</li>
+              <li><strong>Cobertura de Decisões:</strong> Cada branch testado</li>
+              <li><strong>Cobertura de Condições:</strong> Cada condição avaliada</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Como Encontrar Bugs -->
+        <div id="encontrar-bugs" class="content-section" data-searchable>
+          <h3>Como Encontrar Bugs</h3>
+
+          <div class="content-card">
+            <h5>1. Pense Como um Usuário</h5>
+            <p>Use o sistema como um usuário real faria. Não siga apenas o caminho feliz - explore diferentes formas de usar a aplicação.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>2. Teste Validações</h5>
+            <p>Tente inserir dados inválidos, campos vazios, valores muito grandes, caracteres especiais, SQL injection, XSS, etc.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>3. Teste Casos de Borda</h5>
+            <p>Teste valores nos limites: mínimo, máximo, zero, negativo, strings muito longas, caracteres especiais, etc.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>4. Teste Integrações</h5>
+            <p>Verifique como o sistema se comporta quando APIs externas falham, quando há timeout, quando dados estão corrompidos, etc.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>5. Teste em Diferentes Ambientes</h5>
+            <p>Teste em diferentes navegadores, dispositivos, sistemas operacionais, resoluções de tela, etc.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>6. Use Testes Exploratórios</h5>
+            <p>Explore o sistema livremente, sem seguir scripts. Muitos bugs são encontrados quando você "brinca" com a aplicação.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>7. Revise Logs e Console</h5>
+            <p>Verifique logs do servidor, console do navegador, Network tab, e outras ferramentas de debug para encontrar erros não visíveis na UI.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>8. Teste Regressão</h5>
+            <p>Execute testes que já passaram anteriormente. Novas funcionalidades podem quebrar funcionalidades existentes.</p>
+          </div>
+        </div>
+
+        <!-- Como Reportar Bugs -->
+        <div id="reportar-bugs" class="content-section" data-searchable>
+          <h3>Como Reportar Bugs</h3>
+
+          <h4>Estrutura de um Bom Bug Report</h4>
+          
+          <div class="content-card">
+            <h5>1. Título Claro e Descritivo</h5>
+            <p>O título deve resumir o problema de forma clara e objetiva.</p>
+            <p><strong>Bom exemplo:</strong> "Botão de login não responde após 3 tentativas de login inválido"</p>
+            <p><strong>Mau exemplo:</strong> "Erro no sistema"</p>
+          </div>
+
+          <div class="content-card">
+            <h5>2. Descrição Detalhada</h5>
+            <p>Descreva o que aconteceu, o que era esperado e o que foi observado.</p>
+            <ul>
+              <li><strong>Passos para Reproduzir:</strong> Lista numerada e clara</li>
+              <li><strong>Resultado Esperado:</strong> O que deveria acontecer</li>
+              <li><strong>Resultado Atual:</strong> O que realmente aconteceu</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h5>3. Ambiente e Configuração</h5>
+            <p>Inclua informações sobre:</p>
+            <ul>
+              <li>Sistema operacional e versão</li>
+              <li>Navegador e versão</li>
+              <li>Versão da aplicação</li>
+              <li>Dispositivo (se aplicável)</li>
+              <li>Dados de teste utilizados</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h5>4. Evidências</h5>
+            <p>Anexe screenshots, vídeos, logs, ou outros artefatos que ajudem a entender o problema.</p>
+            <p><strong>Dica:</strong> Use ferramentas como Lightshot, ShareX, ou a ferramenta de captura nativa do sistema.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>5. Prioridade e Severidade</h5>
+            <p>Classifique o bug de acordo com o impacto:</p>
+            <ul>
+              <li><strong>Crítica:</strong> Sistema inutilizável</li>
+              <li><strong>Alta:</strong> Funcionalidade principal quebrada</li>
+              <li><strong>Média:</strong> Funcionalidade secundária afetada</li>
+              <li><strong>Baixa:</strong> Problema cosmético ou menor</li>
+            </ul>
+          </div>
+
+          <h4>Boas Práticas</h4>
+          <div class="content-card">
+            <h5>Seja Específico</h5>
+            <p>Evite descrições vagas. Seja preciso sobre onde, quando e como o bug ocorre.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>Um Bug por Report</h5>
+            <p>Não misture múltiplos bugs em um único report. Cada problema deve ter seu próprio ticket.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>Verifique se Já Existe</h5>
+            <p>Antes de criar um novo report, verifique se o bug já foi reportado. Se sim, adicione informações adicionais ao report existente.</p>
+          </div>
+
+          <div class="content-card">
+            <h5>Use Templates</h5>
+            <p>Muitas ferramentas (Jira, Bugzilla, etc.) têm templates. Use-os para garantir consistência.</p>
+          </div>
+        </div>
+
+        <!-- Links Úteis -->
+        <div id="links-uteis" class="content-section" data-searchable>
+          <h3>Links e Documentos Úteis</h3>
+
+          <h4>Referências ISTQB</h4>
+          <ul class="link-list">
+            <li><a href="https://www.istqb.org" target="_blank">ISTQB - Site Internacional</a></li>
+            <li><a href="https://www.istqb.org/downloads/send/10-ctfl-2018/285-ctfl-2018-syllabus.html" target="_blank">ISTQB Foundation Level Syllabus</a></li>
+            <li><a href="https://www.istqb.org/downloads/send/10-ctfl-2018/286-ctfl-2018-glossary.html" target="_blank">ISTQB Glossary (Glossário de Termos)</a></li>
+            <li><a href="https://www.istqb.org/certification-path-root/foundation-level.html" target="_blank">Foundation Level - Informações</a></li>
+          </ul>
+
+          <h4>Documentação e Padrões</h4>
+          <ul class="link-list">
+            <li><a href="https://www.softwaretestinghelp.com" target="_blank">Software Testing Help</a></li>
+            <li><a href="https://www.guru99.com/software-testing.html" target="_blank">Guru99 - Software Testing</a></li>
+            <li><a href="https://www.owasp.org" target="_blank">OWASP - Segurança</a></li>
+            <li><a href="https://www.w3.org/WAI/WCAG21/quickref" target="_blank">WCAG - Acessibilidade</a></li>
+          </ul>
+
+          <h4>Ferramentas de Teste</h4>
+          <ul class="link-list">
+            <li><a href="https://www.selenium.dev" target="_blank">Selenium - Automação Web</a></li>
+            <li><a href="https://playwright.dev" target="_blank">Playwright - Automação Moderna</a></li>
+            <li><a href="https://www.cypress.io" target="_blank">Cypress - Framework de Testes</a></li>
+            <li><a href="https://jmeter.apache.org" target="_blank">JMeter - Testes de Performance</a></li>
+            <li><a href="https://www.postman.com" target="_blank">Postman - Testes de API</a></li>
+          </ul>
+
+          <h4>Comunidades e Fóruns</h4>
+          <ul class="link-list">
+            <li><a href="https://www.reddit.com/r/softwaretesting" target="_blank">Reddit - Software Testing</a></li>
+            <li><a href="https://stackoverflow.com/questions/tagged/software-testing" target="_blank">Stack Overflow - Software Testing</a></li>
+            <li><a href="https://www.linkedin.com/groups" target="_blank">LinkedIn - Grupos de QA</a></li>
+          </ul>
+
+          <h4>Sites para Prática</h4>
+          <ul class="link-list">
+            <li><a href="https://the-internet.herokuapp.com" target="_blank">The Internet - Site de Prática</a></li>
+            <li><a href="https://demoqa.com" target="_blank">DemoQA - Elementos para Teste</a></li>
+            <li><a href="https://www.saucedemo.com" target="_blank">Sauce Demo - E-commerce Demo</a></li>
+            <li><a href="../index.html">QA Playground - Este site!</a></li>
+          </ul>
+
+          <h4>Blogs e Artigos</h4>
+          <ul class="link-list">
+            <li><a href="https://www.stickyminds.com" target="_blank">StickyMinds - Artigos de Testes</a></li>
+            <li><a href="https://www.testingexcellence.com" target="_blank">Testing Excellence</a></li>
+            <li><a href="https://www.ministryoftesting.com" target="_blank">Ministry of Testing</a></li>
+          </ul>
         </div>
 
         <div style="margin-top: var(--spacing-xl); text-align: center;">
@@ -148,62 +825,67 @@
 
     <script src="../js/app.js"></script>
     <script>
-      // Interações da página
-      document.getElementById('btn-salvar').addEventListener('click', () => {
-        window.showToast('Dados salvos (simulação)');
-      });
+      // Busca por texto
+      function normalize(str) {
+        return str
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/\p{Diacritic}/gu, '');
+      }
 
-      document.getElementById('arquivo').addEventListener('change', function() {
-        const el = document.getElementById('arquivo-nome');
-        const f = this.files && this.files[0];
-        if (f) {
-          const sizeKB = Math.round(f.size / 1024);
-          el.textContent = `Arquivo selecionado: ${f.name} (${sizeKB} KB)`;
-          el.style.color = 'var(--success)';
-        } else {
-          el.textContent = 'Nenhum arquivo selecionado';
-          el.style.color = 'var(--muted)';
-        }
-      });
+      const searchInput = document.getElementById('searchInput');
+      const contentSections = document.querySelectorAll('.content-section[data-searchable]');
+      const noResults = document.getElementById('noResults');
 
-      document.getElementById('btn-toggle-extra').addEventListener('click', () => {
-        const ex = document.getElementById('extra');
-        const isVisible = ex.style.display !== 'none';
-        ex.style.display = isVisible ? 'none' : 'block';
-        window.showToast(isVisible ? 'Elemento ocultado' : 'Elemento exibido');
-      });
+      if (searchInput) {
+        searchInput.addEventListener('input', function() {
+          const query = normalize(this.value.trim());
+          let visibleCount = 0;
 
-      document.getElementById('btn-load').addEventListener('click', () => {
-        const sp = document.getElementById('spinner');
-        sp.style.display = 'block';
-        document.getElementById('btn-load').disabled = true;
-        
-        setTimeout(() => {
-          sp.style.display = 'none';
-          document.getElementById('btn-load').disabled = false;
-          window.showToast('Carregamento concluído!');
-        }, 2000);
-      });
+          if (query === '') {
+            contentSections.forEach(section => {
+              section.classList.remove('hidden');
+            });
+            noResults.classList.remove('show');
+            return;
+          }
 
-      document.getElementById('btn-validate').addEventListener('click', () => {
-        const pais = document.getElementById('pais');
-        const err = document.getElementById('pais-error');
-        
-        if (!pais.value) {
-          err.style.display = 'block';
-          err.textContent = 'Selecione um país antes de prosseguir.';
-          pais.closest('.form-group').classList.add('error');
-          return;
-        }
-        
-        err.style.display = 'none';
-        pais.closest('.form-group').classList.remove('error');
-        window.showToast('Validação OK! País selecionado: ' + pais.options[pais.selectedIndex].text);
-      });
+          contentSections.forEach(section => {
+            const text = normalize(section.textContent);
+            if (text.includes(query)) {
+              section.classList.remove('hidden');
+              visibleCount++;
+              
+              // Destacar texto encontrado (opcional)
+              const highlights = section.querySelectorAll('.highlight-text');
+              highlights.forEach(h => h.classList.remove('highlight-text'));
+            } else {
+              section.classList.add('hidden');
+            }
+          });
 
-      // Feedback do toggle
-      document.getElementById('toggle-notif').addEventListener('change', function() {
-        window.showToast(this.checked ? 'Notificações ativadas' : 'Notificações desativadas');
+          if (visibleCount === 0) {
+            noResults.classList.add('show');
+          } else {
+            noResults.classList.remove('show');
+          }
+        });
+      }
+
+      // Smooth scroll para links do índice
+      document.querySelectorAll('.toc a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href').substring(1);
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            const offsetPosition = targetElement.offsetTop - 100;
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        });
       });
     </script>
   </body>
