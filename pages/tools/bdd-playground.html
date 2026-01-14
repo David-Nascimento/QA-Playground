@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>BDD Playground — Validação de Cenários Gherkin — QA Playground</title>
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      /* BDD Playground Styles */
+      .bdd-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: var(--spacing-lg);
+      }
+
+      .bdd-header {
+        margin-bottom: var(--spacing-xl);
+        text-align: center;
+      }
+
+      .bdd-header h1 {
+        font-size: var(--font-size-3xl);
+        margin-bottom: var(--spacing-sm);
+        color: var(--text);
+      }
+
+      .bdd-header p {
+        color: var(--muted);
+        font-size: var(--font-size-lg);
+      }
+
+      .bdd-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-lg);
+        margin-bottom: var(--spacing-lg);
+      }
+
+      @media (max-width: 1024px) {
+        .bdd-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .bdd-panel {
+        background: var(--surface);
+        border-radius: var(--border-radius-lg);
+        padding: var(--spacing-lg);
+        box-shadow: var(--shadow-md);
+      }
+
+      .bdd-panel h2 {
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--spacing-md);
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+      }
+
+      .session-selector {
+        margin-bottom: var(--spacing-lg);
+        padding: var(--spacing-md);
+        background: rgba(122, 168, 116, 0.1);
+        border-radius: var(--border-radius-md);
+        border: 2px solid var(--accent);
+      }
+
+      .session-selector label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: var(--spacing-sm);
+        color: var(--text);
+      }
+
+      .session-selector select {
+        width: 100%;
+        padding: var(--spacing-sm);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius-sm);
+        font-size: var(--font-size-base);
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      .session-info {
+        margin-top: var(--spacing-sm);
+        padding: var(--spacing-sm);
+        background: rgba(122, 168, 116, 0.05);
+        border-radius: var(--border-radius-sm);
+        font-size: var(--font-size-sm);
+        color: var(--muted);
+      }
+
+      .session-tips {
+        margin-top: var(--spacing-md);
+        padding: var(--spacing-sm);
+        background: rgba(122, 168, 116, 0.05);
+        border-radius: var(--border-radius-sm);
+      }
+
+      .session-tips h4 {
+        font-size: var(--font-size-sm);
+        font-weight: 600;
+        margin-bottom: var(--spacing-xs);
+        color: var(--text);
+      }
+
+      .session-tips ul {
+        margin: 0;
+        padding-left: var(--spacing-md);
+        font-size: var(--font-size-sm);
+        color: var(--muted);
+      }
+
+      .session-tips li {
+        margin-bottom: var(--spacing-xs);
+      }
+
+      #gherkin-input {
+        width: 100%;
+        min-height: 400px;
+        padding: var(--spacing-md);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius-md);
+        font-family: 'Courier New', monospace;
+        font-size: var(--font-size-sm);
+        background: var(--surface);
+        color: var(--text);
+        resize: vertical;
+        line-height: 1.6;
+      }
+
+      #gherkin-input:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+
+      .btn-validate {
+        width: 100%;
+        padding: var(--spacing-md);
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: var(--border-radius-md);
+        font-size: var(--font-size-base);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all var(--transition);
+        margin-top: var(--spacing-md);
+      }
+
+      .btn-validate:hover:not(:disabled) {
+        background: #6a9664;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .btn-validate:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .result-panel {
+        min-height: 200px;
+      }
+
+      .score-display {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--spacing-lg);
+        background: linear-gradient(135deg, rgba(122, 168, 116, 0.1), rgba(122, 168, 116, 0.05));
+        border-radius: var(--border-radius-md);
+        margin-bottom: var(--spacing-md);
+      }
+
+      .score-value {
+        font-size: var(--font-size-3xl);
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      .score-level {
+        font-size: var(--font-size-xl);
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .score-breakdown {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+      }
+
+      .breakdown-item {
+        padding: var(--spacing-sm);
+        background: rgba(0, 0, 0, 0.03);
+        border-radius: var(--border-radius-sm);
+        font-size: var(--font-size-sm);
+      }
+
+      .breakdown-item strong {
+        display: block;
+        margin-bottom: var(--spacing-xs);
+        color: var(--text);
+      }
+
+      .breakdown-item span {
+        color: var(--muted);
+      }
+
+      .errors-list {
+        margin-top: var(--spacing-md);
+      }
+
+      .error-item {
+        padding: var(--spacing-sm);
+        margin-bottom: var(--spacing-sm);
+        background: rgba(220, 53, 69, 0.1);
+        border-left: 4px solid var(--danger);
+        border-radius: var(--border-radius-sm);
+      }
+
+      .error-item strong {
+        display: block;
+        color: var(--danger);
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .error-item p {
+        margin: 0;
+        font-size: var(--font-size-sm);
+        color: var(--text);
+      }
+
+      .suggestions-list {
+        margin-top: var(--spacing-md);
+      }
+
+      .suggestion-item {
+        padding: var(--spacing-sm);
+        margin-bottom: var(--spacing-sm);
+        background: rgba(255, 193, 7, 0.1);
+        border-left: 4px solid var(--warning);
+        border-radius: var(--border-radius-sm);
+        font-size: var(--font-size-sm);
+        color: var(--text);
+      }
+
+      .explanations-list {
+        margin-top: var(--spacing-md);
+      }
+
+      .explanation-item {
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+        background: rgba(122, 168, 116, 0.1);
+        border-left: 4px solid var(--accent);
+        border-radius: var(--border-radius-sm);
+      }
+
+      .explanation-item h4 {
+        margin: 0 0 var(--spacing-xs) 0;
+        color: var(--accent);
+        font-size: var(--font-size-base);
+      }
+
+      .explanation-item p {
+        margin: 0;
+        font-size: var(--font-size-sm);
+        color: var(--text);
+      }
+
+      .general-feedback {
+        padding: var(--spacing-md);
+        background: rgba(122, 168, 116, 0.15);
+        border-radius: var(--border-radius-md);
+        margin-top: var(--spacing-md);
+      }
+
+      .general-feedback h3 {
+        margin: 0 0 var(--spacing-xs) 0;
+        color: var(--accent);
+        font-size: var(--font-size-lg);
+      }
+
+      .general-feedback p {
+        margin: 0;
+        color: var(--text);
+      }
+
+      .example-link {
+        display: inline-block;
+        margin-top: var(--spacing-sm);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        background: rgba(122, 168, 116, 0.1);
+        color: var(--accent);
+        text-decoration: none;
+        border-radius: var(--border-radius-sm);
+        font-size: var(--font-size-sm);
+        transition: all var(--transition);
+      }
+
+      .example-link:hover {
+        background: rgba(122, 168, 116, 0.2);
+      }
+
+      .valid-badge {
+        display: inline-block;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        background: var(--success);
+        color: white;
+        border-radius: var(--border-radius-sm);
+        font-size: var(--font-size-sm);
+        font-weight: 600;
+        margin-bottom: var(--spacing-md);
+      }
+
+      .invalid-badge {
+        display: inline-block;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        background: var(--danger);
+        color: white;
+        border-radius: var(--border-radius-sm);
+        font-size: var(--font-size-sm);
+        font-weight: 600;
+        margin-bottom: var(--spacing-md);
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: var(--spacing-xl);
+        color: var(--muted);
+      }
+
+      .empty-state svg {
+        width: 64px;
+        height: 64px;
+        margin-bottom: var(--spacing-md);
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="xpath-css-tester.html">XPath e CSS Tester</a></li>
+            <li><a href="nft-playground.html">NFT Playground</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="bdd-container">
+        <div class="bdd-header">
+          <h1>BDD Playground</h1>
+          <p>Crie, valide e avalie cenários BDD em Gherkin. Aprenda na prática e evolua por níveis!</p>
+        </div>
+
+        <div class="bdd-layout">
+          <!-- Painel de Entrada -->
+          <div class="bdd-panel">
+            <h2>Editor de Cenários</h2>
+            
+            <div class="session-selector">
+              <label for="session-select">Nível de Validação:</label>
+              <select id="session-select">
+                <option value="basico">Básico - Estrutura</option>
+                <option value="intermediario">Intermediário - Estrutura + Semântica</option>
+                <option value="avancado">Avançado - Estrutura + Semântica + Linguagem</option>
+                <option value="especialista">Especialista - Todas as Validações</option>
+              </select>
+              <div class="session-info" id="session-info"></div>
+              <div class="session-tips" id="session-tips"></div>
+            </div>
+
+            <textarea 
+              id="gherkin-input" 
+              placeholder="Digite seu cenário Gherkin aqui...
+
+Exemplo:
+Feature: Login de usuário
+  Como usuário do sistema
+  Eu quero fazer login
+  Para acessar minha conta
+
+  Scenario: Login com credenciais válidas
+    Given que o usuário está na página de login
+    When o usuário preenche email e senha corretos
+    Then o usuário deve ser redirecionado para o dashboard
+    And deve aparecer uma mensagem de boas-vindas"></textarea>
+
+            <button class="btn-validate" id="btn-validate">Validar Cenário</button>
+
+            <a href="#" class="example-link" id="load-example">Carregar Exemplo</a>
+          </div>
+
+          <!-- Painel de Resultados -->
+          <div class="bdd-panel result-panel">
+            <h2>Resultados</h2>
+            <div id="results-container">
+              <div class="empty-state">
+                <p>Digite um cenário Gherkin e clique em "Validar Cenário" para ver os resultados.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../../js/app.js"></script>
+    <script src="../../js/modules/bdd/bdd.parser.js"></script>
+    <script src="../../js/modules/bdd/bdd.rules.js"></script>
+    <script src="../../js/modules/bdd/bdd.validator.js"></script>
+    <script src="../../js/modules/bdd/bdd.score.js"></script>
+    <script src="../../js/modules/bdd/bdd.feedback.js"></script>
+    <script src="../../js/modules/bdd/bdd.sessions.js"></script>
+    <script>
+      (() => {
+        'use strict';
+
+        const gherkinInput = document.getElementById('gherkin-input');
+        const btnValidate = document.getElementById('btn-validate');
+        const sessionSelect = document.getElementById('session-select');
+        const sessionInfo = document.getElementById('session-info');
+        const sessionTips = document.getElementById('session-tips');
+        const resultsContainer = document.getElementById('results-container');
+        const loadExample = document.getElementById('load-example');
+
+        let currentSession = 'basico';
+
+        // Exemplos de cenários
+        const examples = {
+          basico: `Feature: Login de usuário
+  Como usuário do sistema
+  Eu quero fazer login
+  Para acessar minha conta
+
+  Scenario: Login com credenciais válidas
+    Given que o usuário está na página de login
+    When o usuário preenche email e senha corretos
+    Then o usuário deve ser redirecionado para o dashboard`,
+
+          intermediario: `Feature: Processamento de pedidos
+  Como vendedor
+  Eu quero processar pedidos
+  Para entregar produtos aos clientes
+
+  Scenario: Pedido aprovado automaticamente
+    Given que existe um pedido com valor abaixo de R$ 1000
+    And o cliente tem histórico de pagamento em dia
+    When o sistema processa o pedido
+    Then o pedido deve ser aprovado automaticamente
+    And o cliente deve receber uma confirmação por email`,
+
+          avancado: `Feature: Gestão de estoque
+  Como gerente de estoque
+  Eu quero monitorar níveis de produtos
+  Para evitar rupturas
+
+  Background:
+    Given que o sistema possui produtos cadastrados
+    And os produtos têm níveis de estoque definidos
+
+  Scenario: Alerta de estoque baixo
+    Given que um produto tem quantidade menor que o mínimo
+    When o sistema verifica o estoque
+    Then deve ser gerado um alerta para o gerente
+    And o alerta deve conter o nome do produto e quantidade atual
+
+  Scenario Outline: Reabastecimento automático
+    Given que o produto "<produto>" está abaixo do mínimo
+    When o sistema detecta a necessidade de reabastecimento
+    Then deve ser criado um pedido de compra
+    And o pedido deve conter a quantidade sugerida
+
+    Examples:
+      | produto | quantidade_minima | quantidade_atual |
+      | Notebook | 10 | 5 |
+      | Mouse | 50 | 20 |`,
+
+          especialista: `Feature: Sistema de pontos de fidelidade
+  Como cliente
+  Eu quero acumular pontos em compras
+  Para trocar por benefícios
+
+  Rule: Acúmulo de pontos
+    Scenario: Compra com pontos
+      Given que o cliente possui 1000 pontos
+      When o cliente realiza uma compra de R$ 50
+      Then o cliente deve receber 50 pontos
+      And o total de pontos deve ser 1050
+
+    Scenario Outline: Conversão de pontos
+      Given que o cliente possui "<pontos_iniciais>" pontos
+      When o cliente solicita conversão para desconto
+      Then deve ser aplicado desconto de "<desconto>" reais
+      And o saldo de pontos deve ser "<pontos_finais>"
+
+      Examples:
+        | pontos_iniciais | desconto | pontos_finais |
+        | 1000 | 10 | 900 |
+        | 2000 | 25 | 1750 |
+        | 5000 | 100 | 4000 |
+
+  Rule: Expiração de pontos
+    Background:
+      Given que o sistema possui regra de expiração de pontos
+
+    Scenario: Pontos não expirados
+      Given que o cliente possui pontos válidos
+      When o sistema verifica a validade dos pontos
+      Then os pontos devem permanecer ativos`
+        };
+
+        // Atualizar informações da sessão
+        function updateSessionInfo() {
+          const session = BDDSessions.getSession(currentSession);
+          sessionInfo.innerHTML = `<strong>${session.name}</strong><br>${session.description}`;
+          
+          let tipsHtml = '<h4>Dicas para este nível:</h4><ul>';
+          session.tips.forEach(tip => {
+            tipsHtml += `<li>${tip}</li>`;
+          });
+          tipsHtml += '</ul>';
+          sessionTips.innerHTML = tipsHtml;
+        }
+
+        // Carregar exemplo
+        loadExample.addEventListener('click', (e) => {
+          e.preventDefault();
+          gherkinInput.value = examples[currentSession] || examples.basico;
+        });
+
+        // Mudança de sessão
+        sessionSelect.addEventListener('change', (e) => {
+          currentSession = e.target.value;
+          updateSessionInfo();
+        });
+
+        // Validação
+        btnValidate.addEventListener('click', () => {
+          const gherkinText = gherkinInput.value.trim();
+          
+          if (!gherkinText) {
+            resultsContainer.innerHTML = `
+              <div class="empty-state">
+                <p>Por favor, digite um cenário Gherkin antes de validar.</p>
+              </div>
+            `;
+            return;
+          }
+
+          try {
+            // Parse
+            const parsed = BDDParser.parse(gherkinText);
+            
+            // Validação
+            const validation = BDDValidator.validate(parsed, currentSession);
+            
+            // Score
+            const score = BDDScore.calculate(validation, currentSession);
+            
+            // Feedback
+            const feedback = BDDFeedback.generate(validation, score);
+
+            // Renderizar resultados
+            renderResults(validation, score, feedback);
+          } catch (error) {
+            resultsContainer.innerHTML = `
+              <div class="error-item">
+                <strong>Erro ao processar:</strong>
+                <p>${error.message}</p>
+              </div>
+            `;
+          }
+        });
+
+        // Renderizar resultados
+        function renderResults(validation, score, feedback) {
+          let html = '';
+
+          // Badge de validação
+          if (validation.valid) {
+            html += '<span class="valid-badge">Válido</span>';
+          } else {
+            html += '<span class="invalid-badge">Inválido</span>';
+          }
+
+          // Score
+          html += `
+            <div class="score-display">
+              <div>
+                <div class="score-value">${score.score}</div>
+                <div class="score-level">${score.level}</div>
+              </div>
+            </div>
+          `;
+
+          // Breakdown
+          html += '<div class="score-breakdown">';
+          Object.entries(score.breakdown).forEach(([key, value]) => {
+            if (value.total > 0) {
+              html += `
+                <div class="breakdown-item">
+                  <strong>${key.charAt(0).toUpperCase() + key.slice(1)}</strong>
+                  <span>${value.score}/${value.total} (${value.percentage}%)</span>
+                </div>
+              `;
+            }
+          });
+          html += '</div>';
+
+          // Erros
+          if (validation.errors.length > 0) {
+            html += '<div class="errors-list"><h3>Erros Encontrados:</h3>';
+            validation.errors.forEach(error => {
+              html += `
+                <div class="error-item">
+                  <strong>${error.rule}</strong>
+                  <p>${error.message}</p>
+                </div>
+              `;
+            });
+            html += '</div>';
+          }
+
+          // Sugestões
+          if (feedback.suggestions.length > 0) {
+            html += '<div class="suggestions-list"><h3>Sugestões:</h3>';
+            feedback.suggestions.forEach(suggestion => {
+              html += `<div class="suggestion-item">${suggestion}</div>`;
+            });
+            html += '</div>';
+          }
+
+          // Explicações
+          if (feedback.explanations.length > 0) {
+            html += '<div class="explanations-list"><h3>Explicações:</h3>';
+            feedback.explanations.forEach(explanation => {
+              html += `
+                <div class="explanation-item">
+                  <h4>${explanation.title}</h4>
+                  <p>${explanation.content}</p>
+                </div>
+              `;
+            });
+            html += '</div>';
+          }
+
+          // Feedback geral
+          if (feedback.general) {
+            html += `
+              <div class="general-feedback">
+                <h3>${feedback.general.title}</h3>
+                <p>${feedback.general.content}</p>
+              </div>
+            `;
+          }
+
+          resultsContainer.innerHTML = html;
+        }
+
+        // Inicialização
+        updateSessionInfo();
+      })();
+    </script>
+  </body>
+</html>
