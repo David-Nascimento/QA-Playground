@@ -119,9 +119,16 @@
         color: var(--accent);
       }
       .highlight {
-        background: rgba(122, 168, 116, 0.2);
-        border: 2px solid var(--accent);
-        transition: all 0.3s;
+        background: rgba(255, 248, 200, 0.15) !important;
+        border: 3px solid #ffd54f !important;
+        box-shadow: 0 0 0 2px rgba(255, 213, 79, 0.2), 
+                    0 0 15px rgba(255, 213, 79, 0.25),
+                    0 2px 8px rgba(0, 0, 0, 0.15) !important;
+        outline: 2px solid #ffb74d !important;
+        outline-offset: 2px !important;
+        position: relative !important;
+        z-index: 1000 !important;
+        transition: all 0.3s ease !important;
       }
       .form-input {
         padding: 12px;
@@ -1328,12 +1335,33 @@
           if (nodes.length === 0) {
             resultDiv.innerHTML = '<span class="result-error">Nenhum elemento encontrado com este XPath.</span>';
           } else {
-            nodes.forEach(node => {
+            // Destacar elementos com animação
+            nodes.forEach((node, index) => {
               if (node.nodeType === Node.ELEMENT_NODE) {
-                node.classList.add('highlight');
+                setTimeout(() => {
+                  node.classList.add('highlight');
+                }, index * 50); // Delay progressivo mais rápido
               }
             });
-            resultDiv.innerHTML = `<span class="result-success">${nodes.length} elemento(s) destacado(s) em amarelo.</span>`;
+            
+            // Mensagem com contador destacado
+            resultDiv.innerHTML = `<span class="result-success" style="font-size: 1.1em; font-weight: 600;">
+              ✓ <strong style="color: #ffc107; font-size: 1.2em;">${nodes.length}</strong> elemento(s) encontrado(s) e destacado(s) em <strong style="color: #ffc107;">amarelo brilhante</strong>!
+            </span>`;
+            
+            // Scroll suave para o primeiro elemento encontrado
+            if (nodes.length > 0 && nodes[0].nodeType === Node.ELEMENT_NODE) {
+              setTimeout(() => {
+                const element = nodes[0];
+                const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - 150; // Offset para não colar no topo
+                
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: 'smooth'
+                });
+              }, 300);
+            }
           }
         } catch (e) {
           resultDiv.innerHTML = `<span class="result-error">Erro: ${e.message}</span>`;
@@ -1385,10 +1413,31 @@
           if (elements.length === 0) {
             resultDiv.innerHTML = '<span class="result-error">Nenhum elemento encontrado com este seletor CSS.</span>';
           } else {
-            elements.forEach(el => {
-              el.classList.add('highlight');
+            // Destacar elementos com animação
+            elements.forEach((el, index) => {
+              setTimeout(() => {
+                el.classList.add('highlight');
+              }, index * 50); // Delay progressivo mais rápido
             });
-            resultDiv.innerHTML = `<span class="result-success">${elements.length} elemento(s) destacado(s) em amarelo.</span>`;
+            
+            // Mensagem com contador destacado
+            resultDiv.innerHTML = `<span class="result-success" style="font-size: 1.1em; font-weight: 600;">
+              ✓ <strong style="color: #ffc107; font-size: 1.2em;">${elements.length}</strong> elemento(s) encontrado(s) e destacado(s) em <strong style="color: #ffc107;">amarelo brilhante</strong>!
+            </span>`;
+            
+            // Scroll suave para o primeiro elemento encontrado
+            if (elements.length > 0) {
+              setTimeout(() => {
+                const element = elements[0];
+                const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - 150; // Offset para não colar no topo
+                
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: 'smooth'
+                });
+              }, 300);
+            }
           }
         } catch (e) {
           resultDiv.innerHTML = `<span class="result-error">Erro: ${e.message}</span>`;
