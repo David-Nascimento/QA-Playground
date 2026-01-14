@@ -148,6 +148,12 @@ Essa diferença de abordagem é intencional e faz parte da proposta do projeto: 
 
 ---
 
+## Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE). Você é livre para usar, modificar e distribuir este projeto para fins educacionais, comerciais ou pessoais.
+
+---
+
 ## Autor
 
 Desenvolvido por **David Nascimento**, com foco em prática real de QA, aprendizado contínuo e construção de portfólio profissional.
