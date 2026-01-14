@@ -40,374 +40,2189 @@
       <section class="hero">
         <h1>Desafios Nível Sênior</h1>
         <p>
-          Desafios avançados envolvendo DOM complexo, Shadow DOM, APIs, autenticação, iframes, múltiplas janelas e cenários realistas de produção.
+          Desafios avançados que exigem conhecimento profundo de automação, arquitetura de testes, manipulação de DOM complexo, integração com APIs e cenários realistas de produção. Estes desafios testam habilidades de QA Sênior sem facilitar a complexidade.
         </p>
       </section>
 
       <section class="section">
         <div class="section-header">
           <h2>Desafios Nível Sênior</h2>
-          <div class="section-desc">Desafios avançados envolvendo DOM complexo, Shadow DOM, APIs, autenticação, iframes, múltiplas janelas e cenários realistas de produção.</div>
+          <div class="section-desc">Desafios avançados envolvendo DOM complexo, Shadow DOM, APIs, autenticação, iframes, múltiplas janelas e cenários realistas de produção. Requer conhecimento avançado de automação, estratégias de localização complexas e gerenciamento de estados assíncronos.</div>
         </div>
 
         <div class="subsections-vertical">
           <!-- Desafio 1: Shadow DOM -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 1: Interação com Shadow DOM</h3>
-            <p><strong>Objetivo:</strong> Localizar e interagir com elementos dentro de Shadow DOM, que não são acessíveis por seletores CSS tradicionais.</p>
+            <p><strong>Objetivo:</strong> Localizar e interagir com elementos dentro de Shadow DOM encapsulado, que não são acessíveis por seletores CSS tradicionais. Este é um dos desafios mais complexos de automação web moderna.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../senior/dinamicos/shadow-dom.html">Shadow DOM</a></li>
-              <li>Identifique elementos que estão encapsulados em Shadow DOM</li>
-              <li>Tente localizar esses elementos usando seletores CSS tradicionais (deve falhar)</li>
-              <li>Use JavaScript para acessar o Shadow Root</li>
-              <li>Localize elementos dentro do Shadow Root</li>
-              <li>Interaja com botões e inputs dentro do Shadow DOM</li>
-              <li>Valide estados e valores de elementos encapsulados</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Encapsulamento:</strong> Elementos dentro de Shadow DOM não são acessíveis por seletores CSS/XPath tradicionais</li>
+                <li><strong>Shadow Root:</strong> Deve ser acessado via <code>element.shadowRoot</code> (apenas se mode='open')</li>
+                <li><strong>Shadow DOM Fechado:</strong> Se mode='closed', acesso é ainda mais limitado e requer estratégias alternativas</li>
+                <li><strong>Nested Shadow DOM:</strong> Pode haver Shadow DOMs aninhados (Shadow DOM dentro de Shadow DOM)</li>
+                <li><strong>Interação:</strong> Após localizar elemento dentro do Shadow Root, interações funcionam normalmente</li>
+                <li><strong>Desafio Extra:</strong> Criar função helper reutilizável que funcione com qualquer nível de aninhamento</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Use <code>element.shadowRoot</code> para acessar o Shadow Root de um elemento</li>
-              <li>Use <code>shadowRoot.querySelector()</code> para localizar elementos dentro do Shadow DOM</li>
-              <li>Use <code>element.shadowRoot.querySelectorAll()</code> para múltiplos elementos</li>
-              <li>Verifique se o Shadow Root está aberto: <code>element.shadowRoot.mode === 'open'</code></li>
-              <li>Para Shadow DOM fechado, use <code>element.attachShadow({mode: 'closed'})</code> (limitado)</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Falha com Seletores Tradicionais</h5>
+              <p><strong>O que fazer:</strong> Tentar localizar elemento dentro do Shadow DOM usando seletores CSS tradicionais</p>
+              <p><strong>Resultado Esperado:</strong> Seletores tradicionais falham (elemento não encontrado)</p>
+              <p><strong>Validação:</strong> Confirme que <code>driver.find_element(By.CSS_SELECTOR, "button")</code> não encontra o botão dentro do Shadow DOM</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Use DevTools para inspecionar Shadow DOM e identificar elementos</li>
-              <li><strong>Automação:</strong> Use JavaScript executor: <code>driver.executeScript("return document.querySelector('custom-element').shadowRoot.querySelector('button')")</code></li>
-              <li><strong>Validação:</strong> Verifique que seletores tradicionais não funcionam, mas acesso via shadowRoot funciona</li>
-              <li><strong>Assertivas:</strong> Valide que interações dentro do Shadow DOM funcionam corretamente</li>
-              <li><strong>Desafio:</strong> Crie estratégias de localização que funcionem tanto com Shadow DOM aberto quanto fechado</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Acesso via Shadow Root (Open Mode)</h5>
+              <p><strong>O que fazer:</strong> Acessar Shadow Root e localizar elemento dentro dele</p>
+              <p><strong>Resultado Esperado:</strong> Elemento é encontrado e pode ser interagido</p>
+              <p><strong>Desafio:</strong> Criar função que verifica se Shadow Root está aberto antes de acessar</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Interação com Elementos Encapsulados</h5>
+              <p><strong>O que fazer:</strong> Clicar em botão e preencher input dentro do Shadow DOM</p>
+              <p><strong>Resultado Esperado:</strong> Interações funcionam normalmente após acesso correto ao Shadow Root</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Shadow DOMs Aninhados</h5>
+              <p><strong>O que fazer:</strong> Acessar elemento dentro de Shadow DOM que está dentro de outro Shadow DOM</p>
+              <p><strong>Resultado Esperado:</strong> Deve acessar cada nível sequencialmente: shadowRoot1 → shadowRoot2 → elemento</p>
+              <p><strong>Desafio Avançado:</strong> Criar função recursiva que encontre elemento em qualquer nível de aninhamento</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 5: Validação de Estados</h5>
+              <p><strong>O que fazer:</strong> Validar estado (checked, value, text) de elementos dentro do Shadow DOM</p>
+              <p><strong>Resultado Esperado:</strong> Estados podem ser lidos normalmente após acesso correto</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>Host Element:</strong> <code>data-testid="shadow-host"</code> ou elemento custom que contém Shadow DOM</li>
+                <li><strong>Acesso Shadow Root:</strong> <code>element.shadowRoot</code> (JavaScript) ou via <code>executeScript</code></li>
+                <li><strong>Elemento dentro Shadow:</strong> <code>shadowRoot.querySelector('button')</code></li>
+                <li><strong>Verificar Mode:</strong> <code>element.shadowRoot.mode</code> retorna 'open' ou 'closed'</li>
+                <li><strong>Múltiplos Elementos:</strong> <code>shadowRoot.querySelectorAll('input')</code></li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../senior/dinamicos/shadow-dom.html" target="_blank">Shadow DOM</a></li>
+                <li>Use DevTools para inspecionar e identificar o elemento host que contém Shadow DOM</li>
+                <li>Tente localizar botão usando <code>driver.find_element(By.CSS_SELECTOR, "button")</code> → Deve falhar</li>
+                <li>Acesse o Shadow Root: <code>shadowHost = driver.find_element(By.ID, "shadow-host")</code></li>
+                <li>Use JavaScript executor para acessar: <code>shadowRoot = driver.execute_script("return arguments[0].shadowRoot", shadowHost)</code></li>
+                <li>Localize elemento dentro: <code>button = driver.execute_script("return arguments[0].querySelector('button')", shadowRoot)</code></li>
+                <li>Interaja com o elemento: <code>driver.execute_script("arguments[0].click()", button)</code></li>
+                <li>Valide que a interação funcionou verificando mudanças no resultado</li>
+                <li>Se houver Shadow DOMs aninhados, repita o processo para cada nível</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-senior-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-senior-1" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-senior-1-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-senior-1-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-senior-1-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-senior-1-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-senior-1-robot">Robot Framework</button>
+                </div>
+                <div id="code-senior-1-cypress" class="code-content active">
+                  <pre><code>it('deve interagir com Shadow DOM', () => {
+  cy.visit('/pages/senior/dinamicos/shadow-dom.html')
+  
+  // Acessa Shadow Root e encontra elemento
+  cy.get('[data-testid="shadow-host"]').then($host => {
+    return $host[0].shadowRoot.querySelector('button')
+  }).then($button => {
+    cy.wrap($button).click()
+  })
+  
+  // Valida resultado
+  cy.get('[data-testid="shadow-result"]')
+    .should('contain', 'clicado')
+})
+
+// Helper function para Shadow DOM aninhado
+function findInShadow(selector, shadowHost) {
+  const shadowRoot = shadowHost.shadowRoot
+  if (!shadowRoot) return null
+  
+  let element = shadowRoot.querySelector(selector)
+  if (element) return element
+  
+  // Busca recursivamente em Shadow DOMs aninhados
+  const nestedShadows = shadowRoot.querySelectorAll('*')
+  for (let el of nestedShadows) {
+    if (el.shadowRoot) {
+      element = findInShadow(selector, el)
+      if (element) return element
+    }
+  }
+  return null
+}</code></pre>
+                </div>
+                <div id="code-senior-1-playwright" class="code-content">
+                  <pre><code>test('deve interagir com Shadow DOM', async ({ page }) => {
+  await page.goto('/pages/senior/dinamicos/shadow-dom.html')
+  
+  // Playwright tem suporte nativo para Shadow DOM
+  const shadowHost = page.locator('[data-testid="shadow-host"]')
+  const button = shadowHost.locator('button')
+  await button.click()
+  
+  await expect(page.getByTestId('shadow-result')).toContainText('clicado')
+})
+
+// Para Shadow DOM fechado ou aninhado
+test('Shadow DOM aninhado', async ({ page }) => {
+  await page.goto('/pages/senior/dinamicos/shadow-dom.html')
+  
+  // Acessa via JavaScript
+  const button = await page.evaluateHandle(() => {
+    const host = document.querySelector('[data-testid="shadow-host"]')
+    return host.shadowRoot.querySelector('custom-element')
+      .shadowRoot.querySelector('button')
+  })
+  await button.click()
+})</code></pre>
+                </div>
+                <div id="code-senior-1-selenium" class="code-content">
+                  <pre><code>@Test
+public void testShadowDOM() {
+    driver.get("http://localhost/pages/senior/dinamicos/shadow-dom.html");
+    
+    // Localiza host element
+    WebElement shadowHost = driver.findElement(By.cssSelector("[data-testid='shadow-host']"));
+    
+    // Acessa Shadow Root via JavaScript
+    JavascriptExecutor js = (JavascriptExecutor) driver;
+    WebElement shadowRoot = (WebElement) js.executeScript(
+        "return arguments[0].shadowRoot", shadowHost);
+    
+    // Localiza elemento dentro do Shadow Root
+    WebElement button = (WebElement) js.executeScript(
+        "return arguments[0].querySelector('button')", shadowRoot);
+    
+    // Interage com o elemento
+    js.executeScript("arguments[0].click()", button);
+    
+    // Valida resultado
+    WebElement result = driver.findElement(By.cssSelector("[data-testid='shadow-result']"));
+    assertTrue(result.getText().contains("clicado"));
+}
+
+// Helper method para Shadow DOM aninhado
+public WebElement findInShadowDOM(String selector, WebElement host) {
+    JavascriptExecutor js = (JavascriptExecutor) driver;
+    Object shadowRoot = js.executeScript("return arguments[0].shadowRoot", host);
+    if (shadowRoot == null) return null;
+    
+    WebElement element = (WebElement) js.executeScript(
+        "return arguments[0].querySelector(arguments[1])", shadowRoot, selector);
+    if (element != null) return element;
+    
+    // Busca recursivamente em Shadow DOMs aninhados
+    List<WebElement> nested = (List<WebElement>) js.executeScript(
+        "return Array.from(arguments[0].querySelectorAll('*'))", shadowRoot);
+    for (WebElement el : nested) {
+        if (js.executeScript("return arguments[0].shadowRoot", el) != null) {
+            element = findInShadowDOM(selector, el);
+            if (element != null) return element;
+        }
+    }
+    return null;
+}</code></pre>
+                </div>
+                <div id="code-senior-1-capybara" class="code-content">
+                  <pre><code>scenario 'deve interagir com Shadow DOM' do
+  visit '/pages/senior/dinamicos/shadow-dom.html'
+  
+  # Acessa Shadow Root via JavaScript
+  shadow_host = find('[data-testid="shadow-host"]', visible: false)
+  shadow_root = page.execute_script("return arguments[0].shadowRoot", shadow_host)
+  button = page.execute_script("return arguments[0].querySelector('button')", shadow_root)
+  page.execute_script("arguments[0].click()", button)
+  
+  expect(page).to have_content('clicado')
+end
+
+# Helper para Shadow DOM aninhado
+def find_in_shadow(selector, host)
+  shadow_root = page.execute_script("return arguments[0].shadowRoot", host)
+  return nil unless shadow_root
+  
+  element = page.execute_script("return arguments[0].querySelector(arguments[1])", 
+    shadow_root, selector)
+  return element if element
+  
+  # Busca recursiva
+  nested = page.execute_script("return Array.from(arguments[0].querySelectorAll('*'))", 
+    shadow_root)
+  nested.each do |el|
+    if page.execute_script("return arguments[0].shadowRoot", el)
+      found = find_in_shadow(selector, el)
+      return found if found
+    end
+  end
+  nil
+end</code></pre>
+                </div>
+                <div id="code-senior-1-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Interagir Com Shadow DOM
+    Go To    http://localhost/pages/senior/dinamicos/shadow-dom.html
+    ${host}=    Get WebElement    css:[data-testid="shadow-host"]
+    ${shadowRoot}=    Execute Javascript    return arguments[0].shadowRoot;    ARGUMENTS    ${host}
+    ${button}=    Execute Javascript    return arguments[0].querySelector('button');    ARGUMENTS    ${shadowRoot}
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${button}
+    Element Should Contain    css:[data-testid="shadow-result"]    clicado</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 2: Large DOM -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 2: Performance em Large DOM</h3>
-            <p><strong>Objetivo:</strong> Testar performance e localização de elementos em uma página com milhares de elementos DOM.</p>
+            <p><strong>Objetivo:</strong> Testar performance e localização de elementos em uma página com milhares de elementos DOM. Otimizar seletores e estratégias para garantir testes rápidos e confiáveis mesmo em DOMs massivos.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../senior/dinamicos/large-dom.html">Large DOM</a></li>
-              <li>Medir o tempo de carregamento da página</li>
-              <li>Localizar um elemento específico entre milhares de elementos</li>
-              <li>Rolar até um elemento específico e validar sua visibilidade</li>
-              <li>Testar interação com elementos que não estão visíveis inicialmente</li>
-              <li>Validar performance de seletores CSS vs XPath vs data-testid</li>
-              <li>Testar scroll infinito se presente</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Tamanho do DOM:</strong> Página contém 10.000+ elementos DOM</li>
+                <li><strong>Performance:</strong> Localização de elemento deve ocorrer em menos de 1 segundo</li>
+                <li><strong>Elementos Fora da Viewport:</strong> Muitos elementos não estão visíveis inicialmente</li>
+                <li><strong>Scroll Necessário:</strong> Elementos podem estar em qualquer posição da página</li>
+                <li><strong>Seletores:</strong> Seletores genéricos (div, span) retornam milhares de elementos e são lentos</li>
+                <li><strong>Otimização:</strong> data-testid é significativamente mais rápido que CSS/XPath genéricos</li>
+                <li><strong>Desafio Extra:</strong> Criar benchmark comparando performance de diferentes estratégias de localização</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Use <code>data-testid</code> para localização mais eficiente (recomendado)</li>
-              <li>Evite seletores genéricos como <code>div</code> ou <code>span</code> que retornam muitos elementos</li>
-              <li>Use seletores mais específicos: <code>div[data-testid="item-1234"]</code></li>
-              <li>Use <code>isDisplayed()</code> ou <code>element.scrollIntoView()</code> para elementos fora da viewport</li>
-              <li>Considere usar <code>findElements()</code> e filtrar por visibilidade se necessário</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Medição de Performance</h5>
+              <p><strong>O que fazer:</strong> Medir tempo de localização usando diferentes seletores</p>
+              <p><strong>Resultado Esperado:</strong> data-testid deve ser mais rápido que CSS genérico, que é mais rápido que XPath complexo</p>
+              <p><strong>Desafio:</strong> Criar teste que compare: <code>div[data-testid="item-5000"]</code> vs <code>div:nth-child(5000)</code> vs <code>//div[5000]</code></p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Use Performance tab do DevTools para medir tempo de renderização</li>
-              <li><strong>Automação:</strong> Meça tempo de localização: <code>start = time.time(); element = driver.find_element(...); end = time.time()</code></li>
-              <li><strong>Validação:</strong> Compare performance entre diferentes estratégias de localização</li>
-              <li><strong>Assertivas:</strong> Valide que elementos são encontrados corretamente mesmo em DOM grande</li>
-              <li><strong>Otimização:</strong> Use waits implícitos e explícitos apropriados para evitar timeouts</li>
-              <li><strong>Desafio:</strong> Otimize seletores para encontrar elementos em menos de 1 segundo em DOM com 10k+ elementos</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Localização de Elemento Específico</h5>
+              <p><strong>O que fazer:</strong> Localizar elemento específico (ex: item-5000) entre 10k+ elementos</p>
+              <p><strong>Resultado Esperado:</strong> Elemento é encontrado em menos de 1 segundo usando seletor otimizado</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Elemento Fora da Viewport</h5>
+              <p><strong>O que fazer:</strong> Localizar elemento que não está visível inicialmente (requer scroll)</p>
+              <p><strong>Resultado Esperado:</strong> Elemento é encontrado, scroll é executado, elemento fica visível</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Múltiplas Localizações</h5>
+              <p><strong>O que fazer:</strong> Localizar 10 elementos diferentes espalhados pelo DOM</p>
+              <p><strong>Resultado Esperado:</strong> Todas as localizações completam em tempo aceitável</p>
+              <p><strong>Desafio:</strong> Otimizar para que todas as 10 localizações completem em menos de 5 segundos total</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>data-testid (Recomendado):</strong> <code>div[data-testid="item-5000"]</code> - Mais rápido</li>
+                <li><strong>CSS Específico:</strong> <code>div.item-class[data-id="5000"]</code> - Rápido se específico</li>
+                <li><strong>XPath:</strong> <code>//div[@data-testid='item-5000']</code> - Mais lento, evite se possível</li>
+                <li><strong>Evitar:</strong> <code>div</code>, <code>span</code>, <code>//div</code> - Retornam milhares de elementos</li>
+                <li><strong>Scroll:</strong> <code>element.scrollIntoView()</code> ou <code>driver.execute_script("arguments[0].scrollIntoView()", element)</code></li>
+                <li><strong>Filtrar Visibilidade:</strong> Use <code>is_displayed()</code> após <code>find_elements()</code> se necessário</li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../senior/dinamicos/large-dom.html" target="_blank">Large DOM</a></li>
+                <li>Use DevTools Performance tab para medir tempo de carregamento da página</li>
+                <li>Meça tempo de localização com seletor genérico: <code>driver.find_elements(By.TAG_NAME, "div")</code> → Anote tempo</li>
+                <li>Meça tempo com data-testid: <code>driver.find_element(By.CSS_SELECTOR, "[data-testid='item-5000']")</code> → Compare</li>
+                <li>Localize elemento específico usando data-testid → Deve ser rápido</li>
+                <li>Se elemento não estiver visível, use <code>scrollIntoView()</code> antes de interagir</li>
+                <li>Teste localizar múltiplos elementos espalhados pelo DOM</li>
+                <li>Crie benchmark comparando diferentes estratégias de localização</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-senior-2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-senior-2" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-senior-2-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-senior-2-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-senior-2-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-senior-2-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-senior-2-robot">Robot Framework</button>
+                </div>
+                <div id="code-senior-2-cypress" class="code-content active">
+                  <pre><code>it('deve localizar elemento em DOM grande com performance', () => {
+  cy.visit('/pages/senior/dinamicos/large-dom.html')
+  
+  // Mede tempo de localização
+  const start = performance.now()
+  cy.get('[data-testid="item-5000"]').should('exist')
+  const end = performance.now()
+  
+  // Valida que foi rápido (menos de 1 segundo)
+  expect(end - start).to.be.lessThan(1000)
+  
+  // Scroll até elemento se necessário
+  cy.get('[data-testid="item-5000"]').scrollIntoView().should('be.visible')
+})
+
+// Benchmark de diferentes seletores
+it('benchmark de seletores', () => {
+  cy.visit('/pages/senior/dinamicos/large-dom.html')
+  
+  const times = {}
+  
+  // Testa data-testid
+  const start1 = performance.now()
+  cy.get('[data-testid="item-5000"]')
+  times.testid = performance.now() - start1
+  
+  // Testa CSS específico
+  const start2 = performance.now()
+  cy.get('div.item[data-id="5000"]')
+  times.css = performance.now() - start2
+  
+  cy.log('Performance:', times)
+})</code></pre>
+                </div>
+                <div id="code-senior-2-playwright" class="code-content">
+                  <pre><code>test('deve localizar elemento em DOM grande', async ({ page }) => {
+  await page.goto('/pages/senior/dinamicos/large-dom.html')
+  
+  // Mede tempo de localização
+  const start = Date.now()
+  await page.getByTestId('item-5000').waitFor({ state: 'attached' })
+  const duration = Date.now() - start
+  
+  // Valida performance
+  expect(duration).toBeLessThan(1000)
+  
+  // Scroll se necessário
+  await page.getByTestId('item-5000').scrollIntoViewIfNeeded()
+  await expect(page.getByTestId('item-5000')).toBeVisible()
+})
+
+// Benchmark
+test('benchmark seletores', async ({ page }) => {
+  await page.goto('/pages/senior/dinamicos/large-dom.html')
+  
+  const start1 = Date.now()
+  await page.locator('[data-testid="item-5000"]').waitFor()
+  const time1 = Date.now() - start1
+  
+  const start2 = Date.now()
+  await page.locator('div.item').nth(4999).waitFor()
+  const time2 = Date.now() - start2
+  
+  console.log(`data-testid: ${time1}ms, CSS nth: ${time2}ms`)
+})</code></pre>
+                </div>
+                <div id="code-senior-2-selenium" class="code-content">
+                  <pre><code>@Test
+public void testLargeDOMPerformance() {
+    driver.get("http://localhost/pages/senior/dinamicos/large-dom.html");
+    
+    // Mede tempo de localização
+    long start = System.currentTimeMillis();
+    WebElement element = driver.findElement(By.cssSelector("[data-testid='item-5000']"));
+    long duration = System.currentTimeMillis() - start;
+    
+    // Valida performance (menos de 1 segundo)
+    assertTrue(duration < 1000, "Localização deve ser rápida: " + duration + "ms");
+    
+    // Scroll se necessário
+    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+    
+    // Valida visibilidade
+    assertTrue(element.isDisplayed());
+}
+
+// Benchmark de seletores
+@Test
+public void benchmarkSelectors() {
+    driver.get("http://localhost/pages/senior/dinamicos/large-dom.html");
+    
+    // Testa data-testid
+    long start1 = System.currentTimeMillis();
+    driver.findElement(By.cssSelector("[data-testid='item-5000']"));
+    long time1 = System.currentTimeMillis() - start1;
+    
+    // Testa XPath
+    long start2 = System.currentTimeMillis();
+    driver.findElement(By.xpath("//div[@data-testid='item-5000']"));
+    long time2 = System.currentTimeMillis() - start2;
+    
+    System.out.println("data-testid: " + time1 + "ms, XPath: " + time2 + "ms");
+}</code></pre>
+                </div>
+                <div id="code-senior-2-capybara" class="code-content">
+                  <pre><code>scenario 'deve localizar elemento em DOM grande' do
+  visit '/pages/senior/dinamicos/large-dom.html'
+  
+  # Mede tempo
+  start = Time.now
+  element = find('[data-testid="item-5000"]')
+  duration = ((Time.now - start) * 1000).to_i
+  
+  expect(duration).to be < 1000
+  
+  # Scroll se necessário
+  execute_script("arguments[0].scrollIntoView(true);", element)
+  expect(element).to be_visible
+end</code></pre>
+                </div>
+                <div id="code-senior-2-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Localizar Em DOM Grande
+    Go To    http://localhost/pages/senior/dinamicos/large-dom.html
+    ${start}=    Evaluate    time.time()    modules=time
+    Wait Until Element Is Visible    css:[data-testid="item-5000"]    timeout=2s
+    ${duration}=    Evaluate    (time.time() - ${start}) * 1000    modules=time
+    Should Be True    ${duration} < 1000
+    Scroll Element Into View    css:[data-testid="item-5000"]</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 3: Dynamic Content Loading -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 3: Conteúdo Dinâmico com Loading Assíncrono</h3>
-            <p><strong>Objetivo:</strong> Testar elementos que são carregados dinamicamente via AJAX/fetch com delays variáveis.</p>
+            <p><strong>Objetivo:</strong> Testar elementos carregados dinamicamente via AJAX/fetch com delays variáveis e imprevisíveis. Criar estratégias robustas de wait que funcionem com qualquer tempo de resposta.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../senior/dinamicos/dynamic-content.html">Conteúdo Dinâmico</a></li>
-              <li>Identifique elementos que aparecem após carregamento assíncrono</li>
-              <li>Clique em um botão que dispara carregamento de conteúdo</li>
-              <li>Aguarde o conteúdo aparecer (pode ter delay de 1-5 segundos)</li>
-              <li>Valide que o conteúdo foi carregado corretamente</li>
-              <li>Teste múltiplos carregamentos sequenciais</li>
-              <li>Teste cenário de timeout (conteúdo que nunca carrega)</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Delay Variável:</strong> Tempo de carregamento pode variar de 1 a 10 segundos (aleatório)</li>
+                <li><strong>Loading State:</strong> Spinner/loader aparece durante carregamento e desaparece quando completo</li>
+                <li><strong>Múltiplos Carregamentos:</strong> Sistema pode ter múltiplos carregamentos simultâneos</li>
+                <li><strong>Timeout:</strong> Se carregamento exceder 15 segundos, deve mostrar erro</li>
+                <li><strong>Estado Inicial:</strong> Conteúdo não existe no DOM antes do carregamento</li>
+                <li><strong>Desafio Extra:</strong> Criar wait customizado que funcione com delays variáveis sem usar time.sleep fixo</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Use <code>data-testid="loading-spinner"</code> para identificar estado de carregamento</li>
-              <li>Use <code>data-testid="dynamic-content"</code> para o conteúdo que será carregado</li>
-              <li>Use <code>WebDriverWait</code> com condições: <code>presence_of_element_located</code>, <code>visibility_of_element_located</code></li>
-              <li>Use <code>invisibility_of_element_located</code> para aguardar desaparecimento do spinner</li>
-              <li>Evite <code>time.sleep()</code> fixo - use waits explícitos</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Carregamento com Delay Curto</h5>
+              <p><strong>O que fazer:</strong> Disparar carregamento e aguardar conteúdo aparecer (delay de 1-3 segundos)</p>
+              <p><strong>Resultado Esperado:</strong> Spinner aparece, conteúdo carrega, spinner desaparece</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Observe o comportamento e tempo de carregamento</li>
-              <li><strong>Automação:</strong> Use <code>WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "content")))</code></li>
-              <li><strong>Validação:</strong> Verifique que o conteúdo aparece após o carregamento</li>
-              <li><strong>Assertivas:</strong> Valide que o spinner desaparece quando conteúdo é carregado</li>
-              <li><strong>Espera:</strong> Configure timeouts apropriados (não muito curto, não muito longo)</li>
-              <li><strong>Desafio:</strong> Crie uma estratégia que funcione mesmo com delays variáveis (1-10 segundos)</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Carregamento com Delay Longo</h5>
+              <p><strong>O que fazer:</strong> Disparar carregamento e aguardar conteúdo aparecer (delay de 5-10 segundos)</p>
+              <p><strong>Resultado Esperado:</strong> Wait explícito aguarda corretamente, conteúdo aparece</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Múltiplos Carregamentos Sequenciais</h5>
+              <p><strong>O que fazer:</strong> Disparar 3 carregamentos sequenciais, aguardando cada um completar</p>
+              <p><strong>Resultado Esperado:</strong> Cada carregamento completa antes do próximo iniciar</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Validação Durante Loading</h5>
+              <p><strong>O que fazer:</strong> Durante o carregamento, verificar que spinner está visível e conteúdo não existe</p>
+              <p><strong>Resultado Esperado:</strong> Spinner visível, conteúdo ausente do DOM</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 5: Timeout (Negativo)</h5>
+              <p><strong>O que fazer:</strong> Simular timeout (se possível) ou aguardar tempo máximo</p>
+              <p><strong>Resultado Esperado:</strong> Mensagem de erro aparece após timeout</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>Spinner:</strong> <code>data-testid="loading-spinner"</code> ou elemento com classe "loading"</li>
+                <li><strong>Conteúdo Dinâmico:</strong> <code>data-testid="dynamic-content"</code> ou container que recebe conteúdo</li>
+                <li><strong>Botão Trigger:</strong> <code>data-testid="btn-load"</code> ou botão que dispara carregamento</li>
+                <li><strong>Mensagem Erro:</strong> <code>data-testid="error-message"</code> para timeouts</li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../senior/dinamicos/dynamic-content.html" target="_blank">Conteúdo Dinâmico</a></li>
+                <li>Verifique que o conteúdo dinâmico não existe inicialmente no DOM</li>
+                <li>Clique no botão que dispara carregamento</li>
+                <li>Verifique que spinner aparece imediatamente</li>
+                <li>Use wait explícito para aguardar conteúdo aparecer (não use time.sleep fixo)</li>
+                <li>Valide que spinner desaparece quando conteúdo é carregado</li>
+                <li>Valide que conteúdo foi carregado corretamente</li>
+                <li>Teste múltiplos carregamentos sequenciais</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-senior-3">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-senior-3" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-senior-3-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-senior-3-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-senior-3-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-senior-3-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-senior-3-robot">Robot Framework</button>
+                </div>
+                <div id="code-senior-3-cypress" class="code-content active">
+                  <pre><code>it('deve aguardar conteúdo dinâmico carregar', () => {
+  cy.visit('/pages/senior/dinamicos/dynamic-content.html')
+  
+  // Verifica que conteúdo não existe inicialmente
+  cy.get('[data-testid="dynamic-content"]').should('not.exist')
+  
+  // Dispara carregamento
+  cy.get('[data-testid="btn-load"]').click()
+  
+  // Aguarda spinner aparecer
+  cy.get('[data-testid="loading-spinner"]', { timeout: 1000 }).should('be.visible')
+  
+  // Aguarda conteúdo aparecer (wait explícito)
+  cy.get('[data-testid="dynamic-content"]', { timeout: 15000 })
+    .should('be.visible')
+    .and('contain', 'Carregado')
+  
+  // Verifica que spinner desapareceu
+  cy.get('[data-testid="loading-spinner"]').should('not.exist')
+})</code></pre>
+                </div>
+                <div id="code-senior-3-playwright" class="code-content">
+                  <pre><code>test('deve aguardar conteúdo dinâmico', async ({ page }) => {
+  await page.goto('/pages/senior/dinamicos/dynamic-content.html')
+  
+  // Verifica que não existe
+  await expect(page.getByTestId('dynamic-content')).not.toBeAttached()
+  
+  // Dispara carregamento
+  await page.getByTestId('btn-load').click()
+  
+  // Aguarda spinner
+  await expect(page.getByTestId('loading-spinner')).toBeVisible({ timeout: 1000 })
+  
+  // Aguarda conteúdo (wait explícito)
+  await expect(page.getByTestId('dynamic-content')).toBeVisible({ timeout: 15000 })
+  
+  // Verifica spinner desapareceu
+  await expect(page.getByTestId('loading-spinner')).not.toBeVisible()
+})</code></pre>
+                </div>
+                <div id="code-senior-3-selenium" class="code-content">
+                  <pre><code>@Test
+public void testDynamicContent() {
+    driver.get("http://localhost/pages/senior/dinamicos/dynamic-content.html");
+    
+    // Verifica que não existe
+    List<WebElement> content = driver.findElements(By.cssSelector("[data-testid='dynamic-content']"));
+    assertEquals(0, content.size());
+    
+    // Dispara carregamento
+    driver.findElement(By.cssSelector("[data-testid='btn-load']")).click();
+    
+    // Aguarda spinner aparecer
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+    wait.until(ExpectedConditions.visibilityOfElementLocated(
+        By.cssSelector("[data-testid='loading-spinner']")));
+    
+    // Aguarda conteúdo aparecer (wait explícito)
+    wait.until(ExpectedConditions.presenceOfElementLocated(
+        By.cssSelector("[data-testid='dynamic-content']")));
+    
+    // Verifica spinner desapareceu
+    wait.until(ExpectedConditions.invisibilityOfElementLocated(
+        By.cssSelector("[data-testid='loading-spinner']")));
+}</code></pre>
+                </div>
+                <div id="code-senior-3-capybara" class="code-content">
+                  <pre><code>scenario 'deve aguardar conteúdo dinâmico' do
+  visit '/pages/senior/dinamicos/dynamic-content.html'
+  
+  # Verifica que não existe
+  expect(page).not_to have_selector('[data-testid="dynamic-content"]')
+  
+  # Dispara carregamento
+  click_button 'Carregar'
+  
+  # Aguarda spinner
+  expect(page).to have_selector('[data-testid="loading-spinner"]', visible: true, wait: 1)
+  
+  # Aguarda conteúdo (wait explícito)
+  expect(page).to have_selector('[data-testid="dynamic-content"]', visible: true, wait: 15)
+  
+  # Verifica spinner desapareceu
+  expect(page).not_to have_selector('[data-testid="loading-spinner"]', visible: true)
+end</code></pre>
+                </div>
+                <div id="code-senior-3-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Aguardar Conteudo Dinamico
+    Go To    http://localhost/pages/senior/dinamicos/dynamic-content.html
+    Element Should Not Exist    css:[data-testid="dynamic-content"]
+    Click Element    css:[data-testid="btn-load"]
+    Wait Until Element Is Visible    css:[data-testid="loading-spinner"]    timeout=1s
+    Wait Until Element Is Visible    css:[data-testid="dynamic-content"]    timeout=15s
+    Wait Until Element Is Not Visible    css:[data-testid="loading-spinner"]    timeout=2s</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 4: Iframe -->
-          <div class="subsection">
-            <h3>Desafio 4: Interação com Iframe</h3>
-            <p><strong>Objetivo:</strong> Localizar e interagir com elementos dentro de um iframe, que requer mudança de contexto.</p>
+          <div class="subsection challenge-section">
+            <h3>Desafio 4: Interação com Iframe e Iframes Aninhados</h3>
+            <p><strong>Objetivo:</strong> Localizar e interagir com elementos dentro de iframes, incluindo iframes aninhados. Gerenciar mudanças de contexto corretamente para evitar erros de localização.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../senior/dinamicos/iframe.html">Iframe</a></li>
-              <li>Identifique o iframe na página principal</li>
-              <li>Tente localizar elementos dentro do iframe sem mudar contexto (deve falhar)</li>
-              <li>Mude o contexto para o iframe</li>
-              <li>Localize e interaja com elementos dentro do iframe</li>
-              <li>Volte para o contexto principal</li>
-              <li>Teste com múltiplos iframes aninhados</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Isolamento:</strong> Elementos dentro do iframe não são acessíveis do contexto principal</li>
+                <li><strong>Mudança de Contexto:</strong> Deve mudar para o iframe antes de localizar elementos dentro dele</li>
+                <li><strong>Retorno:</strong> Deve voltar ao contexto principal após interações no iframe</li>
+                <li><strong>Iframes Aninhados:</strong> Pode haver iframe dentro de iframe, requerendo múltiplas mudanças de contexto</li>
+                <li><strong>Armadilha:</strong> Esquecer de voltar ao contexto principal causa falhas em testes subsequentes</li>
+                <li><strong>Desafio Extra:</strong> Criar context manager (Python) ou try-finally que garanta retorno ao contexto principal</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Use <code>driver.find_element(By.TAG_NAME, "iframe")</code> ou <code>driver.find_element(By.ID, "iframe-id")</code></li>
-              <li>Mude contexto: <code>driver.switch_to.frame(iframe_element)</code> ou <code>driver.switch_to.frame("iframe-id")</code></li>
-              <li>Volte ao contexto principal: <code>driver.switch_to.default_content()</code></li>
-              <li>Para iframes aninhados: mude contexto sequencialmente para cada iframe</li>
-              <li>Use <code>driver.switch_to.parent_frame()</code> para voltar um nível</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Falha sem Mudança de Contexto</h5>
+              <p><strong>O que fazer:</strong> Tentar localizar elemento dentro do iframe sem mudar contexto</p>
+              <p><strong>Resultado Esperado:</strong> Elemento não é encontrado (NoSuchElementException)</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Use DevTools para inspecionar elementos dentro do iframe</li>
-              <li><strong>Automação:</strong> Sempre mude contexto antes de interagir: <code>driver.switch_to.frame(iframe); element = driver.find_element(...); driver.switch_to.default_content()</code></li>
-              <li><strong>Validação:</strong> Verifique que elementos são encontrados apenas após mudança de contexto</li>
-              <li><strong>Assertivas:</strong> Valide que interações dentro do iframe funcionam corretamente</li>
-              <li><strong>Desafio:</strong> Crie uma função helper que gerencie mudanças de contexto automaticamente</li>
-              <li><strong>Armadilha:</strong> Sempre volte ao contexto principal após testes no iframe para evitar erros</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Interação com Iframe Simples</h5>
+              <p><strong>O que fazer:</strong> Mudar contexto, localizar e interagir com elemento, voltar ao contexto principal</p>
+              <p><strong>Resultado Esperado:</strong> Interação funciona corretamente, contexto principal é restaurado</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Iframes Aninhados</h5>
+              <p><strong>O que fazer:</strong> Acessar elemento dentro de iframe que está dentro de outro iframe</p>
+              <p><strong>Resultado Esperado:</strong> Deve mudar contexto sequencialmente: principal → iframe1 → iframe2</p>
+              <p><strong>Desafio:</strong> Criar função que encontre e acesse iframe aninhado automaticamente</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Múltiplos Iframes na Página</h5>
+              <p><strong>O que fazer:</strong> Interagir com elementos em diferentes iframes na mesma página</p>
+              <p><strong>Resultado Esperado:</strong> Deve mudar contexto para cada iframe antes de interagir</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>Iframe:</strong> <code>iframe</code> ou <code>data-testid="iframe-container"</code></li>
+                <li><strong>Mudar Contexto:</strong> <code>driver.switch_to.frame(iframe_element)</code> ou <code>driver.switch_to.frame("iframe-id")</code></li>
+                <li><strong>Voltar Principal:</strong> <code>driver.switch_to.default_content()</code></li>
+                <li><strong>Voltar Um Nível:</strong> <code>driver.switch_to.parent_frame()</code> (para iframes aninhados)</li>
+                <li><strong>Elemento Dentro Iframe:</strong> Após mudar contexto, localize normalmente</li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../senior/dinamicos/iframe.html" target="_blank">Iframe</a></li>
+                <li>Identifique o iframe na página (use DevTools)</li>
+                <li>Tente localizar elemento dentro do iframe sem mudar contexto → Deve falhar</li>
+                <li>Localize o iframe: <code>iframe = driver.find_element(By.TAG_NAME, "iframe")</code></li>
+                <li>Mude contexto: <code>driver.switch_to.frame(iframe)</code></li>
+                <li>Localize elemento dentro do iframe → Deve funcionar</li>
+                <li>Interaja com o elemento (click, send_keys, etc.)</li>
+                <li>Volte ao contexto principal: <code>driver.switch_to.default_content()</code></li>
+                <li>Se houver iframes aninhados, repita o processo para cada nível</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-senior-4">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-senior-4" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-senior-4-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-senior-4-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-senior-4-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-senior-4-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-senior-4-robot">Robot Framework</button>
+                </div>
+                <div id="code-senior-4-cypress" class="code-content active">
+                  <pre><code>it('deve interagir com iframe', () => {
+  cy.visit('/pages/senior/dinamicos/iframe.html')
+  
+  // Cypress precisa carregar iframe explicitamente
+  cy.get('iframe').then($iframe => {
+    const $body = $iframe.contents().find('body')
+    
+    // Interage dentro do iframe
+    cy.wrap($body).find('button').click()
+    cy.wrap($body).find('input').type('Texto no iframe')
+  })
+})
+
+// Para iframes aninhados
+it('iframe aninhado', () => {
+  cy.visit('/pages/senior/dinamicos/iframe.html')
+  
+  cy.get('iframe').then($iframe1 => {
+    const $body1 = $iframe1.contents().find('body')
+    cy.wrap($body1).find('iframe').then($iframe2 => {
+      const $body2 = $iframe2.contents().find('body')
+      cy.wrap($body2).find('button').click()
+    })
+  })
+})</code></pre>
+                </div>
+                <div id="code-senior-4-playwright" class="code-content">
+                  <pre><code>test('deve interagir com iframe', async ({ page }) => {
+  await page.goto('/pages/senior/dinamicos/iframe.html')
+  
+  // Playwright tem suporte nativo para iframes
+  const frame = page.frameLocator('iframe')
+  await frame.locator('button').click()
+  await frame.locator('input').fill('Texto no iframe')
+})
+
+// Iframes aninhados
+test('iframe aninhado', async ({ page }) => {
+  await page.goto('/pages/senior/dinamicos/iframe.html')
+  
+  const frame1 = page.frameLocator('iframe')
+  const frame2 = frame1.frameLocator('iframe')
+  await frame2.locator('button').click()
+})</code></pre>
+                </div>
+                <div id="code-senior-4-selenium" class="code-content">
+                  <pre><code>@Test
+public void testIframe() {
+    driver.get("http://localhost/pages/senior/dinamicos/iframe.html");
+    
+    // Localiza iframe
+    WebElement iframe = driver.findElement(By.tagName("iframe"));
+    
+    // Muda contexto
+    driver.switchTo().frame(iframe);
+    
+    try {
+        // Interage dentro do iframe
+        WebElement button = driver.findElement(By.tagName("button"));
+        button.click();
+        
+        WebElement input = driver.findElement(By.tagName("input"));
+        input.sendKeys("Texto no iframe");
+    } finally {
+        // SEMPRE volta ao contexto principal
+        driver.switchTo().defaultContent();
+    }
+}
+
+// Helper com context manager (garante retorno)
+public void withFrame(WebElement iframe, Runnable action) {
+    driver.switchTo().frame(iframe);
+    try {
+        action.run();
+    } finally {
+        driver.switchTo().defaultContent();
+    }
+}
+
+// Uso
+@Test
+public void testIframeComHelper() {
+    driver.get("http://localhost/pages/senior/dinamicos/iframe.html");
+    WebElement iframe = driver.findElement(By.tagName("iframe"));
+    
+    withFrame(iframe, () -> {
+        driver.findElement(By.tagName("button")).click();
+    });
+}</code></pre>
+                </div>
+                <div id="code-senior-4-capybara" class="code-content">
+                  <pre><code>scenario 'deve interagir com iframe' do
+  visit '/pages/senior/dinamicos/iframe.html'
+  
+  # Capybara gerencia iframes automaticamente
+  within_frame('iframe') do
+    click_button 'Botão'
+    fill_in 'input', with: 'Texto no iframe'
+  end
+end
+
+# Iframes aninhados
+scenario 'iframe aninhado' do
+  visit '/pages/senior/dinamicos/iframe.html'
+  
+  within_frame('iframe') do
+    within_frame('iframe') do
+      click_button 'Botão'
+    end
+  end
+end</code></pre>
+                </div>
+                <div id="code-senior-4-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Interagir Com Iframe
+    Go To    http://localhost/pages/senior/dinamicos/iframe.html
+    Select Frame    css:iframe
+    Click Element    css:button
+    Input Text    css:input    Texto no iframe
+    Unselect Frame</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 5: Múltiplas Janelas -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 5: Gerenciamento de Múltiplas Janelas/Tabs</h3>
-            <p><strong>Objetivo:</strong> Testar abertura de novas janelas, alternância entre elas e validação de conteúdo em cada janela.</p>
+            <p><strong>Objetivo:</strong> Testar abertura, gerenciamento e fechamento de múltiplas janelas/tabs. Criar estratégias robustas para alternar entre janelas e garantir limpeza adequada.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../senior/dinamicos/multiplas-janelas.html">Múltiplas Janelas</a></li>
-              <li>Identifique o botão que abre uma nova janela</li>
-              <li>Clique no botão e aguarde a nova janela abrir</li>
-              <li>Identifique todas as janelas abertas</li>
-              <li>Mude o foco para a nova janela</li>
-              <li>Valide conteúdo na nova janela</li>
-              <li>Feche a nova janela e retorne para a original</li>
-              <li>Teste abertura de múltiplas janelas simultaneamente</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Window Handles:</strong> Cada janela/tab tem um handle único que identifica a janela</li>
+                <li><strong>Mudança de Foco:</strong> Deve mudar foco explicitamente para interagir com elementos em outra janela</li>
+                <li><strong>Fechamento:</strong> <code>driver.close()</code> fecha apenas a janela atual, não todas</li>
+                <li><strong>Múltiplas Janelas:</strong> Sistema pode abrir 3+ janelas simultaneamente</li>
+                <li><strong>Armadilha:</strong> Esquecer de voltar para janela original causa falhas em testes subsequentes</li>
+                <li><strong>Desafio Extra:</strong> Criar função que gerencie todas as janelas e garanta limpeza no final (try-finally ou context manager)</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Obtenha handle da janela atual: <code>current_window = driver.current_window_handle</code></li>
-              <li>Obtenha todos os handles: <code>all_windows = driver.window_handles</code></li>
-              <li>Mude para nova janela: <code>driver.switch_to.window(new_window_handle)</code></li>
-              <li>Identifique nova janela: <code>new_window = [w for w in all_windows if w != current_window][0]</code></li>
-              <li>Feche janela: <code>driver.close()</code> (fecha apenas a janela atual)</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Abertura de Nova Janela</h5>
+              <p><strong>O que fazer:</strong> Clicar em botão que abre nova janela e identificar a nova janela</p>
+              <p><strong>Resultado Esperado:</strong> Nova janela é aberta, handle é obtido, foco muda para nova janela</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Abra janelas e valide conteúdo visualmente</li>
-              <li><strong>Automação:</strong> Gerencie handles: <code>original = driver.current_window_handle; click_button(); new = [w for w in driver.window_handles if w != original][0]; driver.switch_to.window(new); validate(); driver.close(); driver.switch_to.window(original)</code></li>
-              <li><strong>Validação:</strong> Verifique que a nova janela foi aberta e contém conteúdo esperado</li>
-              <li><strong>Assertivas:</strong> Valide que após fechar, o controle retorna para a janela original</li>
-              <li><strong>Desafio:</strong> Crie uma função que gerencie múltiplas janelas e garanta que todas sejam fechadas no final</li>
-              <li><strong>Armadilha:</strong> Sempre volte para a janela original antes de finalizar testes</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Validação em Nova Janela</h5>
+              <p><strong>O que fazer:</strong> Mudar para nova janela e validar conteúdo específico</p>
+              <p><strong>Resultado Esperado:</strong> Conteúdo da nova janela é validado corretamente</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Fechamento e Retorno</h5>
+              <p><strong>O que fazer:</strong> Fechar nova janela e retornar para janela original</p>
+              <p><strong>Resultado Esperado:</strong> Nova janela fecha, controle retorna para original</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Múltiplas Janelas Simultâneas</h5>
+              <p><strong>O que fazer:</strong> Abrir 3 janelas, alternar entre elas, validar conteúdo em cada uma</p>
+              <p><strong>Resultado Esperado:</strong> Todas as janelas são gerenciadas corretamente</p>
+              <p><strong>Desafio:</strong> Criar função que itere por todas as janelas e valide conteúdo</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>Handle Atual:</strong> <code>driver.current_window_handle</code></li>
+                <li><strong>Todos Handles:</strong> <code>driver.window_handles</code> (retorna lista)</li>
+                <li><strong>Mudar Janela:</strong> <code>driver.switch_to.window(handle)</code></li>
+                <li><strong>Fechar Janela:</strong> <code>driver.close()</code> (fecha apenas atual)</li>
+                <li><strong>Identificar Nova:</strong> Comparar lista antes/depois para encontrar nova janela</li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../senior/dinamicos/multiplas-janelas.html" target="_blank">Múltiplas Janelas</a></li>
+                <li>Salve handle da janela original: <code>original = driver.current_window_handle</code></li>
+                <li>Clique no botão que abre nova janela</li>
+                <li>Aguarde nova janela abrir (pode haver delay)</li>
+                <li>Obtenha todos os handles: <code>all_windows = driver.window_handles</code></li>
+                <li>Identifique nova janela: <code>new_window = [w for w in all_windows if w != original][0]</code></li>
+                <li>Mude para nova janela: <code>driver.switch_to.window(new_window)</code></li>
+                <li>Valide conteúdo na nova janela</li>
+                <li>Feche nova janela: <code>driver.close()</code></li>
+                <li>Volte para original: <code>driver.switch_to.window(original)</code></li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-senior-5">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-senior-5" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-senior-5-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-senior-5-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-senior-5-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-senior-5-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-senior-5-robot">Robot Framework</button>
+                </div>
+                <div id="code-senior-5-cypress" class="code-content active">
+                  <pre><code>it('deve gerenciar múltiplas janelas', () => {
+  cy.visit('/pages/senior/dinamicos/multiplas-janelas.html')
+  
+  // Salva URL original
+  cy.url().then(originalUrl => {
+    // Remove target para abrir na mesma janela (Cypress limita múltiplas janelas)
+    cy.get('[data-testid="btn-open-window"]')
+      .invoke('removeAttr', 'target')
+      .click()
+    
+    // Alternativamente, usa window.open via JavaScript
+    cy.window().then(win => {
+      const newWindow = win.open('/nova-pagina.html')
+      cy.wrap(newWindow).should('exist')
+    })
+  })
+})
+
+// Cypress tem limitações com múltiplas janelas
+// Para testes completos, considere usar cy.origin()</code></pre>
+                </div>
+                <div id="code-senior-5-playwright" class="code-content">
+                  <pre><code>test('deve gerenciar múltiplas janelas', async ({ page, context }) => {
+  await page.goto('/pages/senior/dinamicos/multiplas-janelas.html')
+  
+  // Aguarda nova janela ser aberta
+  const [newPage] = await Promise.all([
+    context.waitForEvent('page'),
+    page.getByTestId('btn-open-window').click()
+  ])
+  
+  // Valida conteúdo na nova janela
+  await expect(newPage.locator('h1')).toContainText('Nova Janela')
+  
+  // Fecha nova janela
+  await newPage.close()
+  
+  // Continua na janela original
+  await expect(page.locator('h1')).toContainText('Original')
+})</code></pre>
+                </div>
+                <div id="code-senior-5-selenium" class="code-content">
+                  <pre><code>@Test
+public void testMultiplasJanelas() {
+    driver.get("http://localhost/pages/senior/dinamicos/multiplas-janelas.html");
+    
+    // Salva handle original
+    String originalWindow = driver.getWindowHandle();
+    
+    // Clica botão que abre nova janela
+    driver.findElement(By.cssSelector("[data-testid='btn-open-window']")).click();
+    
+    // Aguarda nova janela aparecer
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+    wait.until(d -> driver.getWindowHandles().size() > 1);
+    
+    // Identifica nova janela
+    Set<String> allWindows = driver.getWindowHandles();
+    String newWindow = allWindows.stream()
+        .filter(w -> !w.equals(originalWindow))
+        .findFirst()
+        .orElseThrow();
+    
+    // Muda para nova janela
+    driver.switchTo().window(newWindow);
+    
+    // Valida conteúdo
+    WebElement title = driver.findElement(By.tagName("h1"));
+    assertTrue(title.getText().contains("Nova Janela"));
+    
+    // Fecha nova janela
+    driver.close();
+    
+    // Volta para original
+    driver.switchTo().window(originalWindow);
+    
+    // Valida que está na original
+    assertTrue(driver.getCurrentUrl().contains("multiplas-janelas"));
+}
+
+// Helper que garante limpeza
+public void withNewWindow(Runnable action) {
+    String original = driver.getWindowHandle();
+    try {
+        action.run();
+    } finally {
+        // Fecha todas as janelas exceto original
+        Set<String> allWindows = driver.getWindowHandles();
+        for (String window : allWindows) {
+            if (!window.equals(original)) {
+                driver.switchTo().window(window);
+                driver.close();
+            }
+        }
+        driver.switchTo().window(original);
+    }
+}</code></pre>
+                </div>
+                <div id="code-senior-5-capybara" class="code-content">
+                  <pre><code>scenario 'deve gerenciar múltiplas janelas' do
+  visit '/pages/senior/dinamicos/multiplas-janelas.html'
+  
+  # Salva janela original
+  original_window = page.driver.browser.window_handles.first
+  
+  # Clica botão
+  click_button 'Abrir Nova Janela'
+  
+  # Aguarda nova janela
+  sleep 1
+  new_window = (page.driver.browser.window_handles - [original_window]).first
+  
+  # Muda para nova janela
+  page.driver.browser.switch_to.window(new_window)
+  
+  # Valida conteúdo
+  expect(page).to have_content('Nova Janela')
+  
+  # Fecha e volta
+  page.driver.browser.close
+  page.driver.browser.switch_to.window(original_window)
+end</code></pre>
+                </div>
+                <div id="code-senior-5-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Gerenciar Multiplas Janelas
+    Go To    http://localhost/pages/senior/dinamicos/multiplas-janelas.html
+    ${original}=    Get Window Handles
+    Click Element    css:[data-testid="btn-open-window"]
+    Sleep    1s
+    ${all}=    Get Window Handles
+    ${new}=    Evaluate    [w for w in ${all} if w != ${original}[0]][0]
+    Switch Window    ${new}
+    Element Should Contain    css:h1    Nova Janela
+    Close Window
+    Switch Window    ${original}[0]</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 6: API Testing -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 6: Validação de Chamadas de API e Respostas</h3>
-            <p><strong>Objetivo:</strong> Interceptar e validar requisições HTTP, respostas de API e códigos de status.</p>
+            <p><strong>Objetivo:</strong> Interceptar, validar e mockar requisições HTTP, respostas de API, códigos de status e tempo de resposta. Criar testes que validem tanto a chamada quanto a atualização da UI.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../senior/apis/api.html">API Testing</a></li>
-              <li>Abra DevTools > Network tab</li>
-              <li>Execute uma ação que dispara chamada de API</li>
-              <li>Intercepte a requisição HTTP (método, URL, headers, body)</li>
-              <li>Valide a resposta (status code, body, headers)</li>
-              <li>Teste cenários de erro (400, 401, 500)</li>
-              <li>Valide que a UI reflete corretamente a resposta da API</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Interceptação:</strong> Deve capturar requisições antes de serem enviadas</li>
+                <li><strong>Validação Request:</strong> Método HTTP, URL, headers, body devem ser validados</li>
+                <li><strong>Validação Response:</strong> Status code, body JSON, headers de resposta devem ser validados</li>
+                <li><strong>Tempo de Resposta:</strong> API deve responder em menos de 2 segundos</li>
+                <li><strong>Cenários de Erro:</strong> Deve testar 400, 401, 500 e validar tratamento de erro na UI</li>
+                <li><strong>UI Sync:</strong> Interface deve refletir corretamente o estado da resposta da API</li>
+                <li><strong>Desafio Extra:</strong> Criar mocks para testar diferentes cenários sem depender do backend real</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Use <code>driver.execute_cdp_cmd()</code> para habilitar Network domain (Chrome DevTools Protocol)</li>
-              <li>Use <code>Network.setRequestInterception(true)</code> para interceptar requisições</li>
-              <li>Use <code>requests</code> library (Python) ou <code>fetch</code> (JavaScript) para chamadas diretas</li>
-              <li>Use <code>driver.get_log('performance')</code> para logs de rede (limitado)</li>
-              <li>Use bibliotecas como <code>selenium-wire</code> ou <code>browsermob-proxy</code> para interceptação avançada</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Interceptar Requisição GET</h5>
+              <p><strong>O que fazer:</strong> Interceptar requisição GET e validar URL, headers e método</p>
+              <p><strong>Resultado Esperado:</strong> Requisição é capturada, método é GET, URL está correta</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Use Network tab do DevTools para inspecionar requisições</li>
-              <li><strong>Automação:</strong> Use CDP: <code>driver.execute_cdp_cmd('Network.enable', {}); driver.execute_cdp_cmd('Network.setRequestInterception', {'patterns': [{'urlPattern': '*'}]})</code></li>
-              <li><strong>Validação:</strong> Verifique que requisições têm método, URL e body corretos</li>
-              <li><strong>Assertivas:</strong> Valide status codes, estrutura de resposta JSON, e tempo de resposta</li>
-              <li><strong>Desafio:</strong> Crie testes que validem tanto a chamada de API quanto a atualização da UI baseada na resposta</li>
-              <li><strong>Mock:</strong> Considere usar mocks/stubs para testar diferentes cenários de resposta sem depender do backend real</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Validar Resposta de Sucesso</h5>
+              <p><strong>O que fazer:</strong> Interceptar resposta 200 e validar body JSON e status code</p>
+              <p><strong>Resultado Esperado:</strong> Status 200, body JSON válido, UI atualizada corretamente</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Validar Resposta de Erro</h5>
+              <p><strong>O que fazer:</strong> Simular resposta 400 ou 500 e validar tratamento na UI</p>
+              <p><strong>Resultado Esperado:</strong> Mensagem de erro aparece na UI, estado é atualizado</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Validar Tempo de Resposta</h5>
+              <p><strong>O que fazer:</strong> Medir tempo entre requisição e resposta</p>
+              <p><strong>Resultado Esperado:</strong> Tempo de resposta está dentro do limite aceitável</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 5: Mock de Resposta</h5>
+              <p><strong>O que fazer:</strong> Interceptar requisição e retornar resposta mockada</p>
+              <p><strong>Resultado Esperado:</strong> UI atualiza com dados mockados, teste não depende de backend</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>CDP Network:</strong> Use Chrome DevTools Protocol para interceptar requisições</li>
+                <li><strong>Request Listener:</strong> Configure listener para capturar requisições</li>
+                <li><strong>Response Listener:</strong> Configure listener para capturar respostas</li>
+                <li><strong>UI Elements:</strong> Após resposta, valide elementos que refletem o estado da API</li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../senior/apis/api.html" target="_blank">API Testing</a></li>
+                <li>Configure interceptação de rede usando CDP ou biblioteca apropriada</li>
+                <li>Execute ação que dispara chamada de API (ex: clicar botão)</li>
+                <li>Capture a requisição: valide método, URL, headers, body</li>
+                <li>Capture a resposta: valide status code, body JSON, headers</li>
+                <li>Valide que UI foi atualizada baseada na resposta</li>
+                <li>Teste cenário de erro simulando resposta 400/500</li>
+                <li>Meça tempo de resposta e valide que está dentro do limite</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-senior-6">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-senior-6" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-senior-6-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-senior-6-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-senior-6-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-senior-6-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-senior-6-robot">Robot Framework</button>
+                </div>
+                <div id="code-senior-6-cypress" class="code-content active">
+                  <pre><code>it('deve interceptar e validar chamada de API', () => {
+  cy.visit('/pages/senior/apis/api.html')
+  
+  // Intercepta requisição
+  cy.intercept('GET', '/api/users', { fixture: 'users.json' }).as('getUsers')
+  
+  // Dispara ação
+  cy.get('[data-testid="btn-fetch"]').click()
+  
+  // Aguarda requisição
+  cy.wait('@getUsers').then(interception => {
+    // Valida requisição
+    expect(interception.request.method).to.equal('GET')
+    expect(interception.request.url).to.include('/api/users')
+    
+    // Valida resposta
+    expect(interception.response.statusCode).to.equal(200)
+    expect(interception.response.body).to.have.property('data')
+  })
+  
+  // Valida UI atualizada
+  cy.get('[data-testid="api-result"]').should('contain', 'sucesso')
+})
+
+// Mock de resposta de erro
+it('deve tratar erro da API', () => {
+  cy.intercept('GET', '/api/users', { statusCode: 500 }).as('getUsersError')
+  cy.visit('/pages/senior/apis/api.html')
+  cy.get('[data-testid="btn-fetch"]').click()
+  cy.wait('@getUsersError')
+  cy.get('[data-testid="error-message"]').should('be.visible')
+})</code></pre>
+                </div>
+                <div id="code-senior-6-playwright" class="code-content">
+                  <pre><code>test('deve interceptar e validar API', async ({ page }) => {
+  await page.goto('/pages/senior/apis/api.html')
+  
+  // Intercepta requisição
+  const [response] = await Promise.all([
+    page.waitForResponse(resp => resp.url().includes('/api/users')),
+    page.getByTestId('btn-fetch').click()
+  ])
+  
+  // Valida resposta
+  expect(response.status()).toBe(200)
+  const body = await response.json()
+  expect(body).toHaveProperty('data')
+  
+  // Valida UI
+  await expect(page.getByTestId('api-result')).toContainText('sucesso')
+})
+
+// Mock de resposta
+test('mock de resposta', async ({ page }) => {
+  await page.route('**/api/users', route => {
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify({ data: [{ id: 1, name: 'Mock User' }] })
+    })
+  })
+  
+  await page.goto('/pages/senior/apis/api.html')
+  await page.getByTestId('btn-fetch').click()
+  await expect(page.getByTestId('api-result')).toContainText('Mock User')
+})</code></pre>
+                </div>
+                <div id="code-senior-6-selenium" class="code-content">
+                  <pre><code>@Test
+public void testAPIIntersection() {
+    ChromeDriver driver = new ChromeDriver();
+    DevTools devTools = driver.getDevTools();
+    devTools.createSession();
+    
+    // Habilita Network domain
+    devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
+    
+    // Listener para requisições
+    AtomicReference<String> requestUrl = new AtomicReference<>();
+    devTools.addListener(Network.requestWillBeSent(), request -> {
+        requestUrl.set(request.getRequest().getUrl());
+    });
+    
+    // Listener para respostas
+    AtomicInteger statusCode = new AtomicInteger();
+    devTools.addListener(Network.responseReceived(), response -> {
+        statusCode.set(response.getResponse().getStatus().intValue());
+    });
+    
+    driver.get("http://localhost/pages/senior/apis/api.html");
+    driver.findElement(By.cssSelector("[data-testid='btn-fetch']")).click();
+    
+    // Aguarda resposta
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+    wait.until(d -> statusCode.get() > 0);
+    
+    // Valida
+    assertTrue(requestUrl.get().contains("/api/users"));
+    assertEquals(200, statusCode.get());
+    
+    // Valida UI
+    WebElement result = driver.findElement(By.cssSelector("[data-testid='api-result']"));
+    assertTrue(result.getText().contains("sucesso"));
+}</code></pre>
+                </div>
+                <div id="code-senior-6-capybara" class="code-content">
+                  <pre><code>scenario 'deve interceptar API' do
+  visit '/pages/senior/apis/api.html'
+  
+  # Capybara não tem interceptação nativa
+  # Use biblioteca externa ou valide apenas UI
+  click_button 'Buscar'
+  
+  # Aguarda UI atualizar
+  expect(page).to have_selector('[data-testid="api-result"]', 
+    text: 'sucesso', wait: 5)
+end
+
+# Para interceptação, use selenium-wire ou similar
+# require 'selenium-webdriver'
+# require 'selenium/webdriver/chrome'
+# 
+# options = Selenium::WebDriver::Chrome::Options.new
+# driver = Selenium::WebDriver.for :chrome, options: options
+# # Configure interceptação via CDP</code></pre>
+                </div>
+                <div id="code-senior-6-robot" class="code-content">
+                  <pre><code>*** Settings ***
+Library    RequestsLibrary
+
+*** Test Cases ***
+Validar Chamada API
+    Go To    http://localhost/pages/senior/apis/api.html
+    Click Element    css:[data-testid="btn-fetch"]
+    Wait Until Element Is Visible    css:[data-testid="api-result"]    timeout=5s
+    Element Should Contain    css:[data-testid="api-result"]    sucesso
+
+# Para interceptação completa, use bibliotecas externas
+# ou valide apenas a UI após chamada</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 7: Autenticação HTTP Basic/Digest -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 7: Autenticação HTTP Basic e Digest</h3>
-            <p><strong>Objetivo:</strong> Testar acesso a páginas protegidas por autenticação HTTP Basic e Digest.</p>
+            <p><strong>Objetivo:</strong> Testar acesso a páginas protegidas por autenticação HTTP Basic e Digest usando Chrome DevTools Protocol. Criar helpers reutilizáveis para autenticação.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../senior/dinamicos/autenticacao-basica.html">Autenticação Básica</a></li>
-              <li>Tente acessar a URL protegida (deve aparecer popup de autenticação)</li>
-              <li>Forneça credenciais corretas e valide acesso</li>
-              <li>Forneça credenciais incorretas e valide rejeição</li>
-              <li>Teste autenticação Digest em <a href="../senior/dinamicos/digest-authentication.html">Digest Authentication</a></li>
-              <li>Valide que conteúdo protegido só é exibido após autenticação bem-sucedida</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>HTTP Basic:</strong> Credenciais são enviadas em header Authorization: Basic base64(user:pass)</li>
+                <li><strong>HTTP Digest:</strong> Usa challenge-response com nonce, mais seguro que Basic</li>
+                <li><strong>Popup do Navegador:</strong> Navegador mostra popup de autenticação se credenciais não forem fornecidas</li>
+                <li><strong>CDP:</strong> Chrome DevTools Protocol permite definir headers antes de navegar</li>
+                <li><strong>Segurança:</strong> Credenciais nunca devem ser hardcoded - usar variáveis de ambiente</li>
+                <li><strong>Desafio Extra:</strong> Criar função helper que funcione tanto com Basic quanto Digest</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Use URL com credenciais: <code>http://username:password@example.com</code> (não recomendado, pode não funcionar)</li>
-              <li>Use <code>driver.execute_cdp_cmd()</code> para autenticação: <code>driver.execute_cdp_cmd('Network.setExtraHTTPHeaders', {'headers': {'Authorization': 'Basic ' + base64.b64encode('user:pass').decode()}})</code></li>
-              <li>Use bibliotecas como <code>requests</code> com <code>auth=(user, pass)</code> para testes de API</li>
-              <li>Para Digest: use <code>requests</code> com <code>HTTPDigestAuth</code></li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Acesso sem Credenciais</h5>
+              <p><strong>O que fazer:</strong> Tentar acessar URL protegida sem fornecer credenciais</p>
+              <p><strong>Resultado Esperado:</strong> Popup de autenticação aparece ou acesso é negado</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Use popup do navegador para inserir credenciais</li>
-              <li><strong>Automação:</strong> Use CDP antes de navegar: <code>driver.execute_cdp_cmd('Network.enable', {}); driver.execute_cdp_cmd('Network.setExtraHTTPHeaders', {'headers': {'Authorization': 'Basic ' + base64_encoded_credentials}}); driver.get(url)</code></li>
-              <li><strong>Validação:</strong> Verifique que conteúdo protegido é exibido após autenticação</li>
-              <li><strong>Assertivas:</strong> Valide que acesso sem credenciais é negado</li>
-              <li><strong>Desafio:</strong> Crie uma função helper que gerencie autenticação Basic e Digest automaticamente</li>
-              <li><strong>Segurança:</strong> Nunca hardcode credenciais no código - use variáveis de ambiente ou vaults</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Autenticação Basic com Credenciais Válidas</h5>
+              <p><strong>O que fazer:</strong> Fornecer credenciais válidas via CDP antes de navegar</p>
+              <p><strong>Resultado Esperado:</strong> Acesso é concedido, conteúdo protegido é exibido</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Autenticação com Credenciais Inválidas</h5>
+              <p><strong>O que fazer:</strong> Fornecer credenciais incorretas</p>
+              <p><strong>Resultado Esperado:</strong> Acesso é negado, conteúdo protegido não é exibido</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Autenticação Digest</h5>
+              <p><strong>O que fazer:</strong> Testar autenticação Digest (mais complexa que Basic)</p>
+              <p><strong>Resultado Esperado:</strong> Fluxo de challenge-response funciona corretamente</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>CDP Network:</strong> Use <code>Network.setExtraHTTPHeaders</code> para definir Authorization header</li>
+                <li><strong>Base64 Encoding:</strong> Credenciais Basic devem ser: <code>base64(username:password)</code></li>
+                <li><strong>Conteúdo Protegido:</strong> Após autenticação, valide elementos que só aparecem quando autenticado</li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../senior/dinamicos/autenticacao-basica.html" target="_blank">Autenticação Básica</a></li>
+                <li>Tente acessar sem credenciais → Verifique popup ou negação de acesso</li>
+                <li>Configure CDP antes de navegar: habilite Network domain</li>
+                <li>Encode credenciais em Base64: <code>base64("admin:admin")</code></li>
+                <li>Defina header Authorization: <code>Basic YWRtaW46YWRtaW4=</code></li>
+                <li>Navegue para URL protegida → Conteúdo deve aparecer</li>
+                <li>Valide que conteúdo protegido é exibido</li>
+                <li>Teste com credenciais inválidas → Acesso deve ser negado</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-senior-7">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-senior-7" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-senior-7-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-senior-7-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-senior-7-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-senior-7-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-senior-7-robot">Robot Framework</button>
+                </div>
+                <div id="code-senior-7-cypress" class="code-content active">
+                  <pre><code>it('deve autenticar com HTTP Basic', () => {
+  const username = 'admin'
+  const password = 'admin'
+  const auth = btoa(`${username}:${password}`)
+  
+  cy.visit('/pages/senior/dinamicos/autenticacao-basica.html', {
+    auth: { username, password }
+  })
+  
+  // Valida conteúdo protegido
+  cy.get('[data-testid="protected-content"]').should('be.visible')
+})</code></pre>
+                </div>
+                <div id="code-senior-7-playwright" class="code-content">
+                  <pre><code>test('deve autenticar com HTTP Basic', async ({ page }) => {
+  const username = 'admin'
+  const password = 'admin'
+  
+  // Playwright suporta HTTP auth nativo
+  await page.goto('/pages/senior/dinamicos/autenticacao-basica.html', {
+    waitUntil: 'networkidle'
+  })
+  
+  // Ou use setExtraHTTPHeaders via CDP
+  await page.setExtraHTTPHeaders({
+    'Authorization': `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`
+  })
+  
+  await expect(page.getByTestId('protected-content')).toBeVisible()
+})</code></pre>
+                </div>
+                <div id="code-senior-7-selenium" class="code-content">
+                  <pre><code>@Test
+public void testHTTPBasicAuth() {
+    ChromeDriver driver = new ChromeDriver();
+    DevTools devTools = driver.getDevTools();
+    devTools.createSession();
+    
+    // Habilita Network
+    devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
+    
+    // Define credenciais
+    String username = "admin";
+    String password = "admin";
+    String auth = Base64.getEncoder().encodeToString(
+        (username + ":" + password).getBytes());
+    
+    // Define header antes de navegar
+    Map<String, Object> headers = new HashMap<>();
+    headers.put("Authorization", "Basic " + auth);
+    devTools.send(Network.setExtraHTTPHeaders(new Headers(headers)));
+    
+    // Navega
+    driver.get("http://localhost/pages/senior/dinamicos/autenticacao-basica.html");
+    
+    // Valida conteúdo protegido
+    WebElement content = driver.findElement(By.cssSelector("[data-testid='protected-content']"));
+    assertTrue(content.isDisplayed());
+}</code></pre>
+                </div>
+                <div id="code-senior-7-capybara" class="code-content">
+                  <pre><code>scenario 'deve autenticar com HTTP Basic' do
+  username = 'admin'
+  password = 'admin'
+  auth = Base64.strict_encode64("#{username}:#{password}")
+  
+  # Capybara com Selenium
+  page.driver.browser.manage.add_authentication('http://localhost', username, password)
+  
+  visit '/pages/senior/dinamicos/autenticacao-basica.html'
+  
+  expect(page).to have_selector('[data-testid="protected-content"]', visible: true)
+end</code></pre>
+                </div>
+                <div id="code-senior-7-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Autenticacao HTTP Basic
+    ${auth}=    Evaluate    base64.b64encode(b'admin:admin').decode()    modules=base64
+    Go To    http://localhost/pages/senior/dinamicos/autenticacao-basica.html
+    # Para autenticação completa, use biblioteca externa ou CDP</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 8: Dynamic IDs -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 8: Elementos com IDs Dinâmicos</h3>
-            <p><strong>Objetivo:</strong> Localizar elementos que têm IDs gerados dinamicamente e mudam a cada carregamento.</p>
+            <p><strong>Objetivo:</strong> Localizar elementos com IDs gerados dinamicamente que mudam a cada carregamento. Criar estratégias robustas de localização que não dependam de IDs.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../senior/dinamicos/id-dinamico.html">ID Dinâmico</a></li>
-              <li>Identifique elementos que têm IDs que mudam</li>
-              <li>Recarregue a página e observe que IDs mudaram</li>
-              <li>Encontre atributos estáticos que podem ser usados para localização</li>
-              <li>Crie estratégias de localização que não dependam de IDs</li>
-              <li>Teste localização usando XPath relativo, CSS selectors com outros atributos, ou data-testid</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>IDs Dinâmicos:</strong> IDs são gerados aleatoriamente a cada carregamento (ex: id="button-abc123", id="button-xyz789")</li>
+                <li><strong>Atributos Estáticos:</strong> Outros atributos (class, data-*, role, text) permanecem constantes</li>
+                <li><strong>Estrutura:</strong> Posição relativa na estrutura HTML pode mudar ligeiramente</li>
+                <li><strong>Desafio:</strong> Criar seletores que funcionem mesmo se estrutura HTML mudar</li>
+                <li><strong>Boas Práticas:</strong> Priorizar data-testid > atributos estáticos > XPath com texto > posição relativa</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Evite usar IDs se eles são dinâmicos</li>
-              <li>Use <code>data-testid</code> se disponível (recomendado)</li>
-              <li>Use XPath com texto: <code>//button[contains(text(), 'Salvar')]</code></li>
-              <li>Use XPath com atributos: <code>//div[@class='item' and contains(@data-value, 'specific')]</code></li>
-              <li>Use CSS selectors com outros atributos: <code>button[type='submit'][class='btn-primary']</code></li>
-              <li>Use XPath com posição relativa: <code>//table//tr[2]//td[3]</code> (cuidado com mudanças de layout)</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Falha com ID Dinâmico</h5>
+              <p><strong>O que fazer:</strong> Tentar localizar usando ID que muda a cada carregamento</p>
+              <p><strong>Resultado Esperado:</strong> Localização falha após recarregar página</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Inspecione elementos e identifique atributos estáticos</li>
-              <li><strong>Automação:</strong> Crie seletores robustos: <code>driver.find_element(By.XPATH, "//button[@data-action='save']")</code> ou <code>driver.find_element(By.CSS_SELECTOR, "button[data-testid='save-btn']")</code></li>
-              <li><strong>Validação:</strong> Recarregue página múltiplas vezes e valide que seletores ainda funcionam</li>
-              <li><strong>Assertivas:</strong> Valide que elementos são encontrados independentemente do ID dinâmico</li>
-              <li><strong>Desafio:</strong> Crie uma estratégia de localização que funcione mesmo se estrutura HTML mudar ligeiramente</li>
-              <li><strong>Boas Práticas:</strong> Priorize data-testid > CSS selectors > XPath > ID (quando ID é dinâmico)</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Localização por data-testid</h5>
+              <p><strong>O que fazer:</strong> Localizar usando data-testid que permanece constante</p>
+              <p><strong>Resultado Esperado:</strong> Localização funciona mesmo após recarregar</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Localização por Atributos Estáticos</h5>
+              <p><strong>O que fazer:</strong> Localizar usando combinação de atributos estáticos (class, type, role)</p>
+              <p><strong>Resultado Esperado:</strong> Localização funciona independente do ID</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: XPath com Texto</h5>
+              <p><strong>O que fazer:</strong> Localizar usando XPath que busca por texto do elemento</p>
+              <p><strong>Resultado Esperado:</strong> Localização funciona se texto não mudar</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 5: Validação de Robustez</h5>
+              <p><strong>O que fazer:</strong> Recarregar página 5 vezes e validar que seletor ainda funciona</p>
+              <p><strong>Resultado Esperado:</strong> Seletor robusto funciona em todas as tentativas</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>Evitar:</strong> <code>id="button-abc123"</code> (ID dinâmico)</li>
+                <li><strong>Recomendado:</strong> <code>[data-testid="save-button"]</code> (data-testid estático)</li>
+                <li><strong>Alternativa 1:</strong> <code>button[type="submit"][class="btn-primary"]</code> (atributos estáticos)</li>
+                <li><strong>Alternativa 2:</strong> <code>//button[contains(text(), 'Salvar')]</code> (XPath com texto)</li>
+                <li><strong>Alternativa 3:</strong> <code>//form//button[@type='submit']</code> (XPath relativo)</li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../senior/dinamicos/id-dinamico.html" target="_blank">ID Dinâmico</a></li>
+                <li>Inspecione elemento e anote o ID atual (ex: id="btn-abc123")</li>
+                <li>Recarregue a página → Verifique que ID mudou (ex: id="btn-xyz789")</li>
+                <li>Identifique atributos estáticos do elemento (class, data-*, type, text)</li>
+                <li>Crie seletor usando data-testid: <code>[data-testid="action-button"]</code></li>
+                <li>Se não houver data-testid, use atributos: <code>button[type="submit"].btn-primary</code></li>
+                <li>Teste seletor recarregando página múltiplas vezes → Deve funcionar sempre</li>
+                <li>Valide que elemento é encontrado corretamente em todas as tentativas</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-senior-8">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-senior-8" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-senior-8-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-senior-8-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-senior-8-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-senior-8-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-senior-8-robot">Robot Framework</button>
+                </div>
+                <div id="code-senior-8-cypress" class="code-content active">
+                  <pre><code>it('deve localizar elemento com ID dinâmico', () => {
+  cy.visit('/pages/senior/dinamicos/id-dinamico.html')
+  
+  // Usa data-testid (recomendado)
+  cy.get('[data-testid="action-button"]').click()
+  
+  // Ou usa atributos estáticos
+  cy.get('button[type="submit"].btn-primary').click()
+  
+  // Ou XPath com texto
+  cy.xpath('//button[contains(text(), "Salvar")]').click()
+})
+
+// Testa robustez recarregando
+it('seletor robusto funciona após recarregar', () => {
+  for (let i = 0; i < 5; i++) {
+    cy.visit('/pages/senior/dinamicos/id-dinamico.html')
+    cy.get('[data-testid="action-button"]').should('exist')
+  }
+})</code></pre>
+                </div>
+                <div id="code-senior-8-playwright" class="code-content">
+                  <pre><code>test('deve localizar elemento com ID dinâmico', async ({ page }) => {
+  await page.goto('/pages/senior/dinamicos/id-dinamico.html')
+  
+  // Usa data-testid
+  await page.getByTestId('action-button').click()
+  
+  // Ou atributos estáticos
+  await page.locator('button[type="submit"].btn-primary').click()
+  
+  // Ou texto
+  await page.getByRole('button', { name: 'Salvar' }).click()
+})
+
+// Testa robustez
+test('seletor robusto após recarregar', async ({ page }) => {
+  for (let i = 0; i < 5; i++) {
+    await page.goto('/pages/senior/dinamicos/id-dinamico.html')
+    await expect(page.getByTestId('action-button')).toBeVisible()
+  }
+})</code></pre>
+                </div>
+                <div id="code-senior-8-selenium" class="code-content">
+                  <pre><code>@Test
+public void testDynamicID() {
+    driver.get("http://localhost/pages/senior/dinamicos/id-dinamico.html");
+    
+    // Estratégia 1: data-testid (recomendado)
+    WebElement button1 = driver.findElement(By.cssSelector("[data-testid='action-button']"));
+    
+    // Estratégia 2: atributos estáticos
+    WebElement button2 = driver.findElement(By.cssSelector("button[type='submit'].btn-primary"));
+    
+    // Estratégia 3: XPath com texto
+    WebElement button3 = driver.findElement(By.xpath("//button[contains(text(), 'Salvar')]"));
+    
+    // Todas devem funcionar
+    assertNotNull(button1);
+    assertNotNull(button2);
+    assertNotNull(button3);
+}
+
+// Testa robustez
+@Test
+public void testRobustezSeletor() {
+    for (int i = 0; i < 5; i++) {
+        driver.get("http://localhost/pages/senior/dinamicos/id-dinamico.html");
+        WebElement button = driver.findElement(By.cssSelector("[data-testid='action-button']"));
+        assertTrue(button.isDisplayed());
+    }
+}</code></pre>
+                </div>
+                <div id="code-senior-8-capybara" class="code-content">
+                  <pre><code>scenario 'deve localizar elemento com ID dinâmico' do
+  visit '/pages/senior/dinamicos/id-dinamico.html'
+  
+  # Estratégia 1: data-testid
+  find('[data-testid="action-button"]').click
+  
+  # Estratégia 2: atributos
+  find('button[type="submit"].btn-primary').click
+  
+  # Estratégia 3: texto
+  click_button 'Salvar'
+end
+
+# Testa robustez
+scenario 'seletor robusto' do
+  5.times do
+    visit '/pages/senior/dinamicos/id-dinamico.html'
+    expect(page).to have_selector('[data-testid="action-button"]')
+  end
+end</code></pre>
+                </div>
+                <div id="code-senior-8-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Localizar Com ID Dinamico
+    Go To    http://localhost/pages/senior/dinamicos/id-dinamico.html
+    Click Element    css:[data-testid="action-button"]
+    # Ou
+    Click Element    css:button[type="submit"].btn-primary
+    # Ou
+    Click Button    Salvar
+
+Testar Robustez
+    FOR    ${i}    IN RANGE    5
+        Go To    http://localhost/pages/senior/dinamicos/id-dinamico.html
+        Element Should Be Visible    css:[data-testid="action-button"]
+    END</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 9: JavaScript Errors -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 9: Captura e Validação de Erros JavaScript</h3>
-            <p><strong>Objetivo:</strong> Detectar e validar erros JavaScript que ocorrem durante a execução de testes.</p>
+            <p><strong>Objetivo:</strong> Detectar, capturar e validar erros JavaScript que ocorrem durante execução de testes. Criar sistema de monitoramento de erros para garantir qualidade.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../senior/dinamicos/js-error.html">JavaScript Error</a></li>
-              <li>Abra DevTools > Console tab</li>
-              <li>Execute ações que podem gerar erros JavaScript</li>
-              <li>Observe erros no console</li>
-              <li>Valide que erros são capturados corretamente</li>
-              <li>Teste diferentes tipos de erros (ReferenceError, TypeError, etc.)</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Tipos de Erro:</strong> ReferenceError, TypeError, SyntaxError, etc.</li>
+                <li><strong>Níveis de Log:</strong> SEVERE (erros críticos), WARNING (avisos), INFO (informações)</li>
+                <li><strong>Erros Esperados:</strong> Alguns erros podem ser esperados em testes negativos</li>
+                <li><strong>Filtragem:</strong> Deve filtrar erros esperados dos erros reais</li>
+                <li><strong>Reporte:</strong> Todos os erros devem ser reportados para análise</li>
+                <li><strong>Desafio Extra:</strong> Criar helper que capture, filtre e reporte erros automaticamente</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Habilite logging: <code>driver.set_log_level('SEVERE')</code> ou configure LoggingPreferences</li>
-              <li>Obtenha logs do navegador: <code>logs = driver.get_log('browser')</code></li>
-              <li>Filtre por nível: <code>errors = [log for log in logs if log['level'] == 'SEVERE']</code></li>
-              <li>Use <code>driver.execute_script()</code> para verificar <code>window.onerror</code></li>
-              <li>Use CDP: <code>driver.execute_cdp_cmd('Runtime.enable', {})</code> para capturar exceptions</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Capturar Erros SEVERE</h5>
+              <p><strong>O que fazer:</strong> Configurar logging e capturar apenas erros SEVERE</p>
+              <p><strong>Resultado Esperado:</strong> Apenas erros críticos são capturados</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Use Console tab do DevTools para ver erros</li>
-              <li><strong>Automação:</strong> Configure antes de navegar: <code>capabilities.set_capability('goog:loggingPrefs', {'browser': 'ALL'}); logs = driver.get_log('browser'); assert len([l for l in logs if l['level'] == 'SEVERE']) == 0</code></li>
-              <li><strong>Validação:</strong> Verifique que não há erros JavaScript não tratados</li>
-              <li><strong>Assertivas:</strong> Valide que erros esperados (em testes negativos) são capturados</li>
-              <li><strong>Desafio:</strong> Crie um helper que capture e reporte todos os erros JavaScript durante a execução de testes</li>
-              <li><strong>Nota:</strong> Alguns erros podem ser esperados em testes negativos - filtre apropriadamente</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Validar Ausência de Erros</h5>
+              <p><strong>O que fazer:</strong> Executar teste e verificar que não há erros JavaScript</p>
+              <p><strong>Resultado Esperado:</strong> Lista de erros SEVERE está vazia</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Filtrar Erros Esperados</h5>
+              <p><strong>O que fazer:</strong> Em teste negativo, filtrar erros esperados dos erros reais</p>
+              <p><strong>Resultado Esperado:</strong> Apenas erros não esperados são reportados</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Captura via CDP</h5>
+              <p><strong>O que fazer:</strong> Usar Chrome DevTools Protocol para capturar exceptions</p>
+              <p><strong>Resultado Esperado:</strong> Erros são capturados em tempo real via CDP</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>Browser Logs:</strong> <code>driver.get_log('browser')</code> retorna logs do console</li>
+                <li><strong>Filtrar SEVERE:</strong> Filtrar logs por nível 'SEVERE'</li>
+                <li><strong>CDP Runtime:</strong> <code>Runtime.enable</code> para capturar exceptions</li>
+                <li><strong>window.onerror:</strong> Verificar via JavaScript se há erros não tratados</li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../senior/dinamicos/js-error.html" target="_blank">JavaScript Error</a></li>
+                <li>Configure logging antes de navegar: habilite browser logs</li>
+                <li>Execute ações na página que podem gerar erros</li>
+                <li>Obtenha logs: <code>logs = driver.get_log('browser')</code></li>
+                <li>Filtre erros SEVERE: <code>errors = [log for log in logs if log['level'] == 'SEVERE']</code></li>
+                <li>Valide que não há erros (ou que erros esperados são capturados)</li>
+                <li>Use CDP para captura mais avançada se necessário</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-senior-9">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-senior-9" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-senior-9-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-senior-9-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-senior-9-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-senior-9-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-senior-9-robot">Robot Framework</button>
+                </div>
+                <div id="code-senior-9-cypress" class="code-content active">
+                  <pre><code>it('deve capturar erros JavaScript', () => {
+  cy.visit('/pages/senior/dinamicos/js-error.html', {
+    onBeforeLoad(win) {
+      // Captura erros
+      cy.stub(win.console, 'error').as('consoleError')
+    }
+  })
+  
+  // Executa ação que pode gerar erro
+  cy.get('[data-testid="btn-trigger-error"]').click()
+  
+  // Valida que erro foi capturado
+  cy.get('@consoleError').should('have.been.called')
+})
+
+// Valida ausência de erros
+it('não deve ter erros JavaScript', () => {
+  const errors = []
+  
+  cy.visit('/pages/senior/dinamicos/js-error.html', {
+    onBeforeLoad(win) {
+      win.addEventListener('error', (e) => {
+        errors.push(e.message)
+      })
+    }
+  })
+  
+  cy.then(() => {
+    expect(errors.length).to.equal(0)
+  })
+})</code></pre>
+                </div>
+                <div id="code-senior-9-playwright" class="code-content">
+                  <pre><code>test('deve capturar erros JavaScript', async ({ page }) => {
+  const errors = []
+  
+  // Listener para erros
+  page.on('console', msg => {
+    if (msg.type() === 'error') {
+      errors.push(msg.text())
+    }
+  })
+  
+  page.on('pageerror', error => {
+    errors.push(error.message)
+  })
+  
+  await page.goto('/pages/senior/dinamicos/js-error.html')
+  await page.getByTestId('btn-trigger-error').click()
+  
+  // Valida que erro foi capturado
+  expect(errors.length).toBeGreaterThan(0)
+})
+
+// Valida ausência de erros
+test('não deve ter erros', async ({ page }) => {
+  const errors = []
+  page.on('pageerror', e => errors.push(e))
+  
+  await page.goto('/pages/senior/dinamicos/js-error.html')
+  
+  expect(errors.length).toBe(0)
+})</code></pre>
+                </div>
+                <div id="code-senior-9-selenium" class="code-content">
+                  <pre><code>@Test
+public void testJavaScriptErrors() {
+    ChromeOptions options = new ChromeOptions();
+    LoggingPreferences logs = new LoggingPreferences();
+    logs.enable(LogType.BROWSER, Level.ALL);
+    options.setCapability("goog:loggingPrefs", logs);
+    
+    ChromeDriver driver = new ChromeDriver(options);
+    driver.get("http://localhost/pages/senior/dinamicos/js-error.html");
+    
+    // Executa ação
+    driver.findElement(By.cssSelector("[data-testid='btn-trigger-error']")).click();
+    
+    // Obtém logs
+    List<LogEntry> logsList = driver.manage().logs().get(LogType.BROWSER).getAll();
+    
+    // Filtra erros SEVERE
+    List<LogEntry> severeErrors = logsList.stream()
+        .filter(log -> log.getLevel() == Level.SEVERE)
+        .collect(Collectors.toList());
+    
+    // Valida que não há erros (ou que erros esperados foram capturados)
+    assertEquals(0, severeErrors.size());
+}
+
+// Helper para capturar erros
+public List<String> getJavaScriptErrors(WebDriver driver) {
+    return driver.manage().logs().get(LogType.BROWSER).getAll().stream()
+        .filter(log -> log.getLevel() == Level.SEVERE)
+        .map(LogEntry::getMessage)
+        .collect(Collectors.toList());
+}</code></pre>
+                </div>
+                <div id="code-senior-9-capybara" class="code-content">
+                  <pre><code>scenario 'deve capturar erros JavaScript' do
+  visit '/pages/senior/dinamicos/js-error.html'
+  
+  # Capybara com Selenium pode acessar logs
+  logs = page.driver.browser.manage.logs.get(:browser)
+  errors = logs.select { |log| log.level == 'SEVERE' }
+  
+  # Executa ação
+  click_button 'Trigger Error'
+  
+  # Valida erros
+  new_logs = page.driver.browser.manage.logs.get(:browser)
+  new_errors = new_logs.select { |log| log.level == 'SEVERE' }
+  
+  expect(new_errors.length).to be > errors.length
+end</code></pre>
+                </div>
+                <div id="code-senior-9-robot" class="code-content">
+                  <pre><code>*** Settings ***
+Library    SeleniumLibrary
+
+*** Test Cases ***
+Capturar Erros JavaScript
+    Open Browser    http://localhost/pages/senior/dinamicos/js-error.html    chrome
+    ${logs}=    Get Log    browser
+    ${errors}=    Evaluate    [log for log in ${logs} if log['level'] == 'SEVERE']
+    Should Be Empty    ${errors}</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 10: OAuth2 e Autenticação Avançada -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 10: Fluxo de Autenticação OAuth2</h3>
-            <p><strong>Objetivo:</strong> Testar o fluxo completo de autenticação OAuth2 incluindo redirecionamentos e tokens.</p>
+            <p><strong>Objetivo:</strong> Testar fluxo completo de autenticação OAuth2 incluindo redirecionamentos, autorização, tokens e estados. Este é um dos desafios mais complexos de automação web.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../senior/dinamicos/oauth2-providers.html">OAuth2 Providers</a></li>
-              <li>Clique no botão de login com OAuth2</li>
-              <li>Observe redirecionamento para página de autorização</li>
-              <li>Preencha credenciais no provider (se simulado)</li>
-              <li>Autorize o acesso</li>
-              <li>Valide redirecionamento de volta com código/token</li>
-              <li>Valide que usuário está autenticado na aplicação</li>
-              <li>Teste cenário de negação de autorização</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Fluxo OAuth2:</strong> Login → Redirecionamento → Autorização → Callback → Token → Autenticado</li>
+                <li><strong>Redirecionamentos:</strong> Múltiplos redirecionamentos entre aplicação e provider</li>
+                <li><strong>State Parameter:</strong> Parâmetro state deve ser validado para prevenir CSRF</li>
+                <li><strong>Tokens:</strong> Access token e refresh token devem ser armazenados corretamente</li>
+                <li><strong>Timeouts:</strong> Cada etapa pode ter timeout diferente</li>
+                <li><strong>Mocks:</strong> Para testes estáveis, considere mockar o provider OAuth2</li>
+                <li><strong>Desafio Extra:</strong> Criar função que gerencie todo o fluxo OAuth2 automaticamente</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Monitore mudanças de URL: <code>driver.current_url</code></li>
-              <li>Procure por parâmetros na URL: <code>code=</code>, <code>token=</code>, <code>state=</code></li>
-              <li>Use <code>driver.execute_script('return localStorage.getItem("token")')</code> para tokens armazenados</li>
-              <li>Use <code>driver.get_cookies()</code> para verificar cookies de sessão</li>
-              <li>Intercepte requisições para capturar tokens (usando CDP ou proxy)</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Iniciar Fluxo OAuth2</h5>
+              <p><strong>O que fazer:</strong> Clicar em botão de login OAuth2 e aguardar redirecionamento</p>
+              <p><strong>Resultado Esperado:</strong> Redirecionamento para página de autorização do provider</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Execute o fluxo completo e observe cada etapa</li>
-              <li><strong>Automação:</strong> Gerencie redirecionamentos: <code>click_login(); wait_for_url_contains('authorize'); fill_credentials(); authorize(); wait_for_url_contains('callback'); validate_token()</code></li>
-              <li><strong>Validação:</strong> Verifique que token é recebido e armazenado corretamente</li>
-              <li><strong>Assertivas:</strong> Valide que usuário está autenticado após fluxo completo</li>
-              <li><strong>Desafio:</strong> Crie testes que funcionem tanto com providers reais quanto com mocks/stubs</li>
-              <li><strong>Segurança:</strong> Nunca commite tokens ou credenciais - use variáveis de ambiente</li>
-              <li><strong>Complexidade:</strong> Gerencie timeouts apropriados para cada etapa do fluxo OAuth2</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Autorização no Provider</h5>
+              <p><strong>O que fazer:</strong> Preencher credenciais e autorizar acesso</p>
+              <p><strong>Resultado Esperado:</strong> Provider redireciona de volta com código de autorização</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Validação de Token</h5>
+              <p><strong>O que fazer:</strong> Validar que token foi recebido e armazenado (localStorage/cookie)</p>
+              <p><strong>Resultado Esperado:</strong> Token existe e usuário está autenticado</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Negação de Autorização</h5>
+              <p><strong>O que fazer:</strong> Negar autorização no provider</p>
+              <p><strong>Resultado Esperado:</strong> Redirecionamento de volta com erro, usuário não autenticado</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 5: Validação de State</h5>
+              <p><strong>O que fazer:</strong> Validar que parâmetro state é preservado durante o fluxo</p>
+              <p><strong>Resultado Esperado:</strong> State no callback corresponde ao state inicial</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>URL Monitoring:</strong> Monitorar <code>driver.current_url</code> para detectar redirecionamentos</li>
+                <li><strong>URL Parameters:</strong> Extrair <code>code</code>, <code>state</code>, <code>error</code> da URL de callback</li>
+                <li><strong>LocalStorage:</strong> <code>driver.execute_script('return localStorage.getItem("token")')</code></li>
+                <li><strong>Cookies:</strong> <code>driver.get_cookies()</code> para verificar cookies de sessão</li>
+                <li><strong>Wait for URL:</strong> Aguardar URL conter 'callback' ou 'authorize'</li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../senior/dinamicos/oauth2-providers.html" target="_blank">OAuth2 Providers</a></li>
+                <li>Salve URL inicial e state (se visível)</li>
+                <li>Clique no botão de login OAuth2</li>
+                <li>Aguarde redirecionamento: <code>wait.until(lambda d: 'authorize' in d.current_url)</code></li>
+                <li>Na página de autorização, preencha credenciais (se simulado)</li>
+                <li>Clique em "Autorizar"</li>
+                <li>Aguarde redirecionamento de volta: <code>wait.until(lambda d: 'callback' in d.current_url)</code></li>
+                <li>Extraia código/token da URL: <code>code = parse_qs(urlparse(driver.current_url).query)['code'][0]</code></li>
+                <li>Valide token em localStorage ou cookies</li>
+                <li>Valide que usuário está autenticado (elementos específicos aparecem)</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-senior-10">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-senior-10" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-senior-10-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-senior-10-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-senior-10-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-senior-10-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-senior-10-robot">Robot Framework</button>
+                </div>
+                <div id="code-senior-10-cypress" class="code-content active">
+                  <pre><code>it('deve completar fluxo OAuth2', () => {
+  cy.visit('/pages/senior/dinamicos/oauth2-providers.html')
+  
+  // Clica login
+  cy.get('[data-testid="btn-oauth-login"]').click()
+  
+  // Aguarda redirecionamento
+  cy.url().should('include', 'authorize')
+  
+  // Preenche credenciais (se simulado)
+  cy.get('input[name="username"]').type('user')
+  cy.get('input[name="password"]').type('pass')
+  cy.get('button[type="submit"]').click()
+  
+  // Aguarda callback
+  cy.url().should('include', 'callback')
+  cy.url().should('include', 'code=')
+  
+  // Valida token
+  cy.window().then(win => {
+    const token = win.localStorage.getItem('token')
+    expect(token).to.exist
+  })
+  
+  // Valida autenticado
+  cy.get('[data-testid="user-authenticated"]').should('be.visible')
+})</code></pre>
+                </div>
+                <div id="code-senior-10-playwright" class="code-content">
+                  <pre><code>test('deve completar fluxo OAuth2', async ({ page }) => {
+  await page.goto('/pages/senior/dinamicos/oauth2-providers.html')
+  
+  // Clica login
+  await page.getByTestId('btn-oauth-login').click()
+  
+  // Aguarda redirecionamento
+  await page.waitForURL('**/authorize**')
+  
+  // Preenche credenciais
+  await page.fill('input[name="username"]', 'user')
+  await page.fill('input[name="password"]', 'pass')
+  await page.click('button[type="submit"]')
+  
+  // Aguarda callback
+  await page.waitForURL('**/callback**')
+  expect(page.url()).toContain('code=')
+  
+  // Valida token
+  const token = await page.evaluate(() => localStorage.getItem('token'))
+  expect(token).toBeTruthy()
+  
+  // Valida autenticado
+  await expect(page.getByTestId('user-authenticated')).toBeVisible()
+})</code></pre>
+                </div>
+                <div id="code-senior-10-selenium" class="code-content">
+                  <pre><code>@Test
+public void testOAuth2Flow() {
+    driver.get("http://localhost/pages/senior/dinamicos/oauth2-providers.html");
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+    
+    // Clica login
+    driver.findElement(By.cssSelector("[data-testid='btn-oauth-login']")).click();
+    
+    // Aguarda redirecionamento para authorize
+    wait.until(ExpectedConditions.urlContains("authorize"));
+    
+    // Preenche credenciais
+    driver.findElement(By.name("username")).sendKeys("user");
+    driver.findElement(By.name("password")).sendKeys("pass");
+    driver.findElement(By.cssSelector("button[type='submit']")).click();
+    
+    // Aguarda callback
+    wait.until(ExpectedConditions.urlContains("callback"));
+    String currentUrl = driver.getCurrentUrl();
+    assertTrue(currentUrl.contains("code="));
+    
+    // Extrai código
+    String code = extractCodeFromUrl(currentUrl);
+    assertNotNull(code);
+    
+    // Valida token
+    JavascriptExecutor js = (JavascriptExecutor) driver;
+    String token = (String) js.executeScript("return localStorage.getItem('token')");
+    assertNotNull(token);
+    
+    // Valida autenticado
+    WebElement authenticated = driver.findElement(By.cssSelector("[data-testid='user-authenticated']"));
+    assertTrue(authenticated.isDisplayed());
+}
+
+private String extractCodeFromUrl(String url) {
+    // Extrai código da URL
+    String[] parts = url.split("code=");
+    if (parts.length > 1) {
+        return parts[1].split("&")[0];
+    }
+    return null;
+}</code></pre>
+                </div>
+                <div id="code-senior-10-capybara" class="code-content">
+                  <pre><code>scenario 'deve completar fluxo OAuth2' do
+  visit '/pages/senior/dinamicos/oauth2-providers.html'
+  
+  # Clica login
+  click_button 'Login com OAuth2'
+  
+  # Aguarda redirecionamento
+  expect(page).to have_current_path(/authorize/, wait: 10)
+  
+  # Preenche credenciais
+  fill_in 'username', with: 'user'
+  fill_in 'password', with: 'pass'
+  click_button 'Autorizar'
+  
+  # Aguarda callback
+  expect(page).to have_current_path(/callback/, wait: 10)
+  expect(page.current_url).to include('code=')
+  
+  # Valida token
+  token = page.evaluate_script("localStorage.getItem('token')")
+  expect(token).not_to be_nil
+  
+  # Valida autenticado
+  expect(page).to have_selector('[data-testid="user-authenticated"]', visible: true)
+end</code></pre>
+                </div>
+                <div id="code-senior-10-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Fluxo OAuth2
+    Go To    http://localhost/pages/senior/dinamicos/oauth2-providers.html
+    Click Element    css:[data-testid="btn-oauth-login"]
+    Wait Until Location Contains    authorize    timeout=10s
+    Input Text    name:username    user
+    Input Text    name:password    pass
+    Click Button    Autorizar
+    Wait Until Location Contains    callback    timeout=10s
+    ${token}=    Execute Javascript    return localStorage.getItem('token');
+    Should Not Be Empty    ${token}
+    Element Should Be Visible    css:[data-testid="user-authenticated"]</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -418,10 +2233,104 @@
       </div>
     </main>
 
+    <!-- Dialog de Confirmação -->
+    <div class="confirm-dialog-overlay" id="confirm-overlay"></div>
+    <div class="confirm-dialog" id="confirm-dialog">
+      <h3>Mostrar Exemplos de Código?</h3>
+      <p>Os exemplos de código podem conter spoilers. Tem certeza que deseja visualizar?</p>
+      <div class="confirm-dialog-buttons">
+        <button class="btn-cancel" id="confirm-cancel">Não</button>
+        <button class="btn-confirm" id="confirm-ok">Sim</button>
+      </div>
+    </div>
+
     <footer class="site-footer">
       QA Playground — Projeto educacional • Português
     </footer>
 
     <script src="../../js/app.js"></script>
+    <script>
+      // Gerenciamento de código escondido com confirmação
+      document.querySelectorAll('.code-reveal-button').forEach(button => {
+        button.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          const container = document.getElementById(targetId);
+          
+          // Se o código já está visível, esconde diretamente
+          if (container && container.classList.contains('active')) {
+            container.classList.remove('active');
+            // Atualiza texto do botão
+            const svg = this.querySelector('svg');
+            this.innerHTML = svg.outerHTML + ' Ver Exemplos de Código';
+            return;
+          }
+          
+          // Se está escondido, mostra dialog de confirmação
+          const overlay = document.getElementById('confirm-overlay');
+          const dialog = document.getElementById('confirm-dialog');
+          
+          overlay.classList.add('active');
+          dialog.classList.add('active');
+          
+          // Salva o target para usar após confirmação
+          dialog.dataset.targetId = targetId;
+        });
+      });
+      
+      // Botão Sim - mostra código
+      document.getElementById('confirm-ok').addEventListener('click', function() {
+        const dialog = document.getElementById('confirm-dialog');
+        const targetId = dialog.dataset.targetId;
+        const container = document.getElementById(targetId);
+        const overlay = document.getElementById('confirm-overlay');
+        const button = document.querySelector(`[data-target="${targetId}"]`);
+        
+        if (container) {
+          container.classList.add('active');
+          // Atualiza texto do botão
+          if (button) {
+            const svg = button.querySelector('svg');
+            button.innerHTML = svg.outerHTML + ' Esconder Exemplos de Código';
+          }
+        }
+        
+        overlay.classList.remove('active');
+        dialog.classList.remove('active');
+      });
+      
+      // Botão Não - fecha dialog
+      document.getElementById('confirm-cancel').addEventListener('click', function() {
+        const overlay = document.getElementById('confirm-overlay');
+        const dialog = document.getElementById('confirm-dialog');
+        
+        overlay.classList.remove('active');
+        dialog.classList.remove('active');
+      });
+      
+      // Fecha dialog ao clicar no overlay
+      document.getElementById('confirm-overlay').addEventListener('click', function() {
+        this.classList.remove('active');
+        document.getElementById('confirm-dialog').classList.remove('active');
+      });
+      
+      // Gerenciamento de tabs de código
+      document.querySelectorAll('.code-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          const container = this.closest('.code-tabs-container');
+          
+          // Remove active de todas as tabs e contents
+          container.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+          container.querySelectorAll('.code-content').forEach(c => c.classList.remove('active'));
+          
+          // Adiciona active na tab e content selecionados
+          this.classList.add('active');
+          const content = container.querySelector('#' + targetId);
+          if (content) {
+            content.classList.add('active');
+          }
+        });
+      });
+    </script>
   </body>
 </html>

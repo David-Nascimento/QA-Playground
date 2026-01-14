@@ -40,7 +40,7 @@
       <section class="hero">
         <h1>Desafios Nível Pleno</h1>
         <p>
-          Desafios intermediários envolvendo tabelas dinâmicas, upload de arquivos, interações complexas e validações avançadas.
+          Desafios intermediários envolvendo tabelas dinâmicas, upload de arquivos, interações complexas e validações avançadas. Requer conhecimento de waits, manipulação de elementos dinâmicos e estratégias de localização mais sofisticadas.
         </p>
       </section>
 
@@ -52,174 +52,884 @@
 
         <div class="subsections-vertical">
           <!-- Desafio 1: Tabela com Paginação -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 1: Tabela com Paginação Dinâmica</h3>
-            <p><strong>Objetivo:</strong> Testar a navegação entre páginas de uma tabela paginada e validar a consistência dos dados.</p>
+            <p><strong>Objetivo:</strong> Testar a navegação entre páginas de uma tabela paginada, validar consistência dos dados e gerenciar estados de botões de navegação.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../pleno/tabelas/dynamic-pagination.html">Tabela com Paginação</a></li>
-              <li>Conte o número total de itens e páginas disponíveis</li>
-              <li>Navegue para a próxima página e valide os dados exibidos</li>
-              <li>Navegue para a página anterior e valide os dados</li>
-              <li>Pule para a última página e valide</li>
-              <li>Pule para a primeira página e valide</li>
-              <li>Verifique se os botões de navegação estão habilitados/desabilitados corretamente</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Paginação:</strong> Tabela deve ter controles de navegação (Primeira, Anterior, Próxima, Última)</li>
+                <li><strong>Informação:</strong> Deve exibir página atual, total de páginas e total de itens</li>
+                <li><strong>Estado dos Botões:</strong> Botão "Anterior" deve estar desabilitado na primeira página</li>
+                <li><strong>Estado dos Botões:</strong> Botão "Próxima" deve estar desabilitado na última página</li>
+                <li><strong>Dados:</strong> Cada página deve exibir quantidade fixa de itens (ex: 10 itens por página)</li>
+                <li><strong>Consistência:</strong> Não deve haver duplicação de dados entre páginas</li>
+                <li><strong>Atualização:</strong> Tabela deve atualizar após clicar em botão de navegação (pode haver delay)</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Use <code>data-testid="pagination-next"</code> para o botão próxima página</li>
-              <li>Use <code>data-testid="pagination-prev"</code> para o botão página anterior</li>
-              <li>Use <code>data-testid="pagination-first"</code> e <code>data-testid="pagination-last"</code></li>
-              <li>Use <code>data-testid="pagination-info"</code> para informações de página atual</li>
-              <li>Use <code>tbody tr</code> para contar linhas visíveis na página atual</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Navegação Básica</h5>
+              <p><strong>O que fazer:</strong> Navegar para a próxima página e validar que os dados mudaram</p>
+              <p><strong>Resultado Esperado:</strong> Dados da tabela são atualizados, informações de paginação são atualizadas</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Navegue entre páginas e valide que os dados mudam corretamente</li>
-              <li><strong>Automação:</strong> Crie um loop que navegue por todas as páginas validando dados</li>
-              <li><strong>Validação:</strong> Verifique que não há duplicação de dados entre páginas</li>
-              <li><strong>Assertivas:</strong> Valide que botões estão desabilitados quando apropriado (primeira/última página)</li>
-              <li><strong>Espera:</strong> Use waits explícitos para garantir que a tabela foi atualizada após clicar</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Validação de Estado dos Botões</h5>
+              <p><strong>O que fazer:</strong> Na primeira página, verificar estado dos botões "Anterior" e "Primeira"</p>
+              <p><strong>Resultado Esperado:</strong> Botões "Anterior" e "Primeira" devem estar desabilitados</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Navegação para Última Página</h5>
+              <p><strong>O que fazer:</strong> Clicar em "Última" e verificar estado dos botões</p>
+              <p><strong>Resultado Esperado:</strong> Última página é exibida, botões "Próxima" e "Última" ficam desabilitados</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Validação de Dados entre Páginas</h5>
+              <p><strong>O que fazer:</strong> Navegar por todas as páginas e coletar dados de cada uma</p>
+              <p><strong>Resultado Esperado:</strong> Não deve haver duplicação de dados entre páginas diferentes</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 5: Navegação Sequencial</h5>
+              <p><strong>O que fazer:</strong> Navegar: Primeira → Próxima → Próxima → Anterior → Última → Anterior</p>
+              <p><strong>Resultado Esperado:</strong> Cada navegação deve funcionar corretamente e dados devem ser atualizados</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>Botão Próxima:</strong> <code>data-testid="pagination-next"</code> ou <code>button[aria-label*="próxima"]</code></li>
+                <li><strong>Botão Anterior:</strong> <code>data-testid="pagination-prev"</code> ou <code>button[aria-label*="anterior"]</code></li>
+                <li><strong>Botão Primeira:</strong> <code>data-testid="pagination-first"</code></li>
+                <li><strong>Botão Última:</strong> <code>data-testid="pagination-last"</code></li>
+                <li><strong>Informação Paginação:</strong> <code>data-testid="pagination-info"</code> ou elemento que mostra "Página X de Y"</li>
+                <li><strong>Linhas da Tabela:</strong> <code>tbody tr</code> para contar itens na página atual</li>
+                <li><strong>Verificar Desabilitado:</strong> <code>element.get_attribute("disabled")</code> ou <code>element.is_enabled()</code></li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../pleno/tabelas/dynamic-pagination.html" target="_blank">Tabela com Paginação</a></li>
+                <li>Observe as informações de paginação (página atual, total de páginas, total de itens)</li>
+                <li>Na primeira página, verifique se botões "Anterior" e "Primeira" estão desabilitados</li>
+                <li>Conte quantas linhas existem na página atual</li>
+                <li>Clique em "Próxima" → Aguarde a tabela atualizar → Verifique que dados mudaram</li>
+                <li>Verifique que botão "Anterior" agora está habilitado</li>
+                <li>Navegue até a última página → Verifique que botões "Próxima" e "Última" ficam desabilitados</li>
+                <li>Navegue por todas as páginas e valide que não há dados duplicados</li>
+                <li>Teste navegação sequencial em ambas as direções</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-pleno-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-pleno-1" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-pleno-1-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-pleno-1-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-pleno-1-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-pleno-1-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-pleno-1-robot">Robot Framework</button>
+                </div>
+                <div id="code-pleno-1-cypress" class="code-content active">
+                  <pre><code>it('deve navegar entre páginas da tabela', () => {
+  cy.visit('/pages/pleno/tabelas/dynamic-pagination.html')
+  
+  // Verifica estado inicial
+  cy.get('[data-testid="pagination-prev"]').should('be.disabled')
+  cy.get('[data-testid="pagination-first"]').should('be.disabled')
+  
+  // Navega para próxima página
+  cy.get('[data-testid="pagination-next"]').click()
+  cy.wait(500) // Aguarda atualização
+  
+  // Verifica que botão anterior está habilitado
+  cy.get('[data-testid="pagination-prev"]').should('not.be.disabled')
+  
+  // Coleta dados da primeira página
+  cy.get('tbody tr').then(($rows1) => {
+    const dados1 = Array.from($rows1).map(row => row.textContent)
+    
+    // Navega para próxima
+    cy.get('[data-testid="pagination-next"]').click()
+    cy.wait(500)
+    
+    // Coleta dados da segunda página
+    cy.get('tbody tr').then(($rows2) => {
+      const dados2 = Array.from($rows2).map(row => row.textContent)
+      
+      // Valida que não há duplicação
+      const duplicados = dados1.filter(d => dados2.includes(d))
+      expect(duplicados.length).to.equal(0)
+    })
+  })
+})</code></pre>
+                </div>
+                <div id="code-pleno-1-playwright" class="code-content">
+                  <pre><code>test('deve navegar entre páginas da tabela', async ({ page }) => {
+  await page.goto('/pages/pleno/tabelas/dynamic-pagination.html')
+  
+  // Verifica estado inicial
+  await expect(page.getByTestId('pagination-prev')).toBeDisabled()
+  
+  // Navega para próxima página
+  await page.getByTestId('pagination-next').click()
+  await page.waitForTimeout(500)
+  
+  // Verifica que botão anterior está habilitado
+  await expect(page.getByTestId('pagination-prev')).toBeEnabled()
+  
+  // Navega até última página
+  await page.getByTestId('pagination-last').click()
+  await page.waitForTimeout(500)
+  
+  // Verifica que botão próxima está desabilitado
+  await expect(page.getByTestId('pagination-next')).toBeDisabled()
+})</code></pre>
+                </div>
+                <div id="code-pleno-1-selenium" class="code-content">
+                  <pre><code>@Test
+public void testNavegacaoPaginacao() {
+    driver.get("http://localhost/pages/pleno/tabelas/dynamic-pagination.html");
+    
+    WebElement btnAnterior = driver.findElement(By.cssSelector("[data-testid='pagination-prev']"));
+    WebElement btnProxima = driver.findElement(By.cssSelector("[data-testid='pagination-next']"));
+    
+    // Verifica estado inicial
+    assertFalse(btnAnterior.isEnabled());
+    
+    // Navega para próxima
+    btnProxima.click();
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+    wait.until(ExpectedConditions.elementToBeClickable(btnAnterior));
+    
+    // Verifica que anterior está habilitado
+    assertTrue(btnAnterior.isEnabled());
+    
+    // Navega até última página
+    WebElement btnUltima = driver.findElement(By.cssSelector("[data-testid='pagination-last']"));
+    btnUltima.click();
+    wait.until(ExpectedConditions.not(ExpectedConditions.elementToBeClickable(btnProxima)));
+    
+    // Verifica que próxima está desabilitada
+    assertFalse(btnProxima.isEnabled());
+}</code></pre>
+                </div>
+                <div id="code-pleno-1-capybara" class="code-content">
+                  <pre><code>scenario 'deve navegar entre páginas da tabela' do
+  visit '/pages/pleno/tabelas/dynamic-pagination.html'
+  
+  # Verifica estado inicial
+  expect(find('[data-testid="pagination-prev"]')).to be_disabled
+  
+  # Navega para próxima
+  click_button 'Próxima'
+  sleep 0.5
+  
+  # Verifica que anterior está habilitado
+  expect(find('[data-testid="pagination-prev"]')).not_to be_disabled
+  
+  # Navega até última
+  click_button 'Última'
+  sleep 0.5
+  
+  # Verifica que próxima está desabilitada
+  expect(find('[data-testid="pagination-next"]')).to be_disabled
+end</code></pre>
+                </div>
+                <div id="code-pleno-1-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Navegar Entre Paginas
+    Go To    http://localhost/pages/pleno/tabelas/dynamic-pagination.html
+    Element Should Be Disabled    css:[data-testid="pagination-prev"]
+    Click Element    css:[data-testid="pagination-next"]
+    Sleep    0.5s
+    Element Should Be Enabled    css:[data-testid="pagination-prev"]
+    Click Element    css:[data-testid="pagination-last"]
+    Sleep    0.5s
+    Element Should Be Disabled    css:[data-testid="pagination-next"]</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 2: Upload de Arquivos -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 2: Upload e Validação de Arquivos</h3>
-            <p><strong>Objetivo:</strong> Testar o upload de arquivos com validação de formato, tamanho e feedback visual.</p>
+            <p><strong>Objetivo:</strong> Testar upload de arquivos com validação de formato, tamanho, múltiplos arquivos e feedback visual durante o processo.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../pleno/arquivos/validacao-formatos.html">Validação de Formatos</a></li>
-              <li>Tente fazer upload de um arquivo com formato permitido (ex: .jpg, .png)</li>
-              <li>Tente fazer upload de um arquivo com formato não permitido (ex: .exe, .bat)</li>
-              <li>Tente fazer upload de um arquivo que excede o tamanho máximo</li>
-              <li>Faça upload de múltiplos arquivos simultaneamente</li>
-              <li>Verifique se há feedback visual durante o upload (barra de progresso)</li>
-              <li>Valide se o nome do arquivo é exibido após upload bem-sucedido</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Formatos Permitidos:</strong> Apenas imagens (.jpg, .png, .gif) são aceitas</li>
+                <li><strong>Tamanho Máximo:</strong> Arquivo não pode exceder 5MB</li>
+                <li><strong>Múltiplos Arquivos:</strong> Sistema permite upload de até 5 arquivos simultaneamente</li>
+                <li><strong>Feedback Visual:</strong> Deve exibir barra de progresso durante upload</li>
+                <li><strong>Validação:</strong> Mensagens de erro devem aparecer para formatos inválidos ou tamanho excedido</li>
+                <li><strong>Sucesso:</strong> Após upload bem-sucedido, nome do arquivo deve ser exibido</li>
+                <li><strong>Estado:</strong> Botão de upload deve estar desabilitado durante o processo</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Use <code>input[type="file"]</code> para localizar o campo de upload</li>
-              <li>Use <code>data-testid="input-upload"</code> para localização específica</li>
-              <li>Use <code>data-testid="upload-progress"</code> para barra de progresso</li>
-              <li>Use <code>data-testid="upload-message"</code> para mensagens de sucesso/erro</li>
-              <li>Use <code>accept</code> attribute para verificar formatos aceitos</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Upload de Arquivo Válido</h5>
+              <p><strong>O que fazer:</strong> Fazer upload de uma imagem .jpg menor que 5MB</p>
+              <p><strong>Resultado Esperado:</strong> Barra de progresso aparece, upload completa, nome do arquivo é exibido</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Teste com diferentes tipos e tamanhos de arquivo</li>
-              <li><strong>Automação:</strong> Use <code>sendKeys()</code> com caminho do arquivo (não funciona em todos os navegadores)</li>
-              <li><strong>Validação:</strong> Verifique mensagens de erro para formatos inválidos</li>
-              <li><strong>Assertivas:</strong> Valide que apenas arquivos permitidos são aceitos</li>
-              <li><strong>Limitação:</strong> Note que upload automático pode ser limitado por políticas de segurança do navegador</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Upload de Formato Inválido</h5>
+              <p><strong>O que fazer:</strong> Tentar fazer upload de arquivo .exe ou .bat</p>
+              <p><strong>Resultado Esperado:</strong> Mensagem de erro aparece: "Formato de arquivo não permitido"</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Upload de Arquivo Grande</h5>
+              <p><strong>O que fazer:</strong> Tentar fazer upload de arquivo maior que 5MB</p>
+              <p><strong>Resultado Esperado:</strong> Mensagem de erro: "Arquivo excede o tamanho máximo de 5MB"</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Upload Múltiplos Arquivos</h5>
+              <p><strong>O que fazer:</strong> Selecionar 3 arquivos de imagem simultaneamente</p>
+              <p><strong>Resultado Esperado:</strong> Todos os 3 arquivos são processados e nomes são exibidos</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 5: Estado Durante Upload</h5>
+              <p><strong>O que fazer:</strong> Durante o upload, verificar estado do botão e barra de progresso</p>
+              <p><strong>Resultado Esperado:</strong> Botão fica desabilitado, barra de progresso mostra progresso</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>Campo Upload:</strong> <code>input[type="file"]</code> ou <code>data-testid="input-upload"</code></li>
+                <li><strong>Barra Progresso:</strong> <code>data-testid="upload-progress"</code> ou <code>progress</code></li>
+                <li><strong>Mensagem Sucesso/Erro:</strong> <code>data-testid="upload-message"</code></li>
+                <li><strong>Lista Arquivos:</strong> <code>data-testid="uploaded-files"</code> ou lista de elementos</li>
+                <li><strong>Botão Upload:</strong> <code>button[type="submit"]</code> ou <code>data-testid="btn-upload"</code></li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../pleno/arquivos/validacao-formatos.html" target="_blank">Validação de Formatos</a></li>
+                <li>Clique no campo de upload e selecione uma imagem .jpg válida</li>
+                <li>Observe se barra de progresso aparece e se botão fica desabilitado</li>
+                <li>Aguarde upload completar → Verifique se nome do arquivo é exibido</li>
+                <li>Tente fazer upload de arquivo .exe → Verifique mensagem de erro</li>
+                <li>Tente fazer upload de arquivo maior que 5MB → Verifique mensagem de erro</li>
+                <li>Selecione múltiplos arquivos (até 5) → Verifique se todos são processados</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-pleno-2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-pleno-2" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-pleno-2-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-pleno-2-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-pleno-2-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-pleno-2-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-pleno-2-robot">Robot Framework</button>
+                </div>
+                <div id="code-pleno-2-cypress" class="code-content active">
+                  <pre><code>it('deve fazer upload de arquivo válido', () => {
+  cy.visit('/pages/pleno/arquivos/validacao-formatos.html')
+  
+  const fileName = 'test-image.jpg'
+  cy.fixture(fileName).then(fileContent => {
+    cy.get('input[type="file"]').attachFile({
+      fileContent: fileContent,
+      fileName: fileName,
+      mimeType: 'image/jpeg'
+    })
+  })
+  
+  // Aguarda barra de progresso
+  cy.get('[data-testid="upload-progress"]', { timeout: 5000 }).should('be.visible')
+  
+  // Aguarda mensagem de sucesso
+  cy.get('[data-testid="upload-message"]', { timeout: 10000 })
+    .should('contain', 'sucesso')
+    .and('contain', fileName)
+})</code></pre>
+                </div>
+                <div id="code-pleno-2-playwright" class="code-content">
+                  <pre><code>test('deve fazer upload de arquivo válido', async ({ page }) => {
+  await page.goto('/pages/pleno/arquivos/validacao-formatos.html')
+  
+  const fileInput = page.locator('input[type="file"]')
+  await fileInput.setInputFiles('path/to/test-image.jpg')
+  
+  // Aguarda barra de progresso
+  await expect(page.getByTestId('upload-progress')).toBeVisible({ timeout: 5000 })
+  
+  // Aguarda mensagem de sucesso
+  await expect(page.getByTestId('upload-message'))
+    .toContainText('sucesso', { timeout: 10000 })
+})</code></pre>
+                </div>
+                <div id="code-pleno-2-selenium" class="code-content">
+                  <pre><code>@Test
+public void testUploadArquivo() {
+    driver.get("http://localhost/pages/pleno/arquivos/validacao-formatos.html");
+    
+    WebElement fileInput = driver.findElement(By.cssSelector("input[type='file']"));
+    String filePath = System.getProperty("user.dir") + "/test-image.jpg";
+    fileInput.sendKeys(filePath);
+    
+    // Aguarda barra de progresso
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    wait.until(ExpectedConditions.visibilityOfElementLocated(
+        By.cssSelector("[data-testid='upload-progress']")));
+    
+    // Aguarda mensagem de sucesso
+    wait.until(ExpectedConditions.textToBePresentInElementLocated(
+        By.cssSelector("[data-testid='upload-message']"), "sucesso"));
+}</code></pre>
+                </div>
+                <div id="code-pleno-2-capybara" class="code-content">
+                  <pre><code>scenario 'deve fazer upload de arquivo válido' do
+  visit '/pages/pleno/arquivos/validacao-formatos.html'
+  
+  attach_file('input[type="file"]', 'test-image.jpg')
+  
+  # Aguarda barra de progresso
+  expect(page).to have_selector('[data-testid="upload-progress"]', visible: true, wait: 5)
+  
+  # Aguarda mensagem de sucesso
+  expect(page).to have_content('sucesso', wait: 10)
+end</code></pre>
+                </div>
+                <div id="code-pleno-2-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Upload Arquivo Valido
+    Go To    http://localhost/pages/pleno/arquivos/validacao-formatos.html
+    Choose File    css:input[type="file"]    ${CURDIR}/test-image.jpg
+    Wait Until Element Is Visible    css:[data-testid="upload-progress"]    timeout=5s
+    Wait Until Page Contains    sucesso    timeout=10s</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 3: Drag and Drop -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 3: Drag and Drop de Elementos</h3>
-            <p><strong>Objetivo:</strong> Testar a funcionalidade de arrastar e soltar elementos entre áreas diferentes.</p>
+            <p><strong>Objetivo:</strong> Testar funcionalidade de arrastar e soltar elementos entre áreas diferentes, validando estados e animações.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../pleno/interacoes/drag-drop.html">Drag and Drop</a></li>
-              <li>Identifique o elemento que pode ser arrastado (drag source)</li>
-              <li>Identifique a área de destino (drop target)</li>
-              <li>Arraste o elemento da origem para o destino</li>
-              <li>Verifique se o elemento foi movido corretamente</li>
-              <li>Teste arrastar múltiplos elementos</li>
-              <li>Teste arrastar para uma área inválida e verifique se é rejeitado</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Elemento Arrastável:</strong> Deve ter atributo <code>draggable="true"</code></li>
+                <li><strong>Área de Destino:</strong> Deve aceitar drop e ter feedback visual quando elemento está sobre ela</li>
+                <li><strong>Movimento:</strong> Elemento deve ser removido da origem e adicionado ao destino</li>
+                <li><strong>Área Inválida:</strong> Tentar arrastar para área não permitida deve ser rejeitado</li>
+                <li><strong>Múltiplos Elementos:</strong> Sistema pode permitir arrastar múltiplos elementos sequencialmente</li>
+                <li><strong>Feedback Visual:</strong> Durante o drag, elemento deve ter estado visual diferente (opacidade, cursor)</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Use <code>data-testid="drag-source"</code> para elemento arrastável</li>
-              <li>Use <code>data-testid="drop-target"</code> para área de destino</li>
-              <li>Use <code>draggable="true"</code> attribute para identificar elementos arrastáveis</li>
-              <li>Use eventos de mouse: <code>mousedown</code>, <code>mousemove</code>, <code>mouseup</code></li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Drag and Drop Básico</h5>
+              <p><strong>O que fazer:</strong> Arrastar elemento da área origem para área destino</p>
+              <p><strong>Resultado Esperado:</strong> Elemento aparece na área destino e desaparece da origem</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Arraste elementos e verifique visualmente o resultado</li>
-              <li><strong>Automação:</strong> Use Actions API do Selenium: <code>Actions().dragAndDrop(source, target).perform()</code></li>
-              <li><strong>Validação:</strong> Verifique se o elemento aparece na área de destino após o drop</li>
-              <li><strong>Assertivas:</strong> Valide que o elemento foi removido da origem e adicionado ao destino</li>
-              <li><strong>Espera:</strong> Use waits para garantir que a animação de drag foi concluída</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Múltiplos Elementos</h5>
+              <p><strong>O que fazer:</strong> Arrastar 3 elementos sequencialmente para o destino</p>
+              <p><strong>Resultado Esperado:</strong> Todos os 3 elementos aparecem na área destino</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Área Inválida</h5>
+              <p><strong>O que fazer:</strong> Tentar arrastar elemento para área que não aceita drop</p>
+              <p><strong>Resultado Esperado:</strong> Elemento retorna para origem ou é rejeitado visualmente</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>Elemento Arrastável:</strong> <code>data-testid="drag-source"</code> ou <code>[draggable="true"]</code></li>
+                <li><strong>Área Destino:</strong> <code>data-testid="drop-target"</code> ou elemento com evento <code>ondrop</code></li>
+                <li><strong>Verificar Posição:</strong> Após drop, verificar se elemento está dentro do container destino</li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../pleno/interacoes/drag-drop.html" target="_blank">Drag and Drop</a></li>
+                <li>Identifique o elemento que pode ser arrastado (drag source)</li>
+                <li>Identifique a área de destino (drop target)</li>
+                <li>Arraste o elemento da origem para o destino</li>
+                <li>Verifique se elemento aparece na área destino</li>
+                <li>Verifique se elemento desapareceu da área origem</li>
+                <li>Teste arrastar múltiplos elementos sequencialmente</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-pleno-3">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-pleno-3" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-pleno-3-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-pleno-3-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-pleno-3-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-pleno-3-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-pleno-3-robot">Robot Framework</button>
+                </div>
+                <div id="code-pleno-3-cypress" class="code-content active">
+                  <pre><code>it('deve arrastar e soltar elemento', () => {
+  cy.visit('/pages/pleno/interacoes/drag-drop.html')
+  
+  cy.get('[data-testid="drag-source"]').trigger('mousedown', { which: 1 })
+  cy.get('[data-testid="drop-target"]')
+    .trigger('mousemove')
+    .trigger('mouseup', { force: true })
+  
+  // Verifica que elemento foi movido
+  cy.get('[data-testid="drop-target"]')
+    .should('contain', 'Elemento movido')
+})</code></pre>
+                </div>
+                <div id="code-pleno-3-playwright" class="code-content">
+                  <pre><code>test('deve arrastar e soltar elemento', async ({ page }) => {
+  await page.goto('/pages/pleno/interacoes/drag-drop.html')
+  
+  const source = page.getByTestId('drag-source')
+  const target = page.getByTestId('drop-target')
+  
+  await source.dragTo(target)
+  
+  // Verifica que elemento foi movido
+  await expect(target).toContainText('Elemento movido')
+})</code></pre>
+                </div>
+                <div id="code-pleno-3-selenium" class="code-content">
+                  <pre><code>@Test
+public void testDragAndDrop() {
+    driver.get("http://localhost/pages/pleno/interacoes/drag-drop.html");
+    
+    WebElement source = driver.findElement(By.cssSelector("[data-testid='drag-source']"));
+    WebElement target = driver.findElement(By.cssSelector("[data-testid='drop-target']"));
+    
+    Actions actions = new Actions(driver);
+    actions.dragAndDrop(source, target).perform();
+    
+    // Aguarda animação
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+    wait.until(ExpectedConditions.textToBePresentInElement(target, "Elemento movido"));
+}</code></pre>
+                </div>
+                <div id="code-pleno-3-capybara" class="code-content">
+                  <pre><code>scenario 'deve arrastar e soltar elemento' do
+  visit '/pages/pleno/interacoes/drag-drop.html'
+  
+  source = find('[data-testid="drag-source"]')
+  target = find('[data-testid="drop-target"]')
+  
+  source.drag_to(target)
+  
+  expect(target).to have_content('Elemento movido')
+end</code></pre>
+                </div>
+                <div id="code-pleno-3-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Drag And Drop
+    Go To    http://localhost/pages/pleno/interacoes/drag-drop.html
+    Drag And Drop    css:[data-testid="drag-source"]    css:[data-testid="drop-target"]
+    Wait Until Element Contains    css:[data-testid="drop-target"]    Elemento movido    timeout=3s</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 4: Slider -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 4: Interação com Slider (Range Input)</h3>
-            <p><strong>Objetivo:</strong> Testar a manipulação de um slider e validar que o valor é atualizado corretamente.</p>
+            <p><strong>Objetivo:</strong> Testar manipulação de slider, validar valores, limites e atualização em tempo real.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../pleno/interacoes/slider.html">Slider</a></li>
-              <li>Identifique o valor inicial do slider</li>
-              <li>Arraste o slider para o valor mínimo</li>
-              <li>Arraste o slider para o valor máximo</li>
-              <li>Arraste o slider para um valor intermediário</li>
-              <li>Verifique se há um indicador visual do valor atual</li>
-              <li>Teste se o valor é atualizado em tempo real durante o arraste</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Limites:</strong> Slider tem valor mínimo e máximo definidos (ex: 0 a 100)</li>
+                <li><strong>Valor Inicial:</strong> Slider pode ter valor padrão ao carregar</li>
+                <li><strong>Atualização:</strong> Valor exibido deve atualizar em tempo real durante o arraste</li>
+                <li><strong>Precisão:</strong> Slider pode ter step (incremento) definido (ex: step="1" ou step="10")</li>
+                <li><strong>Feedback Visual:</strong> Deve haver indicador visual do valor atual</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Use <code>input[type="range"]</code> para localizar o slider</li>
-              <li>Use <code>data-testid="slider-range"</code> para localização específica</li>
-              <li>Use <code>min</code>, <code>max</code>, e <code>value</code> attributes para obter limites e valor atual</li>
-              <li>Use <code>data-testid="slider-value"</code> para o indicador de valor</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Mover para Valor Mínimo</h5>
+              <p><strong>O que fazer:</strong> Arrastar slider para o valor mínimo</p>
+              <p><strong>Resultado Esperado:</strong> Valor exibido corresponde ao mínimo, slider não pode ir abaixo</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Arraste o slider e observe a mudança de valor</li>
-              <li><strong>Automação:</strong> Use <code>Actions().dragAndDropBy(slider, offsetX, 0).perform()</code> ou <code>sendKeys(Keys.ARROW_RIGHT)</code></li>
-              <li><strong>Validação:</strong> Verifique se o valor exibido corresponde ao valor do slider</li>
-              <li><strong>Assertivas:</strong> Valide que o valor está dentro dos limites min/max</li>
-              <li><strong>Precisão:</strong> Teste valores específicos usando JavaScript para definir o valor diretamente</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Mover para Valor Máximo</h5>
+              <p><strong>O que fazer:</strong> Arrastar slider para o valor máximo</p>
+              <p><strong>Resultado Esperado:</strong> Valor exibido corresponde ao máximo, slider não pode ir acima</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Valor Intermediário</h5>
+              <p><strong>O que fazer:</strong> Arrastar slider para um valor intermediário (ex: 50)</p>
+              <p><strong>Resultado Esperado:</strong> Valor exibido corresponde à posição do slider</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>Slider:</strong> <code>input[type="range"]</code> ou <code>data-testid="slider-range"</code></li>
+                <li><strong>Valor Exibido:</strong> <code>data-testid="slider-value"</code> ou elemento que mostra o valor</li>
+                <li><strong>Atributos:</strong> <code>min</code>, <code>max</code>, <code>value</code>, <code>step</code></li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../pleno/interacoes/slider.html" target="_blank">Slider</a></li>
+                <li>Observe o valor inicial do slider</li>
+                <li>Arraste o slider para a esquerda (valor mínimo) → Verifique valor exibido</li>
+                <li>Arraste o slider para a direita (valor máximo) → Verifique valor exibido</li>
+                <li>Arraste para um valor intermediário → Verifique se valor atualiza em tempo real</li>
+                <li>Teste valores específicos usando setas do teclado (se suportado)</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-pleno-4">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-pleno-4" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-pleno-4-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-pleno-4-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-pleno-4-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-pleno-4-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-pleno-4-robot">Robot Framework</button>
+                </div>
+                <div id="code-pleno-4-cypress" class="code-content active">
+                  <pre><code>it('deve manipular slider', () => {
+  cy.visit('/pages/pleno/interacoes/slider.html')
+  
+  cy.get('input[type="range"]').then($slider => {
+    const min = parseInt($slider.attr('min'))
+    const max = parseInt($slider.attr('max'))
+    
+    // Move para mínimo
+    cy.wrap($slider).invoke('val', min).trigger('input')
+    cy.get('[data-testid="slider-value"]').should('contain', min)
+    
+    // Move para máximo
+    cy.wrap($slider).invoke('val', max).trigger('input')
+    cy.get('[data-testid="slider-value"]').should('contain', max)
+  })
+})</code></pre>
+                </div>
+                <div id="code-pleno-4-playwright" class="code-content">
+                  <pre><code>test('deve manipular slider', async ({ page }) => {
+  await page.goto('/pages/pleno/interacoes/slider.html')
+  
+  const slider = page.locator('input[type="range"]')
+  const min = await slider.getAttribute('min')
+  const max = await slider.getAttribute('max')
+  
+  // Move para mínimo
+  await slider.fill(min)
+  await expect(page.getByTestId('slider-value')).toContainText(min)
+  
+  // Move para máximo
+  await slider.fill(max)
+  await expect(page.getByTestId('slider-value')).toContainText(max)
+})</code></pre>
+                </div>
+                <div id="code-pleno-4-selenium" class="code-content">
+                  <pre><code>@Test
+public void testSlider() {
+    driver.get("http://localhost/pages/pleno/interacoes/slider.html");
+    
+    WebElement slider = driver.findElement(By.cssSelector("input[type='range']"));
+    String min = slider.getAttribute("min");
+    String max = slider.getAttribute("max");
+    
+    // Move para mínimo usando JavaScript
+    ((JavascriptExecutor) driver).executeScript(
+        "arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input'));",
+        slider, min);
+    
+    WebElement valueDisplay = driver.findElement(By.cssSelector("[data-testid='slider-value']"));
+    assertTrue(valueDisplay.getText().contains(min));
+}</code></pre>
+                </div>
+                <div id="code-pleno-4-capybara" class="code-content">
+                  <pre><code>scenario 'deve manipular slider' do
+  visit '/pages/pleno/interacoes/slider.html'
+  
+  slider = find('input[type="range"]')
+  min = slider[:min].to_i
+  max = slider[:max].to_i
+  
+  # Move para mínimo
+  execute_script("arguments[0].value = #{min}; arguments[0].dispatchEvent(new Event('input'));", slider)
+  expect(find('[data-testid="slider-value"]')).to have_content(min.to_s)
+end</code></pre>
+                </div>
+                <div id="code-pleno-4-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Manipular Slider
+    Go To    http://localhost/pages/pleno/interacoes/slider.html
+    ${min}=    Get Element Attribute    css:input[type="range"]    min
+    Execute Javascript    arguments[0].value = ${min}; arguments[0].dispatchEvent(new Event('input'));    ARGUMENTS    css:input[type="range"]
+    Element Should Contain    css:[data-testid="slider-value"]    ${min}</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 5: Tabela Ordenável -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 5: Ordenação de Colunas em Tabela</h3>
-            <p><strong>Objetivo:</strong> Testar a ordenação ascendente e descendente de colunas em uma tabela.</p>
+            <p><strong>Objetivo:</strong> Testar ordenação ascendente e descendente de colunas, validar indicadores visuais e consistência dos dados.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../pleno/tabelas/ordenaveis.html">Tabela Ordenável</a></li>
-              <li>Clique no cabeçalho de uma coluna para ordenar ascendente</li>
-              <li>Clique novamente para ordenar descendente</li>
-              <li>Teste a ordenação em todas as colunas ordenáveis</li>
-              <li>Verifique se há indicador visual da coluna ordenada e direção</li>
-              <li>Valide que os dados estão corretamente ordenados após cada clique</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Ordenação:</strong> Clicar no cabeçalho ordena ascendente, segundo clique ordena descendente</li>
+                <li><strong>Indicador Visual:</strong> Deve mostrar seta para cima (asc) ou para baixo (desc) na coluna ordenada</li>
+                <li><strong>Múltiplas Colunas:</strong> Apenas uma coluna pode estar ordenada por vez</li>
+                <li><strong>Dados:</strong> Ordenação deve ser aplicada corretamente (numérica, alfabética, data)</li>
+                <li><strong>Atualização:</strong> Tabela deve atualizar após clicar (pode haver delay de animação)</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Use <code>th[data-sortable="true"]</code> ou <code>data-testid="sort-header"</code> para cabeçalhos ordenáveis</li>
-              <li>Use <code>data-testid="sort-asc"</code> e <code>data-testid="sort-desc"</code> para indicadores</li>
-              <li>Use <code>tbody tr</code> para acessar linhas após ordenação</li>
-              <li>Use <code>td:nth-child(n)</code> para comparar valores de colunas específicas</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Ordenação Ascendente</h5>
+              <p><strong>O que fazer:</strong> Clicar no cabeçalho de uma coluna pela primeira vez</p>
+              <p><strong>Resultado Esperado:</strong> Dados são ordenados de A-Z ou menor para maior, seta para cima aparece</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Clique nos cabeçalhos e verifique visualmente a ordenação</li>
-              <li><strong>Automação:</strong> Crie um script que colete valores, ordene, e compare com a ordem exibida</li>
-              <li><strong>Validação:</strong> Verifique que a ordem dos dados corresponde à ordenação esperada</li>
-              <li><strong>Assertivas:</strong> Valide que alternar entre asc/desc funciona corretamente</li>
-              <li><strong>Espera:</strong> Use waits para garantir que a ordenação foi aplicada antes de validar</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Ordenação Descendente</h5>
+              <p><strong>O que fazer:</strong> Clicar novamente no mesmo cabeçalho</p>
+              <p><strong>Resultado Esperado:</strong> Dados são ordenados de Z-A ou maior para menor, seta para baixo aparece</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Mudança de Coluna</h5>
+              <p><strong>O que fazer:</strong> Com uma coluna ordenada, clicar em outra coluna</p>
+              <p><strong>Resultado Esperado:</strong> Nova coluna é ordenada, indicador visual muda para nova coluna</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Validação de Ordenação</h5>
+              <p><strong>O que fazer:</strong> Após ordenar, coletar valores da coluna e verificar ordem</p>
+              <p><strong>Resultado Esperado:</strong> Valores estão na ordem correta (ascendente ou descendente)</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>Cabeçalho Ordenável:</strong> <code>th[data-sortable="true"]</code> ou <code>data-testid="sort-header"</code></li>
+                <li><strong>Indicador Asc:</strong> <code>data-testid="sort-asc"</code> ou classe CSS específica</li>
+                <li><strong>Indicador Desc:</strong> <code>data-testid="sort-desc"</code> ou classe CSS específica</li>
+                <li><strong>Linhas Após Ordenação:</strong> <code>tbody tr</code> para coletar valores ordenados</li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../pleno/tabelas/ordenaveis.html" target="_blank">Tabela Ordenável</a></li>
+                <li>Observe a ordem inicial dos dados na tabela</li>
+                <li>Clique no cabeçalho da primeira coluna ordenável</li>
+                <li>Verifique se dados são ordenados ascendente e seta para cima aparece</li>
+                <li>Clique novamente no mesmo cabeçalho → Verifique ordenação descendente</li>
+                <li>Clique em outra coluna ordenável → Verifique que indicador muda para nova coluna</li>
+                <li>Valide que dados estão corretamente ordenados comparando valores</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-pleno-5">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-pleno-5" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-pleno-5-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-pleno-5-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-pleno-5-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-pleno-5-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-pleno-5-robot">Robot Framework</button>
+                </div>
+                <div id="code-pleno-5-cypress" class="code-content active">
+                  <pre><code>it('deve ordenar coluna da tabela', () => {
+  cy.visit('/pages/pleno/tabelas/ordenaveis.html')
+  
+  // Coleta valores antes da ordenação
+  cy.get('tbody tr td:nth-child(1)').then($cells => {
+    const valoresAntes = Array.from($cells).map(cell => cell.textContent.trim())
+    
+    // Clica no cabeçalho para ordenar
+    cy.get('th[data-sortable="true"]').first().click()
+    cy.wait(500) // Aguarda animação
+    
+    // Verifica indicador ascendente
+    cy.get('[data-testid="sort-asc"]').should('be.visible')
+    
+    // Coleta valores após ordenação
+    cy.get('tbody tr td:nth-child(1)').then($cells => {
+      const valoresDepois = Array.from($cells).map(cell => cell.textContent.trim())
+      
+      // Valida que está ordenado
+      const ordenado = [...valoresDepois].sort()
+      expect(valoresDepois).to.deep.equal(ordenado)
+    })
+  })
+})</code></pre>
+                </div>
+                <div id="code-pleno-5-playwright" class="code-content">
+                  <pre><code>test('deve ordenar coluna da tabela', async ({ page }) => {
+  await page.goto('/pages/pleno/tabelas/ordenaveis.html')
+  
+  // Coleta valores antes
+  const valoresAntes = await page.locator('tbody tr td:nth-child(1)')
+    .allTextContents()
+  
+  // Clica no cabeçalho
+  await page.locator('th[data-sortable="true"]').first().click()
+  await page.waitForTimeout(500)
+  
+  // Verifica indicador
+  await expect(page.getByTestId('sort-asc')).toBeVisible()
+  
+  // Coleta valores após
+  const valoresDepois = await page.locator('tbody tr td:nth-child(1)')
+    .allTextContents()
+  
+  // Valida ordenação
+  const ordenado = [...valoresDepois].sort()
+  expect(valoresDepois).toEqual(ordenado)
+})</code></pre>
+                </div>
+                <div id="code-pleno-5-selenium" class="code-content">
+                  <pre><code>@Test
+public void testOrdenacaoTabela() {
+    driver.get("http://localhost/pages/pleno/tabelas/ordenaveis.html");
+    
+    // Coleta valores antes
+    List<WebElement> celulas = driver.findElements(By.cssSelector("tbody tr td:nth-child(1)"));
+    List<String> valoresAntes = celulas.stream()
+        .map(WebElement::getText)
+        .collect(Collectors.toList());
+    
+    // Clica no cabeçalho
+    WebElement header = driver.findElement(By.cssSelector("th[data-sortable='true']"));
+    header.click();
+    
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+    wait.until(ExpectedConditions.presenceOfElementLocated(
+        By.cssSelector("[data-testid='sort-asc']")));
+    
+    // Coleta valores após
+    celulas = driver.findElements(By.cssSelector("tbody tr td:nth-child(1)"));
+    List<String> valoresDepois = celulas.stream()
+        .map(WebElement::getText)
+        .collect(Collectors.toList());
+    
+    // Valida ordenação
+    List<String> ordenado = new ArrayList<>(valoresDepois);
+    Collections.sort(ordenado);
+    assertEquals(ordenado, valoresDepois);
+}</code></pre>
+                </div>
+                <div id="code-pleno-5-capybara" class="code-content">
+                  <pre><code>scenario 'deve ordenar coluna da tabela' do
+  visit '/pages/pleno/tabelas/ordenaveis.html'
+  
+  # Coleta valores antes
+  valores_antes = all('tbody tr td:nth-child(1)').map(&:text).map(&:strip)
+  
+  # Clica no cabeçalho
+  find('th[data-sortable="true"]').click
+  sleep 0.5
+  
+  # Verifica indicador
+  expect(page).to have_selector('[data-testid="sort-asc"]', visible: true)
+  
+  # Coleta valores após
+  valores_depois = all('tbody tr td:nth-child(1)').map(&:text).map(&:strip)
+  
+  # Valida ordenação
+  expect(valores_depois).to eq(valores_depois.sort)
+end</code></pre>
+                </div>
+                <div id="code-pleno-5-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Ordenar Coluna Tabela
+    Go To    http://localhost/pages/pleno/tabelas/ordenaveis.html
+    Click Element    css:th[data-sortable="true"]:first-child
+    Sleep    0.5s
+    Element Should Be Visible    css:[data-testid="sort-asc"]
+    ${valores}=    Get WebElements    css:tbody tr td:nth-child(1)
+    # Validar ordenação comparando valores</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -230,10 +940,104 @@
       </div>
     </main>
 
+    <!-- Dialog de Confirmação -->
+    <div class="confirm-dialog-overlay" id="confirm-overlay"></div>
+    <div class="confirm-dialog" id="confirm-dialog">
+      <h3>Mostrar Exemplos de Código?</h3>
+      <p>Os exemplos de código podem conter spoilers. Tem certeza que deseja visualizar?</p>
+      <div class="confirm-dialog-buttons">
+        <button class="btn-cancel" id="confirm-cancel">Não</button>
+        <button class="btn-confirm" id="confirm-ok">Sim</button>
+      </div>
+    </div>
+
     <footer class="site-footer">
       QA Playground — Projeto educacional • Português
     </footer>
 
     <script src="../../js/app.js"></script>
+    <script>
+      // Gerenciamento de código escondido com confirmação
+      document.querySelectorAll('.code-reveal-button').forEach(button => {
+        button.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          const container = document.getElementById(targetId);
+          
+          // Se o código já está visível, esconde diretamente
+          if (container && container.classList.contains('active')) {
+            container.classList.remove('active');
+            // Atualiza texto do botão
+            const svg = this.querySelector('svg');
+            this.innerHTML = svg.outerHTML + ' Ver Exemplos de Código';
+            return;
+          }
+          
+          // Se está escondido, mostra dialog de confirmação
+          const overlay = document.getElementById('confirm-overlay');
+          const dialog = document.getElementById('confirm-dialog');
+          
+          overlay.classList.add('active');
+          dialog.classList.add('active');
+          
+          // Salva o target para usar após confirmação
+          dialog.dataset.targetId = targetId;
+        });
+      });
+      
+      // Botão Sim - mostra código
+      document.getElementById('confirm-ok').addEventListener('click', function() {
+        const dialog = document.getElementById('confirm-dialog');
+        const targetId = dialog.dataset.targetId;
+        const container = document.getElementById(targetId);
+        const overlay = document.getElementById('confirm-overlay');
+        const button = document.querySelector(`[data-target="${targetId}"]`);
+        
+        if (container) {
+          container.classList.add('active');
+          // Atualiza texto do botão
+          if (button) {
+            const svg = button.querySelector('svg');
+            button.innerHTML = svg.outerHTML + ' Esconder Exemplos de Código';
+          }
+        }
+        
+        overlay.classList.remove('active');
+        dialog.classList.remove('active');
+      });
+      
+      // Botão Não - fecha dialog
+      document.getElementById('confirm-cancel').addEventListener('click', function() {
+        const overlay = document.getElementById('confirm-overlay');
+        const dialog = document.getElementById('confirm-dialog');
+        
+        overlay.classList.remove('active');
+        dialog.classList.remove('active');
+      });
+      
+      // Fecha dialog ao clicar no overlay
+      document.getElementById('confirm-overlay').addEventListener('click', function() {
+        this.classList.remove('active');
+        document.getElementById('confirm-dialog').classList.remove('active');
+      });
+      
+      // Gerenciamento de tabs de código
+      document.querySelectorAll('.code-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          const container = this.closest('.code-tabs-container');
+          
+          // Remove active de todas as tabs e contents
+          container.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+          container.querySelectorAll('.code-content').forEach(c => c.classList.remove('active'));
+          
+          // Adiciona active na tab e content selecionados
+          this.classList.add('active');
+          const content = container.querySelector('#' + targetId);
+          if (content) {
+            content.classList.add('active');
+          }
+        });
+      });
+    </script>
   </body>
 </html>

@@ -867,3 +867,268 @@ textarea:focus-visible {
 .test-code.active {
   display: block;
 }
+
+/* === Challenge Page Styles === */
+.challenge-rules {
+  background: rgba(122, 168, 116, 0.08);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-lg);
+  border-left: 4px solid var(--accent);
+}
+
+.challenge-rules h5 {
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  color: var(--accent);
+  font-size: var(--font-size-base);
+}
+
+.challenge-rules ul {
+  margin-bottom: var(--spacing-sm);
+}
+
+.challenge-scenario {
+  background: var(--surface);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.challenge-scenario h5 {
+  color: var(--accent);
+  margin-top: 0;
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-lg);
+}
+
+.challenge-scenario p {
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.7;
+}
+
+.challenge-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.challenge-section h4 {
+  color: var(--text);
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid rgba(122, 168, 116, 0.2);
+  font-size: var(--font-size-xl);
+}
+
+.challenge-section h5 {
+  color: var(--accent);
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-lg);
+}
+
+.challenge-instructions {
+  background: var(--surface);
+  border-left: 3px solid var(--accent);
+  padding: var(--spacing-md);
+  margin: var(--spacing-md) 0;
+  border-radius: var(--border-radius-sm);
+}
+
+.challenge-instructions ol,
+.challenge-instructions ul {
+  margin-left: var(--spacing-md);
+}
+
+.challenge-instructions li {
+  margin-bottom: var(--spacing-xs);
+  line-height: 1.6;
+}
+
+.code-reveal-container {
+  margin: var(--spacing-lg) 0;
+}
+
+.code-reveal-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--surface);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--text);
+  transition: all var(--transition);
+  margin-bottom: var(--spacing-sm);
+}
+
+.code-reveal-button:hover {
+  background: rgba(122, 168, 116, 0.1);
+  border-color: var(--accent);
+}
+
+.code-reveal-button svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--muted);
+}
+
+.code-reveal-button:hover svg {
+  fill: var(--accent);
+}
+
+.code-tabs-container {
+  display: none;
+  margin-top: var(--spacing-md);
+}
+
+.code-tabs-container.active {
+  display: block;
+}
+
+.code-tabs {
+  display: flex;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+}
+
+.code-tab {
+  background: none;
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  transition: all var(--transition);
+  font-size: var(--font-size-sm);
+}
+
+.code-tab:hover {
+  color: var(--accent);
+}
+
+.code-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.code-content {
+  display: none;
+  background: rgba(0, 0, 0, 0.03);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.code-content.active {
+  display: block;
+}
+
+.code-content pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.code-content code {
+  color: var(--text);
+}
+
+.confirm-dialog {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--surface);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: 10000;
+  max-width: 400px;
+  width: 90%;
+}
+
+.confirm-dialog.active {
+  display: block;
+}
+
+.confirm-dialog-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+.confirm-dialog-overlay.active {
+  display: block;
+}
+
+.confirm-dialog h3 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+}
+
+.confirm-dialog p {
+  margin-bottom: var(--spacing-lg);
+  color: var(--muted);
+}
+
+.confirm-dialog-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-end;
+}
+
+.confirm-dialog-buttons button {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all var(--transition);
+}
+
+.confirm-dialog-buttons .btn-confirm {
+  background: var(--accent);
+  color: white;
+}
+
+.confirm-dialog-buttons .btn-confirm:hover {
+  background: var(--accent-2);
+}
+
+.confirm-dialog-buttons .btn-cancel {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.confirm-dialog-buttons .btn-cancel:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 700px) {
+  .code-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  
+  .confirm-dialog {
+    padding: var(--spacing-lg);
+  }
+}

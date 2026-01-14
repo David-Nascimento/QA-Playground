@@ -40,7 +40,7 @@
       <section class="hero">
         <h1>Desafios Nível Júnior</h1>
         <p>
-          Desafios básicos focados em fundamentos de QA, localização de elementos e validações simples.
+          Desafios básicos focados em fundamentos de QA, localização de elementos e validações simples. Cada desafio inclui instruções claras e passo a passo para facilitar seu aprendizado.
         </p>
       </section>
 
@@ -52,133 +52,734 @@
 
         <div class="subsections-vertical">
           <!-- Desafio 1: Formulário de Login -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 1: Validação de Formulário de Login</h3>
-            <p><strong>Objetivo:</strong> Testar o formulário de login com validações de campos obrigatórios e mensagens de erro.</p>
+            <p><strong>Objetivo:</strong> Testar o formulário de login com validações de campos obrigatórios, formatos e mensagens de erro.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../junior/formularios/login.html">Formulário de Login</a></li>
-              <li>Tente submeter o formulário sem preencher nenhum campo</li>
-              <li>Preencha apenas o campo de email e tente submeter</li>
-              <li>Preencha apenas o campo de senha e tente submeter</li>
-              <li>Preencha ambos os campos com dados válidos e submeta</li>
-              <li>Teste com email inválido (sem @, sem domínio, etc.)</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Email:</strong> Campo obrigatório, deve ter formato válido (ex: usuario@dominio.com)</li>
+                <li><strong>Senha:</strong> Campo obrigatório, mínimo de 6 caracteres</li>
+                <li><strong>Lembrar-me:</strong> Campo opcional (checkbox)</li>
+                <li><strong>Validação:</strong> Mensagens de erro devem aparecer em tempo real ao sair do campo (blur)</li>
+                <li><strong>Submissão:</strong> Formulário só pode ser submetido quando ambos os campos estão válidos</li>
+                <li><strong>Credenciais válidas:</strong> Email: <code>teste@qaplayground.com</code> | Senha: <code>senha123</code></li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Use <code>id="email"</code> ou <code>data-testid="input-email"</code> para localizar o campo de email</li>
-              <li>Use <code>id="senha"</code> ou <code>data-testid="input-senha"</code> para localizar o campo de senha</li>
-              <li>Use <code>id="btn-login"</code> ou <code>data-testid="btn-login"</code> para localizar o botão de login</li>
-              <li>Mensagens de erro podem ser encontradas por <code>id="email-error"</code> e <code>id="senha-error"</code></li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Login com Sucesso</h5>
+              <p><strong>O que fazer:</strong> Preencher email e senha válidos e clicar em "Entrar"</p>
+              <p><strong>Dados de Teste:</strong> Email: <code>teste@qaplayground.com</code> | Senha: <code>senha123</code></p>
+              <p><strong>Resultado Esperado:</strong> Toast de sucesso aparece, formulário é limpo, botão volta ao estado normal</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Execute os passos acima e verifique se as mensagens de erro aparecem corretamente</li>
-              <li><strong>Automação:</strong> Crie testes que validem a presença de mensagens de erro quando campos estão vazios</li>
-              <li><strong>Validação:</strong> Verifique se o formulário só permite submissão quando ambos os campos estão válidos</li>
-              <li><strong>Assertivas:</strong> Verifique se mensagens de erro desaparecem quando campos são preenchidos corretamente</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Campos Vazios</h5>
+              <p><strong>O que fazer:</strong> Clicar em "Entrar" sem preencher nenhum campo</p>
+              <p><strong>Resultado Esperado:</strong> Mensagens de erro aparecem para ambos os campos</p>
+              <p><strong>Mensagens Esperadas:</strong> Email: "Email é obrigatório." | Senha: "Senha é obrigatória."</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Email Vazio</h5>
+              <p><strong>O que fazer:</strong> Preencher apenas a senha e clicar em "Entrar"</p>
+              <p><strong>Resultado Esperado:</strong> Erro aparece apenas no campo email</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Senha Vazia</h5>
+              <p><strong>O que fazer:</strong> Preencher apenas o email e clicar em "Entrar"</p>
+              <p><strong>Resultado Esperado:</strong> Erro aparece apenas no campo senha</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 5: Email com Formato Inválido</h5>
+              <p><strong>O que fazer:</strong> Digitar email inválido (ex: <code>email-sem-arroba</code>) e sair do campo</p>
+              <p><strong>Resultado Esperado:</strong> Mensagem "Formato de email inválido." aparece</p>
+              <p><strong>Exemplos de emails inválidos:</strong> <code>email-sem-arroba.com</code>, <code>@dominio.com</code>, <code>usuario@</code></p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 6: Senha Curta</h5>
+              <p><strong>O que fazer:</strong> Digitar senha com menos de 6 caracteres (ex: <code>12345</code>) e sair do campo</p>
+              <p><strong>Resultado Esperado:</strong> Mensagem "Senha deve ter no mínimo 6 caracteres." aparece</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>Formulário:</strong> <code>data-testid="form-login"</code> ou <code>id="login-form"</code></li>
+                <li><strong>Campo Email:</strong> <code>id="email"</code> ou <code>data-testid="input-email"</code></li>
+                <li><strong>Campo Senha:</strong> <code>id="password"</code> ou <code>data-testid="input-senha"</code></li>
+                <li><strong>Botão Entrar:</strong> <code>id="btn-login"</code> ou <code>data-testid="btn-login"</code></li>
+                <li><strong>Mensagem Erro Email:</strong> <code>id="email-error"</code></li>
+                <li><strong>Mensagem Erro Senha:</strong> <code>id="password-error"</code></li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../junior/formularios/login.html" target="_blank">Formulário de Login</a></li>
+                <li>Clique em "Entrar" sem preencher nada → Verifique se aparecem mensagens de erro</li>
+                <li>Preencha apenas a senha → Clique em "Entrar" → Verifique se aparece erro no email</li>
+                <li>Preencha apenas o email → Clique em "Entrar" → Verifique se aparece erro na senha</li>
+                <li>Digite <code>email-invalido</code> no campo email → Pressione Tab → Verifique se aparece erro</li>
+                <li>Digite <code>12345</code> no campo senha → Pressione Tab → Verifique se aparece erro</li>
+                <li>Corrija o email para <code>teste@qaplayground.com</code> → Verifique se o erro desaparece</li>
+                <li>Preencha email: <code>teste@qaplayground.com</code> e senha: <code>senha123</code></li>
+                <li>Clique em "Entrar" → Observe que o botão mostra "Autenticando..." e fica desabilitado</li>
+                <li>Aguarde ~1.5 segundos → Verifique se aparece toast de sucesso</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-1" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-1-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-1-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-1-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-1-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-1-robot">Robot Framework</button>
+                </div>
+                <div id="code-1-cypress" class="code-content active">
+                  <pre><code>// Teste: Login com campos vazios
+it('deve exibir erros quando campos estão vazios', () => {
+  cy.visit('/pages/junior/formularios/login.html')
+  cy.get('[data-testid="btn-login"]').click()
+  
+  cy.get('#email-error').should('be.visible')
+    .and('contain', 'obrigatório')
+  cy.get('#password-error').should('be.visible')
+})
+
+// Teste: Login com sucesso
+it('deve fazer login com credenciais válidas', () => {
+  cy.visit('/pages/junior/formularios/login.html')
+  cy.get('[data-testid="input-email"]').type('teste@qaplayground.com')
+  cy.get('[data-testid="input-senha"]').type('senha123')
+  cy.get('[data-testid="btn-login"]').click()
+  
+  cy.contains('sucesso', { timeout: 3000 }).should('be.visible')
+})</code></pre>
+                </div>
+                <div id="code-1-playwright" class="code-content">
+                  <pre><code>// Teste: Login com campos vazios
+test('deve exibir erros quando campos estão vazios', async ({ page }) => {
+  await page.goto('/pages/junior/formularios/login.html')
+  await page.getByTestId('btn-login').click()
+  
+  await expect(page.getByTestId('email-error')).toBeVisible()
+  await expect(page.getByTestId('password-error')).toBeVisible()
+})
+
+// Teste: Login com sucesso
+test('deve fazer login com credenciais válidas', async ({ page }) => {
+  await page.goto('/pages/junior/formularios/login.html')
+  await page.getByTestId('input-email').fill('teste@qaplayground.com')
+  await page.getByTestId('input-senha').fill('senha123')
+  await page.getByTestId('btn-login').click()
+  
+  await expect(page.locator('text=sucesso')).toBeVisible({ timeout: 3000 })
+})</code></pre>
+                </div>
+                <div id="code-1-selenium" class="code-content">
+                  <pre><code>// Teste: Login com campos vazios
+@Test
+public void testLoginCamposVazios() {
+    driver.get("http://localhost/pages/junior/formularios/login.html");
+    driver.findElement(By.cssSelector("[data-testid='btn-login']")).click();
+    
+    WebElement emailError = driver.findElement(By.id("email-error"));
+    WebElement senhaError = driver.findElement(By.id("password-error"));
+    
+    assertTrue(emailError.isDisplayed());
+    assertTrue(senhaError.isDisplayed());
+}
+
+// Teste: Login com sucesso
+@Test
+public void testLoginSucesso() {
+    driver.get("http://localhost/pages/junior/formularios/login.html");
+    driver.findElement(By.cssSelector("[data-testid='input-email']"))
+        .sendKeys("teste@qaplayground.com");
+    driver.findElement(By.cssSelector("[data-testid='input-senha']"))
+        .sendKeys("senha123");
+    driver.findElement(By.cssSelector("[data-testid='btn-login']")).click();
+    
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+    wait.until(ExpectedConditions.textToBePresentInElementLocated(
+        By.tagName("body"), "sucesso"));
+}</code></pre>
+                </div>
+                <div id="code-1-capybara" class="code-content">
+                  <pre><code># Teste: Login com campos vazios
+scenario 'deve exibir erros quando campos estão vazios' do
+  visit '/pages/junior/formularios/login.html'
+  click_button 'Entrar'
+  
+  expect(page).to have_selector('#email-error', visible: true)
+  expect(page).to have_selector('#password-error', visible: true)
+end
+
+# Teste: Login com sucesso
+scenario 'deve fazer login com credenciais válidas' do
+  visit '/pages/junior/formularios/login.html'
+  fill_in 'email', with: 'teste@qaplayground.com'
+  fill_in 'password', with: 'senha123'
+  click_button 'Entrar'
+  
+  expect(page).to have_content('sucesso', wait: 3)
+end</code></pre>
+                </div>
+                <div id="code-1-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Login Com Campos Vazios
+    Go To    http://localhost/pages/junior/formularios/login.html
+    Click Element    css:[data-testid="btn-login"]
+    Element Should Be Visible    id:email-error
+    Element Should Be Visible    id:password-error
+
+Login Com Sucesso
+    Go To    http://localhost/pages/junior/formularios/login.html
+    Input Text    css:[data-testid="input-email"]    teste@qaplayground.com
+    Input Text    css:[data-testid="input-senha"]    senha123
+    Click Element    css:[data-testid="btn-login"]
+    Wait Until Page Contains    sucesso    timeout=3s</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 2: Tabela Dinâmica -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 2: Validação de Dados em Tabela</h3>
-            <p><strong>Objetivo:</strong> Validar dados exibidos em uma tabela dinâmica e verificar a consistência das informações.</p>
+            <p><strong>Objetivo:</strong> Validar dados exibidos em uma tabela dinâmica, verificar consistência e formato das informações.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../junior/tabelas/dynamic.html">Tabela Dinâmica</a></li>
-              <li>Conte o número total de linhas na tabela</li>
-              <li>Identifique todas as colunas presentes</li>
-              <li>Verifique se há dados duplicados</li>
-              <li>Valide se todos os valores numéricos estão no formato correto</li>
-              <li>Verifique se há células vazias ou com dados inválidos</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Estrutura:</strong> Tabela deve ter cabeçalhos (th) e linhas de dados (tbody tr)</li>
+                <li><strong>Quantidade:</strong> Tabela deve conter pelo menos 5 linhas de dados</li>
+                <li><strong>Colunas:</strong> Devem existir colunas para: Nome, Email, Idade, Status</li>
+                <li><strong>Formato Email:</strong> Todos os emails devem ter formato válido (usuario@dominio.com)</li>
+                <li><strong>Idade:</strong> Deve ser um número inteiro positivo entre 18 e 100</li>
+                <li><strong>Status:</strong> Deve conter apenas valores: "Ativo", "Inativo" ou "Pendente"</li>
+                <li><strong>Integridade:</strong> Não deve haver linhas duplicadas (mesmo email)</li>
+                <li><strong>Completude:</strong> Todas as células devem estar preenchidas (sem valores vazios)</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Use <code>data-testid="tabela-dados"</code> ou selecione por <code>table</code> para localizar a tabela</li>
-              <li>Use <code>tbody tr</code> para encontrar todas as linhas de dados</li>
-              <li>Use <code>th</code> para localizar os cabeçalhos das colunas</li>
-              <li>Use <code>td:nth-child(n)</code> para acessar colunas específicas</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Verificar Estrutura da Tabela</h5>
+              <p><strong>O que fazer:</strong> Inspecionar a tabela e verificar se existe e está visível</p>
+              <p><strong>Resultado Esperado:</strong> Tabela existe, tem cabeçalhos (Nome, Email, Idade, Status) e pelo menos 5 linhas</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Inspecione visualmente cada linha e valide os dados</li>
-              <li><strong>Automação:</strong> Crie um script que percorra todas as linhas e valide o formato dos dados</li>
-              <li><strong>Validação:</strong> Verifique se a quantidade de linhas corresponde ao esperado</li>
-              <li><strong>Assertivas:</strong> Valide que todos os valores numéricos são positivos e estão no formato correto</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Contar Linhas</h5>
+              <p><strong>O que fazer:</strong> Contar quantas linhas de dados existem na tabela</p>
+              <p><strong>Resultado Esperado:</strong> Deve haver pelo menos 5 linhas de dados</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Validar Formato de Email</h5>
+              <p><strong>O que fazer:</strong> Verificar todos os emails na coluna Email</p>
+              <p><strong>Resultado Esperado:</strong> Todos os emails devem ter formato válido (contém @ e domínio)</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Validar Idade</h5>
+              <p><strong>O que fazer:</strong> Verificar todos os valores na coluna Idade</p>
+              <p><strong>Resultado Esperado:</strong> Todas as idades devem ser números entre 18 e 100</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 5: Validar Status</h5>
+              <p><strong>O que fazer:</strong> Verificar todos os valores na coluna Status</p>
+              <p><strong>Resultado Esperado:</strong> Status devem ser apenas: "Ativo", "Inativo" ou "Pendente"</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 6: Verificar Duplicatas</h5>
+              <p><strong>O que fazer:</strong> Verificar se há emails duplicados na tabela</p>
+              <p><strong>Resultado Esperado:</strong> Não deve haver emails duplicados</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>Tabela:</strong> <code>data-testid="tabela-dados"</code> ou <code>table</code></li>
+                <li><strong>Linhas de Dados:</strong> <code>tbody tr</code></li>
+                <li><strong>Coluna Email (2ª coluna):</strong> <code>td:nth-child(2)</code></li>
+                <li><strong>Coluna Idade (3ª coluna):</strong> <code>td:nth-child(3)</code></li>
+                <li><strong>Coluna Status (4ª coluna):</strong> <code>td:nth-child(4)</code></li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../junior/tabelas/dynamic.html" target="_blank">Tabela Dinâmica</a></li>
+                <li>Verifique se a tabela existe e está visível na página</li>
+                <li>Conte quantas linhas de dados existem (deve ser 5 ou mais)</li>
+                <li>Percorra cada linha e verifique se o email tem formato válido (contém @)</li>
+                <li>Verifique se todas as idades são números entre 18 e 100</li>
+                <li>Verifique se os status são apenas: Ativo, Inativo ou Pendente</li>
+                <li>Colete todos os emails e verifique se há duplicatas</li>
+                <li>Verifique se não há células vazias na tabela</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-2" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-2-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-2-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-2-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-2-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-2-robot">Robot Framework</button>
+                </div>
+                <div id="code-2-cypress" class="code-content active">
+                  <pre><code>it('deve validar dados da tabela', () => {
+  cy.visit('/pages/junior/tabelas/dynamic.html')
+  
+  // Conta linhas
+  cy.get('tbody tr').should('have.length.at.least', 5)
+  
+  // Valida emails
+  cy.get('tbody tr').each(($row) => {
+    const email = $row.find('td:nth-child(2)').text()
+    expect(email).to.include('@')
+    expect(email).to.include('.')
+  })
+  
+  // Valida idades
+  cy.get('tbody tr').each(($row) => {
+    const idade = parseInt($row.find('td:nth-child(3)').text())
+    expect(idade).to.be.at.least(18)
+    expect(idade).to.be.at.most(100)
+  })
+})</code></pre>
+                </div>
+                <div id="code-2-playwright" class="code-content">
+                  <pre><code>test('deve validar dados da tabela', async ({ page }) => {
+  await page.goto('/pages/junior/tabelas/dynamic.html')
+  
+  const linhas = await page.locator('tbody tr').all()
+  expect(linhas.length).toBeGreaterThanOrEqual(5)
+  
+  for (const linha of linhas) {
+    const email = await linha.locator('td:nth-child(2)').textContent()
+    expect(email).toContain('@')
+    
+    const idade = parseInt(await linha.locator('td:nth-child(3)').textContent())
+    expect(idade).toBeGreaterThanOrEqual(18)
+    expect(idade).toBeLessThanOrEqual(100)
+  }
+})</code></pre>
+                </div>
+                <div id="code-2-selenium" class="code-content">
+                  <pre><code>@Test
+public void testValidarTabela() {
+    driver.get("http://localhost/pages/junior/tabelas/dynamic.html");
+    
+    List<WebElement> linhas = driver.findElements(By.cssSelector("tbody tr"));
+    assertTrue(linhas.size() >= 5);
+    
+    for (WebElement linha : linhas) {
+        String email = linha.findElement(By.cssSelector("td:nth-child(2)")).getText();
+        assertTrue(email.contains("@"));
+        
+        int idade = Integer.parseInt(linha.findElement(By.cssSelector("td:nth-child(3)")).getText());
+        assertTrue(idade >= 18 && idade <= 100);
+    }
+}</code></pre>
+                </div>
+                <div id="code-2-capybara" class="code-content">
+                  <pre><code>scenario 'deve validar dados da tabela' do
+  visit '/pages/junior/tabelas/dynamic.html'
+  
+  linhas = all('tbody tr')
+  expect(linhas.length).to be >= 5
+  
+  linhas.each do |linha|
+    email = linha.find('td:nth-child(2)').text
+    expect(email).to include('@')
+    
+    idade = linha.find('td:nth-child(3)').text.to_i
+    expect(idade).to be_between(18, 100)
+  end
+end</code></pre>
+                </div>
+                <div id="code-2-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Validar Dados Da Tabela
+    Go To    http://localhost/pages/junior/tabelas/dynamic.html
+    ${linhas}=    Get Element Count    tbody tr
+    Should Be True    ${linhas} >= 5
+    
+    FOR    ${linha}    IN    @{linhas}
+        ${email}=    Get Text    ${linha} td:nth-child(2)
+        Should Contain    ${email}    @
+    END</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 3: Checkboxes e Radio Buttons -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 3: Interação com Checkboxes e Radio Buttons</h3>
             <p><strong>Objetivo:</strong> Testar a seleção e deseleção de checkboxes e radio buttons, validando estados e comportamentos.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../junior/interacoes/checkboxes.html">Checkboxes</a></li>
-              <li>Selecione um checkbox e verifique se ele fica marcado</li>
-              <li>Deselecione o mesmo checkbox e verifique se ele fica desmarcado</li>
-              <li>Selecione múltiplos checkboxes simultaneamente</li>
-              <li>Acesse a página <a href="../junior/interacoes/radio-buttons.html">Radio Buttons</a></li>
-              <li>Selecione uma opção de radio e verifique se outras são desmarcadas automaticamente</li>
-              <li>Teste se é possível desmarcar um radio button já selecionado</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <h5>Checkboxes:</h5>
+              <ul>
+                <li>Permitem <strong>múltiplas seleções</strong> simultâneas</li>
+                <li>Podem ser <strong>selecionados e deselecionados</strong> independentemente</li>
+                <li>Cada checkbox é <strong>independente</strong> dos outros</li>
+              </ul>
+              <h5>Radio Buttons:</h5>
+              <ul>
+                <li>Permitem <strong>apenas uma seleção</strong> por grupo (mesmo atributo name)</li>
+                <li>Ao selecionar um radio, os outros do mesmo grupo são <strong>automaticamente desmarcados</strong></li>
+                <li><strong>Não podem ser desmarcados</strong> clicando novamente</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Use <code>input[type="checkbox"]</code> para localizar checkboxes</li>
-              <li>Use <code>input[type="radio"]</code> para localizar radio buttons</li>
-              <li>Use <code>data-testid</code> específicos como <code>data-testid="checkbox-aceite"</code></li>
-              <li>Use <code>name</code> attribute para agrupar radio buttons</li>
-              <li>Verifique o estado com <code>.checked</code> property</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Selecionar Checkbox</h5>
+              <p><strong>O que fazer:</strong> Clicar em um checkbox desmarcado</p>
+              <p><strong>Resultado Esperado:</strong> Checkbox fica marcado</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Clique em cada elemento e verifique visualmente o estado</li>
-              <li><strong>Automação:</strong> Use <code>isSelected()</code> ou <code>.checked</code> para validar estados</li>
-              <li><strong>Validação:</strong> Verifique que apenas um radio pode estar selecionado por grupo</li>
-              <li><strong>Assertivas:</strong> Valide que checkboxes podem ter múltiplas seleções simultâneas</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Deselecionar Checkbox</h5>
+              <p><strong>O que fazer:</strong> Clicar novamente em um checkbox marcado</p>
+              <p><strong>Resultado Esperado:</strong> Checkbox fica desmarcado</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Múltiplos Checkboxes</h5>
+              <p><strong>O que fazer:</strong> Selecionar 3 checkboxes diferentes</p>
+              <p><strong>Resultado Esperado:</strong> Todos os 3 checkboxes ficam marcados simultaneamente</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Radio Button - Exclusividade</h5>
+              <p><strong>O que fazer:</strong> Selecionar 1º radio, depois selecionar 2º radio do mesmo grupo</p>
+              <p><strong>Resultado Esperado:</strong> 1º radio é desmarcado automaticamente, apenas 2º fica selecionado</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 5: Radio Button - Não Desmarcar</h5>
+              <p><strong>O que fazer:</strong> Com um radio selecionado, clicar novamente no mesmo radio</p>
+              <p><strong>Resultado Esperado:</strong> Radio permanece selecionado (não pode ser desmarcado)</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>Checkbox:</strong> <code>input[type="checkbox"]</code> ou <code>data-testid="checkbox-aceite"</code></li>
+                <li><strong>Radio:</strong> <code>input[type="radio"]</code> ou <code>input[name="genero"]</code></li>
+                <li><strong>Verificar estado:</strong> <code>element.is_selected()</code> (Selenium) ou <code>element.checked</code> (JavaScript)</li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <h5>Teste de Checkboxes:</h5>
+              <ol>
+                <li>Acesse a página <a href="../junior/interacoes/checkboxes.html" target="_blank">Checkboxes</a></li>
+                <li>Clique em um checkbox → Verifique que fica marcado</li>
+                <li>Clique novamente no mesmo checkbox → Verifique que fica desmarcado</li>
+                <li>Selecione 3 checkboxes diferentes → Todos devem estar marcados</li>
+              </ol>
+              <h5>Teste de Radio Buttons:</h5>
+              <ol>
+                <li>Acesse a página <a href="../junior/interacoes/radio-buttons.html" target="_blank">Radio Buttons</a></li>
+                <li>Clique em um radio → Verifique que fica marcado</li>
+                <li>Selecione outro radio do mesmo grupo → O primeiro deve ser desmarcado automaticamente</li>
+                <li>Clique novamente no radio selecionado → Deve permanecer selecionado</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-3">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-3" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-3-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-3-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-3-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-3-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-3-robot">Robot Framework</button>
+                </div>
+                <div id="code-3-cypress" class="code-content active">
+                  <pre><code>// Teste: Checkboxes
+it('deve permitir múltiplas seleções', () => {
+  cy.visit('/pages/junior/interacoes/checkboxes.html')
+  cy.get('input[type="checkbox"]').first().check()
+  cy.get('input[type="checkbox"]').first().should('be.checked')
+  cy.get('input[type="checkbox"]').first().uncheck()
+  cy.get('input[type="checkbox"]').first().should('not.be.checked')
+})
+
+// Teste: Radio buttons
+it('deve permitir apenas uma seleção por grupo', () => {
+  cy.visit('/pages/junior/interacoes/radio-buttons.html')
+  cy.get('input[name="genero"]').first().check()
+  cy.get('input[name="genero"]').first().should('be.checked')
+  cy.get('input[name="genero"]').last().check()
+  cy.get('input[name="genero"]').first().should('not.be.checked')
+})</code></pre>
+                </div>
+                <div id="code-3-playwright" class="code-content">
+                  <pre><code>// Teste: Checkboxes
+test('deve permitir múltiplas seleções', async ({ page }) => {
+  await page.goto('/pages/junior/interacoes/checkboxes.html')
+  await page.locator('input[type="checkbox"]').first().check()
+  await expect(page.locator('input[type="checkbox"]').first()).toBeChecked()
+})
+
+// Teste: Radio buttons
+test('deve permitir apenas uma seleção por grupo', async ({ page }) => {
+  await page.goto('/pages/junior/interacoes/radio-buttons.html')
+  await page.locator('input[name="genero"]').first().check()
+  await page.locator('input[name="genero"]').last().check()
+  await expect(page.locator('input[name="genero"]').first()).not.toBeChecked()
+})</code></pre>
+                </div>
+                <div id="code-3-selenium" class="code-content">
+                  <pre><code>// Teste: Checkboxes
+@Test
+public void testCheckboxes() {
+    driver.get("http://localhost/pages/junior/interacoes/checkboxes.html");
+    WebElement checkbox = driver.findElement(By.cssSelector("input[type='checkbox']"));
+    checkbox.click();
+    assertTrue(checkbox.isSelected());
+    checkbox.click();
+    assertFalse(checkbox.isSelected());
+}
+
+// Teste: Radio buttons
+@Test
+public void testRadioButtons() {
+    driver.get("http://localhost/pages/junior/interacoes/radio-buttons.html");
+    List<WebElement> radios = driver.findElements(By.cssSelector("input[name='genero']"));
+    radios.get(0).click();
+    assertTrue(radios.get(0).isSelected());
+    radios.get(1).click();
+    assertFalse(radios.get(0).isSelected());
+    assertTrue(radios.get(1).isSelected());
+}</code></pre>
+                </div>
+                <div id="code-3-capybara" class="code-content">
+                  <pre><code># Teste: Checkboxes
+scenario 'deve permitir múltiplas seleções' do
+  visit '/pages/junior/interacoes/checkboxes.html'
+  check 'checkbox-id'
+  expect(find_field('checkbox-id')).to be_checked
+  uncheck 'checkbox-id'
+  expect(find_field('checkbox-id')).not_to be_checked
+end
+
+# Teste: Radio buttons
+scenario 'deve permitir apenas uma seleção por grupo' do
+  visit '/pages/junior/interacoes/radio-buttons.html'
+  choose 'radio-1'
+  expect(find_field('radio-1')).to be_checked
+  choose 'radio-2'
+  expect(find_field('radio-1')).not_to be_checked
+end</code></pre>
+                </div>
+                <div id="code-3-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Teste Checkboxes
+    Go To    http://localhost/pages/junior/interacoes/checkboxes.html
+    Select Checkbox    css:input[type="checkbox"]
+    Checkbox Should Be Selected    css:input[type="checkbox"]
+    Unselect Checkbox    css:input[type="checkbox"]
+    Checkbox Should Not Be Selected    css:input[type="checkbox"]
+
+Teste Radio Buttons
+    Go To    http://localhost/pages/junior/interacoes/radio-buttons.html
+    Select Radio Button    genero    radio-1
+    Radio Button Should Be Set To    genero    radio-1</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Desafio 4: Dropdown List -->
-          <div class="subsection">
+          <div class="subsection challenge-section">
             <h3>Desafio 4: Seleção em Dropdown List</h3>
-            <p><strong>Objetivo:</strong> Testar a seleção de opções em um dropdown e validar o valor selecionado.</p>
+            <p><strong>Objetivo:</strong> Testar a seleção de opções em um dropdown (select), validar valores e comportamento.</p>
             
-            <h4>Como Executar:</h4>
-            <ol>
-              <li>Acesse a página <a href="../junior/interacoes/dropdown-list.html">Dropdown List</a></li>
-              <li>Clique no dropdown e verifique todas as opções disponíveis</li>
-              <li>Selecione a primeira opção e valide o valor</li>
-              <li>Selecione a última opção e valide o valor</li>
-              <li>Selecione uma opção do meio e valide o valor</li>
-              <li>Verifique se há uma opção padrão quando o dropdown é carregado</li>
-            </ol>
+            <h4>Regras de Negócio</h4>
+            <div class="challenge-rules">
+              <ul>
+                <li><strong>Opção Padrão:</strong> Dropdown deve ter uma opção padrão (geralmente "-- selecione --")</li>
+                <li><strong>Seleção Única:</strong> Apenas uma opção pode estar selecionada por vez</li>
+                <li><strong>Valor vs Texto:</strong> Cada opção tem um value (dado) e um text (exibido)</li>
+                <li><strong>Mudança de Seleção:</strong> Ao selecionar nova opção, a anterior é substituída</li>
+              </ul>
+            </div>
 
-            <h4>Como Procurar:</h4>
-            <ul>
-              <li>Use <code>select</code> element ou <code>id</code> específico</li>
-              <li>Use <code>data-testid="select-pais"</code> para localizar o dropdown</li>
-              <li>Use <code>option</code> elements dentro do select para acessar opções</li>
-              <li>Use <code>select.value</code> ou <code>select.selectedIndex</code> para obter o valor selecionado</li>
-            </ul>
+            <h4>Cenários de Teste</h4>
+            
+            <div class="challenge-scenario">
+              <h5>Cenário 1: Verificar Opções Disponíveis</h5>
+              <p><strong>O que fazer:</strong> Abrir o dropdown e contar quantas opções existem</p>
+              <p><strong>Resultado Esperado:</strong> Deve haver pelo menos 3 opções válidas</p>
+            </div>
 
-            <h4>Forma de Testar:</h4>
-            <ul>
-              <li><strong>Manual:</strong> Selecione cada opção e verifique se o valor é atualizado corretamente</li>
-              <li><strong>Automação:</strong> Use <code>Select</code> class do Selenium ou <code>selectByVisibleText()</code></li>
-              <li><strong>Validação:</strong> Verifique se o valor selecionado corresponde ao esperado</li>
-              <li><strong>Assertivas:</strong> Valide que todas as opções estão disponíveis e podem ser selecionadas</li>
-            </ul>
+            <div class="challenge-scenario">
+              <h5>Cenário 2: Selecionar Primeira Opção</h5>
+              <p><strong>O que fazer:</strong> Selecionar a primeira opção válida</p>
+              <p><strong>Resultado Esperado:</strong> Opção é selecionada e valor/texto estão corretos</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 3: Selecionar Última Opção</h5>
+              <p><strong>O que fazer:</strong> Selecionar a última opção disponível</p>
+              <p><strong>Resultado Esperado:</strong> Última opção é selecionada corretamente</p>
+            </div>
+
+            <div class="challenge-scenario">
+              <h5>Cenário 4: Mudar Seleção</h5>
+              <p><strong>O que fazer:</strong> Com uma opção selecionada, selecionar outra diferente</p>
+              <p><strong>Resultado Esperado:</strong> Seleção anterior é substituída pela nova</p>
+            </div>
+
+            <h4>Como Procurar Elementos</h4>
+            <div class="challenge-instructions">
+              <ul>
+                <li><strong>Dropdown:</strong> <code>select</code> ou <code>data-testid="select-pais"</code></li>
+                <li><strong>Todas as opções:</strong> <code>select option</code></li>
+                <li><strong>Opção selecionada:</strong> <code>select option:checked</code></li>
+                <li><strong>Valor selecionado:</strong> <code>select.value</code></li>
+              </ul>
+            </div>
+
+            <h4>Instruções Passo a Passo</h4>
+            <div class="challenge-instructions">
+              <ol>
+                <li>Acesse a página <a href="../junior/interacoes/dropdown-list.html" target="_blank">Dropdown List</a></li>
+                <li>Abra o dropdown e conte quantas opções existem</li>
+                <li>Observe qual opção está selecionada por padrão</li>
+                <li>Selecione a primeira opção válida → Verifique valor e texto</li>
+                <li>Selecione a última opção → Verifique valor e texto</li>
+                <li>Selecione uma opção do meio → Verifique valor e texto</li>
+                <li>Com uma opção selecionada, selecione outra → Verifique substituição</li>
+              </ol>
+            </div>
+
+            <h4>Exemplo de Automação</h4>
+            <div class="code-reveal-container">
+              <button class="code-reveal-button" data-target="code-4">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Ver Exemplos de Código
+              </button>
+              <div id="code-4" class="code-tabs-container">
+                <div class="code-tabs">
+                  <button class="code-tab active" data-target="code-4-cypress">Cypress</button>
+                  <button class="code-tab" data-target="code-4-playwright">Playwright</button>
+                  <button class="code-tab" data-target="code-4-selenium">Selenium (Java)</button>
+                  <button class="code-tab" data-target="code-4-capybara">Capybara (Ruby)</button>
+                  <button class="code-tab" data-target="code-4-robot">Robot Framework</button>
+                </div>
+                <div id="code-4-cypress" class="code-content active">
+                  <pre><code>it('deve selecionar opções do dropdown', () => {
+  cy.visit('/pages/junior/interacoes/dropdown-list.html')
+  
+  cy.get('select').select('Brasil')
+  cy.get('select').should('have.value', 'br')
+  
+  cy.get('select').select('Estados Unidos')
+  cy.get('select').should('have.value', 'us')
+})</code></pre>
+                </div>
+                <div id="code-4-playwright" class="code-content">
+                  <pre><code>test('deve selecionar opções do dropdown', async ({ page }) => {
+  await page.goto('/pages/junior/interacoes/dropdown-list.html')
+  
+  await page.selectOption('select', 'Brasil')
+  await expect(page.locator('select')).toHaveValue('br')
+  
+  await page.selectOption('select', { value: 'us' })
+  await expect(page.locator('select')).toHaveValue('us')
+})</code></pre>
+                </div>
+                <div id="code-4-selenium" class="code-content">
+                  <pre><code>@Test
+public void testDropdown() {
+    driver.get("http://localhost/pages/junior/interacoes/dropdown-list.html");
+    
+    Select dropdown = new Select(driver.findElement(By.tagName("select")));
+    dropdown.selectByVisibleText("Brasil");
+    assertEquals("br", dropdown.getFirstSelectedOption().getAttribute("value"));
+    
+    dropdown.selectByValue("us");
+    assertEquals("us", dropdown.getFirstSelectedOption().getAttribute("value"));
+}</code></pre>
+                </div>
+                <div id="code-4-capybara" class="code-content">
+                  <pre><code>scenario 'deve selecionar opções do dropdown' do
+  visit '/pages/junior/interacoes/dropdown-list.html'
+  
+  select 'Brasil', from: 'select'
+  expect(find_field('select').value).to eq('br')
+  
+  select 'Estados Unidos', from: 'select'
+  expect(find_field('select').value).to eq('us')
+end</code></pre>
+                </div>
+                <div id="code-4-robot" class="code-content">
+                  <pre><code>*** Test Cases ***
+Selecionar Dropdown
+    Go To    http://localhost/pages/junior/interacoes/dropdown-list.html
+    Select From List By Label    css:select    Brasil
+    ${valor}=    Get Value    css:select
+    Should Be Equal    ${valor}    br</code></pre>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -189,10 +790,104 @@
       </div>
     </main>
 
+    <!-- Dialog de Confirmação -->
+    <div class="confirm-dialog-overlay" id="confirm-overlay"></div>
+    <div class="confirm-dialog" id="confirm-dialog">
+      <h3>Mostrar Exemplos de Código?</h3>
+      <p>Os exemplos de código podem conter spoilers. Tem certeza que deseja visualizar?</p>
+      <div class="confirm-dialog-buttons">
+        <button class="btn-cancel" id="confirm-cancel">Não</button>
+        <button class="btn-confirm" id="confirm-ok">Sim</button>
+      </div>
+    </div>
+
     <footer class="site-footer">
       QA Playground — Projeto educacional • Português
     </footer>
 
     <script src="../../js/app.js"></script>
+    <script>
+      // Gerenciamento de código escondido com confirmação
+      document.querySelectorAll('.code-reveal-button').forEach(button => {
+        button.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          const container = document.getElementById(targetId);
+          
+          // Se o código já está visível, esconde diretamente
+          if (container && container.classList.contains('active')) {
+            container.classList.remove('active');
+            // Atualiza texto do botão
+            const svg = this.querySelector('svg');
+            this.innerHTML = svg.outerHTML + ' Ver Exemplos de Código';
+            return;
+          }
+          
+          // Se está escondido, mostra dialog de confirmação
+          const overlay = document.getElementById('confirm-overlay');
+          const dialog = document.getElementById('confirm-dialog');
+          
+          overlay.classList.add('active');
+          dialog.classList.add('active');
+          
+          // Salva o target para usar após confirmação
+          dialog.dataset.targetId = targetId;
+        });
+      });
+      
+      // Botão Sim - mostra código
+      document.getElementById('confirm-ok').addEventListener('click', function() {
+        const dialog = document.getElementById('confirm-dialog');
+        const targetId = dialog.dataset.targetId;
+        const container = document.getElementById(targetId);
+        const overlay = document.getElementById('confirm-overlay');
+        const button = document.querySelector(`[data-target="${targetId}"]`);
+        
+        if (container) {
+          container.classList.add('active');
+          // Atualiza texto do botão
+          if (button) {
+            const svg = button.querySelector('svg');
+            button.innerHTML = svg.outerHTML + ' Esconder Exemplos de Código';
+          }
+        }
+        
+        overlay.classList.remove('active');
+        dialog.classList.remove('active');
+      });
+      
+      // Botão Não - fecha dialog
+      document.getElementById('confirm-cancel').addEventListener('click', function() {
+        const overlay = document.getElementById('confirm-overlay');
+        const dialog = document.getElementById('confirm-dialog');
+        
+        overlay.classList.remove('active');
+        dialog.classList.remove('active');
+      });
+      
+      // Fecha dialog ao clicar no overlay
+      document.getElementById('confirm-overlay').addEventListener('click', function() {
+        this.classList.remove('active');
+        document.getElementById('confirm-dialog').classList.remove('active');
+      });
+      
+      // Gerenciamento de tabs de código
+      document.querySelectorAll('.code-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          const container = this.closest('.code-tabs-container');
+          
+          // Remove active de todas as tabs e contents
+          container.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+          container.querySelectorAll('.code-content').forEach(c => c.classList.remove('active'));
+          
+          // Adiciona active na tab e content selecionados
+          this.classList.add('active');
+          const content = container.querySelector('#' + targetId);
+          if (content) {
+            content.classList.add('active');
+          }
+        });
+      });
+    </script>
   </body>
 </html>
