@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Resiliência - Timeout e Retry — Cenários NFT — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      .timeout-controls {
+        background: var(--surface);
+        padding: var(--spacing-lg);
+        border-radius: var(--border-radius-lg);
+        margin-bottom: var(--spacing-lg);
+        box-shadow: var(--shadow-sm);
+      }
+      .timeout-controls h3 {
+        margin-top: 0;
+        color: var(--accent);
+      }
+      .control-group {
+        display: flex;
+        gap: var(--spacing-md);
+        align-items: center;
+        margin-bottom: var(--spacing-md);
+        flex-wrap: wrap;
+      }
+      .control-group label {
+        font-weight: 600;
+        min-width: 150px;
+      }
+      .control-group input[type="number"] {
+        padding: var(--spacing-sm);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius-sm);
+        width: 100px;
+      }
+      .results-area {
+        background: var(--surface);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius-lg);
+        padding: var(--spacing-lg);
+        min-height: 300px;
+        max-height: 500px;
+        overflow-y: auto;
+        margin-bottom: var(--spacing-lg);
+      }
+      .request-item {
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-sm);
+        border-radius: var(--border-radius-md);
+        border-left: 4px solid;
+        background: rgba(0, 0, 0, 0.02);
+      }
+      .request-item.pending {
+        border-left-color: var(--warning);
+        background: rgba(255, 193, 7, 0.1);
+      }
+      .request-item.success {
+        border-left-color: var(--success);
+        background: rgba(40, 167, 69, 0.1);
+      }
+      .request-item.timeout {
+        border-left-color: var(--danger);
+        background: rgba(220, 53, 69, 0.1);
+      }
+      .request-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-xs);
+      }
+      .request-id {
+        font-weight: 600;
+        color: var(--accent);
+      }
+      .request-status {
+        font-size: var(--font-size-sm);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: var(--border-radius-sm);
+        font-weight: 600;
+      }
+      .status-pending {
+        background: var(--warning);
+        color: #856404;
+      }
+      .status-success {
+        background: var(--success);
+        color: white;
+      }
+      .status-timeout {
+        background: var(--danger);
+        color: white;
+      }
+      .request-details {
+        font-family: 'Courier New', monospace;
+        font-size: var(--font-size-sm);
+        margin-top: var(--spacing-xs);
+        color: var(--muted);
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-lg);
+      }
+      .metric-card {
+        background: rgba(0, 0, 0, 0.03);
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-md);
+        border-left: 3px solid var(--accent);
+      }
+      .metric-value {
+        font-size: 1.5em;
+        font-weight: 700;
+        color: var(--accent);
+        margin: var(--spacing-xs) 0;
+      }
+      .metric-label {
+        font-size: var(--font-size-sm);
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="../nft-playground.html">NFT Playground</a></li>
+            <li><a href="index.html">Cenários NFT</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Cenário: Resiliência - Timeout e Retry</h2>
+          <div class="section-desc">
+            Este cenário simula requisições com timeout e mecanismos de retry. 
+            Use este cenário para testar como a aplicação lida com timeouts e se recupera através de retries.
+          </div>
+        </div>
+
+        <div class="timeout-controls">
+          <h3>Controles de Teste</h3>
+          <div class="control-group">
+            <label>Timeout (ms):</label>
+            <input type="number" id="timeout-value" min="100" max="10000" value="2000" step="100">
+            <span id="timeout-display">2000ms</span>
+          </div>
+          <div class="control-group">
+            <label>Latência Simulada (ms):</label>
+            <input type="number" id="latency-value" min="0" max="10000" value="1500" step="100">
+            <span id="latency-display">1500ms</span>
+          </div>
+          <div class="control-group">
+            <label>Número de Requisições:</label>
+            <input type="number" id="request-count" min="1" max="20" value="5" step="1">
+            <span id="request-count-display">5</span>
+          </div>
+          <div class="control-group">
+            <label>Retry Automático:</label>
+            <input type="checkbox" id="auto-retry" checked>
+            <span>Sim</span>
+          </div>
+          <div class="control-group">
+            <label>Máximo de Retries:</label>
+            <input type="number" id="max-retries" min="0" max="5" value="2" step="1">
+            <span id="max-retries-display">2</span>
+          </div>
+          <div class="control-group">
+            <button id="start-test" class="btn btn-primary">Iniciar Teste</button>
+            <button id="clear-results" class="btn btn-secondary">Limpar Resultados</button>
+          </div>
+        </div>
+
+        <div class="results-area" id="results-area">
+          <p style="color: var(--muted); text-align: center; padding: var(--spacing-xl);">
+            Clique em "Iniciar Teste" para começar o teste de timeout e retry.
+          </p>
+        </div>
+
+        <div class="metrics">
+          <div class="metric-card">
+            <div class="metric-label">Requisições Totais</div>
+            <div class="metric-value" id="metric-total">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Sucessos</div>
+            <div class="metric-value" id="metric-success">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Timeouts</div>
+            <div class="metric-value" id="metric-timeout">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Retries Executados</div>
+            <div class="metric-value" id="metric-retries">0</div>
+          </div>
+        </div>
+
+        <div class="content-card" style="margin-top: var(--spacing-lg);">
+          <h4>Como Testar Este Cenário</h4>
+          <ul>
+            <li><strong>Timeout:</strong> Observe se as requisições são canceladas após o timeout</li>
+            <li><strong>Retry:</strong> Verifique se o sistema tenta novamente após timeout</li>
+            <li><strong>Limite de Retries:</strong> Teste se o sistema respeita o limite máximo de retries</li>
+            <li><strong>Feedback:</strong> Observe mensagens de erro e feedback ao usuário</li>
+            <li><strong>Comportamento:</strong> Teste diferentes combinações de timeout e latência</li>
+          </ul>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="index.html" class="btn btn-secondary">← Voltar para Cenários</a>
+          <a href="../nft-playground.html" class="btn btn-secondary" style="margin-left: var(--spacing-md);">
+            🎮 NFT Playground
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      let requestCounter = 0;
+      let successCount = 0;
+      let timeoutCount = 0;
+      let retryCount = 0;
+
+      const timeoutInput = document.getElementById('timeout-value');
+      const timeoutDisplay = document.getElementById('timeout-display');
+      const latencyInput = document.getElementById('latency-value');
+      const latencyDisplay = document.getElementById('latency-display');
+      const requestCountInput = document.getElementById('request-count');
+      const requestCountDisplay = document.getElementById('request-count-display');
+      const autoRetryCheckbox = document.getElementById('auto-retry');
+      const maxRetriesInput = document.getElementById('max-retries');
+      const maxRetriesDisplay = document.getElementById('max-retries-display');
+      const startBtn = document.getElementById('start-test');
+      const clearBtn = document.getElementById('clear-results');
+      const resultsArea = document.getElementById('results-area');
+      const metricTotal = document.getElementById('metric-total');
+      const metricSuccess = document.getElementById('metric-success');
+      const metricTimeout = document.getElementById('metric-timeout');
+      const metricRetries = document.getElementById('metric-retries');
+
+      timeoutInput.addEventListener('input', () => {
+        timeoutDisplay.textContent = timeoutInput.value + 'ms';
+      });
+
+      latencyInput.addEventListener('input', () => {
+        latencyDisplay.textContent = latencyInput.value + 'ms';
+      });
+
+      requestCountInput.addEventListener('input', () => {
+        requestCountDisplay.textContent = requestCountInput.value;
+      });
+
+      maxRetriesInput.addEventListener('input', () => {
+        maxRetriesDisplay.textContent = maxRetriesInput.value;
+      });
+
+      async function simulateRequestWithTimeout(requestId, timeout, latency, maxRetries, autoRetry) {
+        let retries = 0;
+        
+        while (retries <= maxRetries) {
+          const requestEl = document.createElement('div');
+          requestEl.className = 'request-item pending';
+          const requestIdDisplay = retries > 0 ? `${requestId} (Retry ${retries})` : requestId;
+          
+          requestEl.innerHTML = `
+            <div class="request-header">
+              <span class="request-id">Requisição #${requestIdDisplay}</span>
+              <span class="request-status status-pending">Aguardando...</span>
+            </div>
+            <div class="request-details">GET /api/resource/${requestId}</div>
+          `;
+          resultsArea.appendChild(requestEl);
+          resultsArea.scrollTop = resultsArea.scrollHeight;
+
+          const startTime = performance.now();
+          let timedOut = false;
+
+          const timeoutPromise = new Promise((resolve) => {
+            setTimeout(() => {
+              timedOut = true;
+              resolve('timeout');
+            }, timeout);
+          });
+
+          const requestPromise = new Promise((resolve) => {
+            setTimeout(() => {
+              resolve('success');
+            }, latency);
+          });
+
+          const result = await Promise.race([timeoutPromise, requestPromise]);
+
+          if (result === 'timeout') {
+            timeoutCount++;
+            metricTimeout.textContent = timeoutCount;
+            
+            if (retries < maxRetries && autoRetry) {
+              requestEl.className = 'request-item pending';
+              requestEl.querySelector('.request-status').textContent = `Timeout - Retry ${retries + 1}`;
+              requestEl.querySelector('.request-status').className = 'request-status status-pending';
+              requestEl.querySelector('.request-details').textContent = `GET /api/resource/${requestId} - Timeout após ${timeout}ms (tentando novamente...)`;
+              retryCount++;
+              metricRetries.textContent = retryCount;
+              retries++;
+              await new Promise(resolve => setTimeout(resolve, 500));
+            } else {
+              requestEl.className = 'request-item timeout';
+              requestEl.querySelector('.request-status').textContent = 'Timeout';
+              requestEl.querySelector('.request-status').className = 'request-status status-timeout';
+              requestEl.querySelector('.request-details').textContent = `GET /api/resource/${requestId} - Timeout após ${timeout}ms (sem mais retries)`;
+              break;
+            }
+          } else {
+            const endTime = performance.now();
+            const duration = endTime - startTime;
+            successCount++;
+            metricSuccess.textContent = successCount;
+            
+            requestEl.className = 'request-item success';
+            requestEl.querySelector('.request-status').textContent = 'Sucesso';
+            requestEl.querySelector('.request-status').className = 'request-status status-success';
+            requestEl.querySelector('.request-details').textContent = `GET /api/resource/${requestId} - Response em ${duration.toFixed(0)}ms`;
+            break;
+          }
+        }
+
+        const total = successCount + timeoutCount;
+        metricTotal.textContent = total;
+      }
+
+      startBtn.addEventListener('click', async () => {
+        const timeout = Number.parseInt(timeoutInput.value, 10);
+        const latency = Number.parseInt(latencyInput.value, 10);
+        const requests = Number.parseInt(requestCountInput.value, 10);
+        const maxRetries = Number.parseInt(maxRetriesInput.value, 10);
+        const autoRetry = autoRetryCheckbox.checked;
+
+        requestCounter = 0;
+        successCount = 0;
+        timeoutCount = 0;
+        retryCount = 0;
+        metricTotal.textContent = '0';
+        metricSuccess.textContent = '0';
+        metricTimeout.textContent = '0';
+        metricRetries.textContent = '0';
+
+        if (resultsArea.children.length === 1 && resultsArea.children[0].tagName === 'P') {
+          resultsArea.innerHTML = '';
+        }
+
+        for (let i = 1; i <= requests; i++) {
+          requestCounter = i;
+          await simulateRequestWithTimeout(i, timeout, latency, maxRetries, autoRetry);
+          await new Promise(resolve => setTimeout(resolve, 300));
+        }
+      });
+
+      clearBtn.addEventListener('click', () => {
+        resultsArea.innerHTML = '<p style="color: var(--muted); text-align: center; padding: var(--spacing-xl);">Clique em "Iniciar Teste" para começar o teste de timeout e retry.</p>';
+        metricTotal.textContent = '0';
+        metricSuccess.textContent = '0';
+        metricTimeout.textContent = '0';
+        metricRetries.textContent = '0';
+        requestCounter = 0;
+        successCount = 0;
+        timeoutCount = 0;
+        retryCount = 0;
+      });
+    </script>
+  </body>
+</html>

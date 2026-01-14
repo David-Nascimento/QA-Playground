@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Carga - Tabela com Muitos Dados — Cenários NFT — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      .table-controls {
+        background: var(--surface);
+        padding: var(--spacing-lg);
+        border-radius: var(--border-radius-lg);
+        margin-bottom: var(--spacing-lg);
+        box-shadow: var(--shadow-sm);
+      }
+      .table-controls h3 {
+        margin-top: 0;
+        color: var(--accent);
+      }
+      .control-group {
+        display: flex;
+        gap: var(--spacing-md);
+        align-items: center;
+        margin-bottom: var(--spacing-md);
+        flex-wrap: wrap;
+      }
+      .control-group label {
+        font-weight: 600;
+        min-width: 150px;
+      }
+      .control-group input[type="number"] {
+        padding: var(--spacing-sm);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius-sm);
+        width: 100px;
+      }
+      .table-container {
+        background: var(--surface);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius-lg);
+        padding: var(--spacing-lg);
+        max-height: 600px;
+        overflow: auto;
+        margin-bottom: var(--spacing-lg);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th {
+        background: var(--accent);
+        color: white;
+        padding: var(--spacing-sm) var(--spacing-md);
+        text-align: left;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      td {
+        padding: var(--spacing-sm) var(--spacing-md);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      tr:hover {
+        background: rgba(122, 168, 116, 0.1);
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-lg);
+      }
+      .metric-card {
+        background: rgba(0, 0, 0, 0.03);
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-md);
+        border-left: 3px solid var(--accent);
+      }
+      .metric-value {
+        font-size: 1.5em;
+        font-weight: 700;
+        color: var(--accent);
+        margin: var(--spacing-xs) 0;
+      }
+      .metric-label {
+        font-size: var(--font-size-sm);
+        color: var(--muted);
+      }
+      .loading {
+        text-align: center;
+        padding: var(--spacing-xl);
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="../nft-playground.html">NFT Playground</a></li>
+            <li><a href="index.html">Cenários NFT</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Cenário: Carga - Tabela com Muitos Dados</h2>
+          <div class="section-desc">
+            Este cenário simula uma tabela renderizando grandes volumes de dados. 
+            Use este cenário para testar performance de renderização de tabelas grandes 
+            e identificar problemas de scroll e renderização.
+          </div>
+        </div>
+
+        <div class="table-controls">
+          <h3>Controles de Teste</h3>
+          <div class="control-group">
+            <label>Número de Linhas:</label>
+            <input type="number" id="row-count" min="10" max="10000" value="1000" step="10">
+            <span id="row-count-display">1000</span>
+          </div>
+          <div class="control-group">
+            <label>Colunas:</label>
+            <input type="number" id="col-count" min="3" max="10" value="5" step="1">
+            <span id="col-count-display">5</span>
+          </div>
+          <div class="control-group">
+            <button id="generate-table" class="btn btn-primary">Gerar Tabela</button>
+            <button id="clear-table" class="btn btn-secondary">Limpar</button>
+          </div>
+        </div>
+
+        <div class="table-container" id="table-container">
+          <div class="loading">Clique em "Gerar Tabela" para começar o teste de carga.</div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric-card">
+            <div class="metric-label">Linhas Renderizadas</div>
+            <div class="metric-value" id="metric-rows">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Colunas</div>
+            <div class="metric-value" id="metric-cols">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Tempo de Renderização</div>
+            <div class="metric-value" id="metric-time">0ms</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Elementos DOM</div>
+            <div class="metric-value" id="metric-elements">0</div>
+          </div>
+        </div>
+
+        <div class="content-card" style="margin-top: var(--spacing-lg);">
+          <h4>Como Testar Este Cenário</h4>
+          <ul>
+            <li><strong>Performance:</strong> Use DevTools Performance para medir o tempo de renderização</li>
+            <li><strong>Scroll:</strong> Teste o scroll da tabela para verificar fluidez</li>
+            <li><strong>Memória:</strong> Monitore o uso de memória com diferentes tamanhos de tabela</li>
+            <li><strong>Virtualização:</strong> Compare performance com e sem virtualização de linhas</li>
+            <li><strong>Limites:</strong> Identifique o ponto onde a performance degrada significativamente</li>
+          </ul>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="index.html" class="btn btn-secondary">← Voltar para Cenários</a>
+          <a href="../nft-playground.html" class="btn btn-secondary" style="margin-left: var(--spacing-md);">
+            🎮 NFT Playground
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      const rowCountInput = document.getElementById('row-count');
+      const rowCountDisplay = document.getElementById('row-count-display');
+      const colCountInput = document.getElementById('col-count');
+      const colCountDisplay = document.getElementById('col-count-display');
+      const generateBtn = document.getElementById('generate-table');
+      const clearBtn = document.getElementById('clear-table');
+      const tableContainer = document.getElementById('table-container');
+      const metricRows = document.getElementById('metric-rows');
+      const metricCols = document.getElementById('metric-cols');
+      const metricTime = document.getElementById('metric-time');
+      const metricElements = document.getElementById('metric-elements');
+
+      rowCountInput.addEventListener('input', () => {
+        rowCountDisplay.textContent = rowCountInput.value;
+      });
+
+      colCountInput.addEventListener('input', () => {
+        colCountDisplay.textContent = colCountInput.value;
+      });
+
+      function generateRandomData() {
+        const names = ['João', 'Maria', 'Pedro', 'Ana', 'Carlos', 'Julia', 'Lucas', 'Fernanda'];
+        const cities = ['São Paulo', 'Rio de Janeiro', 'Belo Horizonte', 'Curitiba', 'Porto Alegre'];
+        const statuses = ['Ativo', 'Inativo', 'Pendente', 'Aprovado'];
+        
+        return {
+          name: names[Math.floor(Math.random() * names.length)],
+          city: cities[Math.floor(Math.random() * cities.length)],
+          status: statuses[Math.floor(Math.random() * statuses.length)],
+          value: (Math.random() * 10000).toFixed(2),
+          date: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toLocaleDateString('pt-BR')
+        };
+      }
+
+      generateBtn.addEventListener('click', () => {
+        const rows = Number.parseInt(rowCountInput.value, 10);
+        const cols = Number.parseInt(colCountInput.value, 10);
+        
+        tableContainer.innerHTML = '';
+        const startTime = performance.now();
+
+        const table = document.createElement('table');
+        const thead = document.createElement('thead');
+        const tbody = document.createElement('tbody');
+        
+        // Cabeçalho
+        const headerRow = document.createElement('tr');
+        headerRow.appendChild(document.createElement('th')).textContent = 'ID';
+        headerRow.appendChild(document.createElement('th')).textContent = 'Nome';
+        headerRow.appendChild(document.createElement('th')).textContent = 'Cidade';
+        headerRow.appendChild(document.createElement('th')).textContent = 'Status';
+        headerRow.appendChild(document.createElement('th')).textContent = 'Valor';
+        if (cols > 5) {
+          headerRow.appendChild(document.createElement('th')).textContent = 'Data';
+        }
+        if (cols > 6) {
+          headerRow.appendChild(document.createElement('th')).textContent = 'Email';
+        }
+        if (cols > 7) {
+          headerRow.appendChild(document.createElement('th')).textContent = 'Telefone';
+        }
+        if (cols > 8) {
+          headerRow.appendChild(document.createElement('th')).textContent = 'Observações';
+        }
+        if (cols > 9) {
+          headerRow.appendChild(document.createElement('th')).textContent = 'Categoria';
+        }
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        // Linhas
+        for (let i = 1; i <= rows; i++) {
+          const data = generateRandomData();
+          const row = document.createElement('tr');
+          
+          row.appendChild(document.createElement('td')).textContent = i;
+          row.appendChild(document.createElement('td')).textContent = data.name;
+          row.appendChild(document.createElement('td')).textContent = data.city;
+          row.appendChild(document.createElement('td')).textContent = data.status;
+          row.appendChild(document.createElement('td')).textContent = `R$ ${data.value}`;
+          
+          if (cols > 5) {
+            row.appendChild(document.createElement('td')).textContent = data.date;
+          }
+          if (cols > 6) {
+            row.appendChild(document.createElement('td')).textContent = `${data.name.toLowerCase()}@example.com`;
+          }
+          if (cols > 7) {
+            row.appendChild(document.createElement('td')).textContent = `(11) ${Math.floor(Math.random() * 9000) + 1000}-${Math.floor(Math.random() * 9000) + 1000}`;
+          }
+          if (cols > 8) {
+            row.appendChild(document.createElement('td')).textContent = `Observação ${i}`;
+          }
+          if (cols > 9) {
+            row.appendChild(document.createElement('td')).textContent = `Categoria ${Math.floor(Math.random() * 5) + 1}`;
+          }
+          
+          tbody.appendChild(row);
+        }
+
+        table.appendChild(tbody);
+        tableContainer.appendChild(table);
+
+        const endTime = performance.now();
+        const renderTime = endTime - startTime;
+        
+        metricRows.textContent = rows;
+        metricCols.textContent = cols;
+        metricTime.textContent = renderTime.toFixed(0) + 'ms';
+        metricElements.textContent = (rows * cols + cols).toLocaleString();
+      });
+
+      clearBtn.addEventListener('click', () => {
+        tableContainer.innerHTML = '<div class="loading">Clique em "Gerar Tabela" para começar o teste de carga.</div>';
+        metricRows.textContent = '0';
+        metricCols.textContent = '0';
+        metricTime.textContent = '0ms';
+        metricElements.textContent = '0';
+      });
+    </script>
+  </body>
+</html>

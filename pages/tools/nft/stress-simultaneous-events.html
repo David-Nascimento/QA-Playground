@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Stress - Eventos Simultâneos — Cenários NFT — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      .events-controls {
+        background: var(--surface);
+        padding: var(--spacing-lg);
+        border-radius: var(--border-radius-lg);
+        margin-bottom: var(--spacing-lg);
+        box-shadow: var(--shadow-sm);
+      }
+      .events-controls h3 {
+        margin-top: 0;
+        color: var(--accent);
+      }
+      .control-group {
+        display: flex;
+        gap: var(--spacing-md);
+        align-items: center;
+        margin-bottom: var(--spacing-md);
+        flex-wrap: wrap;
+      }
+      .control-group label {
+        font-weight: 600;
+        min-width: 150px;
+      }
+      .control-group input[type="number"] {
+        padding: var(--spacing-sm);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius-sm);
+        width: 100px;
+      }
+      .events-area {
+        background: var(--surface);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius-lg);
+        padding: var(--spacing-lg);
+        margin-bottom: var(--spacing-lg);
+        min-height: 300px;
+        position: relative;
+        overflow: hidden;
+      }
+      .event-marker {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: var(--accent);
+        border-radius: 50%;
+        animation: fadeOut 1s ease forwards;
+      }
+      @keyframes fadeOut {
+        from { opacity: 1; transform: scale(1); }
+        to { opacity: 0; transform: scale(0); }
+      }
+      .events-log {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: var(--border-radius-md);
+        padding: var(--spacing-md);
+        margin-top: var(--spacing-md);
+        max-height: 200px;
+        overflow-y: auto;
+        font-family: 'Courier New', monospace;
+        font-size: var(--font-size-sm);
+      }
+      .log-entry {
+        padding: var(--spacing-xs);
+        margin-bottom: var(--spacing-xs);
+        border-left: 3px solid var(--accent);
+        padding-left: var(--spacing-sm);
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-lg);
+      }
+      .metric-card {
+        background: rgba(0, 0, 0, 0.03);
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-md);
+        border-left: 3px solid var(--accent);
+      }
+      .metric-value {
+        font-size: 1.5em;
+        font-weight: 700;
+        color: var(--accent);
+        margin: var(--spacing-xs) 0;
+      }
+      .metric-label {
+        font-size: var(--font-size-sm);
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="../nft-playground.html">NFT Playground</a></li>
+            <li><a href="index.html">Cenários NFT</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Cenário: Stress - Eventos Simultâneos</h2>
+          <div class="section-desc">
+            Este cenário dispara múltiplos eventos simultaneamente para testar capacidade de processamento. 
+            Use este cenário para verificar como a aplicação lida com muitos eventos ao mesmo tempo.
+          </div>
+        </div>
+
+        <div class="events-controls">
+          <h3>Controles de Teste</h3>
+          <div class="control-group">
+            <label>Número de Eventos:</label>
+            <input type="number" id="event-count" min="10" max="1000" value="100" step="10">
+            <span id="event-count-display">100</span>
+          </div>
+          <div class="control-group">
+            <label>Intervalo (ms):</label>
+            <input type="number" id="event-interval" min="0" max="100" value="10" step="1">
+            <span id="event-interval-display">10ms</span>
+          </div>
+          <div class="control-group">
+            <button id="start-events" class="btn btn-primary">Iniciar Eventos</button>
+            <button id="stop-events" class="btn btn-secondary" style="display: none;">Parar</button>
+            <button id="clear-events" class="btn btn-secondary">Limpar</button>
+          </div>
+        </div>
+
+        <div class="events-area" id="events-area">
+          <p style="color: var(--muted); text-align: center; padding: var(--spacing-xl);">
+            Clique em "Iniciar Eventos" para começar o teste de eventos simultâneos.
+          </p>
+          <div class="events-log" id="events-log">
+            <div style="color: var(--muted); font-style: italic;">Aguardando eventos...</div>
+          </div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric-card">
+            <div class="metric-label">Eventos Disparados</div>
+            <div class="metric-value" id="metric-events">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Tempo Total</div>
+            <div class="metric-value" id="metric-time">0ms</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Taxa de Eventos</div>
+            <div class="metric-value" id="metric-rate">0 eventos/s</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Status</div>
+            <div class="metric-value" id="metric-status" style="font-size: 1em;">Aguardando</div>
+          </div>
+        </div>
+
+        <div class="content-card" style="margin-top: var(--spacing-lg);">
+          <h4>Como Testar Este Cenário</h4>
+          <ul>
+            <li><strong>Performance:</strong> Observe se a aplicação consegue processar todos os eventos</li>
+            <li><strong>CPU:</strong> Monitore o uso de CPU durante o disparo de eventos</li>
+            <li><strong>Throttling:</strong> Verifique se há throttling ou debounce implementado</li>
+            <li><strong>Memória:</strong> Observe se há vazamentos de memória com muitos eventos</li>
+            <li><strong>Responsividade:</strong> Teste se a interface continua responsiva</li>
+          </ul>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="index.html" class="btn btn-secondary">← Voltar para Cenários</a>
+          <a href="../nft-playground.html" class="btn btn-secondary" style="margin-left: var(--spacing-md);">
+            🎮 NFT Playground
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      let eventCount = 0;
+      let isRunning = false;
+      let startTime = null;
+      let eventInterval = null;
+
+      const eventCountInput = document.getElementById('event-count');
+      const eventCountDisplay = document.getElementById('event-count-display');
+      const eventIntervalInput = document.getElementById('event-interval');
+      const eventIntervalDisplay = document.getElementById('event-interval-display');
+      const startBtn = document.getElementById('start-events');
+      const stopBtn = document.getElementById('stop-events');
+      const clearBtn = document.getElementById('clear-events');
+      const eventsArea = document.getElementById('events-area');
+      const eventsLog = document.getElementById('events-log');
+      const metricEvents = document.getElementById('metric-events');
+      const metricTime = document.getElementById('metric-time');
+      const metricRate = document.getElementById('metric-rate');
+      const metricStatus = document.getElementById('metric-status');
+
+      eventCountInput.addEventListener('input', () => {
+        eventCountDisplay.textContent = eventCountInput.value;
+      });
+
+      eventIntervalInput.addEventListener('input', () => {
+        eventIntervalDisplay.textContent = eventIntervalInput.value + 'ms';
+      });
+
+      function createEventMarker(x, y) {
+        const marker = document.createElement('div');
+        marker.className = 'event-marker';
+        marker.style.left = x + 'px';
+        marker.style.top = y + 'px';
+        eventsArea.appendChild(marker);
+        
+        setTimeout(() => {
+          marker.remove();
+        }, 1000);
+      }
+
+      function logEvent(eventNumber) {
+        const logEntry = document.createElement('div');
+        logEntry.className = 'log-entry';
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        logEntry.textContent = `[${timestamp}] Evento #${eventNumber} disparado`;
+        eventsLog.appendChild(logEntry);
+        eventsLog.scrollTop = eventsLog.scrollHeight;
+
+        if (eventsLog.children.length > 50) {
+          eventsLog.removeChild(eventsLog.children[0]);
+        }
+      }
+
+      function triggerEvent() {
+        eventCount++;
+        const x = Math.random() * (eventsArea.offsetWidth - 20);
+        const y = Math.random() * (eventsArea.offsetHeight - 20);
+        
+        createEventMarker(x, y);
+        logEvent(eventCount);
+        
+        const elapsed = performance.now() - startTime;
+        metricEvents.textContent = eventCount;
+        metricTime.textContent = elapsed.toFixed(0) + 'ms';
+        metricRate.textContent = (eventCount / (elapsed / 1000)).toFixed(1) + ' eventos/s';
+      }
+
+      startBtn.addEventListener('click', () => {
+        if (isRunning) return;
+
+        const count = Number.parseInt(eventCountInput.value, 10);
+        const interval = Number.parseInt(eventIntervalInput.value, 10);
+        
+        eventCount = 0;
+        startTime = performance.now();
+        isRunning = true;
+        
+        startBtn.disabled = true;
+        stopBtn.style.display = 'inline-block';
+        metricStatus.textContent = 'Executando...';
+        metricStatus.style.color = 'var(--accent)';
+
+        if (eventsLog.children.length === 1 && eventsLog.children[0].textContent.includes('Aguardando')) {
+          eventsLog.innerHTML = '';
+        }
+
+        let triggered = 0;
+        eventInterval = setInterval(() => {
+          if (triggered >= count || !isRunning) {
+            clearInterval(eventInterval);
+            const endTime = performance.now();
+            const totalTime = endTime - startTime;
+            metricTime.textContent = totalTime.toFixed(0) + 'ms';
+            metricRate.textContent = (eventCount / (totalTime / 1000)).toFixed(1) + ' eventos/s';
+            metricStatus.textContent = 'Concluído';
+            metricStatus.style.color = 'var(--success)';
+            startBtn.disabled = false;
+            stopBtn.style.display = 'none';
+            isRunning = false;
+            return;
+          }
+
+          triggerEvent();
+          triggered++;
+        }, interval);
+      });
+
+      stopBtn.addEventListener('click', () => {
+        if (eventInterval) {
+          clearInterval(eventInterval);
+        }
+        isRunning = false;
+        stopBtn.style.display = 'none';
+        startBtn.disabled = false;
+        metricStatus.textContent = 'Interrompido';
+        metricStatus.style.color = 'var(--warning)';
+      });
+
+      clearBtn.addEventListener('click', () => {
+        eventsLog.innerHTML = '<div style="color: var(--muted); font-style: italic;">Aguardando eventos...</div>';
+        metricEvents.textContent = '0';
+        metricTime.textContent = '0ms';
+        metricRate.textContent = '0 eventos/s';
+        metricStatus.textContent = 'Aguardando';
+        metricStatus.style.color = 'var(--text)';
+        eventCount = 0;
+      });
+    </script>
+  </body>
+</html>

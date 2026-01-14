@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Performance - Latência de API — Cenários NFT — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      .api-controls {
+        background: var(--surface);
+        padding: var(--spacing-lg);
+        border-radius: var(--border-radius-lg);
+        margin-bottom: var(--spacing-lg);
+        box-shadow: var(--shadow-sm);
+      }
+      .api-controls h3 {
+        margin-top: 0;
+        color: var(--accent);
+      }
+      .control-group {
+        display: flex;
+        gap: var(--spacing-md);
+        align-items: center;
+        margin-bottom: var(--spacing-md);
+        flex-wrap: wrap;
+      }
+      .control-group label {
+        font-weight: 600;
+        min-width: 150px;
+      }
+      .control-group input[type="number"] {
+        padding: var(--spacing-sm);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius-sm);
+        width: 100px;
+      }
+      .api-results {
+        background: var(--surface);
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius-lg);
+        padding: var(--spacing-lg);
+        min-height: 300px;
+        max-height: 500px;
+        overflow-y: auto;
+        margin-bottom: var(--spacing-lg);
+      }
+      .api-request {
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-sm);
+        border-radius: var(--border-radius-md);
+        border-left: 4px solid var(--accent);
+        background: rgba(0, 0, 0, 0.02);
+      }
+      .api-request.pending {
+        border-left-color: var(--warning);
+        background: rgba(255, 193, 7, 0.1);
+      }
+      .api-request.success {
+        border-left-color: var(--success);
+        background: rgba(40, 167, 69, 0.1);
+      }
+      .api-request.error {
+        border-left-color: var(--danger);
+        background: rgba(220, 53, 69, 0.1);
+      }
+      .request-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-xs);
+      }
+      .request-id {
+        font-weight: 600;
+        color: var(--accent);
+      }
+      .request-time {
+        font-size: var(--font-size-sm);
+        color: var(--muted);
+      }
+      .request-data {
+        font-family: 'Courier New', monospace;
+        font-size: var(--font-size-sm);
+        margin-top: var(--spacing-xs);
+        padding: var(--spacing-sm);
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: var(--border-radius-sm);
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-lg);
+      }
+      .metric-card {
+        background: rgba(0, 0, 0, 0.03);
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-md);
+        border-left: 3px solid var(--accent);
+      }
+      .metric-value {
+        font-size: 1.5em;
+        font-weight: 700;
+        color: var(--accent);
+        margin: var(--spacing-xs) 0;
+      }
+      .metric-label {
+        font-size: var(--font-size-sm);
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="../nft-playground.html">NFT Playground</a></li>
+            <li><a href="index.html">Cenários NFT</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Cenário: Performance - Latência de API</h2>
+          <div class="section-desc">
+            Este cenário simula chamadas de API com diferentes níveis de latência. 
+            Use este cenário para testar como a aplicação se comporta com respostas lentas de API 
+            e para praticar testes de performance de requisições assíncronas.
+          </div>
+        </div>
+
+        <div class="api-controls">
+          <h3>Controles de Teste</h3>
+          <div class="control-group">
+            <label>Latência Simulada (ms):</label>
+            <input type="number" id="latency-input" min="0" max="5000" value="1000" step="100">
+            <span id="latency-display">1000ms</span>
+          </div>
+          <div class="control-group">
+            <label>Número de Requisições:</label>
+            <input type="number" id="request-count" min="1" max="20" value="5" step="1">
+            <span id="request-count-display">5</span>
+          </div>
+          <div class="control-group">
+            <label>Requisições Simultâneas:</label>
+            <input type="checkbox" id="concurrent-requests">
+            <span>Sim</span>
+          </div>
+          <div class="control-group">
+            <button id="start-requests" class="btn btn-primary">Iniciar Requisições</button>
+            <button id="clear-results" class="btn btn-secondary">Limpar Resultados</button>
+          </div>
+        </div>
+
+        <div class="api-results" id="api-results">
+          <p style="color: var(--muted); text-align: center; padding: var(--spacing-xl);">
+            Clique em "Iniciar Requisições" para começar o teste de latência de API.
+          </p>
+        </div>
+
+        <div class="metrics">
+          <div class="metric-card">
+            <div class="metric-label">Requisições Enviadas</div>
+            <div class="metric-value" id="metric-sent">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Requisições Concluídas</div>
+            <div class="metric-value" id="metric-completed">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Tempo Médio</div>
+            <div class="metric-value" id="metric-avg">0ms</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Tempo Total</div>
+            <div class="metric-value" id="metric-total">0ms</div>
+          </div>
+        </div>
+
+        <div class="content-card" style="margin-top: var(--spacing-lg);">
+          <h4>Como Testar Este Cenário</h4>
+          <ul>
+            <li><strong>Network Tab:</strong> Use o DevTools Network para observar as requisições simuladas</li>
+            <li><strong>Performance:</strong> Meça o tempo de resposta e compare com a latência configurada</li>
+            <li><strong>Concorrência:</strong> Teste com requisições simultâneas para ver comportamento assíncrono</li>
+            <li><strong>Métricas:</strong> Anote tempos médios e totais para diferentes configurações de latência</li>
+            <li><strong>Automação:</strong> Use ferramentas como Lighthouse ou Performance API para medir métricas</li>
+          </ul>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="index.html" class="btn btn-secondary">← Voltar para Cenários</a>
+          <a href="../nft-playground.html" class="btn btn-secondary" style="margin-left: var(--spacing-md);">
+            🎮 NFT Playground
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      let requestCounter = 0;
+      const requestTimes = [];
+
+      const latencyInput = document.getElementById('latency-input');
+      const latencyDisplay = document.getElementById('latency-display');
+      const requestCountInput = document.getElementById('request-count');
+      const requestCountDisplay = document.getElementById('request-count-display');
+      const concurrentCheckbox = document.getElementById('concurrent-requests');
+      const startBtn = document.getElementById('start-requests');
+      const clearBtn = document.getElementById('clear-results');
+      const resultsArea = document.getElementById('api-results');
+      const metricSent = document.getElementById('metric-sent');
+      const metricCompleted = document.getElementById('metric-completed');
+      const metricAvg = document.getElementById('metric-avg');
+      const metricTotal = document.getElementById('metric-total');
+
+      latencyInput.addEventListener('input', () => {
+        latencyDisplay.textContent = latencyInput.value + 'ms';
+      });
+
+      requestCountInput.addEventListener('input', () => {
+        requestCountDisplay.textContent = requestCountInput.value;
+      });
+
+      function simulateAPIRequest(requestId, latency) {
+        return new Promise((resolve) => {
+          const requestEl = document.createElement('div');
+          requestEl.className = 'api-request pending';
+          requestEl.id = `request-${requestId}`;
+          requestEl.innerHTML = `
+            <div class="request-header">
+              <span class="request-id">Requisição #${requestId}</span>
+              <span class="request-time">Aguardando...</span>
+            </div>
+            <div class="request-data">GET /api/data/${requestId}</div>
+          `;
+          resultsArea.appendChild(requestEl);
+          resultsArea.scrollTop = resultsArea.scrollHeight;
+
+          const startTime = performance.now();
+          metricSent.textContent = Number.parseInt(metricSent.textContent, 10) + 1;
+
+          setTimeout(() => {
+            const endTime = performance.now();
+            const duration = endTime - startTime;
+            requestTimes.push(duration);
+
+            requestEl.className = 'api-request success';
+            requestEl.querySelector('.request-time').textContent = `${duration.toFixed(0)}ms`;
+            requestEl.querySelector('.request-data').textContent = `GET /api/data/${requestId}\nResponse: { "id": ${requestId}, "data": "Simulated response", "timestamp": ${Date.now()} }`;
+
+            metricCompleted.textContent = Number.parseInt(metricCompleted.textContent, 10) + 1;
+            
+            if (requestTimes.length > 0) {
+              const avg = requestTimes.reduce((a, b) => a + b, 0) / requestTimes.length;
+              metricAvg.textContent = avg.toFixed(0) + 'ms';
+              const total = requestTimes.reduce((a, b) => a + b, 0);
+              metricTotal.textContent = total.toFixed(0) + 'ms';
+            }
+
+            resolve();
+          }, latency);
+        });
+      }
+
+      startBtn.addEventListener('click', async () => {
+        const latency = Number.parseInt(latencyInput.value, 10);
+        const count = Number.parseInt(requestCountInput.value, 10);
+        const concurrent = concurrentCheckbox.checked;
+
+        requestCounter = 0;
+        requestTimes.length = 0;
+        metricSent.textContent = '0';
+        metricCompleted.textContent = '0';
+        metricAvg.textContent = '0ms';
+        metricTotal.textContent = '0ms';
+
+        if (resultsArea.children.length === 1 && resultsArea.children[0].tagName === 'P') {
+          resultsArea.innerHTML = '';
+        }
+
+        const startTime = performance.now();
+
+        if (concurrent) {
+          // Requisições simultâneas
+          const promises = [];
+          for (let i = 0; i < count; i++) {
+            requestCounter++;
+            promises.push(simulateAPIRequest(requestCounter, latency));
+          }
+          await Promise.all(promises);
+        } else {
+          // Requisições sequenciais
+          for (let i = 0; i < count; i++) {
+            requestCounter++;
+            await simulateAPIRequest(requestCounter, latency);
+          }
+        }
+
+        const totalTime = performance.now() - startTime;
+        metricTotal.textContent = totalTime.toFixed(0) + 'ms';
+      });
+
+      clearBtn.addEventListener('click', () => {
+        resultsArea.innerHTML = '<p style="color: var(--muted); text-align: center; padding: var(--spacing-xl);">Clique em "Iniciar Requisições" para começar o teste de latência de API.</p>';
+        metricSent.textContent = '0';
+        metricCompleted.textContent = '0';
+        metricAvg.textContent = '0ms';
+        metricTotal.textContent = '0ms';
+        requestTimes.length = 0;
+      });
+    </script>
+  </body>
+</html>
