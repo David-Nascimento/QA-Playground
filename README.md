@@ -2,7 +2,7 @@
 
 ## Sobre o projeto
 
-O **QA Playground** é um projeto educacional criado para **simular cenários reais de aplicações web**, com foco em **testes manuais, automação de testes e análise de qualidade de software**.
+O **QA Playground** é um projeto educacional criado para **simular cenários reais de aplicações web e mobile**, com foco em **testes manuais, automação de testes e análise de qualidade de software**.
 
 O objetivo não é ensinar uma ferramenta específica, mas fornecer um **ambiente estável, previsível e bem estruturado**, onde profissionais de QA possam **praticar técnicas, estratégias e raciocínio de teste** próximos do que é encontrado em projetos reais.
 
@@ -16,7 +16,7 @@ O QA Playground se propõe a ser um **ambiente de prática contínua**, permitin
 
 * Execute testes manuais baseados em regras de negócio;
 * Crie cenários de teste e BDD focados em comportamento observável;
-* Pratique automação web com diferentes ferramentas e abordagens;
+* Pratique automação web e mobile com diferentes ferramentas e abordagens;
 * Treine análise de requisitos, exploração e pensamento crítico em QA;
 * Utilize o projeto como parte de um portfólio profissional.
 
@@ -44,21 +44,41 @@ O QA Playground é organizado em **cenários com níveis de complexidade progres
 * Formulários simples
 * Validações básicas
 * Regras de negócio diretas
+* Tabelas com conteúdo dinâmico
+* Interações básicas (radio buttons, checkboxes, dropdowns)
 * Ideal para testes manuais e primeiros scripts de automação
 
 ### Nível Pleno
 
 * Elementos dinâmicos
-* Tabelas e manipulação de dados
+* Tabelas com paginação, ordenação e filtros
 * Upload e download de arquivos
+* Interações avançadas (drag and drop, hovers, sliders)
 * Cenários mais próximos de sistemas corporativos
 
 ### Nível Sênior
 
 * Desafios avançados de automação
-* Elementos complexos (ex.: Shadow DOM)
-* Simulações de autenticação
+* Elementos complexos (Shadow DOM, iframes, múltiplas janelas)
+* Simulações de autenticação (OAuth 2.0, HTTP Basic/Digest)
+* APIs REST e códigos de status HTTP
 * Comportamentos que exigem maior análise e estratégia de teste
+* Utilitários e ferramentas auxiliares
+
+### Mobile
+
+* Responsividade e adaptação de layouts
+* Touch events e gestos (tap, swipe, long press)
+* Viewport e orientação (portrait/landscape)
+* Interações avançadas (pinch/zoom, pull to refresh, scroll infinito, multi-touch, shake detection)
+* Mobile Playground com documentação completa para automação Android e iOS
+
+### Ferramentas para QA e SDET
+
+* **XPath e CSS Tester**: Teste e valide seletores XPath e CSS com exemplos práticos
+* **BDD Playground**: Crie, valide e avalie cenários BDD em Gherkin com validação automática
+* **NFT Playground**: Simulador de Testes Não Funcionais (performance, carga, stress, resiliência)
+* **Mobile Playground**: Documentação completa para automação mobile com simuladores Android e iOS
 
 ---
 
@@ -68,8 +88,11 @@ O QA Playground é organizado em **cenários com níveis de complexidade progres
 * Interface simples e objetiva
 * Elementos com identificadores estáveis (id e data-testid)
 * Cenários pensados para testes manuais e automação
+* Suporte para testes web e mobile
 * Sem backend e sem dependências externas
 * Execução fácil em ambiente local
+* Documentação profissional para automação mobile
+* Simuladores interativos de dispositivos Android e iOS
 
 ---
 
@@ -91,16 +114,36 @@ O projeto pode ser executado de forma simples:
 
 Nenhuma configuração adicional é necessária.
 
+### Exemplos de servidores locais
+
+**Python 3:**
+```bash
+python -m http.server 8000
+```
+
+**Node.js (http-server):**
+```bash
+npx http-server -p 8000
+```
+
+**PHP:**
+```bash
+php -S localhost:8000
+```
+
+Acesse `http://localhost:8000` no navegador após iniciar o servidor.
+
 ---
 
 ## Uso em QA e Automação
 
 O QA Playground pode ser utilizado com qualquer ferramenta de automação web, como:
 
-* Selenium
+* Selenium (WebDriver)
 * Playwright
 * Cypress
 * Robot Framework
+* Appium (para testes mobile)
 
 Também é adequado para:
 
@@ -108,6 +151,22 @@ Também é adequado para:
 * Escrita de cenários BDD
 * Testes exploratórios
 * Exercícios de análise de qualidade e estratégia de testes
+* Prática de automação mobile (Android e iOS)
+
+---
+
+## Mobile Playground
+
+O **Mobile Playground** é uma seção dedicada à automação mobile, oferecendo:
+
+* Documentação completa para configuração de ambiente Android e iOS
+* Guias passo a passo de instalação (Node.js, Java, Android SDK, Xcode)
+* Exemplos de código em Java, Python e Ruby para Appium
+* Simuladores interativos de dispositivos Android e iOS
+* Explicação detalhada de Capabilities
+* Comparação entre automação Web e Mobile
+* Troubleshooting de problemas comuns
+* Estruturas de projeto para diferentes linguagens
 
 ---
 
@@ -148,6 +207,12 @@ Essa diferença de abordagem é intencional e faz parte da proposta do projeto: 
 
 ---
 
+## Contribuições
+
+Contribuições são bem-vindas! Se você tem ideias para melhorar o projeto, adicionar novos cenários ou corrigir problemas, sinta-se à vontade para abrir issues ou pull requests.
+
+---
+
 ## Licença
 
 Este projeto está licenciado sob a [MIT License](LICENSE). Você é livre para usar, modificar e distribuir este projeto para fins educacionais, comerciais ou pessoais.
@@ -159,3 +224,7 @@ Este projeto está licenciado sob a [MIT License](LICENSE). Você é livre para 
 Desenvolvido por **David Nascimento**, com foco em prática real de QA, aprendizado contínuo e construção de portfólio profissional.
 
 ---
+
+## Agradecimentos
+
+Agradecimentos a todos os profissionais de QA que contribuem com feedback, sugestões e melhorias para tornar este projeto cada vez mais útil para a comunidade.

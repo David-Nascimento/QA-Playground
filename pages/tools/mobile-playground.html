@@ -1,0 +1,2698 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Mobile Playground — Documentação e Simuladores — QA Playground</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      .mobile-playground {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 var(--spacing-sm);
+      }
+      
+      @media (min-width: 768px) {
+        .mobile-playground {
+          padding: 0;
+        }
+      }
+      
+      .device-selector {
+        display: flex;
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-xl);
+        flex-wrap: wrap;
+      }
+      
+      @media (min-width: 768px) {
+        .device-selector {
+          gap: var(--spacing-md);
+        }
+      }
+      
+      .device-tab {
+        padding: var(--spacing-sm) var(--spacing-md);
+        background: var(--surface);
+        border: 2px solid transparent;
+        border-radius: var(--border-radius-md);
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+        font-size: var(--font-size-sm);
+        white-space: nowrap;
+      }
+      
+      @media (min-width: 768px) {
+        .device-tab {
+          padding: var(--spacing-sm) var(--spacing-lg);
+          font-size: inherit;
+        }
+      }
+      
+      .device-tab.active {
+        border-color: var(--accent);
+        background: rgba(122, 168, 116, 0.1);
+        color: var(--accent);
+      }
+      
+      .device-tab:hover {
+        border-color: var(--accent);
+        opacity: 0.8;
+      }
+      
+      .device-simulator-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-xl);
+        margin-bottom: var(--spacing-xl);
+      }
+      
+      @media (max-width: 1024px) {
+        .device-simulator-container {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      .device-simulator {
+        background: var(--surface);
+        border-radius: var(--border-radius-lg);
+        padding: var(--spacing-md);
+        box-shadow: var(--shadow-md);
+      }
+      
+      @media (min-width: 768px) {
+        .device-simulator {
+          padding: var(--spacing-lg);
+        }
+      }
+      
+      .device-frame {
+        position: relative;
+        margin: 0 auto;
+        background: #000;
+        border-radius: 30px;
+        padding: 15px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      }
+      
+      .device-frame.ios {
+        border-radius: 40px;
+        padding: 8px;
+      }
+      
+      .device-screen {
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+      }
+      
+      .device-screen.ios {
+        border-radius: 32px;
+      }
+      
+      .device-status-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 16px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      
+      .device-status-bar.android {
+        background: #000;
+        color: #00ff00;
+      }
+      
+      .device-content {
+        padding: var(--spacing-sm);
+        min-height: 300px;
+        background: #f5f5f5;
+      }
+      
+      @media (min-width: 768px) {
+        .device-content {
+          padding: var(--spacing-md);
+          min-height: 400px;
+        }
+      }
+      
+      .device-content.ios {
+        background: #f8f8f8;
+      }
+      
+      .device-home-indicator {
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 134px;
+        height: 5px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 3px;
+      }
+      
+      .config-section {
+        background: var(--surface);
+        border-radius: var(--border-radius-md);
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+      }
+      
+      @media (min-width: 768px) {
+        .config-section {
+          padding: var(--spacing-lg);
+        }
+      }
+      
+      .config-tabs {
+        display: flex;
+        gap: var(--spacing-xs);
+        margin-bottom: var(--spacing-md);
+        border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+        flex-wrap: wrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .config-tab {
+        padding: var(--spacing-sm) var(--spacing-sm);
+        background: transparent;
+        border: none;
+        border-bottom: 3px solid transparent;
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--muted);
+        transition: all 0.3s;
+        white-space: nowrap;
+        font-size: var(--font-size-sm);
+        min-width: fit-content;
+      }
+      
+      @media (min-width: 768px) {
+        .config-tab {
+          padding: var(--spacing-sm) var(--spacing-md);
+          font-size: inherit;
+        }
+      }
+      
+      .config-tab.active {
+        color: var(--accent);
+        border-bottom-color: var(--accent);
+      }
+      
+      .config-tab:hover {
+        color: var(--accent);
+        opacity: 0.8;
+      }
+      
+      .config-content {
+        display: none;
+      }
+      
+      .config-content.active {
+        display: block;
+      }
+      
+      .code-example {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: var(--spacing-sm);
+        border-radius: var(--border-radius-md);
+        overflow-x: auto;
+        font-family: 'Courier New', monospace;
+        font-size: 12px;
+        line-height: 1.6;
+        margin-top: var(--spacing-md);
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .code-example pre {
+        margin: 0;
+        padding: 0;
+        white-space: pre;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        overflow: visible;
+      }
+      
+      @media (min-width: 768px) {
+        .code-example {
+          padding: var(--spacing-md);
+          font-size: 14px;
+        }
+      }
+      
+      .code-example .keyword { color: #569cd6; }
+      .code-example .string { color: #ce9178; }
+      .code-example .comment { color: #6a9955; }
+      .code-example .function { color: #dcdcaa; }
+      
+      .capability-item {
+        background: rgba(122, 168, 116, 0.05);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: var(--border-radius-sm);
+        margin-bottom: var(--spacing-xs);
+        font-family: monospace;
+        font-size: 11px;
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
+      
+      @media (min-width: 768px) {
+        .capability-item {
+          padding: var(--spacing-sm);
+          font-size: 13px;
+        }
+      }
+      
+      .capability-key {
+        color: var(--accent);
+        font-weight: 600;
+      }
+      
+      .capability-value {
+        color: var(--text);
+      }
+      
+      .info-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-md);
+      }
+      
+      @media (min-width: 640px) {
+        .info-grid {
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: var(--spacing-md);
+        }
+      }
+      
+      .info-card {
+        background: rgba(122, 168, 116, 0.05);
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-md);
+        border-left: 4px solid var(--accent);
+      }
+      
+      .info-card h4 {
+        margin-top: 0;
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="mobile-playground.html">Mobile Playground</a></li>
+            <li><a href="nft-playground.html">NFT Playground</a></li>
+            <li><a href="bdd-playground.html">BDD Playground</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="mobile-playground">
+        <section class="section">
+          <div class="section-header">
+            <h1>Mobile Playground</h1>
+            <div class="section-desc">
+              Documentação completa para automação mobile com Appium. Configure dispositivos Android e iOS, 
+              explore capabilities, veja exemplos práticos e teste em simuladores interativos.
+            </div>
+          </div>
+
+          <!-- Seletor de Dispositivo -->
+          <div class="device-selector">
+            <button class="device-tab active" data-device="android">Android</button>
+            <button class="device-tab" data-device="ios">iOS</button>
+          </div>
+
+          <!-- Simuladores de Dispositivos -->
+          <div class="device-simulator-container">
+            <!-- Simulador Android -->
+            <div id="android-simulator" class="device-simulator" data-testid="android-simulator">
+              <h3 style="margin-top: 0; margin-bottom: var(--spacing-md);">Simulador Android</h3>
+              <div class="device-frame">
+                <div class="device-screen">
+                  <div class="device-status-bar android">
+                    <div>
+                      <span>📶</span> <span>📶</span> <span>🔋</span>
+                    </div>
+                    <div>9:41</div>
+                    <div>
+                      <span>🔋</span> <span>📶</span>
+                    </div>
+                  </div>
+                  <div class="device-content android" id="android-content">
+                    <div style="text-align: center; padding: var(--spacing-lg);">
+                      <div style="font-size: 48px; margin-bottom: var(--spacing-md);">🤖</div>
+                      <h3 style="margin: 0 0 var(--spacing-sm) 0;">Android Device</h3>
+                      <p style="color: var(--muted); margin: 0;">Simulador interativo</p>
+                      <div style="margin-top: var(--spacing-lg);">
+                        <button class="btn" onclick="simulateAndroidAction()" style="margin: var(--spacing-xs);">Ação 1</button>
+                        <button class="btn" onclick="simulateAndroidAction()" style="margin: var(--spacing-xs);">Ação 2</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Simulador iOS -->
+            <div id="ios-simulator" class="device-simulator" style="display: none;" data-testid="ios-simulator">
+              <h3 style="margin-top: 0; margin-bottom: var(--spacing-md);">Simulador iOS</h3>
+              <div class="device-frame ios">
+                <div class="device-screen ios">
+                  <div class="device-status-bar">
+                    <div>9:41</div>
+                    <div>📶 🔋</div>
+                  </div>
+                  <div class="device-content ios" id="ios-content">
+                    <div style="text-align: center; padding: var(--spacing-lg);">
+                      <div style="font-size: 48px; margin-bottom: var(--spacing-md);">🍎</div>
+                      <h3 style="margin: 0 0 var(--spacing-sm) 0;">iOS Device</h3>
+                      <p style="color: var(--muted); margin: 0;">Simulador interativo</p>
+                      <div style="margin-top: var(--spacing-lg);">
+                        <button class="btn" onclick="simulateIOSAction()" style="margin: var(--spacing-xs);">Ação 1</button>
+                        <button class="btn" onclick="simulateIOSAction()" style="margin: var(--spacing-xs);">Ação 2</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="device-home-indicator"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Documentação Android -->
+          <div id="android-docs" class="config-section">
+            <h2>Configuração Android para Automação</h2>
+            
+            <div class="config-tabs">
+              <button class="config-tab active" data-target="android-start">Como Iniciar</button>
+              <button class="config-tab" data-target="android-install">Instalação</button>
+              <button class="config-tab" data-target="android-setup">Preparar Projeto</button>
+              <button class="config-tab" data-target="android-capabilities">Capabilities</button>
+              <button class="config-tab" data-target="android-examples">Exemplos</button>
+              <button class="config-tab" data-target="android-differences">Web vs Mobile</button>
+              <button class="config-tab" data-target="android-troubleshooting">Troubleshooting</button>
+            </div>
+
+            <!-- Android Como Iniciar -->
+            <div id="android-start" class="config-content active">
+              <h3>Primeiros Passos na Automação Mobile Android</h3>
+              
+              <div class="info-card" style="margin-bottom: var(--spacing-lg);">
+                <h4>O que você vai aprender:</h4>
+                <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg);">
+                  <li>Como configurar seu ambiente de desenvolvimento</li>
+                  <li>Como instalar todas as ferramentas necessárias</li>
+                  <li>Como criar seu primeiro projeto de automação</li>
+                  <li>Como escrever e executar testes mobile</li>
+                </ul>
+              </div>
+
+              <h3>Checklist Inicial</h3>
+              <div class="info-grid">
+                <div class="info-card">
+                  <h4>Passo 1: Instalar Node.js</h4>
+                  <p>Necessário para instalar o Appium. Baixe em <a href="https://nodejs.org" target="_blank">nodejs.org</a></p>
+                  <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">
+                    <strong>Verificar instalação:</strong><br>
+                    <code>node --version</code><br>
+                    <code>npm --version</code>
+                  </p>
+                </div>
+                <div class="info-card">
+                  <h4>Passo 2: Instalar Java JDK</h4>
+                  <p>Requerido para executar Appium e testes Java. JDK 8 ou superior.</p>
+                  <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">
+                    <strong>Verificar instalação:</strong><br>
+                    <code>java -version</code>
+                  </p>
+                </div>
+                <div class="info-card">
+                  <h4>Passo 3: Instalar Android Studio</h4>
+                  <p>Fornece Android SDK e emuladores. Baixe em <a href="https://developer.android.com/studio" target="_blank">developer.android.com</a></p>
+                </div>
+                <div class="info-card">
+                  <h4>Passo 4: Instalar Appium</h4>
+                  <p>Framework de automação mobile multiplataforma.</p>
+                  <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">
+                    <code>npm install -g appium</code>
+                  </p>
+                </div>
+              </div>
+
+              <h3 style="margin-top: var(--spacing-lg);">Fluxo de Trabalho Básico</h3>
+              <div class="code-example">
+<pre><span class="comment"># 1. Iniciar Appium Server</span>
+appium
+
+<span class="comment"># 2. Verificar dispositivos conectados</span>
+adb devices
+
+<span class="comment"># 3. Executar seus testes</span>
+<span class="comment"># (depende da linguagem escolhida)</span>
+
+<span class="comment"># 4. Ver logs e resultados</span>
+<span class="comment"># Appium mostra logs no terminal</span></pre>
+              </div>
+
+              <div class="info-card" style="background: rgba(122, 168, 116, 0.1); margin-top: var(--spacing-lg);">
+                <h4>Dica para Iniciantes</h4>
+                <p>Siga os passos na ordem: Instalação → Preparar Projeto → Capabilities → Exemplos. 
+                Não pule etapas, cada uma é importante para o sucesso da automação.</p>
+              </div>
+            </div>
+
+            <!-- Android Instalação -->
+            <div id="android-install" class="config-content">
+              <h3>Guia Completo de Instalação Android</h3>
+              
+              <h4>1. Instalar Node.js e npm</h4>
+              <div class="code-example">
+<pre><span class="comment"># Windows: Baixar instalador em nodejs.org</span>
+<span class="comment"># macOS: Usar Homebrew</span>
+brew install node
+
+<span class="comment"># Linux (Ubuntu/Debian)</span>
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+<span class="comment"># Verificar instalação</span>
+node --version  <span class="comment"># Deve mostrar v18.x ou superior</span>
+npm --version   <span class="comment"># Deve mostrar 9.x ou superior</span></pre>
+              </div>
+
+              <h4>2. Instalar Java JDK</h4>
+              <div class="code-example">
+<pre><span class="comment"># Windows: Baixar JDK 17+ do Oracle ou usar OpenJDK</span>
+<span class="comment"># macOS: Usar Homebrew</span>
+brew install openjdk@17
+
+<span class="comment"># Linux (Ubuntu/Debian)</span>
+sudo apt-get update
+sudo apt-get install openjdk-17-jdk
+
+<span class="comment"># Configurar JAVA_HOME (Windows)</span>
+<span class="comment"># Variáveis de Ambiente → JAVA_HOME = C:\Program Files\Java\jdk-17</span>
+
+<span class="comment"># Configurar JAVA_HOME (macOS/Linux)</span>
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+echo 'export JAVA_HOME=$(/usr/libexec/java_home -v 17)' >> ~/.zshrc
+
+<span class="comment"># Verificar</span>
+java -version
+echo $JAVA_HOME</pre>
+              </div>
+
+              <h4>3. Instalar Android Studio</h4>
+              <div style="margin-bottom: var(--spacing-md);">
+                <p><strong>Passo a passo:</strong></p>
+                <ol style="line-height: 1.8; padding-left: var(--spacing-lg);">
+                  <li>Baixe Android Studio em <a href="https://developer.android.com/studio" target="_blank">developer.android.com/studio</a></li>
+                  <li>Execute o instalador e siga o assistente</li>
+                  <li>Durante a instalação, selecione:
+                    <ul>
+                      <li>Android SDK</li>
+                      <li>Android SDK Platform</li>
+                      <li>Android Virtual Device (AVD)</li>
+                      <li>Performance (Intel HAXM) - se disponível</li>
+                    </ul>
+                  </li>
+                  <li>Após instalação, abra Android Studio → More Actions → SDK Manager</li>
+                  <li>Instale:
+                    <ul>
+                      <li>Android SDK Platform-Tools</li>
+                      <li>Android SDK Build-Tools</li>
+                      <li>Android Emulator</li>
+                      <li>Pelo menos uma versão do Android (recomendado: Android 11 ou 12)</li>
+                    </ul>
+                  </li>
+                </ol>
+              </div>
+
+              <h4>4. Configurar Variáveis de Ambiente</h4>
+              <div class="code-example">
+<pre><span class="comment"># Windows (PowerShell como Administrador)</span>
+[System.Environment]::SetEnvironmentVariable("ANDROID_HOME", "C:\Users\SeuUsuario\AppData\Local\Android\Sdk", "User")
+[System.Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:ANDROID_HOME\platform-tools;$env:ANDROID_HOME\tools", "User")
+
+<span class="comment"># macOS/Linux</span>
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools
+echo 'export ANDROID_HOME=$HOME/Library/Android/sdk' >> ~/.zshrc
+echo 'export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools' >> ~/.zshrc
+
+<span class="comment"># Verificar instalação</span>
+adb version
+echo $ANDROID_HOME</pre>
+              </div>
+
+              <h4>5. Instalar Appium e Drivers</h4>
+              <div class="code-example">
+<pre><span class="comment"># Instalar Appium globalmente</span>
+npm install -g appium
+
+<span class="comment"># Instalar driver UiAutomator2 para Android</span>
+appium driver install uiautomator2
+
+<span class="comment"># Verificar instalação</span>
+appium --version
+appium driver list
+
+<span class="comment"># Instalar Appium Doctor (opcional, mas recomendado)</span>
+npm install -g appium-doctor
+appium-doctor --android</pre>
+              </div>
+
+              <h4>6. Criar e Configurar Emulador Android</h4>
+              <div style="margin-bottom: var(--spacing-md);">
+                <ol style="line-height: 1.8; padding-left: var(--spacing-lg);">
+                  <li>Abra Android Studio</li>
+                  <li>Tools → Device Manager</li>
+                  <li>Create Device</li>
+                  <li>Escolha um dispositivo (ex: Pixel 5)</li>
+                  <li>Escolha uma imagem do sistema (ex: Android 11 - API 30)</li>
+                  <li>Finalize a criação</li>
+                  <li>Inicie o emulador para testar</li>
+                </ol>
+              </div>
+
+              <div class="code-example">
+<pre><span class="comment"># Listar emuladores disponíveis</span>
+emulator -list-avds
+
+<span class="comment"># Iniciar emulador via linha de comando</span>
+emulator -avd NomeDoEmulador
+
+<span class="comment"># Verificar dispositivos conectados</span>
+adb devices</pre>
+              </div>
+
+              <div class="info-card" style="background: rgba(40, 167, 69, 0.1); margin-top: var(--spacing-lg);">
+                <h4>Verificação Final</h4>
+                <p>Execute estes comandos para confirmar que tudo está instalado:</p>
+                <div class="code-example" style="margin-top: var(--spacing-sm);">
+<pre>node --version      <span class="comment"># ✓ Node.js instalado</span>
+java -version       <span class="comment"># ✓ Java instalado</span>
+adb devices         <span class="comment"># ✓ Android SDK configurado</span>
+appium --version    <span class="comment"># ✓ Appium instalado</span>
+appium driver list  <span class="comment"># ✓ UiAutomator2 deve aparecer</span></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- Android Preparar Projeto -->
+            <div id="android-setup" class="config-content">
+              <h3>Como Preparar o Projeto</h3>
+              
+              <div style="margin-bottom: var(--spacing-md); display: flex; gap: var(--spacing-xs); flex-wrap: wrap;">
+                <button class="config-tab" data-structure="java-android">Java</button>
+                <button class="config-tab" data-structure="python-android">Python</button>
+                <button class="config-tab active" data-structure="ruby-android">Ruby</button>
+              </div>
+
+              <div id="java-android-structure" class="code-example" style="display: none;">
+<pre><span class="comment"># 1. Criar estrutura de diretórios</span>
+mkdir meu-projeto-android
+cd meu-projeto-android
+mkdir -p src/test/java/com/qa/android
+mkdir -p src/test/resources
+
+<span class="comment"># 2. Criar pom.xml (Maven) ou build.gradle (Gradle)</span>
+<span class="comment"># Veja exemplos completos abaixo</span>
+
+<span class="comment"># Estrutura final:</span>
+projeto/
+├── src/
+│   └── test/
+│       ├── java/
+│       │   └── com/qa/android/
+│       │       └── AndroidTests.java
+│       └── resources/
+│           └── app.apk
+├── pom.xml <span class="comment"># ou build.gradle</span>
+└── README.md</pre>
+              </div>
+
+              <div id="python-android-structure" class="code-example" style="display: none;">
+<pre><span class="comment"># 1. Criar estrutura de diretórios</span>
+mkdir meu-projeto-android
+cd meu-projeto-android
+mkdir tests resources
+
+<span class="comment"># 2. Criar ambiente virtual</span>
+python -m venv venv
+source venv/bin/activate  <span class="comment"># macOS/Linux</span>
+<span class="comment"># ou</span>
+venv\Scripts\activate  <span class="comment"># Windows</span>
+
+<span class="comment"># 3. Criar requirements.txt</span>
+echo "Appium-Python-Client==2.11.1" > requirements.txt
+echo "pytest==7.4.0" >> requirements.txt
+echo "pytest-html==3.2.0" >> requirements.txt
+
+<span class="comment"># 4. Instalar dependências</span>
+pip install -r requirements.txt
+
+<span class="comment"># Estrutura final:</span>
+projeto/
+├── tests/
+│   ├── android_tests.py
+│   └── __init__.py
+├── resources/
+│   └── app.apk
+├── requirements.txt
+├── pytest.ini
+└── README.md</pre>
+              </div>
+
+              <div id="ruby-android-structure" class="code-example">
+<pre><span class="comment"># 1. Criar estrutura de diretórios</span>
+mkdir meu-projeto-android
+cd meu-projeto-android
+mkdir -p spec lib resources
+
+<span class="comment"># 2. Criar Gemfile</span>
+echo "source 'https://rubygems.org'" > Gemfile
+echo "gem 'appium_lib', '~> 12.0'" >> Gemfile
+echo "gem 'rspec', '~> 3.12'" >> Gemfile
+echo "gem 'selenium-webdriver', '~> 4.0'" >> Gemfile
+
+<span class="comment"># 3. Instalar dependências</span>
+bundle install
+
+<span class="comment"># Estrutura final:</span>
+projeto/
+├── spec/
+│   └── android_spec.rb
+├── lib/
+│   └── android_helper.rb
+├── resources/
+│   └── app.apk
+├── Gemfile
+├── Gemfile.lock
+└── README.md</pre>
+              </div>
+
+              <h4 style="margin-top: var(--spacing-lg);">Arquivos de Configuração</h4>
+              
+              <div id="java-android-config" class="code-example" style="display: none;">
+                <h5>Java - pom.xml (Maven)</h5>
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0"&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;groupId&gt;com.qa&lt;/groupId&gt;
+  &lt;artifactId&gt;android-tests&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;io.appium&lt;/groupId&gt;
+      &lt;artifactId&gt;java-client&lt;/artifactId&gt;
+      &lt;version&gt;8.5.1&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.testng&lt;/groupId&gt;
+      &lt;artifactId&gt;testng&lt;/artifactId&gt;
+      &lt;version&gt;7.8.0&lt;/version&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/project&gt;</pre>
+              </div>
+              
+              <div id="python-android-config" class="code-example" style="display: none;">
+                <h5>Python - requirements.txt</h5>
+<pre>Appium-Python-Client==2.11.1
+pytest==7.4.0
+pytest-html==3.2.0
+pytest-xdist==3.3.1</pre>
+              </div>
+              
+              <div id="ruby-android-config" class="code-example">
+                <h5>Ruby - Gemfile</h5>
+<pre>source 'https://rubygems.org'
+
+gem 'appium_lib', '~> 12.0'
+gem 'rspec', '~> 3.12'
+gem 'selenium-webdriver', '~> 4.0'</pre>
+              </div>
+
+              <div class="info-card" style="background: rgba(122, 168, 116, 0.1); margin-top: var(--spacing-lg);">
+                <h4>Próximos Passos</h4>
+                <p>Após preparar o projeto, você está pronto para configurar as Capabilities e escrever seus primeiros testes. 
+                Veja a seção "Capabilities" para entender como configurar a conexão com dispositivos Android.</p>
+              </div>
+            </div>
+
+            <!-- Android Capabilities -->
+            <div id="android-capabilities" class="config-content">
+              <h3>Capabilities Android - Guia Completo</h3>
+              
+              <p>Capabilities são configurações que informam ao Appium como se conectar e interagir com seu dispositivo Android. 
+              Pense nelas como "instruções" para o Appium.</p>
+
+              <h4>Capabilities Obrigatórias</h4>
+              <div class="capability-item" style="background: rgba(220, 53, 69, 0.1);">
+                <span class="capability-key">platformName:</span> <span class="capability-value">"Android"</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  <strong>Obrigatório.</strong> Define a plataforma. Sempre "Android" para dispositivos Android.
+                </p>
+              </div>
+              <div class="capability-item" style="background: rgba(220, 53, 69, 0.1);">
+                <span class="capability-key">automationName:</span> <span class="capability-value">"UiAutomator2"</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  <strong>Obrigatório.</strong> Driver de automação. UiAutomator2 é o padrão moderno para Android.
+                </p>
+              </div>
+
+              <h4>Capabilities Importantes</h4>
+              <div class="capability-item">
+                <span class="capability-key">platformVersion:</span> <span class="capability-value">"11.0"</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Versão do Android. Descubra com: <code>adb shell getprop ro.build.version.release</code>
+                </p>
+              </div>
+              <div class="capability-item">
+                <span class="capability-key">deviceName:</span> <span class="capability-value">"Android Emulator"</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Nome do dispositivo. Pode ser qualquer nome descritivo. Listar dispositivos: <code>adb devices</code>
+                </p>
+              </div>
+              <div class="capability-item">
+                <span class="capability-key">udid:</span> <span class="capability-value">"emulator-5554"</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  ID único do dispositivo. Obtido com <code>adb devices</code>. Necessário quando há múltiplos dispositivos.
+                </p>
+              </div>
+
+              <h4>Capabilities para Aplicativos</h4>
+              <div class="capability-item">
+                <span class="capability-key">app:</span> <span class="capability-value">"/path/to/app.apk"</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Caminho completo para o arquivo APK. Use caminho absoluto ou relativo ao projeto.
+                </p>
+              </div>
+              <div class="capability-item">
+                <span class="capability-key">appPackage:</span> <span class="capability-value">"com.example.app"</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Package name da aplicação. Descubra com: <code>aapt dump badging app.apk | grep package</code>
+                </p>
+              </div>
+              <div class="capability-item">
+                <span class="capability-key">appActivity:</span> <span class="capability-value">"com.example.app.MainActivity"</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Activity principal. Descubra com: <code>adb shell dumpsys window | grep mCurrentFocus</code>
+                </p>
+              </div>
+
+              <h4>Capabilities de Comportamento</h4>
+              <div class="capability-item">
+                <span class="capability-key">noReset:</span> <span class="capability-value">false</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Se <code>true</code>, não limpa dados do app entre testes. Útil para testes que dependem de estado anterior.
+                </p>
+              </div>
+              <div class="capability-item">
+                <span class="capability-key">fullReset:</span> <span class="capability-value">false</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Se <code>true</code>, desinstala e reinstala o app completamente. Use apenas quando necessário.
+                </p>
+              </div>
+              <div class="capability-item">
+                <span class="capability-key">autoGrantPermissions:</span> <span class="capability-value">true</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Concede automaticamente todas as permissões solicitadas pelo app.
+                </p>
+              </div>
+
+              <h4>Exemplo Completo de Capabilities</h4>
+              <div class="code-example">
+<pre><span class="comment"># Java</span>
+UiAutomator2Options options = <span class="keyword">new</span> UiAutomator2Options();
+options.setPlatformName(<span class="string">"Android"</span>);
+options.setPlatformVersion(<span class="string">"11.0"</span>);
+options.setDeviceName(<span class="string">"Android Emulator"</span>);
+options.setAutomationName(<span class="string">"UiAutomator2"</span>);
+options.setApp(<span class="string">"/caminho/completo/app.apk"</span>);
+options.setAppPackage(<span class="string">"com.example.app"</span>);
+options.setAppActivity(<span class="string">"com.example.app.MainActivity"</span>);
+options.setNoReset(<span class="keyword">false</span>);
+options.setAutoGrantPermissions(<span class="keyword">true</span>);
+
+<span class="comment"># Python</span>
+options = UiAutomator2Options()
+options.platform_name = <span class="string">"Android"</span>
+options.platform_version = <span class="string">"11.0"</span>
+options.device_name = <span class="string">"Android Emulator"</span>
+options.automation_name = <span class="string">"UiAutomator2"</span>
+options.app = <span class="string">"/caminho/completo/app.apk"</span>
+options.app_package = <span class="string">"com.example.app"</span>
+options.app_activity = <span class="string">"com.example.app.MainActivity"</span>
+options.no_reset = <span class="keyword">False</span>
+options.auto_grant_permissions = <span class="keyword">True</span>
+
+<span class="comment"># Ruby</span>
+caps = {
+  platformName: <span class="string">'Android'</span>,
+  platformVersion: <span class="string">'11.0'</span>,
+  deviceName: <span class="string">'Android Emulator'</span>,
+  automationName: <span class="string">'UiAutomator2'</span>,
+  app: <span class="string">'/caminho/completo/app.apk'</span>,
+  appPackage: <span class="string">'com.example.app'</span>,
+  appActivity: <span class="string">'com.example.app.MainActivity'</span>,
+  noReset: <span class="keyword">false</span>,
+  autoGrantPermissions: <span class="keyword">true</span>
+}</pre>
+              </div>
+
+              <div class="info-card" style="background: rgba(255, 193, 7, 0.1); margin-top: var(--spacing-lg);">
+                <h4>Dicas Importantes</h4>
+                <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg);">
+                  <li>Sempre use caminhos absolutos para o APK</li>
+                  <li>Verifique o package e activity antes de executar testes</li>
+                  <li>Use <code>noReset: false</code> para garantir estado limpo entre testes</li>
+                  <li>Para testes em navegador, use <code>browserName: "Chrome"</code> em vez de <code>app</code></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Android Exemplos -->
+            <div id="android-examples" class="config-content">
+              <h3>Exemplos Completos de Código Android</h3>
+              
+              <p>Exemplos práticos e completos para começar a automação Android. Cada exemplo inclui configuração, interações básicas e boas práticas.</p>
+              
+              <div style="margin-bottom: var(--spacing-md); display: flex; gap: var(--spacing-xs); flex-wrap: wrap;">
+                <button class="config-tab" data-example="java-android-example">Java</button>
+                <button class="config-tab" data-example="python-android-example">Python</button>
+                <button class="config-tab active" data-example="ruby-android-example">Ruby</button>
+              </div>
+              
+              <div id="java-android-example" class="code-example" style="display: none;">
+<pre><span class="keyword">import</span> io.appium.java_client.android.AndroidDriver;
+<span class="keyword">import</span> io.appium.java_client.android.options.UiAutomator2Options;
+<span class="keyword">import</span> org.openqa.selenium.By;
+<span class="keyword">import</span> org.openqa.selenium.support.ui.WebDriverWait;
+<span class="keyword">import</span> org.openqa.selenium.support.ui.ExpectedConditions;
+<span class="keyword">import</span> java.net.URL;
+<span class="keyword">import</span> java.time.Duration;
+
+<span class="keyword">public class</span> <span class="function">AndroidTest</span> {
+    <span class="keyword">private static</span> AndroidDriver driver;
+    
+    <span class="keyword">public static void</span> <span class="function">main</span>(String[] args) {
+        <span class="comment">// Configurar capabilities</span>
+        UiAutomator2Options options = <span class="keyword">new</span> UiAutomator2Options();
+        options.setPlatformName(<span class="string">"Android"</span>);
+        options.setPlatformVersion(<span class="string">"11.0"</span>);
+        options.setDeviceName(<span class="string">"Android Emulator"</span>);
+        options.setAutomationName(<span class="string">"UiAutomator2"</span>);
+        options.setApp(<span class="string">"/caminho/completo/app.apk"</span>);
+        options.setAppPackage(<span class="string">"com.example.app"</span>);
+        options.setAppActivity(<span class="string">"com.example.app.MainActivity"</span>);
+        options.setNoReset(<span class="keyword">false</span>);
+        options.setAutoGrantPermissions(<span class="keyword">true</span>);
+        
+        <span class="comment">// Inicializar driver</span>
+        driver = <span class="keyword">new</span> AndroidDriver(
+            <span class="keyword">new</span> URL(<span class="string">"http://localhost:4723"</span>), 
+            options
+        );
+        
+        <span class="keyword">try</span> {
+            <span class="comment">// Exemplo: Encontrar elemento por Resource ID</span>
+            WebDriverWait wait = <span class="keyword">new</span> WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.presenceOfElementLocated(
+                By.id(<span class="string">"com.example.app:id/loginButton"</span>)
+            )).click();
+            
+            <span class="comment">// Exemplo: Preencher campo de texto</span>
+            driver.findElement(By.id(<span class="string">"com.example.app:id/username"</span>))
+                .sendKeys(<span class="string">"usuario@exemplo.com"</span>);
+            
+            <span class="comment">// Exemplo: Verificar se elemento está visível</span>
+            <span class="keyword">boolean</span> isVisible = driver.findElement(
+                By.id(<span class="string">"com.example.app:id/welcomeMessage"</span>)
+            ).isDisplayed();
+            
+        } <span class="keyword">finally</span> {
+            <span class="comment">// Sempre fechar o driver</span>
+            driver.quit();
+        }
+    }
+}</pre>
+              </div>
+
+              </div>
+              
+              <div id="python-android-example" class="code-example" style="display: none;">
+<pre><span class="keyword">from</span> appium <span class="keyword">import</span> webdriver
+<span class="keyword">from</span> appium.options.android <span class="keyword">import</span> UiAutomator2Options
+<span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By
+<span class="keyword">from</span> selenium.webdriver.support.ui <span class="keyword">import</span> WebDriverWait
+<span class="keyword">from</span> selenium.webdriver.support <span class="keyword">import</span> expected_conditions <span class="keyword">as</span> EC
+
+<span class="comment"># Configurar capabilities</span>
+options = UiAutomator2Options()
+options.platform_name = <span class="string">"Android"</span>
+options.platform_version = <span class="string">"11.0"</span>
+options.device_name = <span class="string">"Android Emulator"</span>
+options.automation_name = <span class="string">"UiAutomator2"</span>
+options.app = <span class="string">"/caminho/completo/app.apk"</span>
+options.app_package = <span class="string">"com.example.app"</span>
+options.app_activity = <span class="string">"com.example.app.MainActivity"</span>
+options.no_reset = <span class="keyword">False</span>
+options.auto_grant_permissions = <span class="keyword">True</span>
+
+<span class="comment"># Inicializar driver</span>
+driver = webdriver.Remote(<span class="string">"http://localhost:4723"</span>, options=options)
+
+<span class="keyword">try</span>:
+    <span class="comment"># Exemplo: Encontrar elemento por Resource ID</span>
+    wait = WebDriverWait(driver, 10)
+    login_button = wait.until(EC.presence_of_element_located((
+        By.ID, <span class="string">"com.example.app:id/loginButton"</span>
+    )))
+    login_button.click()
+    
+    <span class="comment"># Exemplo: Preencher campo de texto</span>
+    username_field = driver.find_element(By.ID, <span class="string">"com.example.app:id/username"</span>)
+    username_field.send_keys(<span class="string">"usuario@exemplo.com"</span>)
+    
+    <span class="comment"># Exemplo: Verificar se elemento está visível</span>
+    <span class="keyword">assert</span> driver.find_element(By.ID, <span class="string">"com.example.app:id/welcomeMessage"</span>).is_displayed()
+    
+<span class="keyword">finally</span>:
+    <span class="comment"># Sempre fechar o driver</span>
+    driver.quit()</pre>
+              </div>
+              
+              
+
+              <h4 style="margin-top: var(--spacing-lg);">Boas Práticas nos Exemplos</h4>
+              <div class="info-grid">
+                <div class="info-card">
+                  <h4>Sempre use esperas explícitas</h4>
+                  <p>Elementos mobile podem demorar para aparecer. Use WebDriverWait em vez de Thread.sleep().</p>
+                </div>
+                <div class="info-card">
+                  <h4>Prefira Resource ID</h4>
+                  <p>Resource ID é mais estável que XPath em Android. Use sempre que possível.</p>
+                </div>
+                <div class="info-card">
+                  <h4>Sempre feche o driver</h4>
+                  <p>Use try/finally ou ensure para garantir que o driver seja fechado mesmo em caso de erro.</p>
+                </div>
+                <div class="info-card">
+                  <h4>Trate exceções</h4>
+                  <p>Mobile pode ter mais falhas que web. Trate exceções adequadamente e adicione logs.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Android Web vs Mobile -->
+            <div id="android-differences" class="config-content">
+              <h3>Diferenças: Automação Web vs Mobile</h3>
+              
+              <p>Automação mobile tem diferenças fundamentais em relação à automação web. Entender essas diferenças é crucial para o sucesso.</p>
+
+              <h4>1. Seletores e Localização de Elementos</h4>
+              <div class="info-grid">
+                <div class="info-card">
+                  <h4>Web (Selenium)</h4>
+                  <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+                    <li>ID, Class, Name</li>
+                    <li>XPath, CSS Selectors</li>
+                    <li>Link Text, Partial Link</li>
+                    <li>Tag Name</li>
+                  </ul>
+                </div>
+                <div class="info-card">
+                  <h4>Mobile (Appium)</h4>
+                  <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+                    <li>ID (resource-id)</li>
+                    <li>Accessibility ID</li>
+                    <li>XPath (limitado)</li>
+                    <li>Class Name</li>
+                    <li>Android UIAutomator</li>
+                    <li>iOS Predicate</li>
+                  </ul>
+                </div>
+              </div>
+
+              <h4>2. Interações e Gestos</h4>
+              <div class="code-example">
+<pre><span class="comment"># WEB: Cliques simples</span>
+driver.findElement(By.id("button")).click()
+
+<span class="comment"># MOBILE: Gestos complexos</span>
+<span class="comment"># Tap (toque simples)</span>
+driver.tap(1, 500, 500, 100)
+
+<span class="comment"># Swipe (deslizar)</span>
+TouchAction action = <span class="keyword">new</span> TouchAction(driver);
+action.press(500, 1000).moveTo(500, 500).release().perform();
+
+<span class="comment"># Long Press (toque longo)</span>
+action.longPress(element).release().perform();
+
+<span class="comment"># Pinch/Zoom (pinçar)</span>
+<span class="comment"># Requer múltiplos toques simultâneos</span></pre>
+              </div>
+
+              <h4>3. Contextos e WebViews</h4>
+              <div class="info-card">
+                <p><strong>Web:</strong> Sempre trabalha em um único contexto (a página web).</p>
+                <p><strong>Mobile:</strong> Pode ter múltiplos contextos:</p>
+                <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg);">
+                  <li><strong>NATIVE_APP:</strong> Contexto nativo da aplicação</li>
+                  <li><strong>WEBVIEW:</strong> Contexto web dentro do app (como um iframe)</li>
+                </ul>
+                <div class="code-example" style="margin-top: var(--spacing-sm);">
+<pre><span class="comment"># Listar contextos disponíveis</span>
+Set&lt;String&gt; contexts = driver.getContextHandles();
+
+<span class="comment"># Alternar para WebView</span>
+driver.context(<span class="string">"WEBVIEW_com.example.app"</span>);
+
+<span class="comment"># Voltar para Native</span>
+driver.context(<span class="string">"NATIVE_APP"</span>);</pre>
+                </div>
+              </div>
+
+              <h4>4. Esperas e Sincronização</h4>
+              <div class="info-grid">
+                <div class="info-card">
+                  <h4>Web</h4>
+                  <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+                    <li>WebDriverWait</li>
+                    <li>ExpectedConditions</li>
+                    <li>Implicit Wait</li>
+                    <li>Page Load Timeout</li>
+                  </ul>
+                </div>
+                <div class="info-card">
+                  <h4>Mobile</h4>
+                  <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+                    <li>WebDriverWait (similar)</li>
+                    <li>Espera por Activity</li>
+                    <li>Espera por Package</li>
+                    <li>Espera por Elemento</li>
+                    <li>Timeout de instalação</li>
+                  </ul>
+                </div>
+              </div>
+
+              <h4>5. Instalação e Gerenciamento de Apps</h4>
+              <div class="code-example">
+<pre><span class="comment"># WEB: Não aplicável</span>
+
+<span class="comment"># MOBILE: Instalar app</span>
+driver.installApp(<span class="string">"/path/to/app.apk"</span>);
+
+<span class="comment"># Verificar se app está instalado</span>
+<span class="keyword">boolean</span> installed = driver.isAppInstalled(<span class="string">"com.example.app"</span>);
+
+<span class="comment"># Desinstalar app</span>
+driver.removeApp(<span class="string">"com.example.app"</span>);
+
+<span class="comment"># Fechar app (sem desinstalar)</span>
+driver.closeApp();
+
+<span class="comment"># Reabrir app</span>
+driver.launchApp();</pre>
+              </div>
+
+              <h4>6. Orientação e Viewport</h4>
+              <div class="code-example">
+<pre><span class="comment"># WEB: Redimensionar janela</span>
+driver.manage().window().setSize(<span class="keyword">new</span> Dimension(375, 667));
+
+<span class="comment"># MOBILE: Rotacionar dispositivo</span>
+driver.rotate(ScreenOrientation.LANDSCAPE);
+driver.rotate(ScreenOrientation.PORTRAIT);
+
+<span class="comment"># Obter orientação atual</span>
+ScreenOrientation orientation = driver.getOrientation();</pre>
+              </div>
+
+              <h4>7. Notificações e Permissões</h4>
+              <div class="info-card">
+                <p><strong>Web:</strong> Não gerencia notificações ou permissões do sistema.</p>
+                <p><strong>Mobile:</strong> Pode interagir com:</p>
+                <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg);">
+                  <li>Notificações push</li>
+                  <li>Permissões do sistema (câmera, localização, etc.)</li>
+                  <li>Alertas nativos</li>
+                  <li>Teclado virtual</li>
+                </ul>
+              </div>
+
+              <div class="info-card" style="background: rgba(122, 168, 116, 0.1); margin-top: var(--spacing-lg);">
+                <h4>Resumo das Principais Diferenças</h4>
+                <table style="width: 100%; border-collapse: collapse; margin-top: var(--spacing-sm);">
+                  <thead>
+                    <tr style="background: rgba(0, 0, 0, 0.05);">
+                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--accent);">Aspecto</th>
+                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--accent);">Web</th>
+                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--accent);">Mobile</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Seletores</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">CSS, XPath completos</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Resource ID, Accessibility ID</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Interações</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Click, Type</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Tap, Swipe, Pinch, Long Press</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Contextos</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Único (página)</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Múltiplos (Native, WebView)</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Apps</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Não aplicável</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Instalar, Desinstalar, Gerenciar</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: var(--spacing-xs);"><strong>Orientacao</strong></td>
+                      <td style="padding: var(--spacing-xs);">Redimensionar janela</td>
+                      <td style="padding: var(--spacing-xs);">Rotacionar dispositivo</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Android Troubleshooting -->
+            <div id="android-troubleshooting" class="config-content">
+              <h3>Troubleshooting - Problemas Comuns</h3>
+              
+              <div class="info-grid">
+                <div class="info-card">
+                  <h4>"UIAutomator2 not installed"</h4>
+                  <p><strong>Problema:</strong> Driver UiAutomator2 não encontrado.</p>
+                  <p><strong>Solução:</strong></p>
+                  <div class="code-example" style="margin-top: var(--spacing-xs);">
+<pre>appium driver install uiautomator2
+appium driver list  <span class="comment"># Verificar instalação</span></pre>
+                  </div>
+                </div>
+                <div class="info-card">
+                  <h4>"Device not found"</h4>
+                  <p><strong>Problema:</strong> Appium não encontra dispositivo.</p>
+                  <p><strong>Solução:</strong></p>
+                  <div class="code-example" style="margin-top: var(--spacing-xs);">
+<pre>adb devices  <span class="comment"># Verificar dispositivos</span>
+adb kill-server
+adb start-server
+adb devices  <span class="comment"># Tentar novamente</span></pre>
+                  </div>
+                </div>
+                <div class="info-card">
+                  <h4>"App not installed"</h4>
+                  <p><strong>Problema:</strong> App não instala no dispositivo.</p>
+                  <p><strong>Solução:</strong></p>
+                  <div class="code-example" style="margin-top: var(--spacing-xs);">
+<pre>adb install app.apk
+adb uninstall com.example.app  <span class="comment"># Se já instalado</span>
+adb install -r app.apk  <span class="comment"># Reinstalar</span></pre>
+                  </div>
+                </div>
+                <div class="info-card">
+                  <h4>"Session not created"</h4>
+                  <p><strong>Problema:</strong> Não consegue criar sessão Appium.</p>
+                  <p><strong>Verificações:</strong></p>
+                  <ul style="margin: var(--spacing-xs) 0; padding-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+                    <li>Appium Server está rodando? (<code>appium</code>)</li>
+                    <li>Capabilities estão corretas?</li>
+                    <li>Versão do Android compatível?</li>
+                    <li>APK existe no caminho especificado?</li>
+                    <li>Package e Activity estão corretos?</li>
+                  </ul>
+                </div>
+                <div class="info-card">
+                  <h4>"Element not found"</h4>
+                  <p><strong>Problema:</strong> Não encontra elementos na tela.</p>
+                  <p><strong>Solução:</strong></p>
+                  <ul style="margin: var(--spacing-xs) 0; padding-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+                    <li>Use Appium Inspector para inspecionar elementos</li>
+                    <li>Verifique se está no contexto correto (Native vs WebView)</li>
+                    <li>Adicione esperas explícitas</li>
+                    <li>Verifique se o elemento está visível na tela</li>
+                  </ul>
+                </div>
+                <div class="info-card">
+                  <h4>"Connection refused"</h4>
+                  <p><strong>Problema:</strong> Não consegue conectar ao Appium Server.</p>
+                  <p><strong>Solução:</strong></p>
+                  <div class="code-example" style="margin-top: var(--spacing-xs);">
+<pre><span class="comment"># Verificar se Appium está rodando</span>
+lsof -i :4723  <span class="comment"># macOS/Linux</span>
+netstat -ano | findstr :4723  <span class="comment"># Windows</span>
+
+<span class="comment"># Reiniciar Appium</span>
+appium</pre>
+                  </div>
+                </div>
+              </div>
+
+              <h4 style="margin-top: var(--spacing-lg);">Ferramentas de Debug</h4>
+              <div class="info-grid">
+                <div class="info-card">
+                  <h4>Appium Inspector</h4>
+                  <p>Ferramenta visual para inspecionar elementos e gravar interações.</p>
+                  <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">
+                    Baixe em: <a href="https://github.com/appium/appium-inspector" target="_blank">github.com/appium/appium-inspector</a>
+                  </p>
+                </div>
+                <div class="info-card">
+                  <h4>UI Automator Viewer</h4>
+                  <p>Ferramenta do Android SDK para inspecionar hierarquia de UI.</p>
+                  <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">
+                    Localização: <code>$ANDROID_HOME/tools/bin/uiautomatorviewer</code>
+                  </p>
+                </div>
+                <div class="info-card">
+                  <h4>ADB Commands</h4>
+                  <p>Comandos úteis para debug:</p>
+                  <div class="code-example" style="margin-top: var(--spacing-xs); font-size: 11px;">
+<pre>adb shell dumpsys window  <span class="comment"># Info da janela atual</span>
+adb logcat  <span class="comment"># Logs do dispositivo</span>
+adb shell pm list packages  <span class="comment"># Listar apps</span>
+adb shell input tap x y  <span class="comment"># Simular toque</span></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Documentação iOS -->
+          <div id="ios-docs" class="config-section" style="display: none;">
+            <h2>🍎 Configuração iOS para Automação</h2>
+            
+            <div class="config-tabs">
+              <button class="config-tab active" data-target="ios-start">Como Iniciar</button>
+              <button class="config-tab" data-target="ios-install">Instalação</button>
+              <button class="config-tab" data-target="ios-setup">Preparar Projeto</button>
+              <button class="config-tab" data-target="ios-capabilities">Capabilities</button>
+              <button class="config-tab" data-target="ios-examples">Exemplos</button>
+              <button class="config-tab" data-target="ios-differences">Web vs Mobile</button>
+              <button class="config-tab" data-target="ios-troubleshooting">Troubleshooting</button>
+            </div>
+
+            <!-- iOS Como Iniciar -->
+            <div id="ios-start" class="config-content active">
+              <h3>Primeiros Passos na Automação Mobile iOS</h3>
+              
+              <div class="info-card" style="background: rgba(220, 53, 69, 0.1); margin-bottom: var(--spacing-lg);">
+                <h4>Requisito Importante</h4>
+                <p><strong>Automação iOS requer macOS.</strong> Não é possível automatizar iOS em Windows ou Linux. 
+                Você precisa de um Mac com Xcode instalado.</p>
+              </div>
+
+              <div class="info-card" style="margin-bottom: var(--spacing-lg);">
+                <h4>O que você vai aprender:</h4>
+                <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg);">
+                  <li>Como configurar seu ambiente macOS para automação iOS</li>
+                  <li>Como instalar Xcode e simuladores iOS</li>
+                  <li>Como criar seu primeiro projeto de automação iOS</li>
+                  <li>Como escrever e executar testes mobile iOS</li>
+                </ul>
+              </div>
+
+              <h3>Checklist Inicial</h3>
+              <div class="info-grid">
+                <div class="info-card">
+                  <h4>Passo 1: macOS Atualizado</h4>
+                  <p>Certifique-se de ter macOS 10.15 (Catalina) ou superior.</p>
+                  <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">
+                    <strong>Verificar:</strong> Apple Menu → About This Mac
+                  </p>
+                </div>
+                <div class="info-card">
+                  <h4>Passo 2: Instalar Xcode</h4>
+                  <p>Baixe Xcode da App Store (gratuito, mas grande ~12GB).</p>
+                  <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">
+                    <strong>Verificar:</strong> <code>xcodebuild -version</code>
+                  </p>
+                </div>
+                <div class="info-card">
+                  <h4>Passo 3: Command Line Tools</h4>
+                  <p>Instale ferramentas de linha de comando do Xcode.</p>
+                  <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">
+                    <code>xcode-select --install</code>
+                  </p>
+                </div>
+                <div class="info-card">
+                  <h4>Passo 4: Instalar Appium</h4>
+                  <p>Framework de automação mobile multiplataforma.</p>
+                  <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">
+                    <code>npm install -g appium</code>
+                  </p>
+                </div>
+              </div>
+
+              <h3 style="margin-top: var(--spacing-lg);">Fluxo de Trabalho Básico</h3>
+              <div class="code-example">
+<pre><span class="comment"># 1. Iniciar Appium Server</span>
+appium
+
+<span class="comment"># 2. Listar simuladores disponíveis</span>
+xcrun simctl list devices
+
+<span class="comment"># 3. Iniciar simulador (opcional, pode iniciar automaticamente)</span>
+open -a Simulator
+
+<span class="comment"># 4. Executar seus testes</span>
+<span class="comment"># (depende da linguagem escolhida)</span>
+
+<span class="comment"># 5. Ver logs e resultados</span>
+<span class="comment"># Appium mostra logs no terminal</span></pre>
+              </div>
+
+              <div class="info-card" style="background: rgba(122, 168, 116, 0.1); margin-top: var(--spacing-lg);">
+                <h4>Dica para Iniciantes</h4>
+                <p>Siga os passos na ordem: Instalação → Preparar Projeto → Capabilities → Exemplos. 
+                iOS tem requisitos mais específicos que Android, então preste atenção aos detalhes de instalação.</p>
+              </div>
+            </div>
+
+            <!-- iOS Instalação -->
+            <div id="ios-install" class="config-content">
+              <h3>Guia Completo de Instalação iOS</h3>
+              
+              <div class="info-card" style="background: rgba(220, 53, 69, 0.1); margin-bottom: var(--spacing-lg);">
+                <h4>Aviso Importante</h4>
+                <p>Automação iOS <strong>só funciona em macOS</strong>. Se você está em Windows ou Linux, 
+                considere usar serviços em nuvem como BrowserStack, Sauce Labs ou AWS Device Farm.</p>
+              </div>
+
+              <h4>1. Instalar Node.js e npm</h4>
+              <div class="code-example">
+<pre><span class="comment"># macOS: Usar Homebrew (recomendado)</span>
+brew install node
+
+<span class="comment"># Ou baixar instalador em nodejs.org</span>
+
+<span class="comment"># Verificar instalação</span>
+node --version  <span class="comment"># Deve mostrar v18.x ou superior</span>
+npm --version   <span class="comment"># Deve mostrar 9.x ou superior</span></pre>
+              </div>
+
+              <h4>2. Instalar Xcode</h4>
+              <div style="margin-bottom: var(--spacing-md);">
+                <p><strong>Passo a passo:</strong></p>
+                <ol style="line-height: 1.8; padding-left: var(--spacing-lg);">
+                  <li>Abra a App Store no Mac</li>
+                  <li>Procure por "Xcode"</li>
+                  <li>Clique em "Obter" ou "Instalar" (gratuito, mas ~12GB)</li>
+                  <li>Aguarde o download e instalação (pode levar horas)</li>
+                  <li>Após instalação, abra Xcode uma vez para aceitar os termos</li>
+                  <li>Xcode → Settings → Locations → Command Line Tools: Selecione a versão instalada</li>
+                </ol>
+              </div>
+
+              <h4>3. Instalar Command Line Tools</h4>
+              <div class="code-example">
+<pre><span class="comment"># Instalar Command Line Tools</span>
+xcode-select --install
+
+<span class="comment"># Se já instalado, pode aparecer erro - isso é normal</span>
+
+<span class="comment"># Verificar instalação</span>
+xcode-select -p  <span class="comment"># Deve mostrar: /Library/Developer/CommandLineTools</span>
+xcodebuild -version  <span class="comment"># Deve mostrar versão do Xcode</span></pre>
+              </div>
+
+              <h4>4. Baixar Simuladores iOS</h4>
+              <div style="margin-bottom: var(--spacing-md);">
+                <ol style="line-height: 1.8; padding-left: var(--spacing-lg);">
+                  <li>Abra Xcode</li>
+                  <li>Xcode → Settings (ou Preferences em versões antigas)</li>
+                  <li>Abra a aba "Platforms" ou "Components"</li>
+                  <li>Baixe pelo menos um simulador iOS (recomendado: iOS 15 ou 16)</li>
+                  <li>Aguarde o download (pode levar tempo)</li>
+                </ol>
+              </div>
+
+              <div class="code-example">
+<pre><span class="comment"># Listar simuladores disponíveis</span>
+xcrun simctl list devices
+
+<span class="comment"># Iniciar simulador específico</span>
+xcrun simctl boot "iPhone 13"
+
+<span class="comment"># Abrir Simulator app</span>
+open -a Simulator
+
+<span class="comment"># Desligar simulador</span>
+xcrun simctl shutdown all</pre>
+              </div>
+
+              <h4>5. Instalar Appium e Drivers</h4>
+              <div class="code-example">
+<pre><span class="comment"># Instalar Appium globalmente</span>
+npm install -g appium
+
+<span class="comment"># Instalar driver XCUITest para iOS</span>
+appium driver install xcuitest
+
+<span class="comment"># Verificar instalação</span>
+appium --version
+appium driver list
+
+<span class="comment"># Instalar Appium Doctor (opcional, mas recomendado)</span>
+npm install -g appium-doctor
+appium-doctor --ios</pre>
+              </div>
+
+              <h4>6. Configurar Certificados (Para Dispositivos Físicos)</h4>
+              <div class="info-card">
+                <p><strong>Nota:</strong> Para testar em dispositivos físicos iOS, você precisa:</p>
+                <ol style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg);">
+                  <li>Conta de desenvolvedor Apple (gratuita ou paga)</li>
+                  <li>Configurar certificados no Xcode</li>
+                  <li>Conectar dispositivo via USB</li>
+                  <li>Confiar no computador no dispositivo</li>
+                </ol>
+                <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--muted);">
+                  Para iniciantes, recomendamos começar com simuladores, que não requerem certificados.
+                </p>
+              </div>
+
+              <div class="info-card" style="background: rgba(40, 167, 69, 0.1); margin-top: var(--spacing-lg);">
+                <h4>Verificação Final</h4>
+                <p>Execute estes comandos para confirmar que tudo está instalado:</p>
+                <div class="code-example" style="margin-top: var(--spacing-sm);">
+<pre>node --version           <span class="comment"># ✓ Node.js instalado</span>
+xcodebuild -version     <span class="comment"># ✓ Xcode instalado</span>
+xcrun simctl list devices  <span class="comment"># ✓ Simuladores disponíveis</span>
+appium --version        <span class="comment"># ✓ Appium instalado</span>
+appium driver list      <span class="comment"># ✓ XCUITest deve aparecer</span></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- iOS Preparar Projeto -->
+            <div id="ios-setup" class="config-content">
+              <h3>Como Preparar o Projeto iOS</h3>
+              
+              <div style="margin-bottom: var(--spacing-md); display: flex; gap: var(--spacing-xs); flex-wrap: wrap;">
+                <button class="config-tab" data-structure="java-ios">Java</button>
+                <button class="config-tab" data-structure="python-ios">Python</button>
+                <button class="config-tab active" data-structure="ruby-ios">Ruby</button>
+              </div>
+
+              <div id="java-ios-structure" class="code-example" style="display: none;">
+<pre><span class="comment"># 1. Criar estrutura de diretórios</span>
+mkdir meu-projeto-ios
+cd meu-projeto-ios
+mkdir -p src/test/java/com/qa/ios
+mkdir -p src/test/resources
+
+<span class="comment"># 2. Criar pom.xml (Maven) ou build.gradle (Gradle)</span>
+<span class="comment"># Veja exemplos completos abaixo</span>
+
+<span class="comment"># Estrutura final:</span>
+projeto/
+├── src/
+│   └── test/
+│       ├── java/
+│       │   └── com/qa/ios/
+│       │       └── IOSTests.java
+│       └── resources/
+│           └── app.app <span class="comment"># ou .ipa</span>
+├── pom.xml <span class="comment"># ou build.gradle</span>
+└── README.md</pre>
+              </div>
+
+              <div id="python-ios-structure" class="code-example" style="display: none;">
+<pre><span class="comment"># 1. Criar estrutura de diretórios</span>
+mkdir meu-projeto-ios
+cd meu-projeto-ios
+mkdir tests resources
+
+<span class="comment"># 2. Criar ambiente virtual</span>
+python3 -m venv venv
+source venv/bin/activate
+
+<span class="comment"># 3. Criar requirements.txt</span>
+echo "Appium-Python-Client==2.11.1" > requirements.txt
+echo "pytest==7.4.0" >> requirements.txt
+echo "pytest-html==3.2.0" >> requirements.txt
+
+<span class="comment"># 4. Instalar dependências</span>
+pip install -r requirements.txt
+
+<span class="comment"># Estrutura final:</span>
+projeto/
+├── tests/
+│   ├── ios_tests.py
+│   └── __init__.py
+├── resources/
+│   └── app.app <span class="comment"># ou .ipa</span>
+├── requirements.txt
+├── pytest.ini
+└── README.md</pre>
+              </div>
+
+              <div id="ruby-ios-structure" class="code-example">
+<pre><span class="comment"># 1. Criar estrutura de diretórios</span>
+mkdir meu-projeto-ios
+cd meu-projeto-ios
+mkdir -p spec lib resources
+
+<span class="comment"># 2. Criar Gemfile</span>
+echo "source 'https://rubygems.org'" > Gemfile
+echo "gem 'appium_lib', '~> 12.0'" >> Gemfile
+echo "gem 'rspec', '~> 3.12'" >> Gemfile
+echo "gem 'selenium-webdriver', '~> 4.0'" >> Gemfile
+
+<span class="comment"># 3. Instalar dependências</span>
+bundle install
+
+<span class="comment"># Estrutura final:</span>
+projeto/
+├── spec/
+│   └── ios_spec.rb
+├── lib/
+│   └── ios_helper.rb
+├── resources/
+│   └── app.app <span class="comment"># ou .ipa</span>
+├── Gemfile
+├── Gemfile.lock
+└── README.md</pre>
+              </div>
+
+              <h4 style="margin-top: var(--spacing-lg);">Arquivos de Configuração</h4>
+              
+              <div id="java-ios-config" class="code-example" style="display: none;">
+                <h5>Java - pom.xml (Maven)</h5>
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0"&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;groupId&gt;com.qa&lt;/groupId&gt;
+  &lt;artifactId&gt;ios-tests&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;io.appium&lt;/groupId&gt;
+      &lt;artifactId&gt;java-client&lt;/artifactId&gt;
+      &lt;version&gt;8.5.1&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.testng&lt;/groupId&gt;
+      &lt;artifactId&gt;testng&lt;/artifactId&gt;
+      &lt;version&gt;7.8.0&lt;/version&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/project&gt;</pre>
+              </div>
+              
+              <div id="python-ios-config" class="code-example" style="display: none;">
+                <h5>Python - requirements.txt</h5>
+<pre>Appium-Python-Client==2.11.1
+pytest==7.4.0
+pytest-html==3.2.0
+pytest-xdist==3.3.1</pre>
+              </div>
+              
+              <div id="ruby-ios-config" class="code-example">
+                <h5>Ruby - Gemfile</h5>
+<pre>source 'https://rubygems.org'
+
+gem 'appium_lib', '~> 12.0'
+gem 'rspec', '~> 3.12'
+gem 'selenium-webdriver', '~> 4.0'</pre>
+              </div>
+
+              <div class="info-card" style="background: rgba(122, 168, 116, 0.1); margin-top: var(--spacing-lg);">
+                <h4>Próximos Passos</h4>
+                <p>Após preparar o projeto, você está pronto para configurar as Capabilities e escrever seus primeiros testes. 
+                Veja a seção "Capabilities" para entender como configurar a conexão com simuladores ou dispositivos iOS.</p>
+              </div>
+            </div>
+
+            <!-- iOS Capabilities -->
+            <div id="ios-capabilities" class="config-content">
+              <h3>Capabilities iOS - Guia Completo</h3>
+              
+              <p>Capabilities são configurações que informam ao Appium como se conectar e interagir com seu dispositivo ou simulador iOS. 
+              Pense nelas como "instruções" para o Appium.</p>
+
+              <h4>Capabilities Obrigatórias</h4>
+              <div class="capability-item" style="background: rgba(220, 53, 69, 0.1);">
+                <span class="capability-key">platformName:</span> <span class="capability-value">"iOS"</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  <strong>Obrigatório.</strong> Define a plataforma. Sempre "iOS" para dispositivos iOS.
+                </p>
+              </div>
+              <div class="capability-item" style="background: rgba(220, 53, 69, 0.1);">
+                <span class="capability-key">automationName:</span> <span class="capability-value">"XCUITest"</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  <strong>Obrigatório.</strong> Driver de automação. XCUITest é o padrão moderno para iOS.
+                </p>
+              </div>
+
+              <h4>Capabilities Importantes</h4>
+              <div class="capability-item">
+                <span class="capability-key">platformVersion:</span> <span class="capability-value">"15.0"</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Versão do iOS. Descubra com: <code>xcrun simctl list devices</code> ou no dispositivo físico: Settings → General → About
+                </p>
+              </div>
+              <div class="capability-item">
+                <span class="capability-key">deviceName:</span> <span class="capability-value">"iPhone 13"</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Nome do dispositivo ou simulador. Listar: <code>xcrun simctl list devices</code>
+                </p>
+              </div>
+              <div class="capability-item">
+                <span class="capability-key">udid:</span> <span class="capability-value">"A1B2C3D4-E5F6-..."</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  ID único do dispositivo. Obtido com <code>xcrun simctl list devices</code> ou <code>instruments -s devices</code>. 
+                  Necessário quando há múltiplos dispositivos.
+                </p>
+              </div>
+
+              <h4>Capabilities para Aplicativos</h4>
+              <div class="capability-item">
+                <span class="capability-key">app:</span> <span class="capability-value">"/path/to/app.app"</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Caminho completo para o arquivo .app (simulador) ou .ipa (dispositivo físico). Use caminho absoluto.
+                </p>
+              </div>
+              <div class="capability-item">
+                <span class="capability-key">bundleId:</span> <span class="capability-value">"com.example.app"</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Bundle ID da aplicação. Descubra com: <code>plutil -p app.app/Info.plist | grep CFBundleIdentifier</code>
+                </p>
+              </div>
+
+              <h4>Capabilities de Comportamento</h4>
+              <div class="capability-item">
+                <span class="capability-key">noReset:</span> <span class="capability-value">false</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Se <code>true</code>, não limpa dados do app entre testes. Útil para testes que dependem de estado anterior.
+                </p>
+              </div>
+              <div class="capability-item">
+                <span class="capability-key">fullReset:</span> <span class="capability-value">false</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Se <code>true</code>, desinstala e reinstala o app completamente. Use apenas quando necessário.
+                </p>
+              </div>
+              <div class="capability-item">
+                <span class="capability-key">wdaLaunchTimeout:</span> <span class="capability-value">60000</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Timeout em milissegundos para WebDriverAgent iniciar. Aumente se WebDriverAgent demorar para compilar.
+                </p>
+              </div>
+              <div class="capability-item">
+                <span class="capability-key">useNewWDA:</span> <span class="capability-value">false</span>
+                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
+                  Se <code>true</code>, reconstrói WebDriverAgent a cada sessão. Use apenas se houver problemas de conexão.
+                </p>
+              </div>
+
+              <h4>Exemplo Completo de Capabilities</h4>
+              <div class="code-example">
+<pre><span class="comment"># Java</span>
+XCUITestOptions options = <span class="keyword">new</span> XCUITestOptions();
+options.setPlatformName(<span class="string">"iOS"</span>);
+options.setPlatformVersion(<span class="string">"15.0"</span>);
+options.setDeviceName(<span class="string">"iPhone 13"</span>);
+options.setAutomationName(<span class="string">"XCUITest"</span>);
+options.setApp(<span class="string">"/caminho/completo/app.app"</span>);
+options.setBundleId(<span class="string">"com.example.app"</span>);
+options.setNoReset(<span class="keyword">false</span>);
+options.setWdaLaunchTimeout(Duration.ofSeconds(60));
+
+<span class="comment"># Python</span>
+options = XCUITestOptions()
+options.platform_name = <span class="string">"iOS"</span>
+options.platform_version = <span class="string">"15.0"</span>
+options.device_name = <span class="string">"iPhone 13"</span>
+options.automation_name = <span class="string">"XCUITest"</span>
+options.app = <span class="string">"/caminho/completo/app.app"</span>
+options.bundle_id = <span class="string">"com.example.app"</span>
+options.no_reset = <span class="keyword">False</span>
+options.wda_launch_timeout = 60000
+
+<span class="comment"># Ruby</span>
+caps = {
+  platformName: <span class="string">'iOS'</span>,
+  platformVersion: <span class="string">'15.0'</span>,
+  deviceName: <span class="string">'iPhone 13'</span>,
+  automationName: <span class="string">'XCUITest'</span>,
+  app: <span class="string">'/caminho/completo/app.app'</span>,
+  bundleId: <span class="string">'com.example.app'</span>,
+  noReset: <span class="keyword">false</span>,
+  wdaLaunchTimeout: 60000
+}</pre>
+              </div>
+
+              <div class="info-card" style="background: rgba(255, 193, 7, 0.1); margin-top: var(--spacing-lg);">
+                <h4>Dicas Importantes</h4>
+                <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg);">
+                  <li>Para simuladores, use arquivo <code>.app</code>. Para dispositivos físicos, use <code>.ipa</code></li>
+                  <li>Bundle ID é essencial - verifique sempre antes de executar testes</li>
+                  <li>WebDriverAgent pode demorar na primeira execução (compilação)</li>
+                  <li>Para testes em navegador, use <code>browserName: "Safari"</code> em vez de <code>app</code></li>
+                  <li>Simuladores são mais rápidos para desenvolvimento; dispositivos físicos para validação final</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- iOS Exemplos -->
+            <div id="ios-examples" class="config-content">
+              <h3>Exemplos Completos de Código iOS</h3>
+              
+              <p>Exemplos práticos e completos para começar a automação iOS. Cada exemplo inclui configuração, interações básicas e boas práticas.</p>
+              
+              <div style="margin-bottom: var(--spacing-md); display: flex; gap: var(--spacing-xs); flex-wrap: wrap;">
+                <button class="config-tab" data-example="java-ios-example">Java</button>
+                <button class="config-tab" data-example="python-ios-example">Python</button>
+                <button class="config-tab active" data-example="ruby-ios-example">Ruby</button>
+              </div>
+              
+              <div id="java-ios-example" class="code-example" style="display: none;">
+<pre><span class="keyword">import</span> io.appium.java_client.ios.IOSDriver;
+<span class="keyword">import</span> io.appium.java_client.ios.options.XCUITestOptions;
+<span class="keyword">import</span> org.openqa.selenium.By;
+<span class="keyword">import</span> org.openqa.selenium.support.ui.WebDriverWait;
+<span class="keyword">import</span> org.openqa.selenium.support.ui.ExpectedConditions;
+<span class="keyword">import</span> java.net.URL;
+<span class="keyword">import</span> java.time.Duration;
+
+<span class="keyword">public class</span> <span class="function">IOSTest</span> {
+    <span class="keyword">private static</span> IOSDriver driver;
+    
+    <span class="keyword">public static void</span> <span class="function">main</span>(String[] args) {
+        <span class="comment">// Configurar capabilities</span>
+        XCUITestOptions options = <span class="keyword">new</span> XCUITestOptions();
+        options.setPlatformName(<span class="string">"iOS"</span>);
+        options.setPlatformVersion(<span class="string">"15.0"</span>);
+        options.setDeviceName(<span class="string">"iPhone 13"</span>);
+        options.setAutomationName(<span class="string">"XCUITest"</span>);
+        options.setApp(<span class="string">"/caminho/completo/app.app"</span>);
+        options.setBundleId(<span class="string">"com.example.app"</span>);
+        options.setNoReset(<span class="keyword">false</span>);
+        options.setWdaLaunchTimeout(Duration.ofSeconds(60));
+        
+        <span class="comment">// Inicializar driver</span>
+        driver = <span class="keyword">new</span> IOSDriver(
+            <span class="keyword">new</span> URL(<span class="string">"http://localhost:4723"</span>), 
+            options
+        );
+        
+        <span class="comment">// Exemplo: Encontrar elemento por Accessibility ID</span>
+        WebDriverWait wait = <span class="keyword">new</span> WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.id(<span class="string">"loginButton"</span>)
+        )).click();
+        
+        <span class="comment">// Exemplo: Preencher campo de texto</span>
+        driver.findElement(By.id(<span class="string">"username"</span>)).sendKeys(<span class="string">"usuario@exemplo.com"</span>);
+        
+        <span class="comment">// Exemplo: Swipe</span>
+        <span class="comment">// (veja seção de gestos para exemplos completos)</span>
+        
+        <span class="comment">// Fechar driver</span>
+        driver.quit();
+    }
+}</pre>
+              </div>
+
+              </div>
+              
+              <div id="python-ios-example" class="code-example" style="display: none;">
+<pre><span class="keyword">from</span> appium <span class="keyword">import</span> webdriver
+<span class="keyword">from</span> appium.options.ios <span class="keyword">import</span> XCUITestOptions
+<span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By
+<span class="keyword">from</span> selenium.webdriver.support.ui <span class="keyword">import</span> WebDriverWait
+<span class="keyword">from</span> selenium.webdriver.support <span class="keyword">import</span> expected_conditions <span class="keyword">as</span> EC
+
+<span class="comment"># Configurar capabilities</span>
+options = XCUITestOptions()
+options.platform_name = <span class="string">"iOS"</span>
+options.platform_version = <span class="string">"15.0"</span>
+options.device_name = <span class="string">"iPhone 13"</span>
+options.automation_name = <span class="string">"XCUITest"</span>
+options.app = <span class="string">"/caminho/completo/app.app"</span>
+options.bundle_id = <span class="string">"com.example.app"</span>
+options.no_reset = <span class="keyword">False</span>
+options.wda_launch_timeout = 60000
+
+<span class="comment"># Inicializar driver</span>
+driver = webdriver.Remote(<span class="string">"http://localhost:4723"</span>, options=options)
+
+<span class="keyword">try</span>:
+    <span class="comment"># Exemplo: Encontrar elemento por Accessibility ID</span>
+    wait = WebDriverWait(driver, 10)
+    login_button = wait.until(EC.presence_of_element_located((
+        By.ID, <span class="string">"loginButton"</span>
+    )))
+    login_button.click()
+    
+    <span class="comment"># Exemplo: Preencher campo de texto</span>
+    username_field = driver.find_element(By.ID, <span class="string">"username"</span>)
+    username_field.send_keys(<span class="string">"usuario@exemplo.com"</span>)
+    
+    <span class="comment"># Exemplo: Verificar se elemento está visível</span>
+    <span class="keyword">assert</span> driver.find_element(By.ID, <span class="string">"welcomeMessage"</span>).is_displayed()
+    
+<span class="keyword">finally</span>:
+    <span class="comment"># Sempre fechar o driver</span>
+    driver.quit()</pre>
+              </div>
+              
+              
+
+              <h4 style="margin-top: var(--spacing-lg);">Boas Práticas nos Exemplos</h4>
+              <div class="info-grid">
+                <div class="info-card">
+                  <h4>Sempre use esperas explícitas</h4>
+                  <p>Elementos mobile podem demorar para aparecer. Use WebDriverWait em vez de Thread.sleep().</p>
+                </div>
+                <div class="info-card">
+                  <h4>Prefira Accessibility ID</h4>
+                  <p>Accessibility ID é mais estável que XPath em iOS. Use sempre que possível.</p>
+                </div>
+                <div class="info-card">
+                  <h4>Sempre feche o driver</h4>
+                  <p>Use try/finally ou ensure para garantir que o driver seja fechado mesmo em caso de erro.</p>
+                </div>
+                <div class="info-card">
+                  <h4>Trate exceções</h4>
+                  <p>Mobile pode ter mais falhas que web. Trate exceções adequadamente e adicione logs.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- iOS Web vs Mobile -->
+            <div id="ios-differences" class="config-content">
+              <h3>Diferenças: Automação Web vs Mobile iOS</h3>
+              
+              <p>Automação mobile iOS tem diferenças fundamentais em relação à automação web. Entender essas diferenças é crucial para o sucesso.</p>
+
+              <h4>1. Seletores e Localização de Elementos</h4>
+              <div class="info-grid">
+                <div class="info-card">
+                  <h4>Web (Selenium)</h4>
+                  <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+                    <li>ID, Class, Name</li>
+                    <li>XPath, CSS Selectors</li>
+                    <li>Link Text, Partial Link</li>
+                    <li>Tag Name</li>
+                  </ul>
+                </div>
+                <div class="info-card">
+                  <h4>Mobile iOS (Appium)</h4>
+                  <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+                    <li>Accessibility ID (recomendado)</li>
+                    <li>Name</li>
+                    <li>Class Name</li>
+                    <li>XPath (limitado, mais lento)</li>
+                    <li>iOS Predicate String</li>
+                    <li>iOS Class Chain</li>
+                  </ul>
+                </div>
+              </div>
+
+              <h4>2. Interações e Gestos iOS</h4>
+              <div class="code-example">
+<pre><span class="comment"># WEB: Cliques simples</span>
+driver.findElement(By.id("button")).click()
+
+<span class="comment"># MOBILE iOS: Gestos específicos</span>
+<span class="comment"># Tap (toque simples)</span>
+driver.tap(1, 500, 500, 100)
+
+<span class="comment"># Swipe (deslizar)</span>
+TouchAction action = <span class="keyword">new</span> TouchAction(driver);
+action.press(500, 1000).moveTo(500, 500).release().perform();
+
+<span class="comment"># Long Press (toque longo)</span>
+action.longPress(element).release().perform();
+
+<span class="comment"># Pinch/Zoom (pinçar)</span>
+<span class="comment"># iOS suporta gestos multi-touch nativamente</span>
+
+<span class="comment"># Scroll específico iOS</span>
+JavascriptExecutor js = (JavascriptExecutor) driver;
+HashMap&lt;String, String&gt; scrollObject = <span class="keyword">new</span> HashMap&lt;&gt;();
+scrollObject.put(<span class="string">"direction"</span>, <span class="string">"down"</span>);
+js.executeScript(<span class="string">"mobile: scroll"</span>, scrollObject);</pre>
+              </div>
+
+              <h4>3. Contextos e WebViews iOS</h4>
+              <div class="info-card">
+                <p><strong>Web:</strong> Sempre trabalha em um único contexto (a página web).</p>
+                <p><strong>Mobile iOS:</strong> Pode ter múltiplos contextos:</p>
+                <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg);">
+                  <li><strong>NATIVE_APP:</strong> Contexto nativo da aplicação iOS</li>
+                  <li><strong>WEBVIEW:</strong> Contexto web dentro do app (WKWebView)</li>
+                </ul>
+                <div class="code-example" style="margin-top: var(--spacing-sm);">
+<pre><span class="comment"># Listar contextos disponíveis</span>
+Set&lt;String&gt; contexts = driver.getContextHandles();
+
+<span class="comment"># Alternar para WebView</span>
+driver.context(<span class="string">"WEBVIEW_1"</span>);  <span class="comment"># iOS usa números</span>
+
+<span class="comment"># Voltar para Native</span>
+driver.context(<span class="string">"NATIVE_APP"</span>);</pre>
+                </div>
+              </div>
+
+              <h4>4. Esperas e Sincronização iOS</h4>
+              <div class="info-grid">
+                <div class="info-card">
+                  <h4>Web</h4>
+                  <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+                    <li>WebDriverWait</li>
+                    <li>ExpectedConditions</li>
+                    <li>Implicit Wait</li>
+                    <li>Page Load Timeout</li>
+                  </ul>
+                </div>
+                <div class="info-card">
+                  <h4>Mobile iOS</h4>
+                  <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+                    <li>WebDriverWait (similar)</li>
+                    <li>Espera por Elemento</li>
+                    <li>Espera por Alertas</li>
+                    <li>Timeout de instalação</li>
+                    <li>wdaLaunchTimeout</li>
+                  </ul>
+                </div>
+              </div>
+
+              <h4>5. Instalação e Gerenciamento de Apps iOS</h4>
+              <div class="code-example">
+<pre><span class="comment"># WEB: Não aplicável</span>
+
+<span class="comment"># MOBILE iOS: Instalar app</span>
+driver.installApp(<span class="string">"/path/to/app.app"</span>);  <span class="comment"># Simulador</span>
+<span class="comment"># ou</span>
+driver.installApp(<span class="string">"/path/to/app.ipa"</span>);  <span class="comment"># Dispositivo físico</span>
+
+<span class="comment"># Verificar se app está instalado</span>
+<span class="keyword">boolean</span> installed = driver.isAppInstalled(<span class="string">"com.example.app"</span>);
+
+<span class="comment"># Desinstalar app</span>
+driver.removeApp(<span class="string">"com.example.app"</span>);
+
+<span class="comment"># Fechar app (sem desinstalar)</span>
+driver.closeApp();
+
+<span class="comment"># Reabrir app</span>
+driver.launchApp();
+
+<span class="comment"># Ativar app em background</span>
+driver.activateApp(<span class="string">"com.example.app"</span>);</pre>
+              </div>
+
+              <h4>6. Orientação e Viewport iOS</h4>
+              <div class="code-example">
+<pre><span class="comment"># WEB: Redimensionar janela</span>
+driver.manage().window().setSize(<span class="keyword">new</span> Dimension(375, 667));
+
+<span class="comment"># MOBILE iOS: Rotacionar dispositivo</span>
+driver.rotate(ScreenOrientation.LANDSCAPE);
+driver.rotate(ScreenOrientation.PORTRAIT);
+
+<span class="comment"># Obter orientação atual</span>
+ScreenOrientation orientation = driver.getOrientation();
+
+<span class="comment"># iOS específico: Lock/Unlock orientação</span>
+driver.lockDevice();  <span class="comment"># Bloquear tela</span>
+driver.unlockDevice();  <span class="comment"># Desbloquear</span></pre>
+              </div>
+
+              <h4>7. Alertas e Permissões iOS</h4>
+              <div class="info-card">
+                <p><strong>Web:</strong> Não gerencia alertas nativos ou permissões do sistema.</p>
+                <p><strong>Mobile iOS:</strong> Pode interagir com:</p>
+                <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg);">
+                  <li>Alertas nativos (UIAlertController)</li>
+                  <li>Permissões do sistema (câmera, localização, notificações)</li>
+                  <li>Action Sheets</li>
+                  <li>Teclado virtual</li>
+                  <li>Date/Time Pickers</li>
+                </ul>
+                <div class="code-example" style="margin-top: var(--spacing-sm);">
+<pre><span class="comment"># Aceitar alerta</span>
+driver.switchTo().alert().accept();
+
+<span class="comment"># Cancelar alerta</span>
+driver.switchTo().alert().dismiss();
+
+<span class="comment"># Obter texto do alerta</span>
+String alertText = driver.switchTo().alert().getText();</pre>
+                </div>
+              </div>
+
+              <div class="info-card" style="background: rgba(122, 168, 116, 0.1); margin-top: var(--spacing-lg);">
+                <h4>Resumo das Principais Diferenças iOS</h4>
+                <table style="width: 100%; border-collapse: collapse; margin-top: var(--spacing-sm);">
+                  <thead>
+                    <tr style="background: rgba(0, 0, 0, 0.05);">
+                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--accent);">Aspecto</th>
+                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--accent);">Web</th>
+                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--accent);">Mobile iOS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Seletores</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">CSS, XPath completos</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Accessibility ID, Predicate</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Interações</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Click, Type</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Tap, Swipe, Pinch, Long Press</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Contextos</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Único (página)</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Múltiplos (Native, WebView)</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Apps</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Não aplicável</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">.app (simulador) ou .ipa (físico)</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: var(--spacing-xs);"><strong>Requisitos</strong></td>
+                      <td style="padding: var(--spacing-xs);">Qualquer OS</td>
+                      <td style="padding: var(--spacing-xs);">macOS obrigatório</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- iOS Troubleshooting -->
+            <div id="ios-troubleshooting" class="config-content">
+              <h3>Troubleshooting - Problemas Comuns iOS</h3>
+              
+              <div class="info-grid">
+                <div class="info-card">
+                  <h4>"XCUITest not installed"</h4>
+                  <p><strong>Problema:</strong> Driver XCUITest não encontrado.</p>
+                  <p><strong>Solução:</strong></p>
+                  <div class="code-example" style="margin-top: var(--spacing-xs);">
+<pre>appium driver install xcuitest
+appium driver list  <span class="comment"># Verificar instalação</span></pre>
+                  </div>
+                </div>
+                <div class="info-card">
+                  <h4>"Simulator not found"</h4>
+                  <p><strong>Problema:</strong> Appium não encontra simulador.</p>
+                  <p><strong>Solução:</strong></p>
+                  <div class="code-example" style="margin-top: var(--spacing-xs);">
+<pre>xcrun simctl list devices  <span class="comment"># Verificar simuladores</span>
+open -a Simulator  <span class="comment"># Abrir Simulator</span>
+xcrun simctl boot "iPhone 13"  <span class="comment"># Iniciar simulador específico</span></pre>
+                  </div>
+                </div>
+                <div class="info-card">
+                  <h4>"WebDriverAgent build failed"</h4>
+                  <p><strong>Problema:</strong> WebDriverAgent não compila.</p>
+                  <p><strong>Soluções:</strong></p>
+                  <ul style="margin: var(--spacing-xs) 0; padding-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+                    <li>Verifique se Xcode Command Line Tools estão instalados</li>
+                    <li>Execute: <code>xcode-select --install</code></li>
+                    <li>Certifique-se que Xcode está atualizado</li>
+                    <li>Tente aumentar <code>wdaLaunchTimeout</code> nas capabilities</li>
+                  </ul>
+                </div>
+                <div class="info-card">
+                  <h4>"Code signing required"</h4>
+                  <p><strong>Problema:</strong> Erro de assinatura de código (dispositivos físicos).</p>
+                  <p><strong>Solução:</strong></p>
+                  <ol style="margin: var(--spacing-xs) 0; padding-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+                    <li>Abra Xcode</li>
+                    <li>Xcode → Settings → Accounts</li>
+                    <li>Adicione sua Apple ID</li>
+                    <li>Selecione sua equipe de desenvolvimento</li>
+                    <li>Para simuladores, não é necessário</li>
+                  </ol>
+                </div>
+                <div class="info-card">
+                  <h4>"Session not created"</h4>
+                  <p><strong>Problema:</strong> Não consegue criar sessão Appium.</p>
+                  <p><strong>Verificações:</strong></p>
+                  <ul style="margin: var(--spacing-xs) 0; padding-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+                    <li>Appium Server está rodando? (<code>appium</code>)</li>
+                    <li>Capabilities estão corretas?</li>
+                    <li>Versão do iOS compatível?</li>
+                    <li>App existe no caminho especificado?</li>
+                    <li>Bundle ID está correto?</li>
+                    <li>Simulador está iniciado?</li>
+                  </ul>
+                </div>
+                <div class="info-card">
+                  <h4>"Element not found"</h4>
+                  <p><strong>Problema:</strong> Não encontra elementos na tela.</p>
+                  <p><strong>Solução:</strong></p>
+                  <ul style="margin: var(--spacing-xs) 0; padding-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+                    <li>Use Appium Inspector para inspecionar elementos</li>
+                    <li>Verifique se está no contexto correto (Native vs WebView)</li>
+                    <li>Use Accessibility ID em vez de XPath quando possível</li>
+                    <li>Adicione esperas explícitas</li>
+                    <li>Verifique se o elemento está visível na tela</li>
+                  </ul>
+                </div>
+                <div class="info-card">
+                  <h4>"Connection refused"</h4>
+                  <p><strong>Problema:</strong> Não consegue conectar ao Appium Server.</p>
+                  <p><strong>Solução:</strong></p>
+                  <div class="code-example" style="margin-top: var(--spacing-xs);">
+<pre><span class="comment"># Verificar se Appium está rodando</span>
+lsof -i :4723
+
+<span class="comment"># Reiniciar Appium</span>
+appium</pre>
+                  </div>
+                </div>
+                <div class="info-card">
+                  <h4>"WebDriverAgent timeout"</h4>
+                  <p><strong>Problema:</strong> WebDriverAgent demora muito para iniciar.</p>
+                  <p><strong>Solução:</strong></p>
+                  <ul style="margin: var(--spacing-xs) 0; padding-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+                    <li>Aumente <code>wdaLaunchTimeout</code> para 120000 (2 minutos)</li>
+                    <li>Use <code>useNewWDA: false</code> para reutilizar WebDriverAgent</li>
+                    <li>Primeira execução sempre demora mais (compilação)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <h4 style="margin-top: var(--spacing-lg);">Ferramentas de Debug iOS</h4>
+              <div class="info-grid">
+                <div class="info-card">
+                  <h4>Appium Inspector</h4>
+                  <p>Ferramenta visual para inspecionar elementos e gravar interações.</p>
+                  <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">
+                    Baixe em: <a href="https://github.com/appium/appium-inspector" target="_blank">github.com/appium/appium-inspector</a>
+                  </p>
+                </div>
+                <div class="info-card">
+                  <h4>Xcode Instruments</h4>
+                  <p>Ferramenta do Xcode para profiling e debug de apps iOS.</p>
+                  <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">
+                    Abra via: Xcode → Open Developer Tool → Instruments
+                  </p>
+                </div>
+                <div class="info-card">
+                  <h4>Simulator Commands</h4>
+                  <p>Comandos úteis para debug:</p>
+                  <div class="code-example" style="margin-top: var(--spacing-xs); font-size: 11px;">
+<pre>xcrun simctl list devices  <span class="comment"># Listar simuladores</span>
+xcrun simctl boot "iPhone 13"  <span class="comment"># Iniciar</span>
+xcrun simctl shutdown all  <span class="comment"># Desligar todos</span>
+xcrun simctl erase all  <span class="comment"># Limpar todos</span>
+xcrun simctl get_app_container booted com.example.app  <span class="comment"># Info do app</span></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: var(--spacing-xl); text-align: center;">
+            <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../js/main.js"></script>
+    <script>
+      // Função para inicializar abas internas
+      function initializeInternalTabs(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        
+        // Inicializar estruturas
+        const structureTabs = container.querySelectorAll('[data-structure]');
+        if (structureTabs.length > 0) {
+          structureTabs.forEach(btn => {
+            const structureId = btn.dataset.structure;
+            const structureEl = document.getElementById(structureId + '-structure');
+            if (structureEl) {
+              structureEl.style.display = btn.classList.contains('active') ? 'block' : 'none';
+            }
+          });
+        }
+        
+        // Inicializar exemplos
+        const exampleTabs = container.querySelectorAll('[data-example]');
+        if (exampleTabs.length > 0) {
+          exampleTabs.forEach(btn => {
+            const exampleId = btn.dataset.example;
+            const exampleEl = document.getElementById(exampleId);
+            if (exampleEl) {
+              exampleEl.style.display = btn.classList.contains('active') ? 'block' : 'none';
+            }
+          });
+        }
+      }
+      
+      // Inicializar abas ao carregar página
+      function initAllTabs() {
+        // Inicializar estruturas Android - ocultar todas primeiro
+        ['java-android', 'python-android', 'ruby-android'].forEach(lang => {
+          const el = document.getElementById(lang + '-structure');
+          if (el) {
+            el.style.display = 'none';
+          }
+        });
+        // Mostrar apenas Ruby Android
+        const rubyAndroidStructure = document.getElementById('ruby-android-structure');
+        if (rubyAndroidStructure) rubyAndroidStructure.style.display = 'block';
+        
+        // Inicializar arquivos de configuração Android - ocultar todas primeiro
+        ['java-android-config', 'python-android-config', 'ruby-android-config'].forEach(lang => {
+          const el = document.getElementById(lang);
+          if (el) {
+            el.style.display = 'none';
+          }
+        });
+        // Mostrar apenas Ruby Android config
+        const rubyAndroidConfig = document.getElementById('ruby-android-config');
+        if (rubyAndroidConfig) rubyAndroidConfig.style.display = 'block';
+        
+        // Inicializar exemplos Android - ocultar todas primeiro
+        ['java-android-example', 'python-android-example', 'ruby-android-example'].forEach(lang => {
+          const el = document.getElementById(lang);
+          if (el) {
+            el.style.display = 'none';
+          }
+        });
+        // Mostrar apenas Ruby Android
+        const rubyAndroidExample = document.getElementById('ruby-android-example');
+        if (rubyAndroidExample) rubyAndroidExample.style.display = 'block';
+        
+        // Inicializar estruturas iOS - ocultar todas primeiro
+        ['java-ios', 'python-ios', 'ruby-ios'].forEach(lang => {
+          const el = document.getElementById(lang + '-structure');
+          if (el) {
+            el.style.display = 'none';
+          }
+        });
+        // Mostrar apenas Ruby iOS
+        const rubyIOSStructure = document.getElementById('ruby-ios-structure');
+        if (rubyIOSStructure) rubyIOSStructure.style.display = 'block';
+        
+        // Inicializar arquivos de configuração iOS - ocultar todas primeiro
+        ['java-ios-config', 'python-ios-config', 'ruby-ios-config'].forEach(lang => {
+          const el = document.getElementById(lang);
+          if (el) {
+            el.style.display = 'none';
+          }
+        });
+        // Mostrar apenas Ruby iOS config
+        const rubyIOSConfig = document.getElementById('ruby-ios-config');
+        if (rubyIOSConfig) rubyIOSConfig.style.display = 'block';
+        
+        // Inicializar exemplos iOS - ocultar todas primeiro
+        ['java-ios-example', 'python-ios-example', 'ruby-ios-example'].forEach(lang => {
+          const el = document.getElementById(lang);
+          if (el) {
+            el.style.display = 'none';
+          }
+        });
+        // Mostrar apenas Ruby iOS
+        const rubyIOSExample = document.getElementById('ruby-ios-example');
+        if (rubyIOSExample) rubyIOSExample.style.display = 'block';
+      }
+      
+      // Inicializar ao carregar página
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAllTabs);
+      } else {
+        initAllTabs();
+      }
+      
+      // Alternar entre dispositivos
+      document.querySelectorAll('.device-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          const device = this.dataset.device;
+          
+          // Atualizar tabs
+          document.querySelectorAll('.device-tab').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Mostrar/ocultar simuladores
+          if (device === 'android') {
+            document.getElementById('android-simulator').style.display = 'block';
+            document.getElementById('ios-simulator').style.display = 'none';
+            document.getElementById('android-docs').style.display = 'block';
+            document.getElementById('ios-docs').style.display = 'none';
+            
+            // Resetar estruturas, configs e exemplos Android
+            ['java-android', 'python-android', 'ruby-android'].forEach(lang => {
+              const structure = document.getElementById(lang + '-structure');
+              const config = document.getElementById(lang + '-config');
+              const example = document.getElementById(lang + '-android-example');
+              if (structure) structure.style.display = 'none';
+              if (config) config.style.display = 'none';
+              if (example) example.style.display = 'none';
+            });
+            document.getElementById('ruby-android-structure').style.display = 'block';
+            document.getElementById('ruby-android-config').style.display = 'block';
+            document.getElementById('ruby-android-example').style.display = 'block';
+            document.querySelectorAll('[data-structure^="java-android"], [data-structure^="python-android"], [data-structure^="ruby-android"], [data-example^="java-android"], [data-example^="python-android"], [data-example^="ruby-android"]').forEach(btn => {
+              btn.classList.remove('active');
+            });
+            document.querySelector('[data-structure="ruby-android"]')?.classList.add('active');
+            document.querySelector('[data-example="ruby-android-example"]')?.classList.add('active');
+          } else {
+            document.getElementById('android-simulator').style.display = 'none';
+            document.getElementById('ios-simulator').style.display = 'block';
+            document.getElementById('android-docs').style.display = 'none';
+            document.getElementById('ios-docs').style.display = 'block';
+            
+            // Resetar estruturas, configs e exemplos iOS
+            ['java-ios', 'python-ios', 'ruby-ios'].forEach(lang => {
+              const structure = document.getElementById(lang + '-structure');
+              const config = document.getElementById(lang + '-config');
+              const example = document.getElementById(lang + '-ios-example');
+              if (structure) structure.style.display = 'none';
+              if (config) config.style.display = 'none';
+              if (example) example.style.display = 'none';
+            });
+            document.getElementById('ruby-ios-structure').style.display = 'block';
+            document.getElementById('ruby-ios-config').style.display = 'block';
+            document.getElementById('ruby-ios-example').style.display = 'block';
+            document.querySelectorAll('[data-structure^="java-ios"], [data-structure^="python-ios"], [data-structure^="ruby-ios"], [data-example^="java-ios"], [data-example^="python-ios"], [data-example^="ruby-ios"]').forEach(btn => {
+              btn.classList.remove('active');
+            });
+            document.querySelector('[data-structure="ruby-ios"]')?.classList.add('active');
+            document.querySelector('[data-example="ruby-ios-example"]')?.classList.add('active');
+          }
+        });
+      });
+
+      // Alternar entre tabs de configuração
+      document.querySelectorAll('.config-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          const targetId = this.dataset.target;
+          const structureId = this.dataset.structure;
+          const exampleId = this.dataset.example;
+          const section = this.closest('.config-section');
+          
+          // Se for um botão de exemplo de código
+          if (exampleId) {
+            // Determinar se é Android ou iOS
+            const isAndroid = exampleId.includes('android');
+            const isIOS = exampleId.includes('ios') && !exampleId.includes('android');
+            
+            // Ocultar todos os exemplos do mesmo tipo
+            document.querySelectorAll('[id$="-example"]').forEach(e => {
+              const eId = e.id;
+              if ((isAndroid && eId.includes('android') && eId.endsWith('-example')) ||
+                  (isIOS && eId.includes('ios') && !eId.includes('android') && eId.endsWith('-example'))) {
+                e.style.display = 'none';
+              }
+            });
+            
+            // Mostrar o exemplo selecionado
+            const selectedExample = document.getElementById(exampleId);
+            if (selectedExample) {
+              selectedExample.style.display = 'block';
+            }
+            
+            // Atualizar todas as abas de exemplo do mesmo tipo
+            document.querySelectorAll('[data-example]').forEach(btn => {
+              const btnExampleId = btn.dataset.example;
+              if (btnExampleId) {
+                const btnIsAndroid = btnExampleId.includes('android');
+                const btnIsIOS = btnExampleId.includes('ios') && !btnExampleId.includes('android');
+                
+                if ((isAndroid && btnIsAndroid) || (isIOS && btnIsIOS)) {
+                  btn.classList.remove('active');
+                }
+              }
+            });
+            this.classList.add('active');
+            return;
+          }
+          
+          // Se for um botão de estrutura de projeto
+          if (structureId) {
+            // Determinar se é Android ou iOS
+            const isAndroid = structureId.includes('android');
+            const isIOS = structureId.includes('ios') && !structureId.includes('android');
+            
+            // Extrair a linguagem (java, python, ruby)
+            const language = structureId.split('-')[0];
+            
+            // Ocultar todas as estruturas do mesmo tipo (Android ou iOS)
+            document.querySelectorAll('[id$="-structure"]').forEach(s => {
+              const sId = s.id;
+              // Verificar se é estrutura Android (contém "android" e termina com "-structure")
+              if (isAndroid && sId.includes('android') && sId.endsWith('-structure')) {
+                s.style.display = 'none';
+              }
+              // Verificar se é estrutura iOS (contém "ios", não contém "android", e termina com "-structure")
+              else if (isIOS && sId.includes('ios') && !sId.includes('android') && sId.endsWith('-structure')) {
+                s.style.display = 'none';
+              }
+            });
+            
+            // Ocultar todos os arquivos de configuração do mesmo tipo
+            document.querySelectorAll('[id$="-config"]').forEach(c => {
+              const cId = c.id;
+              if ((isAndroid && cId.includes('android') && cId.endsWith('-config')) ||
+                  (isIOS && cId.includes('ios') && !cId.includes('android') && cId.endsWith('-config'))) {
+                c.style.display = 'none';
+              }
+            });
+            
+            // Mostrar a estrutura selecionada
+            const selectedStructure = document.getElementById(structureId + '-structure');
+            if (selectedStructure) {
+              selectedStructure.style.display = 'block';
+            }
+            
+            // Mostrar o arquivo de configuração correspondente
+            let configId;
+            if (isAndroid) {
+              configId = language + '-android-config';
+            } else if (isIOS) {
+              configId = language + '-ios-config';
+            }
+            const selectedConfig = document.getElementById(configId);
+            if (selectedConfig) {
+              selectedConfig.style.display = 'block';
+            }
+            
+            // Atualizar todas as abas de estrutura do mesmo tipo
+            document.querySelectorAll('[data-structure]').forEach(btn => {
+              const btnStructureId = btn.dataset.structure;
+              if (btnStructureId) {
+                const btnIsAndroid = btnStructureId.includes('android');
+                const btnIsIOS = btnStructureId.includes('ios') && !btnStructureId.includes('android');
+                
+                if ((isAndroid && btnIsAndroid) || (isIOS && btnIsIOS)) {
+                  btn.classList.remove('active');
+                }
+              }
+            });
+            this.classList.add('active');
+            return;
+          }
+          
+          // Se for um botão de configuração normal (seções principais)
+          if (targetId) {
+            // Atualizar tabs principais
+            section.querySelectorAll('.config-tab[data-target]').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Mostrar/ocultar conteúdo principal
+            section.querySelectorAll('.config-content').forEach(c => c.classList.remove('active'));
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+              
+              // Resetar e reativar abas internas quando mudar de seção
+              setTimeout(() => {
+                // Resetar todas as abas internas
+                targetContent.querySelectorAll('[data-structure], [data-example]').forEach(btn => {
+                  btn.classList.remove('active');
+                });
+                
+                // Ativar a primeira aba (Ruby por padrão) - estruturas
+                const structureBtns = targetContent.querySelectorAll('[data-structure]');
+                if (structureBtns.length > 0) {
+                  // Encontrar a aba Ruby (última ou a que contém "ruby")
+                  let rubyBtn = null;
+                  structureBtns.forEach(btn => {
+                    if (btn.dataset.structure && btn.dataset.structure.includes('ruby')) {
+                      rubyBtn = btn;
+                    }
+                  });
+                  // Se não encontrar Ruby, usar a primeira
+                  const activeBtn = rubyBtn || structureBtns[0];
+                  activeBtn.classList.add('active');
+                  
+                  const structureId = activeBtn.dataset.structure;
+                  const structureEl = document.getElementById(structureId + '-structure');
+                  if (structureEl) {
+                    // Ocultar todas as estruturas e configs do mesmo tipo primeiro
+                    const isAndroid = structureId.includes('android');
+                    const isIOS = structureId.includes('ios') && !structureId.includes('android');
+                    
+                    document.querySelectorAll('[id$="-structure"]').forEach(s => {
+                      const sId = s.id;
+                      if ((isAndroid && sId.includes('android') && sId.endsWith('-structure')) ||
+                          (isIOS && sId.includes('ios') && !sId.includes('android') && sId.endsWith('-structure'))) {
+                        s.style.display = 'none';
+                      }
+                    });
+                    
+                    document.querySelectorAll('[id$="-config"]').forEach(c => {
+                      const cId = c.id;
+                      if ((isAndroid && cId.includes('android') && cId.endsWith('-config')) ||
+                          (isIOS && cId.includes('ios') && !cId.includes('android') && cId.endsWith('-config'))) {
+                        c.style.display = 'none';
+                      }
+                    });
+                    
+                    structureEl.style.display = 'block';
+                    
+                    // Mostrar o arquivo de configuração correspondente
+                    const language = structureId.split('-')[0];
+                    let configId;
+                    if (isAndroid) {
+                      configId = language + '-android-config';
+                    } else if (isIOS) {
+                      configId = language + '-ios-config';
+                    }
+                    const configEl = document.getElementById(configId);
+                    if (configEl) {
+                      configEl.style.display = 'block';
+                    }
+                  }
+                }
+                
+                // Ativar a primeira aba (Ruby por padrão) - exemplos
+                const exampleBtns = targetContent.querySelectorAll('[data-example]');
+                if (exampleBtns.length > 0) {
+                  // Encontrar a aba Ruby (última ou a que contém "ruby")
+                  let rubyExampleBtn = null;
+                  exampleBtns.forEach(btn => {
+                    if (btn.dataset.example && btn.dataset.example.includes('ruby')) {
+                      rubyExampleBtn = btn;
+                    }
+                  });
+                  // Se não encontrar Ruby, usar a primeira
+                  const activeExampleBtn = rubyExampleBtn || exampleBtns[0];
+                  activeExampleBtn.classList.add('active');
+                  
+                  const exampleId = activeExampleBtn.dataset.example;
+                  const exampleEl = document.getElementById(exampleId);
+                  if (exampleEl) {
+                    // Ocultar todos os exemplos do mesmo tipo primeiro
+                    const isAndroid = exampleId.includes('android');
+                    const isIOS = exampleId.includes('ios') && !exampleId.includes('android');
+                    document.querySelectorAll('[id$="-example"]').forEach(e => {
+                      const eId = e.id;
+                      if ((isAndroid && eId.includes('android') && eId.endsWith('-example')) ||
+                          (isIOS && eId.includes('ios') && !eId.includes('android') && eId.endsWith('-example'))) {
+                        e.style.display = 'none';
+                      }
+                    });
+                    exampleEl.style.display = 'block';
+                  }
+                }
+              }, 50);
+            }
+          }
+        });
+      });
+
+      // Simular ações Android
+      function simulateAndroidAction() {
+        const content = document.getElementById('android-content');
+        const messages = [
+          'Ação executada com sucesso!',
+          'Elemento encontrado',
+          'Teste concluído',
+          'Interação realizada'
+        ];
+        const message = messages[Math.floor(Math.random() * messages.length)];
+        
+        const notification = document.createElement('div');
+        notification.style.cssText = 'background: #4CAF50; color: white; padding: 12px; border-radius: 8px; margin-top: 16px; text-align: center;';
+        notification.textContent = message;
+        content.appendChild(notification);
+        
+        setTimeout(() => notification.remove(), 2000);
+      }
+
+      // Simular ações iOS
+      function simulateIOSAction() {
+        const content = document.getElementById('ios-content');
+        const messages = [
+          'Ação executada com sucesso!',
+          'Elemento encontrado',
+          'Teste concluído',
+          'Interação realizada'
+        ];
+        const message = messages[Math.floor(Math.random() * messages.length)];
+        
+        const notification = document.createElement('div');
+        notification.style.cssText = 'background: #007AFF; color: white; padding: 12px; border-radius: 8px; margin-top: 16px; text-align: center;';
+        notification.textContent = message;
+        content.appendChild(notification);
+        
+        setTimeout(() => notification.remove(), 2000);
+      }
+    </script>
+  </body>
+</html>

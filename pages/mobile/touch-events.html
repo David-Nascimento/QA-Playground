@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Touch Events — Mobile — QA Playground</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="../fundamentos.html">Fundamentos</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Touch Events</h2>
+          <div class="section-desc">Pratique testes de gestos, toques, swipe e interações touch em dispositivos móveis. Esta página é ideal para testar automação de eventos touch, gestos e interações específicas de mobile.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div class="info-box">
+              <p><strong>Atividades do Dia a Dia:</strong></p>
+              <ul>
+                <li>Testar eventos de toque (tap, touchstart, touchend)</li>
+                <li>Validar gestos de swipe (deslizar)</li>
+                <li>Testar pinch e zoom em imagens</li>
+                <li>Validar long press (toque longo)</li>
+                <li>Testar double tap (toque duplo)</li>
+                <li>Validar área de toque e tamanhos de botões</li>
+                <li>Testar scroll e drag em mobile</li>
+              </ul>
+              
+              <p><strong>Como Utilizar:</strong></p>
+              <ol>
+                <li>Use um dispositivo móvel ou simule touch no navegador</li>
+                <li>Toque nos elementos abaixo para testar eventos</li>
+                <li>Deslize (swipe) nos elementos indicados</li>
+                <li>Observe os eventos registrados na área de log</li>
+                <li>Teste gestos como pinch, zoom e long press</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Área de Toque</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Toque na área abaixo para testar eventos touch.</p>
+            
+            <div 
+              id="touch-area" 
+              data-testid="touch-area"
+              style="background: var(--surface); border: 2px dashed var(--accent); border-radius: var(--border-radius-md); padding: var(--spacing-xl); min-height: 200px; text-align: center; display: flex; align-items: center; justify-content: center; cursor: pointer; user-select: none;"
+            >
+              <div>
+                <strong>Toque aqui</strong>
+                <p style="color: var(--muted); font-size: var(--font-size-sm); margin-top: var(--spacing-sm);">Toque, deslize ou faça gestos nesta área</p>
+              </div>
+            </div>
+            
+            <div id="touch-log" data-testid="touch-log" style="background: rgba(0, 0, 0, 0.03); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-top: var(--spacing-md); max-height: 200px; overflow-y: auto; font-family: monospace; font-size: var(--font-size-sm);">
+              <strong>Eventos Touch:</strong>
+              <div id="touch-events" style="margin-top: var(--spacing-sm);"></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Botões Touch</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Botões otimizados para toque em dispositivos móveis.</p>
+            
+            <div class="controls" style="display: flex; gap: var(--spacing-md); flex-wrap: wrap;">
+              <button id="btn-tap" class="btn" data-testid="btn-tap" style="min-width: 120px; min-height: 44px;">Tap</button>
+              <button id="btn-long-press" class="btn btn-secondary" data-testid="btn-long-press" style="min-width: 120px; min-height: 44px;">Long Press</button>
+              <button id="btn-double-tap" class="btn btn-secondary" data-testid="btn-double-tap" style="min-width: 120px; min-height: 44px;">Double Tap</button>
+            </div>
+            
+            <div id="button-result" data-testid="button-result" class="hint" style="margin-top: var(--spacing-sm);"></div>
+          </div>
+
+          <div class="subsection">
+            <h3>Swipe (Deslizar)</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Deslize horizontalmente na área abaixo.</p>
+            
+            <div 
+              id="swipe-area" 
+              data-testid="swipe-area"
+              style="background: var(--surface); border: 2px solid var(--accent); border-radius: var(--border-radius-md); padding: var(--spacing-lg); min-height: 150px; position: relative; overflow: hidden; touch-action: pan-x;"
+            >
+              <div id="swipe-content" data-testid="swipe-content" style="text-align: center; padding: var(--spacing-lg); transition: transform 0.3s ease;">
+                <strong>Deslize para a esquerda ou direita</strong>
+                <p style="color: var(--muted); font-size: var(--font-size-sm); margin-top: var(--spacing-sm);">Swipe left ou right</p>
+              </div>
+            </div>
+            
+            <div id="swipe-direction" data-testid="swipe-direction" class="hint" style="margin-top: var(--spacing-sm);"></div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div class="info-box">
+              <p><strong>Cenários de Teste:</strong></p>
+              <ul>
+                <li>Testar eventos touchstart, touchmove, touchend</li>
+                <li>Validar gestos de swipe em diferentes direções</li>
+                <li>Testar long press e double tap</li>
+                <li>Validar área de toque mínima (44x44px recomendado)</li>
+                <li>Testar scroll e drag em elementos móveis</li>
+                <li>Validar prevenção de zoom acidental</li>
+                <li>Testar multi-touch (pinch, zoom)</li>
+              </ul>
+              
+              <p><strong>Elementos identificáveis:</strong></p>
+              <ul>
+                <li><code>data-testid="touch-area"</code> - Área de teste de toque</li>
+                <li><code>data-testid="touch-log"</code> - Log de eventos touch</li>
+                <li><code>data-testid="btn-tap"</code> - Botão de tap</li>
+                <li><code>data-testid="btn-long-press"</code> - Botão de long press</li>
+                <li><code>data-testid="btn-double-tap"</code> - Botão de double tap</li>
+                <li><code>data-testid="swipe-area"</code> - Área de swipe</li>
+                <li><code>data-testid="swipe-direction"</code> - Direção do swipe</li>
+              </ul>
+
+              <p><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-appium-ruby">Appium + Ruby</button>
+                <button class="test-tab" data-target="tab-appium-java">Appium + Java</button>
+                <button class="test-tab" data-target="tab-appium-robot">Appium + Robot</button>
+              </div>
+              
+              <div class="test-tab-content">
+                <pre id="tab-appium-ruby" class="test-code active"><code>
+# Appium + Ruby - Testar touch events
+caps = {
+  platformName: 'Android',
+  deviceName: 'Android Emulator',
+  browserName: 'Chrome',
+  automationName: 'UiAutomator2'
+}
+driver = Appium::Driver.new({ caps: caps }).start_driver
+
+driver.get('http://localhost:8080/pages/mobile/touch-events.html')
+
+# Testar tap
+touch_area = driver.find_element(:css, '[data-testid="touch-area"]')
+Appium::TouchAction.new.tap(element: touch_area).perform
+
+touch_log = driver.find_element(:css, '[data-testid="touch-log"]')
+expect(touch_log.text).to include('touchstart')
+
+# Testar swipe
+swipe_area = driver.find_element(:css, '[data-testid="swipe-area"]')
+Appium::TouchAction.new
+  .press(element: swipe_area, x: 100, y: 50)
+  .move_to(element: swipe_area, x: 50, y: 50)
+  .release
+  .perform
+
+swipe_direction = driver.find_element(:css, '[data-testid="swipe-direction"]')
+expect(swipe_direction.text).to include('left')
+                </code></pre>
+              
+                <pre id="tab-appium-java" class="test-code"><code>
+// Appium + Java - Testar touch events
+DesiredCapabilities caps = new DesiredCapabilities();
+caps.setCapability("platformName", "Android");
+caps.setCapability("deviceName", "Android Emulator");
+caps.setCapability("browserName", "Chrome");
+caps.setCapability("automationName", "UiAutomator2");
+
+AppiumDriver driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), caps);
+
+driver.get("http://localhost:8080/pages/mobile/touch-events.html");
+
+// Testar tap
+WebElement touchArea = driver.findElement(By.cssSelector("[data-testid='touch-area']"));
+TouchAction touchAction = new TouchAction(driver);
+touchAction.tap(touchArea).perform();
+
+WebElement touchLog = driver.findElement(By.cssSelector("[data-testid='touch-log']"));
+assert touchLog.getText().contains("touchstart");
+
+// Testar swipe
+WebElement swipeArea = driver.findElement(By.cssSelector("[data-testid='swipe-area']"));
+new TouchAction(driver)
+  .press(swipeArea, 100, 50)
+  .moveTo(swipeArea, 50, 50)
+  .release()
+  .perform();
+
+WebElement swipeDirection = driver.findElement(By.cssSelector("[data-testid='swipe-direction']"));
+assert swipeDirection.getText().contains("left");
+                </code></pre>
+              
+                <pre id="tab-appium-robot" class="test-code"><code>
+*** Settings ***
+Library    AppiumLibrary
+
+*** Test Cases ***
+Testar Touch Events
+    Open Application    http://localhost:4723/wd/hub
+    ...    platformName=Android
+    ...    deviceName=Android Emulator
+    ...    browserName=Chrome
+    ...    automationName=UiAutomator2
+    
+    Go To Url    http://localhost:8080/pages/mobile/touch-events.html
+    
+    Tap    css:[data-testid="touch-area"]
+    Element Should Contain    css:[data-testid="touch-log"]    touchstart
+    
+    # Testar swipe
+    Swipe    css:[data-testid="swipe-area"]    100    50    50    50
+    Element Should Contain    css:[data-testid="swipe-direction"]    left
+    
+    # Testar long press
+    Long Press    css:[data-testid="btn-long-press"]    500
+    Element Should Contain    css:[data-testid="button-result"]    Long press
+                </code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../js/main.js"></script>
+    <script>
+      // Touch Area
+      const touchArea = document.getElementById('touch-area');
+      const touchEvents = document.getElementById('touch-events');
+      let touchStartTime = 0;
+      let touchCount = 0;
+      let touchTimeout = null;
+
+      function logTouchEvent(event, data = '') {
+        if (touchEvents) {
+          const time = new Date().toLocaleTimeString();
+          const logEntry = document.createElement('div');
+          logEntry.textContent = `[${time}] ${event} ${data}`;
+          touchEvents.appendChild(logEntry);
+          touchEvents.scrollTop = touchEvents.scrollHeight;
+          
+          // Limitar a 10 entradas
+          while (touchEvents.children.length > 10) {
+            touchEvents.removeChild(touchEvents.firstChild);
+          }
+        }
+      }
+
+      if (touchArea) {
+        touchArea.addEventListener('touchstart', (e) => {
+          touchStartTime = Date.now();
+          logTouchEvent('touchstart', `(${e.touches.length} touch${e.touches.length > 1 ? 'es' : ''})`);
+          e.preventDefault();
+        });
+
+        touchArea.addEventListener('touchmove', (e) => {
+          logTouchEvent('touchmove', `(${e.touches.length} touch${e.touches.length > 1 ? 'es' : ''})`);
+        });
+
+        touchArea.addEventListener('touchend', (e) => {
+          const duration = Date.now() - touchStartTime;
+          logTouchEvent('touchend', `(duração: ${duration}ms)`);
+          e.preventDefault();
+        });
+
+        // Mouse events para desktop
+        touchArea.addEventListener('mousedown', () => {
+          logTouchEvent('mousedown (simulação touch)');
+        });
+
+        touchArea.addEventListener('mouseup', () => {
+          logTouchEvent('mouseup (simulação touch)');
+        });
+      }
+
+      // Botões
+      const btnTap = document.getElementById('btn-tap');
+      const btnLongPress = document.getElementById('btn-long-press');
+      const btnDoubleTap = document.getElementById('btn-double-tap');
+      const buttonResult = document.getElementById('button-result');
+
+      if (btnTap) {
+        btnTap.addEventListener('click', () => {
+          if (buttonResult) {
+            buttonResult.textContent = 'Tap detectado!';
+            buttonResult.style.color = 'var(--accent)';
+          }
+        });
+      }
+
+      let longPressTimer = null;
+      if (btnLongPress) {
+        btnLongPress.addEventListener('mousedown', () => {
+          longPressTimer = setTimeout(() => {
+            if (buttonResult) {
+              buttonResult.textContent = 'Long press detectado!';
+              buttonResult.style.color = 'var(--accent)';
+            }
+          }, 500);
+        });
+
+        btnLongPress.addEventListener('mouseup', () => {
+          if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+          }
+        });
+
+        btnLongPress.addEventListener('touchstart', () => {
+          longPressTimer = setTimeout(() => {
+            if (buttonResult) {
+              buttonResult.textContent = 'Long press detectado!';
+              buttonResult.style.color = 'var(--accent)';
+            }
+          }, 500);
+        });
+
+        btnLongPress.addEventListener('touchend', () => {
+          if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+          }
+        });
+      }
+
+      if (btnDoubleTap) {
+        btnDoubleTap.addEventListener('click', () => {
+          touchCount++;
+          if (touchCount === 1) {
+            touchTimeout = setTimeout(() => {
+              touchCount = 0;
+            }, 300);
+          } else if (touchCount === 2) {
+            clearTimeout(touchTimeout);
+            if (buttonResult) {
+              buttonResult.textContent = 'Double tap detectado!';
+              buttonResult.style.color = 'var(--accent)';
+            }
+            touchCount = 0;
+          }
+        });
+      }
+
+      // Swipe
+      const swipeArea = document.getElementById('swipe-area');
+      const swipeDirection = document.getElementById('swipe-direction');
+      let swipeStartX = 0;
+      let swipeStartY = 0;
+
+      if (swipeArea) {
+        swipeArea.addEventListener('touchstart', (e) => {
+          swipeStartX = e.touches[0].clientX;
+          swipeStartY = e.touches[0].clientY;
+        });
+
+        swipeArea.addEventListener('touchend', (e) => {
+          if (!swipeStartX || !swipeStartY) return;
+          
+          const swipeEndX = e.changedTouches[0].clientX;
+          const swipeEndY = e.changedTouches[0].clientY;
+          const diffX = swipeStartX - swipeEndX;
+          const diffY = swipeStartY - swipeEndY;
+
+          if (Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX > 50) {
+              if (swipeDirection) {
+                swipeDirection.textContent = 'Swipe Left detectado ←';
+                swipeDirection.style.color = 'var(--accent)';
+              }
+            } else if (diffX < -50) {
+              if (swipeDirection) {
+                swipeDirection.textContent = 'Swipe Right detectado →';
+                swipeDirection.style.color = 'var(--accent)';
+              }
+            }
+          }
+
+          swipeStartX = 0;
+          swipeStartY = 0;
+        });
+
+        // Mouse events para desktop
+        let mouseDownX = 0;
+        swipeArea.addEventListener('mousedown', (e) => {
+          mouseDownX = e.clientX;
+        });
+
+        swipeArea.addEventListener('mouseup', (e) => {
+          const diffX = mouseDownX - e.clientX;
+          if (Math.abs(diffX) > 50) {
+            if (diffX > 0) {
+              if (swipeDirection) {
+                swipeDirection.textContent = 'Swipe Left detectado ← (mouse)';
+                swipeDirection.style.color = 'var(--accent)';
+              }
+            } else {
+              if (swipeDirection) {
+                swipeDirection.textContent = 'Swipe Right detectado → (mouse)';
+                swipeDirection.style.color = 'var(--accent)';
+              }
+            }
+          }
+          mouseDownX = 0;
+        });
+      }
+
+      // Inicializar abas de teste
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
+</html>

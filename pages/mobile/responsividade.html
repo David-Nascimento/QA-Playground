@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Responsividade — Mobile — QA Playground</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="../fundamentos.html">Fundamentos</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Responsividade</h2>
+          <div class="section-desc">Teste adaptação de layouts em diferentes tamanhos de tela e breakpoints responsivos. Esta página é ideal para validar comportamento responsivo, media queries e adaptação de elementos em diferentes dispositivos.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div class="info-box">
+              <p><strong>Atividades do Dia a Dia:</strong></p>
+              <ul>
+                <li>Testar layout em diferentes tamanhos de viewport</li>
+                <li>Validar breakpoints responsivos (mobile, tablet, desktop)</li>
+                <li>Verificar adaptação de elementos em telas pequenas</li>
+                <li>Testar menu hambúrguer e navegação mobile</li>
+                <li>Validar imagens responsivas e adaptação de conteúdo</li>
+                <li>Testar grid e flexbox em diferentes resoluções</li>
+                <li>Validar legibilidade e usabilidade em mobile</li>
+              </ul>
+              
+              <p><strong>Como Utilizar:</strong></p>
+              <ol>
+                <li>Redimensione a janela do navegador para testar diferentes tamanhos</li>
+                <li>Use as ferramentas de desenvolvedor para simular dispositivos</li>
+                <li>Observe como os elementos se adaptam em diferentes breakpoints</li>
+                <li>Teste a navegação e menus em telas pequenas</li>
+                <li>Valide que o conteúdo permanece legível e funcional</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Layout Responsivo</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Redimensione a janela para ver a adaptação do layout.</p>
+            
+            <div id="viewport-info" data-testid="viewport-info" style="background: rgba(0, 0, 0, 0.03); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <strong>Viewport Atual:</strong>
+              <div id="viewport-size" data-testid="viewport-size" style="margin-top: var(--spacing-xs); font-family: monospace;"></div>
+              <div id="breakpoint" data-testid="breakpoint" style="margin-top: var(--spacing-xs); color: var(--accent); font-weight: 600;"></div>
+            </div>
+
+            <div class="responsive-grid" data-testid="responsive-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-md);">
+              <div class="responsive-card" data-testid="card-1" style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); box-shadow: var(--shadow-sm);">
+                <h4>Card 1</h4>
+                <p>Este card se adapta ao tamanho da tela usando CSS Grid.</p>
+              </div>
+              <div class="responsive-card" data-testid="card-2" style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); box-shadow: var(--shadow-sm);">
+                <h4>Card 2</h4>
+                <p>Em telas pequenas, os cards ficam empilhados verticalmente.</p>
+              </div>
+              <div class="responsive-card" data-testid="card-3" style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); box-shadow: var(--shadow-sm);">
+                <h4>Card 3</h4>
+                <p>Em telas grandes, os cards ficam lado a lado.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Menu Responsivo</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Menu que se adapta ao tamanho da tela.</p>
+            
+            <div id="mobile-menu" data-testid="mobile-menu" style="background: var(--surface); border: 1px solid rgba(0, 0, 0, 0.1); border-radius: var(--border-radius-md); padding: var(--spacing-md);">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4 style="margin: 0;">Menu Principal</h4>
+                <button id="menu-toggle" data-testid="menu-toggle" class="btn btn-secondary" style="display: none;">☰</button>
+              </div>
+              <nav id="menu-items" data-testid="menu-items" style="margin-top: var(--spacing-md);">
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; gap: var(--spacing-md); flex-wrap: wrap;">
+                  <li><a href="#" data-testid="menu-item-1">Início</a></li>
+                  <li><a href="#" data-testid="menu-item-2">Sobre</a></li>
+                  <li><a href="#" data-testid="menu-item-3">Serviços</a></li>
+                  <li><a href="#" data-testid="menu-item-4">Contato</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Imagem Responsiva</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Imagem que se adapta ao tamanho do container.</p>
+            
+            <div style="max-width: 100%; margin-bottom: var(--spacing-md);">
+              <img 
+                src="../../assets/img/image-bug.png" 
+                alt="Imagem responsiva de exemplo" 
+                data-testid="responsive-image"
+                style="width: 100%; height: auto; border-radius: var(--border-radius-md); box-shadow: var(--shadow-sm);"
+              />
+            </div>
+            <div class="hint">Esta imagem se adapta automaticamente ao tamanho do container.</div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div class="info-box">
+              <p><strong>Cenários de Teste:</strong></p>
+              <ul>
+                <li>Testar layout em viewport mobile (320px - 768px)</li>
+                <li>Testar layout em viewport tablet (768px - 1024px)</li>
+                <li>Testar layout em viewport desktop (1024px+)</li>
+                <li>Validar que elementos não quebram em telas pequenas</li>
+                <li>Testar menu hambúrguer em mobile</li>
+                <li>Validar imagens responsivas</li>
+                <li>Testar grid e flexbox em diferentes resoluções</li>
+              </ul>
+              
+              <p><strong>Elementos identificáveis:</strong></p>
+              <ul>
+                <li><code>data-testid="viewport-info"</code> - Informações do viewport</li>
+                <li><code>data-testid="viewport-size"</code> - Tamanho atual do viewport</li>
+                <li><code>data-testid="breakpoint"</code> - Breakpoint ativo</li>
+                <li><code>data-testid="responsive-grid"</code> - Grid responsivo</li>
+                <li><code>data-testid="mobile-menu"</code> - Menu responsivo</li>
+                <li><code>data-testid="menu-toggle"</code> - Botão toggle do menu</li>
+                <li><code>data-testid="responsive-image"</code> - Imagem responsiva</li>
+              </ul>
+
+              <p><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-appium-ruby">Appium + Ruby</button>
+                <button class="test-tab" data-target="tab-appium-java">Appium + Java</button>
+                <button class="test-tab" data-target="tab-appium-robot">Appium + Robot</button>
+              </div>
+              
+              <div class="test-tab-content">
+                <pre id="tab-appium-ruby" class="test-code active"><code>
+# Appium + Ruby - Testar responsividade
+# Configurar capabilities para mobile web
+caps = {
+  platformName: 'iOS',
+  deviceName: 'iPhone SE',
+  browserName: 'Safari',
+  automationName: 'XCUITest'
+}
+driver = Appium::Driver.new({ caps: caps }).start_driver
+
+# Testar viewport mobile
+driver.get('http://localhost:8080/pages/mobile/responsividade.html')
+breakpoint = driver.find_element(:css, '[data-testid="breakpoint"]')
+expect(breakpoint.text).to include('Mobile')
+
+menu_toggle = driver.find_element(:css, '[data-testid="menu-toggle"]')
+expect(menu_toggle.displayed?).to be true
+
+# Testar em tablet
+driver.manage.window.resize_to(1024, 768)
+expect(breakpoint.text).to include('Tablet')
+                </code></pre>
+              
+                <pre id="tab-appium-java" class="test-code"><code>
+// Appium + Java - Testar responsividade
+DesiredCapabilities caps = new DesiredCapabilities();
+caps.setCapability("platformName", "iOS");
+caps.setCapability("deviceName", "iPhone SE");
+caps.setCapability("browserName", "Safari");
+caps.setCapability("automationName", "XCUITest");
+
+AppiumDriver driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), caps);
+
+// Testar viewport mobile
+driver.get("http://localhost:8080/pages/mobile/responsividade.html");
+WebElement breakpoint = driver.findElement(By.cssSelector("[data-testid='breakpoint']"));
+assert breakpoint.getText().contains("Mobile");
+
+WebElement menuToggle = driver.findElement(By.cssSelector("[data-testid='menu-toggle']"));
+assert menuToggle.isDisplayed();
+
+// Testar em tablet
+driver.manage().window().setSize(new Dimension(1024, 768));
+assert breakpoint.getText().contains("Tablet");
+                </code></pre>
+              
+                <pre id="tab-appium-robot" class="test-code"><code>
+*** Settings ***
+Library    AppiumLibrary
+
+*** Test Cases ***
+Testar Responsividade Mobile
+    Open Application    http://localhost:4723/wd/hub
+    ...    platformName=iOS
+    ...    deviceName=iPhone SE
+    ...    browserName=Safari
+    ...    automationName=XCUITest
+    
+    Go To Url    http://localhost:8080/pages/mobile/responsividade.html
+    
+    Element Should Contain    css:[data-testid="breakpoint"]    Mobile
+    Element Should Be Visible    css:[data-testid="menu-toggle"]
+    
+    Set Window Size    1024    768
+    Element Should Contain    css:[data-testid="breakpoint"]    Tablet
+                </code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../js/main.js"></script>
+    <script>
+      function updateViewportInfo() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const sizeEl = document.getElementById('viewport-size');
+        const breakpointEl = document.getElementById('breakpoint');
+        
+        if (sizeEl) {
+          sizeEl.textContent = `${width}px × ${height}px`;
+        }
+        
+        if (breakpointEl) {
+          let breakpoint = 'Desktop';
+          if (width < 768) {
+            breakpoint = 'Mobile';
+          } else if (width < 1024) {
+            breakpoint = 'Tablet';
+          }
+          breakpointEl.textContent = `Breakpoint: ${breakpoint}`;
+        }
+
+        // Menu toggle visibility
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuItems = document.getElementById('menu-items');
+        if (menuToggle && menuItems) {
+          if (width < 768) {
+            menuToggle.style.display = 'block';
+            menuItems.style.display = 'none';
+          } else {
+            menuToggle.style.display = 'none';
+            menuItems.style.display = 'block';
+          }
+        }
+      }
+
+      window.addEventListener('resize', updateViewportInfo);
+      updateViewportInfo();
+
+      // Menu toggle
+      const menuToggle = document.getElementById('menu-toggle');
+      const menuItems = document.getElementById('menu-items');
+      if (menuToggle && menuItems) {
+        menuToggle.addEventListener('click', () => {
+          const isVisible = menuItems.style.display !== 'none';
+          menuItems.style.display = isVisible ? 'none' : 'block';
+        });
+      }
+
+      // Inicializar abas de teste
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
+</html>
