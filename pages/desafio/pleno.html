@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Desafios Pleno — QA Playground</title>
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="../fundamentos.html">Fundamentos</a></li>
+            <li><a href="../junior/formularios/">Formulários</a></li>
+            <li><a href="../junior/tabelas/">Tabelas</a></li>
+            <li><a href="../junior/interacoes/">Interações</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="junior.html">Desafios Júnior</a></li>
+                <li><a href="pleno.html">Desafios Pleno</a></li>
+                <li><a href="senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <h1>Desafios Nível Pleno</h1>
+        <p>
+          Desafios intermediários envolvendo tabelas dinâmicas, upload de arquivos, interações complexas e validações avançadas.
+        </p>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Desafios Nível Pleno</h2>
+          <div class="section-desc">Desafios intermediários envolvendo tabelas dinâmicas, upload de arquivos, interações complexas e validações avançadas.</div>
+        </div>
+
+        <div class="subsections-vertical">
+          <!-- Desafio 1: Tabela com Paginação -->
+          <div class="subsection">
+            <h3>Desafio 1: Tabela com Paginação Dinâmica</h3>
+            <p><strong>Objetivo:</strong> Testar a navegação entre páginas de uma tabela paginada e validar a consistência dos dados.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../pleno/tabelas/dynamic-pagination.html">Tabela com Paginação</a></li>
+              <li>Conte o número total de itens e páginas disponíveis</li>
+              <li>Navegue para a próxima página e valide os dados exibidos</li>
+              <li>Navegue para a página anterior e valide os dados</li>
+              <li>Pule para a última página e valide</li>
+              <li>Pule para a primeira página e valide</li>
+              <li>Verifique se os botões de navegação estão habilitados/desabilitados corretamente</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Use <code>data-testid="pagination-next"</code> para o botão próxima página</li>
+              <li>Use <code>data-testid="pagination-prev"</code> para o botão página anterior</li>
+              <li>Use <code>data-testid="pagination-first"</code> e <code>data-testid="pagination-last"</code></li>
+              <li>Use <code>data-testid="pagination-info"</code> para informações de página atual</li>
+              <li>Use <code>tbody tr</code> para contar linhas visíveis na página atual</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Navegue entre páginas e valide que os dados mudam corretamente</li>
+              <li><strong>Automação:</strong> Crie um loop que navegue por todas as páginas validando dados</li>
+              <li><strong>Validação:</strong> Verifique que não há duplicação de dados entre páginas</li>
+              <li><strong>Assertivas:</strong> Valide que botões estão desabilitados quando apropriado (primeira/última página)</li>
+              <li><strong>Espera:</strong> Use waits explícitos para garantir que a tabela foi atualizada após clicar</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 2: Upload de Arquivos -->
+          <div class="subsection">
+            <h3>Desafio 2: Upload e Validação de Arquivos</h3>
+            <p><strong>Objetivo:</strong> Testar o upload de arquivos com validação de formato, tamanho e feedback visual.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../pleno/arquivos/validacao-formatos.html">Validação de Formatos</a></li>
+              <li>Tente fazer upload de um arquivo com formato permitido (ex: .jpg, .png)</li>
+              <li>Tente fazer upload de um arquivo com formato não permitido (ex: .exe, .bat)</li>
+              <li>Tente fazer upload de um arquivo que excede o tamanho máximo</li>
+              <li>Faça upload de múltiplos arquivos simultaneamente</li>
+              <li>Verifique se há feedback visual durante o upload (barra de progresso)</li>
+              <li>Valide se o nome do arquivo é exibido após upload bem-sucedido</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Use <code>input[type="file"]</code> para localizar o campo de upload</li>
+              <li>Use <code>data-testid="input-upload"</code> para localização específica</li>
+              <li>Use <code>data-testid="upload-progress"</code> para barra de progresso</li>
+              <li>Use <code>data-testid="upload-message"</code> para mensagens de sucesso/erro</li>
+              <li>Use <code>accept</code> attribute para verificar formatos aceitos</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Teste com diferentes tipos e tamanhos de arquivo</li>
+              <li><strong>Automação:</strong> Use <code>sendKeys()</code> com caminho do arquivo (não funciona em todos os navegadores)</li>
+              <li><strong>Validação:</strong> Verifique mensagens de erro para formatos inválidos</li>
+              <li><strong>Assertivas:</strong> Valide que apenas arquivos permitidos são aceitos</li>
+              <li><strong>Limitação:</strong> Note que upload automático pode ser limitado por políticas de segurança do navegador</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 3: Drag and Drop -->
+          <div class="subsection">
+            <h3>Desafio 3: Drag and Drop de Elementos</h3>
+            <p><strong>Objetivo:</strong> Testar a funcionalidade de arrastar e soltar elementos entre áreas diferentes.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../pleno/interacoes/drag-drop.html">Drag and Drop</a></li>
+              <li>Identifique o elemento que pode ser arrastado (drag source)</li>
+              <li>Identifique a área de destino (drop target)</li>
+              <li>Arraste o elemento da origem para o destino</li>
+              <li>Verifique se o elemento foi movido corretamente</li>
+              <li>Teste arrastar múltiplos elementos</li>
+              <li>Teste arrastar para uma área inválida e verifique se é rejeitado</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Use <code>data-testid="drag-source"</code> para elemento arrastável</li>
+              <li>Use <code>data-testid="drop-target"</code> para área de destino</li>
+              <li>Use <code>draggable="true"</code> attribute para identificar elementos arrastáveis</li>
+              <li>Use eventos de mouse: <code>mousedown</code>, <code>mousemove</code>, <code>mouseup</code></li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Arraste elementos e verifique visualmente o resultado</li>
+              <li><strong>Automação:</strong> Use Actions API do Selenium: <code>Actions().dragAndDrop(source, target).perform()</code></li>
+              <li><strong>Validação:</strong> Verifique se o elemento aparece na área de destino após o drop</li>
+              <li><strong>Assertivas:</strong> Valide que o elemento foi removido da origem e adicionado ao destino</li>
+              <li><strong>Espera:</strong> Use waits para garantir que a animação de drag foi concluída</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 4: Slider -->
+          <div class="subsection">
+            <h3>Desafio 4: Interação com Slider (Range Input)</h3>
+            <p><strong>Objetivo:</strong> Testar a manipulação de um slider e validar que o valor é atualizado corretamente.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../pleno/interacoes/slider.html">Slider</a></li>
+              <li>Identifique o valor inicial do slider</li>
+              <li>Arraste o slider para o valor mínimo</li>
+              <li>Arraste o slider para o valor máximo</li>
+              <li>Arraste o slider para um valor intermediário</li>
+              <li>Verifique se há um indicador visual do valor atual</li>
+              <li>Teste se o valor é atualizado em tempo real durante o arraste</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Use <code>input[type="range"]</code> para localizar o slider</li>
+              <li>Use <code>data-testid="slider-range"</code> para localização específica</li>
+              <li>Use <code>min</code>, <code>max</code>, e <code>value</code> attributes para obter limites e valor atual</li>
+              <li>Use <code>data-testid="slider-value"</code> para o indicador de valor</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Arraste o slider e observe a mudança de valor</li>
+              <li><strong>Automação:</strong> Use <code>Actions().dragAndDropBy(slider, offsetX, 0).perform()</code> ou <code>sendKeys(Keys.ARROW_RIGHT)</code></li>
+              <li><strong>Validação:</strong> Verifique se o valor exibido corresponde ao valor do slider</li>
+              <li><strong>Assertivas:</strong> Valide que o valor está dentro dos limites min/max</li>
+              <li><strong>Precisão:</strong> Teste valores específicos usando JavaScript para definir o valor diretamente</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 5: Tabela Ordenável -->
+          <div class="subsection">
+            <h3>Desafio 5: Ordenação de Colunas em Tabela</h3>
+            <p><strong>Objetivo:</strong> Testar a ordenação ascendente e descendente de colunas em uma tabela.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../pleno/tabelas/ordenaveis.html">Tabela Ordenável</a></li>
+              <li>Clique no cabeçalho de uma coluna para ordenar ascendente</li>
+              <li>Clique novamente para ordenar descendente</li>
+              <li>Teste a ordenação em todas as colunas ordenáveis</li>
+              <li>Verifique se há indicador visual da coluna ordenada e direção</li>
+              <li>Valide que os dados estão corretamente ordenados após cada clique</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Use <code>th[data-sortable="true"]</code> ou <code>data-testid="sort-header"</code> para cabeçalhos ordenáveis</li>
+              <li>Use <code>data-testid="sort-asc"</code> e <code>data-testid="sort-desc"</code> para indicadores</li>
+              <li>Use <code>tbody tr</code> para acessar linhas após ordenação</li>
+              <li>Use <code>td:nth-child(n)</code> para comparar valores de colunas específicas</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Clique nos cabeçalhos e verifique visualmente a ordenação</li>
+              <li><strong>Automação:</strong> Crie um script que colete valores, ordene, e compare com a ordem exibida</li>
+              <li><strong>Validação:</strong> Verifique que a ordem dos dados corresponde à ordenação esperada</li>
+              <li><strong>Assertivas:</strong> Valide que alternar entre asc/desc funciona corretamente</li>
+              <li><strong>Espera:</strong> Use waits para garantir que a ordenação foi aplicada antes de validar</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <div style="margin-top: var(--spacing-xl); text-align: center;">
+        <a href="index.html" class="btn btn-secondary">← Voltar para Desafios</a>
+        <a href="../../index.html" class="btn btn-secondary" style="margin-left: var(--spacing-md);">← Voltar para Início</a>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../js/app.js"></script>
+  </body>
+</html>

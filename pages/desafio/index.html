@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Desafios — QA Playground</title>
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="../fundamentos.html">Fundamentos</a></li>
+            <li><a href="../junior/formularios/">Formulários</a></li>
+            <li><a href="../junior/tabelas/">Tabelas</a></li>
+            <li><a href="../junior/interacoes/">Interações</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="junior.html">Desafios Júnior</a></li>
+                <li><a href="pleno.html">Desafios Pleno</a></li>
+                <li><a href="senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <h1>Desafios de Testes por Nível</h1>
+        <p>
+          Desafios práticos organizados por nível de experiência. Cada desafio inclui instruções detalhadas sobre como executar, como procurar elementos e como testar.
+        </p>
+      </section>
+
+      <section class="cards-container">
+        <div class="card-grid">
+          <div class="card card-formulario">
+            <h3>Desafios Júnior</h3>
+            <p>Desafios básicos focados em fundamentos de QA, localização de elementos e validações simples.</p>
+            <a href="junior.html" class="btn">Acessar Desafios</a>
+          </div>
+          
+          <div class="card card-tabela">
+            <h3>Desafios Pleno</h3>
+            <p>Desafios intermediários envolvendo tabelas dinâmicas, upload de arquivos, interações complexas e validações avançadas.</p>
+            <a href="pleno.html" class="btn">Acessar Desafios</a>
+          </div>
+          
+          <div class="card card-dinamico">
+            <h3>Desafios Sênior</h3>
+            <p>Desafios avançados envolvendo DOM complexo, Shadow DOM, APIs, autenticação, iframes, múltiplas janelas e cenários realistas de produção.</p>
+            <a href="senior.html" class="btn">Acessar Desafios</a>
+          </div>
+        </div>
+      </section>
+
+      <div style="margin-top: var(--spacing-xl); text-align: center;">
+        <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../js/app.js"></script>
+  </body>
+</html>

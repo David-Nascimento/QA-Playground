@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Desafios Sênior — QA Playground</title>
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="../fundamentos.html">Fundamentos</a></li>
+            <li><a href="../junior/formularios/">Formulários</a></li>
+            <li><a href="../junior/tabelas/">Tabelas</a></li>
+            <li><a href="../junior/interacoes/">Interações</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="junior.html">Desafios Júnior</a></li>
+                <li><a href="pleno.html">Desafios Pleno</a></li>
+                <li><a href="senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <h1>Desafios Nível Sênior</h1>
+        <p>
+          Desafios avançados envolvendo DOM complexo, Shadow DOM, APIs, autenticação, iframes, múltiplas janelas e cenários realistas de produção.
+        </p>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Desafios Nível Sênior</h2>
+          <div class="section-desc">Desafios avançados envolvendo DOM complexo, Shadow DOM, APIs, autenticação, iframes, múltiplas janelas e cenários realistas de produção.</div>
+        </div>
+
+        <div class="subsections-vertical">
+          <!-- Desafio 1: Shadow DOM -->
+          <div class="subsection">
+            <h3>Desafio 1: Interação com Shadow DOM</h3>
+            <p><strong>Objetivo:</strong> Localizar e interagir com elementos dentro de Shadow DOM, que não são acessíveis por seletores CSS tradicionais.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../senior/dinamicos/shadow-dom.html">Shadow DOM</a></li>
+              <li>Identifique elementos que estão encapsulados em Shadow DOM</li>
+              <li>Tente localizar esses elementos usando seletores CSS tradicionais (deve falhar)</li>
+              <li>Use JavaScript para acessar o Shadow Root</li>
+              <li>Localize elementos dentro do Shadow Root</li>
+              <li>Interaja com botões e inputs dentro do Shadow DOM</li>
+              <li>Valide estados e valores de elementos encapsulados</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Use <code>element.shadowRoot</code> para acessar o Shadow Root de um elemento</li>
+              <li>Use <code>shadowRoot.querySelector()</code> para localizar elementos dentro do Shadow DOM</li>
+              <li>Use <code>element.shadowRoot.querySelectorAll()</code> para múltiplos elementos</li>
+              <li>Verifique se o Shadow Root está aberto: <code>element.shadowRoot.mode === 'open'</code></li>
+              <li>Para Shadow DOM fechado, use <code>element.attachShadow({mode: 'closed'})</code> (limitado)</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Use DevTools para inspecionar Shadow DOM e identificar elementos</li>
+              <li><strong>Automação:</strong> Use JavaScript executor: <code>driver.executeScript("return document.querySelector('custom-element').shadowRoot.querySelector('button')")</code></li>
+              <li><strong>Validação:</strong> Verifique que seletores tradicionais não funcionam, mas acesso via shadowRoot funciona</li>
+              <li><strong>Assertivas:</strong> Valide que interações dentro do Shadow DOM funcionam corretamente</li>
+              <li><strong>Desafio:</strong> Crie estratégias de localização que funcionem tanto com Shadow DOM aberto quanto fechado</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 2: Large DOM -->
+          <div class="subsection">
+            <h3>Desafio 2: Performance em Large DOM</h3>
+            <p><strong>Objetivo:</strong> Testar performance e localização de elementos em uma página com milhares de elementos DOM.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../senior/dinamicos/large-dom.html">Large DOM</a></li>
+              <li>Medir o tempo de carregamento da página</li>
+              <li>Localizar um elemento específico entre milhares de elementos</li>
+              <li>Rolar até um elemento específico e validar sua visibilidade</li>
+              <li>Testar interação com elementos que não estão visíveis inicialmente</li>
+              <li>Validar performance de seletores CSS vs XPath vs data-testid</li>
+              <li>Testar scroll infinito se presente</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Use <code>data-testid</code> para localização mais eficiente (recomendado)</li>
+              <li>Evite seletores genéricos como <code>div</code> ou <code>span</code> que retornam muitos elementos</li>
+              <li>Use seletores mais específicos: <code>div[data-testid="item-1234"]</code></li>
+              <li>Use <code>isDisplayed()</code> ou <code>element.scrollIntoView()</code> para elementos fora da viewport</li>
+              <li>Considere usar <code>findElements()</code> e filtrar por visibilidade se necessário</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Use Performance tab do DevTools para medir tempo de renderização</li>
+              <li><strong>Automação:</strong> Meça tempo de localização: <code>start = time.time(); element = driver.find_element(...); end = time.time()</code></li>
+              <li><strong>Validação:</strong> Compare performance entre diferentes estratégias de localização</li>
+              <li><strong>Assertivas:</strong> Valide que elementos são encontrados corretamente mesmo em DOM grande</li>
+              <li><strong>Otimização:</strong> Use waits implícitos e explícitos apropriados para evitar timeouts</li>
+              <li><strong>Desafio:</strong> Otimize seletores para encontrar elementos em menos de 1 segundo em DOM com 10k+ elementos</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 3: Dynamic Content Loading -->
+          <div class="subsection">
+            <h3>Desafio 3: Conteúdo Dinâmico com Loading Assíncrono</h3>
+            <p><strong>Objetivo:</strong> Testar elementos que são carregados dinamicamente via AJAX/fetch com delays variáveis.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../senior/dinamicos/dynamic-content.html">Conteúdo Dinâmico</a></li>
+              <li>Identifique elementos que aparecem após carregamento assíncrono</li>
+              <li>Clique em um botão que dispara carregamento de conteúdo</li>
+              <li>Aguarde o conteúdo aparecer (pode ter delay de 1-5 segundos)</li>
+              <li>Valide que o conteúdo foi carregado corretamente</li>
+              <li>Teste múltiplos carregamentos sequenciais</li>
+              <li>Teste cenário de timeout (conteúdo que nunca carrega)</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Use <code>data-testid="loading-spinner"</code> para identificar estado de carregamento</li>
+              <li>Use <code>data-testid="dynamic-content"</code> para o conteúdo que será carregado</li>
+              <li>Use <code>WebDriverWait</code> com condições: <code>presence_of_element_located</code>, <code>visibility_of_element_located</code></li>
+              <li>Use <code>invisibility_of_element_located</code> para aguardar desaparecimento do spinner</li>
+              <li>Evite <code>time.sleep()</code> fixo - use waits explícitos</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Observe o comportamento e tempo de carregamento</li>
+              <li><strong>Automação:</strong> Use <code>WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "content")))</code></li>
+              <li><strong>Validação:</strong> Verifique que o conteúdo aparece após o carregamento</li>
+              <li><strong>Assertivas:</strong> Valide que o spinner desaparece quando conteúdo é carregado</li>
+              <li><strong>Espera:</strong> Configure timeouts apropriados (não muito curto, não muito longo)</li>
+              <li><strong>Desafio:</strong> Crie uma estratégia que funcione mesmo com delays variáveis (1-10 segundos)</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 4: Iframe -->
+          <div class="subsection">
+            <h3>Desafio 4: Interação com Iframe</h3>
+            <p><strong>Objetivo:</strong> Localizar e interagir com elementos dentro de um iframe, que requer mudança de contexto.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../senior/dinamicos/iframe.html">Iframe</a></li>
+              <li>Identifique o iframe na página principal</li>
+              <li>Tente localizar elementos dentro do iframe sem mudar contexto (deve falhar)</li>
+              <li>Mude o contexto para o iframe</li>
+              <li>Localize e interaja com elementos dentro do iframe</li>
+              <li>Volte para o contexto principal</li>
+              <li>Teste com múltiplos iframes aninhados</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Use <code>driver.find_element(By.TAG_NAME, "iframe")</code> ou <code>driver.find_element(By.ID, "iframe-id")</code></li>
+              <li>Mude contexto: <code>driver.switch_to.frame(iframe_element)</code> ou <code>driver.switch_to.frame("iframe-id")</code></li>
+              <li>Volte ao contexto principal: <code>driver.switch_to.default_content()</code></li>
+              <li>Para iframes aninhados: mude contexto sequencialmente para cada iframe</li>
+              <li>Use <code>driver.switch_to.parent_frame()</code> para voltar um nível</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Use DevTools para inspecionar elementos dentro do iframe</li>
+              <li><strong>Automação:</strong> Sempre mude contexto antes de interagir: <code>driver.switch_to.frame(iframe); element = driver.find_element(...); driver.switch_to.default_content()</code></li>
+              <li><strong>Validação:</strong> Verifique que elementos são encontrados apenas após mudança de contexto</li>
+              <li><strong>Assertivas:</strong> Valide que interações dentro do iframe funcionam corretamente</li>
+              <li><strong>Desafio:</strong> Crie uma função helper que gerencie mudanças de contexto automaticamente</li>
+              <li><strong>Armadilha:</strong> Sempre volte ao contexto principal após testes no iframe para evitar erros</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 5: Múltiplas Janelas -->
+          <div class="subsection">
+            <h3>Desafio 5: Gerenciamento de Múltiplas Janelas/Tabs</h3>
+            <p><strong>Objetivo:</strong> Testar abertura de novas janelas, alternância entre elas e validação de conteúdo em cada janela.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../senior/dinamicos/multiplas-janelas.html">Múltiplas Janelas</a></li>
+              <li>Identifique o botão que abre uma nova janela</li>
+              <li>Clique no botão e aguarde a nova janela abrir</li>
+              <li>Identifique todas as janelas abertas</li>
+              <li>Mude o foco para a nova janela</li>
+              <li>Valide conteúdo na nova janela</li>
+              <li>Feche a nova janela e retorne para a original</li>
+              <li>Teste abertura de múltiplas janelas simultaneamente</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Obtenha handle da janela atual: <code>current_window = driver.current_window_handle</code></li>
+              <li>Obtenha todos os handles: <code>all_windows = driver.window_handles</code></li>
+              <li>Mude para nova janela: <code>driver.switch_to.window(new_window_handle)</code></li>
+              <li>Identifique nova janela: <code>new_window = [w for w in all_windows if w != current_window][0]</code></li>
+              <li>Feche janela: <code>driver.close()</code> (fecha apenas a janela atual)</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Abra janelas e valide conteúdo visualmente</li>
+              <li><strong>Automação:</strong> Gerencie handles: <code>original = driver.current_window_handle; click_button(); new = [w for w in driver.window_handles if w != original][0]; driver.switch_to.window(new); validate(); driver.close(); driver.switch_to.window(original)</code></li>
+              <li><strong>Validação:</strong> Verifique que a nova janela foi aberta e contém conteúdo esperado</li>
+              <li><strong>Assertivas:</strong> Valide que após fechar, o controle retorna para a janela original</li>
+              <li><strong>Desafio:</strong> Crie uma função que gerencie múltiplas janelas e garanta que todas sejam fechadas no final</li>
+              <li><strong>Armadilha:</strong> Sempre volte para a janela original antes de finalizar testes</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 6: API Testing -->
+          <div class="subsection">
+            <h3>Desafio 6: Validação de Chamadas de API e Respostas</h3>
+            <p><strong>Objetivo:</strong> Interceptar e validar requisições HTTP, respostas de API e códigos de status.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../senior/apis/api.html">API Testing</a></li>
+              <li>Abra DevTools > Network tab</li>
+              <li>Execute uma ação que dispara chamada de API</li>
+              <li>Intercepte a requisição HTTP (método, URL, headers, body)</li>
+              <li>Valide a resposta (status code, body, headers)</li>
+              <li>Teste cenários de erro (400, 401, 500)</li>
+              <li>Valide que a UI reflete corretamente a resposta da API</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Use <code>driver.execute_cdp_cmd()</code> para habilitar Network domain (Chrome DevTools Protocol)</li>
+              <li>Use <code>Network.setRequestInterception(true)</code> para interceptar requisições</li>
+              <li>Use <code>requests</code> library (Python) ou <code>fetch</code> (JavaScript) para chamadas diretas</li>
+              <li>Use <code>driver.get_log('performance')</code> para logs de rede (limitado)</li>
+              <li>Use bibliotecas como <code>selenium-wire</code> ou <code>browsermob-proxy</code> para interceptação avançada</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Use Network tab do DevTools para inspecionar requisições</li>
+              <li><strong>Automação:</strong> Use CDP: <code>driver.execute_cdp_cmd('Network.enable', {}); driver.execute_cdp_cmd('Network.setRequestInterception', {'patterns': [{'urlPattern': '*'}]})</code></li>
+              <li><strong>Validação:</strong> Verifique que requisições têm método, URL e body corretos</li>
+              <li><strong>Assertivas:</strong> Valide status codes, estrutura de resposta JSON, e tempo de resposta</li>
+              <li><strong>Desafio:</strong> Crie testes que validem tanto a chamada de API quanto a atualização da UI baseada na resposta</li>
+              <li><strong>Mock:</strong> Considere usar mocks/stubs para testar diferentes cenários de resposta sem depender do backend real</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 7: Autenticação HTTP Basic/Digest -->
+          <div class="subsection">
+            <h3>Desafio 7: Autenticação HTTP Basic e Digest</h3>
+            <p><strong>Objetivo:</strong> Testar acesso a páginas protegidas por autenticação HTTP Basic e Digest.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../senior/dinamicos/autenticacao-basica.html">Autenticação Básica</a></li>
+              <li>Tente acessar a URL protegida (deve aparecer popup de autenticação)</li>
+              <li>Forneça credenciais corretas e valide acesso</li>
+              <li>Forneça credenciais incorretas e valide rejeição</li>
+              <li>Teste autenticação Digest em <a href="../senior/dinamicos/digest-authentication.html">Digest Authentication</a></li>
+              <li>Valide que conteúdo protegido só é exibido após autenticação bem-sucedida</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Use URL com credenciais: <code>http://username:password@example.com</code> (não recomendado, pode não funcionar)</li>
+              <li>Use <code>driver.execute_cdp_cmd()</code> para autenticação: <code>driver.execute_cdp_cmd('Network.setExtraHTTPHeaders', {'headers': {'Authorization': 'Basic ' + base64.b64encode('user:pass').decode()}})</code></li>
+              <li>Use bibliotecas como <code>requests</code> com <code>auth=(user, pass)</code> para testes de API</li>
+              <li>Para Digest: use <code>requests</code> com <code>HTTPDigestAuth</code></li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Use popup do navegador para inserir credenciais</li>
+              <li><strong>Automação:</strong> Use CDP antes de navegar: <code>driver.execute_cdp_cmd('Network.enable', {}); driver.execute_cdp_cmd('Network.setExtraHTTPHeaders', {'headers': {'Authorization': 'Basic ' + base64_encoded_credentials}}); driver.get(url)</code></li>
+              <li><strong>Validação:</strong> Verifique que conteúdo protegido é exibido após autenticação</li>
+              <li><strong>Assertivas:</strong> Valide que acesso sem credenciais é negado</li>
+              <li><strong>Desafio:</strong> Crie uma função helper que gerencie autenticação Basic e Digest automaticamente</li>
+              <li><strong>Segurança:</strong> Nunca hardcode credenciais no código - use variáveis de ambiente ou vaults</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 8: Dynamic IDs -->
+          <div class="subsection">
+            <h3>Desafio 8: Elementos com IDs Dinâmicos</h3>
+            <p><strong>Objetivo:</strong> Localizar elementos que têm IDs gerados dinamicamente e mudam a cada carregamento.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../senior/dinamicos/id-dinamico.html">ID Dinâmico</a></li>
+              <li>Identifique elementos que têm IDs que mudam</li>
+              <li>Recarregue a página e observe que IDs mudaram</li>
+              <li>Encontre atributos estáticos que podem ser usados para localização</li>
+              <li>Crie estratégias de localização que não dependam de IDs</li>
+              <li>Teste localização usando XPath relativo, CSS selectors com outros atributos, ou data-testid</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Evite usar IDs se eles são dinâmicos</li>
+              <li>Use <code>data-testid</code> se disponível (recomendado)</li>
+              <li>Use XPath com texto: <code>//button[contains(text(), 'Salvar')]</code></li>
+              <li>Use XPath com atributos: <code>//div[@class='item' and contains(@data-value, 'specific')]</code></li>
+              <li>Use CSS selectors com outros atributos: <code>button[type='submit'][class='btn-primary']</code></li>
+              <li>Use XPath com posição relativa: <code>//table//tr[2]//td[3]</code> (cuidado com mudanças de layout)</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Inspecione elementos e identifique atributos estáticos</li>
+              <li><strong>Automação:</strong> Crie seletores robustos: <code>driver.find_element(By.XPATH, "//button[@data-action='save']")</code> ou <code>driver.find_element(By.CSS_SELECTOR, "button[data-testid='save-btn']")</code></li>
+              <li><strong>Validação:</strong> Recarregue página múltiplas vezes e valide que seletores ainda funcionam</li>
+              <li><strong>Assertivas:</strong> Valide que elementos são encontrados independentemente do ID dinâmico</li>
+              <li><strong>Desafio:</strong> Crie uma estratégia de localização que funcione mesmo se estrutura HTML mudar ligeiramente</li>
+              <li><strong>Boas Práticas:</strong> Priorize data-testid > CSS selectors > XPath > ID (quando ID é dinâmico)</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 9: JavaScript Errors -->
+          <div class="subsection">
+            <h3>Desafio 9: Captura e Validação de Erros JavaScript</h3>
+            <p><strong>Objetivo:</strong> Detectar e validar erros JavaScript que ocorrem durante a execução de testes.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../senior/dinamicos/js-error.html">JavaScript Error</a></li>
+              <li>Abra DevTools > Console tab</li>
+              <li>Execute ações que podem gerar erros JavaScript</li>
+              <li>Observe erros no console</li>
+              <li>Valide que erros são capturados corretamente</li>
+              <li>Teste diferentes tipos de erros (ReferenceError, TypeError, etc.)</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Habilite logging: <code>driver.set_log_level('SEVERE')</code> ou configure LoggingPreferences</li>
+              <li>Obtenha logs do navegador: <code>logs = driver.get_log('browser')</code></li>
+              <li>Filtre por nível: <code>errors = [log for log in logs if log['level'] == 'SEVERE']</code></li>
+              <li>Use <code>driver.execute_script()</code> para verificar <code>window.onerror</code></li>
+              <li>Use CDP: <code>driver.execute_cdp_cmd('Runtime.enable', {})</code> para capturar exceptions</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Use Console tab do DevTools para ver erros</li>
+              <li><strong>Automação:</strong> Configure antes de navegar: <code>capabilities.set_capability('goog:loggingPrefs', {'browser': 'ALL'}); logs = driver.get_log('browser'); assert len([l for l in logs if l['level'] == 'SEVERE']) == 0</code></li>
+              <li><strong>Validação:</strong> Verifique que não há erros JavaScript não tratados</li>
+              <li><strong>Assertivas:</strong> Valide que erros esperados (em testes negativos) são capturados</li>
+              <li><strong>Desafio:</strong> Crie um helper que capture e reporte todos os erros JavaScript durante a execução de testes</li>
+              <li><strong>Nota:</strong> Alguns erros podem ser esperados em testes negativos - filtre apropriadamente</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 10: OAuth2 e Autenticação Avançada -->
+          <div class="subsection">
+            <h3>Desafio 10: Fluxo de Autenticação OAuth2</h3>
+            <p><strong>Objetivo:</strong> Testar o fluxo completo de autenticação OAuth2 incluindo redirecionamentos e tokens.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../senior/dinamicos/oauth2-providers.html">OAuth2 Providers</a></li>
+              <li>Clique no botão de login com OAuth2</li>
+              <li>Observe redirecionamento para página de autorização</li>
+              <li>Preencha credenciais no provider (se simulado)</li>
+              <li>Autorize o acesso</li>
+              <li>Valide redirecionamento de volta com código/token</li>
+              <li>Valide que usuário está autenticado na aplicação</li>
+              <li>Teste cenário de negação de autorização</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Monitore mudanças de URL: <code>driver.current_url</code></li>
+              <li>Procure por parâmetros na URL: <code>code=</code>, <code>token=</code>, <code>state=</code></li>
+              <li>Use <code>driver.execute_script('return localStorage.getItem("token")')</code> para tokens armazenados</li>
+              <li>Use <code>driver.get_cookies()</code> para verificar cookies de sessão</li>
+              <li>Intercepte requisições para capturar tokens (usando CDP ou proxy)</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Execute o fluxo completo e observe cada etapa</li>
+              <li><strong>Automação:</strong> Gerencie redirecionamentos: <code>click_login(); wait_for_url_contains('authorize'); fill_credentials(); authorize(); wait_for_url_contains('callback'); validate_token()</code></li>
+              <li><strong>Validação:</strong> Verifique que token é recebido e armazenado corretamente</li>
+              <li><strong>Assertivas:</strong> Valide que usuário está autenticado após fluxo completo</li>
+              <li><strong>Desafio:</strong> Crie testes que funcionem tanto com providers reais quanto com mocks/stubs</li>
+              <li><strong>Segurança:</strong> Nunca commite tokens ou credenciais - use variáveis de ambiente</li>
+              <li><strong>Complexidade:</strong> Gerencie timeouts apropriados para cada etapa do fluxo OAuth2</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <div style="margin-top: var(--spacing-xl); text-align: center;">
+        <a href="index.html" class="btn btn-secondary">← Voltar para Desafios</a>
+        <a href="../../index.html" class="btn btn-secondary" style="margin-left: var(--spacing-md);">← Voltar para Início</a>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../js/app.js"></script>
+  </body>
+</html>

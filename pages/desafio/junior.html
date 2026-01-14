@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Desafios Júnior — QA Playground</title>
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="../fundamentos.html">Fundamentos</a></li>
+            <li><a href="../junior/formularios/">Formulários</a></li>
+            <li><a href="../junior/tabelas/">Tabelas</a></li>
+            <li><a href="../junior/interacoes/">Interações</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="junior.html">Desafios Júnior</a></li>
+                <li><a href="pleno.html">Desafios Pleno</a></li>
+                <li><a href="senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <h1>Desafios Nível Júnior</h1>
+        <p>
+          Desafios básicos focados em fundamentos de QA, localização de elementos e validações simples.
+        </p>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Desafios Nível Júnior</h2>
+          <div class="section-desc">Desafios básicos focados em fundamentos de QA, localização de elementos e validações simples.</div>
+        </div>
+
+        <div class="subsections-vertical">
+          <!-- Desafio 1: Formulário de Login -->
+          <div class="subsection">
+            <h3>Desafio 1: Validação de Formulário de Login</h3>
+            <p><strong>Objetivo:</strong> Testar o formulário de login com validações de campos obrigatórios e mensagens de erro.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../junior/formularios/login.html">Formulário de Login</a></li>
+              <li>Tente submeter o formulário sem preencher nenhum campo</li>
+              <li>Preencha apenas o campo de email e tente submeter</li>
+              <li>Preencha apenas o campo de senha e tente submeter</li>
+              <li>Preencha ambos os campos com dados válidos e submeta</li>
+              <li>Teste com email inválido (sem @, sem domínio, etc.)</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Use <code>id="email"</code> ou <code>data-testid="input-email"</code> para localizar o campo de email</li>
+              <li>Use <code>id="senha"</code> ou <code>data-testid="input-senha"</code> para localizar o campo de senha</li>
+              <li>Use <code>id="btn-login"</code> ou <code>data-testid="btn-login"</code> para localizar o botão de login</li>
+              <li>Mensagens de erro podem ser encontradas por <code>id="email-error"</code> e <code>id="senha-error"</code></li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Execute os passos acima e verifique se as mensagens de erro aparecem corretamente</li>
+              <li><strong>Automação:</strong> Crie testes que validem a presença de mensagens de erro quando campos estão vazios</li>
+              <li><strong>Validação:</strong> Verifique se o formulário só permite submissão quando ambos os campos estão válidos</li>
+              <li><strong>Assertivas:</strong> Verifique se mensagens de erro desaparecem quando campos são preenchidos corretamente</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 2: Tabela Dinâmica -->
+          <div class="subsection">
+            <h3>Desafio 2: Validação de Dados em Tabela</h3>
+            <p><strong>Objetivo:</strong> Validar dados exibidos em uma tabela dinâmica e verificar a consistência das informações.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../junior/tabelas/dynamic.html">Tabela Dinâmica</a></li>
+              <li>Conte o número total de linhas na tabela</li>
+              <li>Identifique todas as colunas presentes</li>
+              <li>Verifique se há dados duplicados</li>
+              <li>Valide se todos os valores numéricos estão no formato correto</li>
+              <li>Verifique se há células vazias ou com dados inválidos</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Use <code>data-testid="tabela-dados"</code> ou selecione por <code>table</code> para localizar a tabela</li>
+              <li>Use <code>tbody tr</code> para encontrar todas as linhas de dados</li>
+              <li>Use <code>th</code> para localizar os cabeçalhos das colunas</li>
+              <li>Use <code>td:nth-child(n)</code> para acessar colunas específicas</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Inspecione visualmente cada linha e valide os dados</li>
+              <li><strong>Automação:</strong> Crie um script que percorra todas as linhas e valide o formato dos dados</li>
+              <li><strong>Validação:</strong> Verifique se a quantidade de linhas corresponde ao esperado</li>
+              <li><strong>Assertivas:</strong> Valide que todos os valores numéricos são positivos e estão no formato correto</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 3: Checkboxes e Radio Buttons -->
+          <div class="subsection">
+            <h3>Desafio 3: Interação com Checkboxes e Radio Buttons</h3>
+            <p><strong>Objetivo:</strong> Testar a seleção e deseleção de checkboxes e radio buttons, validando estados e comportamentos.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../junior/interacoes/checkboxes.html">Checkboxes</a></li>
+              <li>Selecione um checkbox e verifique se ele fica marcado</li>
+              <li>Deselecione o mesmo checkbox e verifique se ele fica desmarcado</li>
+              <li>Selecione múltiplos checkboxes simultaneamente</li>
+              <li>Acesse a página <a href="../junior/interacoes/radio-buttons.html">Radio Buttons</a></li>
+              <li>Selecione uma opção de radio e verifique se outras são desmarcadas automaticamente</li>
+              <li>Teste se é possível desmarcar um radio button já selecionado</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Use <code>input[type="checkbox"]</code> para localizar checkboxes</li>
+              <li>Use <code>input[type="radio"]</code> para localizar radio buttons</li>
+              <li>Use <code>data-testid</code> específicos como <code>data-testid="checkbox-aceite"</code></li>
+              <li>Use <code>name</code> attribute para agrupar radio buttons</li>
+              <li>Verifique o estado com <code>.checked</code> property</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Clique em cada elemento e verifique visualmente o estado</li>
+              <li><strong>Automação:</strong> Use <code>isSelected()</code> ou <code>.checked</code> para validar estados</li>
+              <li><strong>Validação:</strong> Verifique que apenas um radio pode estar selecionado por grupo</li>
+              <li><strong>Assertivas:</strong> Valide que checkboxes podem ter múltiplas seleções simultâneas</li>
+            </ul>
+          </div>
+
+          <!-- Desafio 4: Dropdown List -->
+          <div class="subsection">
+            <h3>Desafio 4: Seleção em Dropdown List</h3>
+            <p><strong>Objetivo:</strong> Testar a seleção de opções em um dropdown e validar o valor selecionado.</p>
+            
+            <h4>Como Executar:</h4>
+            <ol>
+              <li>Acesse a página <a href="../junior/interacoes/dropdown-list.html">Dropdown List</a></li>
+              <li>Clique no dropdown e verifique todas as opções disponíveis</li>
+              <li>Selecione a primeira opção e valide o valor</li>
+              <li>Selecione a última opção e valide o valor</li>
+              <li>Selecione uma opção do meio e valide o valor</li>
+              <li>Verifique se há uma opção padrão quando o dropdown é carregado</li>
+            </ol>
+
+            <h4>Como Procurar:</h4>
+            <ul>
+              <li>Use <code>select</code> element ou <code>id</code> específico</li>
+              <li>Use <code>data-testid="select-pais"</code> para localizar o dropdown</li>
+              <li>Use <code>option</code> elements dentro do select para acessar opções</li>
+              <li>Use <code>select.value</code> ou <code>select.selectedIndex</code> para obter o valor selecionado</li>
+            </ul>
+
+            <h4>Forma de Testar:</h4>
+            <ul>
+              <li><strong>Manual:</strong> Selecione cada opção e verifique se o valor é atualizado corretamente</li>
+              <li><strong>Automação:</strong> Use <code>Select</code> class do Selenium ou <code>selectByVisibleText()</code></li>
+              <li><strong>Validação:</strong> Verifique se o valor selecionado corresponde ao esperado</li>
+              <li><strong>Assertivas:</strong> Valide que todas as opções estão disponíveis e podem ser selecionadas</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <div style="margin-top: var(--spacing-xl); text-align: center;">
+        <a href="index.html" class="btn btn-secondary">← Voltar para Desafios</a>
+        <a href="../../index.html" class="btn btn-secondary" style="margin-left: var(--spacing-md);">← Voltar para Início</a>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../js/app.js"></script>
+  </body>
+</html>
