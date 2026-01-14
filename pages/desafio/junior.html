@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Desafios Júnior — QA Playground</title>
-    <link rel="stylesheet" href="../../css/styles.css" />
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link rel="stylesheet" href="../../css/challenge.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
@@ -805,89 +806,7 @@ Selecionar Dropdown
       QA Playground — Projeto educacional • Português
     </footer>
 
-    <script src="../../js/app.js"></script>
-    <script>
-      // Gerenciamento de código escondido com confirmação
-      document.querySelectorAll('.code-reveal-button').forEach(button => {
-        button.addEventListener('click', function() {
-          const targetId = this.getAttribute('data-target');
-          const container = document.getElementById(targetId);
-          
-          // Se o código já está visível, esconde diretamente
-          if (container && container.classList.contains('active')) {
-            container.classList.remove('active');
-            // Atualiza texto do botão
-            const svg = this.querySelector('svg');
-            this.innerHTML = svg.outerHTML + ' Ver Exemplos de Código';
-            return;
-          }
-          
-          // Se está escondido, mostra dialog de confirmação
-          const overlay = document.getElementById('confirm-overlay');
-          const dialog = document.getElementById('confirm-dialog');
-          
-          overlay.classList.add('active');
-          dialog.classList.add('active');
-          
-          // Salva o target para usar após confirmação
-          dialog.dataset.targetId = targetId;
-        });
-      });
-      
-      // Botão Sim - mostra código
-      document.getElementById('confirm-ok').addEventListener('click', function() {
-        const dialog = document.getElementById('confirm-dialog');
-        const targetId = dialog.dataset.targetId;
-        const container = document.getElementById(targetId);
-        const overlay = document.getElementById('confirm-overlay');
-        const button = document.querySelector(`[data-target="${targetId}"]`);
-        
-        if (container) {
-          container.classList.add('active');
-          // Atualiza texto do botão
-          if (button) {
-            const svg = button.querySelector('svg');
-            button.innerHTML = svg.outerHTML + ' Esconder Exemplos de Código';
-          }
-        }
-        
-        overlay.classList.remove('active');
-        dialog.classList.remove('active');
-      });
-      
-      // Botão Não - fecha dialog
-      document.getElementById('confirm-cancel').addEventListener('click', function() {
-        const overlay = document.getElementById('confirm-overlay');
-        const dialog = document.getElementById('confirm-dialog');
-        
-        overlay.classList.remove('active');
-        dialog.classList.remove('active');
-      });
-      
-      // Fecha dialog ao clicar no overlay
-      document.getElementById('confirm-overlay').addEventListener('click', function() {
-        this.classList.remove('active');
-        document.getElementById('confirm-dialog').classList.remove('active');
-      });
-      
-      // Gerenciamento de tabs de código
-      document.querySelectorAll('.code-tab').forEach(tab => {
-        tab.addEventListener('click', function() {
-          const targetId = this.getAttribute('data-target');
-          const container = this.closest('.code-tabs-container');
-          
-          // Remove active de todas as tabs e contents
-          container.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
-          container.querySelectorAll('.code-content').forEach(c => c.classList.remove('active'));
-          
-          // Adiciona active na tab e content selecionados
-          this.classList.add('active');
-          const content = container.querySelector('#' + targetId);
-          if (content) {
-            content.classList.add('active');
-          }
-        });
-      });
-    </script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/challenge.js"></script>
   </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>QA Playground — Demo</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/main.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
@@ -50,34 +50,34 @@
         </div>
 
         <!-- Seção Júnior -->
-        <div class="section">
+        <section class="section">
           <div class="section-header">
             <h2>Nível Júnior</h2>
             <div class="section-desc">Conceitos básicos de QA, automação e validação de elementos simples.</div>
           </div>
-        <div class="card-grid">
+          <div class="card-grid">
           <!-- Júnior: exemplos básicos -->
           <div class="card card-formulario"><h3>Entradas de Formulário</h3><p>Pratique com campos de texto, números, senhas e datas em formulários web.</p><a href="pages/junior/formularios/" class="btn">Acessar</a></div>
           <div class="card card-tabela"><h3>Tabelas</h3><p>Teste a validação de valores em tabelas com conteúdo dinâmico e operações CRUD.</p><a href="pages/junior/tabelas/" class="btn">Acessar</a></div>
           <div class="card card-interacao"><h3>Interações</h3><p>Pratique com botões de rádio, checkboxes, dropdowns e outros elementos de seleção.</p><a href="pages/junior/interacoes/" class="btn">Acessar</a></div>
-        </div>
-        </div>
+          </div>
+        </section>
 
         <!-- Seção Pleno -->
-        <div class="section">
+        <section class="section">
           <div class="section-header">
             <h2>Nível Pleno</h2>
             <div class="section-desc">Cenários intermediários, manipulação dinâmica, tabelas, arquivos e interações mais complexas.</div>
           </div>
-        <div class="card-grid">
+          <div class="card-grid">
           <div class="card card-tabela"><h3>Tabelas</h3><p>Teste tabelas com paginação dinâmica, ordenação e filtros complexos.</p><a href="pages/pleno/tabelas/" class="btn">Acessar</a></div>
           <div class="card card-interacao"><h3>Interações</h3><p>Pratique drag and drop, hovers, sliders e outras interações avançadas.</p><a href="pages/pleno/interacoes/" class="btn">Acessar</a></div>
           <div class="card card-arquivo"><h3>Arquivos</h3><p>Teste upload e download de arquivos em diferentes formatos.</p><a href="pages/pleno/arquivos/" class="btn">Acessar</a></div>
-        </div>
-        </div>
+          </div>
+        </section>
 
         <!-- Seção Sênior -->
-        <div class="section">
+        <section class="section">
           <div class="section-header">
             <h2>Nível Sênior</h2>
             <div class="section-desc">Desafios avançados, automação complexa, manipulação de DOM, APIs, autenticação e cenários reais de QA.</div>
@@ -88,10 +88,10 @@
           <div class="card card-dinamico"><h3>APIs e Autenticação</h3><p>Teste APIs REST, OAuth 2.0, autenticação HTTP e códigos de status.</p><a href="pages/senior/apis/" class="btn">Acessar</a></div>
           <div class="card card-dinamico"><h3>Utilitários</h3><p>Ferramentas e utilitários: informações do navegador, IP, testes flaky e apps React.</p><a href="pages/senior/utilitarios/" class="btn">Acessar</a></div>
           </div>
-        </div>
+        </section>
 
         <!-- Seção Ferramentas para QA e SDET -->
-        <div class="section">
+        <section class="section">
           <div class="section-header">
             <h2>Ferramentas para Engenheiros QA e SDET</h2>
             <div class="section-desc">Ferramentas práticas para auxiliar na automação de testes, validação de seletores e desenvolvimento de estratégias de teste.</div>
@@ -102,7 +102,7 @@
           <div class="card card-dinamico"><h3>BDD Playground</h3><p>Crie, valide e avalie cenários BDD em Gherkin. Aprenda na prática com validação automática e feedback educacional.</p><a href="pages/tools/bdd-playground.html" class="btn">Acessar</a></div>
           <div class="card card-dinamico"><h3>Cenários NFT</h3><p>Cenários práticos de testes não funcionais com situações reais para execução e prática de NFT.</p><a href="pages/tools/nft/index.html" class="btn">Acessar</a></div>
           </div>
-        </div>
+        </section>
       </section>
 
       <section class="notes">
@@ -121,27 +121,7 @@
       </div>
     </footer>
 
-    <script src="js/app.js"></script>
-      <script>
-        // Filtro de cards por pesquisa (ignora case e acentos)
-        function normalize(str) {
-          return str
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/\p{Diacritic}/gu, '');
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-          const searchInput = document.getElementById('searchInput');
-          if (!searchInput) return;
-          searchInput.addEventListener('input', function() {
-            const query = normalize(this.value);
-            const cards = document.querySelectorAll('.card-grid .card');
-            cards.forEach(card => {
-              const text = normalize(card.innerText);
-              card.style.display = text.includes(query) ? '' : 'none';
-            });
-          });
-        });
-      </script>
+    <script src="js/main.js"></script>
+    <script src="js/home.js"></script>
   </body>
 </html>

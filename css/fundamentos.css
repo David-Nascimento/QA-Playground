@@ -1,0 +1,168 @@
+/* ========================================
+   Fundamentos Page Styles
+   Estilos específicos para página de Fundamentos
+   ======================================== */
+
+.search-container {
+  position: sticky;
+  top: calc(var(--header-height) + var(--spacing-md));
+  background: var(--surface);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--spacing-lg);
+  z-index: 100;
+}
+
+.search-input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-base);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(122, 168, 116, 0.1);
+  outline: none;
+}
+
+.content-section {
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background: var(--surface);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: opacity 0.3s ease;
+}
+
+.content-section.hidden {
+  display: none;
+}
+
+.content-section h3 {
+  color: var(--accent);
+  margin-top: 0;
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid rgba(122, 168, 116, 0.2);
+}
+
+.content-section h4 {
+  color: var(--text);
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-lg);
+}
+
+.content-card {
+  background: rgba(0, 0, 0, 0.02);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  border-left: 4px solid var(--accent);
+  margin-bottom: var(--spacing-md);
+}
+
+.content-card h5 {
+  margin-top: 0;
+  color: var(--accent);
+  font-size: var(--font-size-base);
+}
+
+.link-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.link-list li {
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.link-list li:last-child {
+  border-bottom: none;
+}
+
+.link-list a {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.link-list a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.link-list a::before {
+  content: '🔗';
+  font-size: 1.2em;
+}
+
+.badge-cert {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--accent);
+  color: white;
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  margin-left: var(--spacing-sm);
+}
+
+.highlight-text {
+  background: rgba(255, 248, 200, 0.3);
+  padding: 2px 6px;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+}
+
+.no-results {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: var(--muted);
+  display: none;
+}
+
+.no-results.show {
+  display: block;
+}
+
+.toc {
+  background: var(--surface);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--spacing-xl);
+}
+
+.toc h3 {
+  margin-top: 0;
+  color: var(--accent);
+}
+
+.toc ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc li {
+  padding: var(--spacing-xs) 0;
+}
+
+.toc a {
+  color: var(--text);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.toc a:hover {
+  opacity: 0.8;
+}
