@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Informações do Navegador — QA Playground</title>
+    <link rel="stylesheet" href="../../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../../index.html">Início</a></li>
+            <li><a href="../index.html">Utilitários</a></li>
+            <li><a href="browser-info.html" aria-current="page">Informações do Navegador</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Informações do Navegador</h2>
+          <div class="section-desc">Veja e valide informações do navegador e do ambiente de teste. Esta página exibe detalhes sobre o user agent, resolução da tela, timezone, idioma e outras informações úteis para testes.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Informações do Ambiente</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              As informações abaixo são coletadas automaticamente do navegador e podem ser validadas em testes automatizados.
+            </p>
+
+            <div id="browser-info" data-testid="browser-info" style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <div class="info-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-md);">
+                <div class="info-item">
+                  <strong>User Agent:</strong>
+                  <div id="user-agent" data-testid="user-agent" style="color: var(--muted); font-size: var(--font-size-sm); word-break: break-all; margin-top: var(--spacing-xs);"></div>
+                </div>
+                <div class="info-item">
+                  <strong>Plataforma:</strong>
+                  <div id="platform" data-testid="platform" style="color: var(--muted); font-size: var(--font-size-sm); margin-top: var(--spacing-xs);"></div>
+                </div>
+                <div class="info-item">
+                  <strong>Idioma:</strong>
+                  <div id="language" data-testid="language" style="color: var(--muted); font-size: var(--font-size-sm); margin-top: var(--spacing-xs);"></div>
+                </div>
+                <div class="info-item">
+                  <strong>Timezone:</strong>
+                  <div id="timezone" data-testid="timezone" style="color: var(--muted); font-size: var(--font-size-sm); margin-top: var(--spacing-xs);"></div>
+                </div>
+                <div class="info-item">
+                  <strong>Resolução da Tela:</strong>
+                  <div id="screen-resolution" data-testid="screen-resolution" style="color: var(--muted); font-size: var(--font-size-sm); margin-top: var(--spacing-xs);"></div>
+                </div>
+                <div class="info-item">
+                  <strong>Viewport:</strong>
+                  <div id="viewport" data-testid="viewport" style="color: var(--muted); font-size: var(--font-size-sm); margin-top: var(--spacing-xs);"></div>
+                </div>
+                <div class="info-item">
+                  <strong>Cookies Habilitados:</strong>
+                  <div id="cookies-enabled" data-testid="cookies-enabled" style="color: var(--muted); font-size: var(--font-size-sm); margin-top: var(--spacing-xs);"></div>
+                </div>
+                <div class="info-item">
+                  <strong>Local Storage:</strong>
+                  <div id="local-storage" data-testid="local-storage" style="color: var(--muted); font-size: var(--font-size-sm); margin-top: var(--spacing-xs);"></div>
+                </div>
+                <div class="info-item">
+                  <strong>Session Storage:</strong>
+                  <div id="session-storage" data-testid="session-storage" style="color: var(--muted); font-size: var(--font-size-sm); margin-top: var(--spacing-xs);"></div>
+                </div>
+                <div class="info-item">
+                  <strong>Online:</strong>
+                  <div id="online-status" data-testid="online-status" style="color: var(--muted); font-size: var(--font-size-sm); margin-top: var(--spacing-xs);"></div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: var(--spacing-md); text-align: center;">
+              <button id="btn-refresh" class="btn" data-testid="btn-refresh">Atualizar Informações</button>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Validar informações do user agent</li>
+                <li>Verificar resolução da tela e viewport</li>
+                <li>Testar detecção de recursos do navegador</li>
+                <li>Validar timezone e idioma</li>
+                <li>Testar detecção de status online/offline</li>
+                <li>Validar suporte a cookies e storage</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Validar informações do navegador
+cy.get('[data-testid="user-agent"]').should('not.be.empty')
+cy.get('[data-testid="platform"]').should('contain', 'Win')
+cy.get('[data-testid="screen-resolution"]').should('match', /\d+x\d+/)
+cy.get('[data-testid="btn-refresh"]').click()
+cy.get('[data-testid="viewport"]').should('not.be.empty')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Obter informações
+const userAgent = await page.getByTestId('user-agent').textContent()
+const platform = await page.getByTestId('platform').textContent()
+expect(userAgent).toBeTruthy()
+expect(platform).toBeTruthy()
+
+// Atualizar informações
+await page.getByTestId('btn-refresh').click()
+await expect(page.getByTestId('viewport')).not.toBeEmpty()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Validar informações
+WebElement userAgent = driver.findElement(By.cssSelector("[data-testid='user-agent']"));
+assert !userAgent.getText().isEmpty();
+WebElement resolution = driver.findElement(By.cssSelector("[data-testid='screen-resolution']"));
+assert resolution.getText().matches("\\d+x\\d+");
+driver.findElement(By.cssSelector("[data-testid='btn-refresh']")).click();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Validar informações
+expect(page).to have_css('[data-testid="user-agent"]', text: /.+/)
+expect(page).to have_css('[data-testid="screen-resolution"]', text: /\d+x\d+/)
+click_button '[data-testid="btn-refresh"]'
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Validar informações do navegador
+    Element Should Not Be Empty    css:[data-testid="user-agent"]
+    Element Text Should Match Regexp    css:[data-testid="screen-resolution"]    \\d+x\\d+
+    Click Button    css:[data-testid="btn-refresh"]
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="browser-info"</code> - Container principal</li>
+                <li><code>data-testid="user-agent"</code> - User agent string</li>
+                <li><code>data-testid="platform"</code> - Plataforma do sistema</li>
+                <li><code>data-testid="screen-resolution"</code> - Resolução da tela</li>
+                <li><code>data-testid="btn-refresh"</code> - Botão de atualizar</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../../js/app.js"></script>
+    <script>
+      function updateBrowserInfo() {
+        document.getElementById('user-agent').textContent = navigator.userAgent || 'Não disponível';
+        document.getElementById('platform').textContent = navigator.platform || 'Não disponível';
+        document.getElementById('language').textContent = navigator.language || 'Não disponível';
+        document.getElementById('timezone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Não disponível';
+        document.getElementById('screen-resolution').textContent = `${screen.width}x${screen.height}`;
+        document.getElementById('viewport').textContent = `${window.innerWidth}x${window.innerHeight}`;
+        document.getElementById('cookies-enabled').textContent = navigator.cookieEnabled ? 'Sim' : 'Não';
+        document.getElementById('local-storage').textContent = typeof(Storage) !== 'undefined' ? 'Disponível' : 'Não disponível';
+        document.getElementById('session-storage').textContent = typeof(sessionStorage) !== 'undefined' ? 'Disponível' : 'Não disponível';
+        document.getElementById('online-status').textContent = navigator.onLine ? 'Online' : 'Offline';
+      }
+      
+      document.getElementById('btn-refresh').addEventListener('click', function() {
+        updateBrowserInfo();
+        window.showToast('Informações atualizadas!');
+      });
+      
+      // Atualizar viewport quando a janela for redimensionada
+      window.addEventListener('resize', function() {
+        document.getElementById('viewport').textContent = `${window.innerWidth}x${window.innerHeight}`;
+      });
+      
+      // Atualizar status online/offline
+      window.addEventListener('online', function() {
+        document.getElementById('online-status').textContent = 'Online';
+      });
+      
+      window.addEventListener('offline', function() {
+        document.getElementById('online-status').textContent = 'Offline';
+      });
+      
+      // Inicializar
+      updateBrowserInfo();
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          const tabs = tabsContainer.querySelectorAll('.test-tab');
+          tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              
+              const targetId = this.dataset.target;
+              if (!targetId) return;
+              
+              // Remove active de todas as abas
+              tabs.forEach(t => t.classList.remove('active'));
+              document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+              // Adiciona active na aba clicada
+              this.classList.add('active');
+              const targetContent = document.getElementById(targetId);
+              if (targetContent) {
+                targetContent.classList.add('active');
+              }
+            });
+          });
+        }
+
+        // Aguardar DOM estar pronto
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          setTimeout(initTabs, 50);
+        }
+      })();
+    </script>
+  </body>
+</html>

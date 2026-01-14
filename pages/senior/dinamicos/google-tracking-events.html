@@ -1,19 +1,238 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Google Tracking Events</title>
-  <link rel="stylesheet" href="../../../css/styles.css">
-  <script>
-    function trackEvent() {
-      alert('Evento de rastreamento simulado!');
-    }
-  </script>
-</head>
-<body>
-  <h1>Google Tracking Events</h1>
-  <button onclick="trackEvent()">Simular Evento de Rastreamento</button>
-  <p>Simule eventos para testar automação de rastreamento.</p>
-  <a href="../../../index.html">Voltar</a>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Google Tracking Events — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="google-tracking-events.html" aria-current="page">Google Tracking</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Google Tracking Events</h2>
+          <div class="section-desc">Valide eventos de rastreamento do Google Analytics. Esta página simula eventos de tracking do Google Analytics, permitindo testar a captura e validação de eventos de rastreamento em automação.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Eventos de Rastreamento</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Clique nos botões abaixo para disparar eventos de rastreamento simulados. Teste a captura desses eventos em automação.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md); display: flex; flex-wrap: wrap; gap: var(--spacing-sm);">
+              <button id="btn-track-pageview" class="btn" data-testid="btn-track-pageview">Page View</button>
+              <button id="btn-track-click" class="btn" data-testid="btn-track-click">Click Event</button>
+              <button id="btn-track-conversion" class="btn" data-testid="btn-track-conversion">Conversion</button>
+              <button id="btn-track-custom" class="btn btn-secondary" data-testid="btn-track-custom">Custom Event</button>
+            </div>
+
+            <div id="tracking-result" data-testid="tracking-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 150px;">
+              <p class="muted" style="margin: 0;">Nenhum evento disparado ainda.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar captura de eventos de pageview</li>
+                <li>Validar eventos de clique</li>
+                <li>Testar eventos de conversão</li>
+                <li>Validar eventos customizados</li>
+                <li>Testar interceptação de requisições de tracking</li>
+                <li>Validar parâmetros dos eventos</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Interceptar eventos de tracking
+cy.intercept('POST', '**/collect**', { statusCode: 200 }).as('gaEvent')
+cy.get('[data-testid="btn-track-click"]').click()
+cy.wait('@gaEvent').then((interception) => {
+  expect(interception.request.body).to.include('event')
+})
+
+// Validar que evento foi disparado
+cy.window().its('dataLayer').should('have.length.greaterThan', 0)
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Capturar eventos
+await page.route('**/collect**', route => {
+  console.log('Evento de tracking:', route.request().postData())
+  route.continue()
+})
+await page.getByTestId('btn-track-conversion').click()
+
+// Verificar dataLayer
+const dataLayer = await page.evaluate(() => window.dataLayer || [])
+expect(dataLayer.length).toBeGreaterThan(0)
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Verificar dataLayer
+JavascriptExecutor js = (JavascriptExecutor) driver;
+List&lt;Map&lt;String, Object&gt;&gt; dataLayer = (List&lt;Map&lt;String, Object&gt;&gt;) js.executeScript("return window.dataLayer || []");
+assert dataLayer.size() > 0;
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Verificar dataLayer
+data_layer = page.evaluate_script('window.dataLayer || []')
+expect(data_layer.length).to be > 0
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Verificar eventos de tracking
+    ${data_layer}=    Execute JavaScript    return window.dataLayer || []
+    Should Not Be Empty    ${data_layer}
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="btn-track-pageview"</code> - Botão pageview</li>
+                <li><code>data-testid="btn-track-click"</code> - Botão click event</li>
+                <li><code>data-testid="btn-track-conversion"</code> - Botão conversion</li>
+                <li><code>data-testid="btn-track-custom"</code> - Botão custom event</li>
+                <li><code>data-testid="tracking-result"</code> - Resultado dos eventos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      // Simular dataLayer do Google Analytics
+      window.dataLayer = window.dataLayer || [];
+      
+      const resultEl = document.getElementById('tracking-result');
+      let eventCount = 0;
+
+      function trackEvent(eventName, eventParams = {}) {
+        eventCount++;
+        const event = {
+          event: eventName,
+          ...eventParams,
+          timestamp: new Date().toISOString()
+        };
+        
+        window.dataLayer.push(event);
+        
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        const existing = resultEl.innerHTML;
+        resultEl.innerHTML = `
+          <div style="margin-bottom: var(--spacing-sm); padding-bottom: var(--spacing-sm); border-bottom: 1px solid rgba(122, 168, 116, 0.2);">
+            <p style="margin: 0 0 var(--spacing-xs) 0;"><strong style="color: var(--accent);">Evento #${eventCount}:</strong> ${eventName}</p>
+            <pre style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted); background: var(--bg); padding: var(--spacing-xs); border-radius: var(--border-radius-sm); overflow-x: auto;">${JSON.stringify(eventParams, null, 2)}</pre>
+            <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+          </div>
+          ${existing.includes('Nenhum evento') ? '' : existing}
+        `;
+        
+        console.log('Evento de tracking:', event);
+        window.showToast(`Evento "${eventName}" disparado!`);
+      }
+
+      document.getElementById('btn-track-pageview').addEventListener('click', () => {
+        trackEvent('pageview', { page: '/test-page', title: 'Test Page' });
+      });
+
+      document.getElementById('btn-track-click').addEventListener('click', () => {
+        trackEvent('click', { element: 'button', action: 'click', label: 'Track Click Button' });
+      });
+
+      document.getElementById('btn-track-conversion').addEventListener('click', () => {
+        trackEvent('conversion', { value: 100, currency: 'BRL', transaction_id: 'TXN-' + Date.now() });
+      });
+
+      document.getElementById('btn-track-custom').addEventListener('click', () => {
+        trackEvent('custom_event', { category: 'test', action: 'custom', label: 'Custom Tracking' });
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

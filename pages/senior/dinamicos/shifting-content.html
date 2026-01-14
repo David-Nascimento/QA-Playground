@@ -1,28 +1,229 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Shifting Content</title>
-  <link rel="stylesheet" href="../../../css/styles.css">
-  <style>
-    #shift {
-      transition: margin-left 0.5s;
-      margin-left: 0;
-    }
-    #shift.shifted {
-      margin-left: 100px;
-    }
-  </style>
-  <script>
-    function shiftContent() {
-      document.getElementById('shift').classList.toggle('shifted');
-    }
-  </script>
-</head>
-<body>
-  <h1>Shifting Content</h1>
-  <button onclick="shiftContent()">Mover Conteúdo</button>
-  <div id="shift" style="background:#222;padding:20px;color:#fff;width:200px;">Conteúdo que se move</div>
-  <a href="../../../index.html">Voltar</a>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Shifting Content — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="shifting-content.html" aria-current="page">Shifting Content</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Shifting Content</h2>
+          <div class="section-desc">Valide mudanças de layout e conteúdo inesperadas. Esta página demonstra elementos que mudam de posição, simulando problemas de layout que podem causar testes flaky.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Conteúdo que se Move</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Clique no botão abaixo para mover o conteúdo. Teste a validação de elementos que mudam de posição.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-shift" class="btn" data-testid="btn-mover-conteudo">Mover Conteúdo</button>
+              <button id="btn-reset-shift" class="btn btn-secondary" data-testid="btn-reset-shift">Resetar Posição</button>
+            </div>
+
+            <div style="position: relative; min-height: 150px; margin-bottom: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border: 2px dashed rgba(122, 168, 116, 0.3); border-radius: var(--border-radius-md);">
+              <div id="shift-content" data-testid="shift-content" style="background: var(--accent); color: white; padding: var(--spacing-lg); border-radius: var(--border-radius-md); width: 200px; text-align: center; transition: all 0.5s ease; position: relative; left: 0;">
+                <p style="margin: 0; font-weight: 600;">Conteúdo que se move</p>
+              </div>
+            </div>
+
+            <div id="shift-status" data-testid="shift-status" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+              <p class="muted" style="margin: 0;">Conteúdo na posição inicial.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar elementos que mudam de posição</li>
+                <li>Validar posição de elementos após movimento</li>
+                <li>Testar cliques em elementos que se movem</li>
+                <li>Validar que seletores funcionam após movimento</li>
+                <li>Testar screenshots comparativos</li>
+                <li>Validar layout após mudanças de posição</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Validar posição de elemento
+cy.get('[data-testid="shift-content"]').should('have.css', 'left', '0px')
+cy.get('[data-testid="btn-mover-conteudo"]').click()
+cy.get('[data-testid="shift-content"]').should('not.have.css', 'left', '0px')
+
+// Validar posição específica
+cy.get('[data-testid="shift-content"]').then(($el) => {
+  const left = $el.css('left')
+  expect(left).to.not.equal('0px')
+})
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Validar movimento
+const element = page.getByTestId('shift-content')
+const initialLeft = await element.evaluate(el => el.offsetLeft)
+await page.getByTestId('btn-mover-conteudo').click()
+await page.waitForTimeout(600) // Aguardar transição
+const newLeft = await element.evaluate(el => el.offsetLeft)
+expect(newLeft).not.toBe(initialLeft)
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Validar movimento
+WebElement content = driver.findElement(By.cssSelector("[data-testid='shift-content']"));
+JavascriptExecutor js = (JavascriptExecutor) driver;
+Long initialLeft = (Long) js.executeScript("return arguments[0].offsetLeft;", content);
+driver.findElement(By.cssSelector("[data-testid='btn-mover-conteudo']")).click();
+Thread.sleep(600);
+Long newLeft = (Long) js.executeScript("return arguments[0].offsetLeft;", content);
+assert !newLeft.equals(initialLeft);
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Validar movimento
+element = find('[data-testid="shift-content"]')
+initial_left = page.evaluate_script('arguments[0].offsetLeft', element.native)
+click_button '[data-testid="btn-mover-conteudo"]'
+sleep 0.6
+new_left = page.evaluate_script('arguments[0].offsetLeft', element.native)
+expect(new_left).not_to eq(initial_left)
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Validar movimento de conteúdo
+    ${initial_left}=    Execute JavaScript    return document.querySelector('[data-testid="shift-content"]').offsetLeft
+    Click Button    css:[data-testid="btn-mover-conteudo"]
+    Sleep    0.6s
+    ${new_left}=    Execute JavaScript    return document.querySelector('[data-testid="shift-content"]').offsetLeft
+    Should Not Be Equal    ${new_left}    ${initial_left}
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="shift-content"</code> - Conteúdo que se move</li>
+                <li><code>data-testid="btn-mover-conteudo"</code> - Botão mover</li>
+                <li><code>data-testid="btn-reset-shift"</code> - Botão resetar</li>
+                <li><code>data-testid="shift-status"</code> - Status do movimento</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      const shiftContent = document.getElementById('shift-content');
+      const statusEl = document.getElementById('shift-status');
+      let isShifted = false;
+
+      function shiftContentFunc() {
+        isShifted = !isShifted;
+        shiftContent.style.left = isShifted ? '100px' : '0px';
+        
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        statusEl.innerHTML = `
+          <p style="margin: 0;"><strong>✅ Conteúdo ${isShifted ? 'movido' : 'resetado'}</strong></p>
+          <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Posição: ${isShifted ? '100px' : '0px'} | Horário: ${timestamp}</p>
+        `;
+        window.showToast(`Conteúdo ${isShifted ? 'movido' : 'resetado'}!`);
+      }
+
+      function resetShift() {
+        isShifted = false;
+        shiftContent.style.left = '0px';
+        statusEl.innerHTML = '<p class="muted" style="margin: 0;">Conteúdo na posição inicial.</p>';
+        window.showToast('Posição resetada!');
+      }
+
+      document.getElementById('btn-shift').addEventListener('click', shiftContentFunc);
+      document.getElementById('btn-reset-shift').addEventListener('click', resetShift);
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

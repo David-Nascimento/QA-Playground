@@ -1,39 +1,264 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Cookie Consent Alert</title>
-  <link rel="stylesheet" href="../../../css/styles.css">
-  <style>
-    #cookieConsent {
-      display: none;
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: #222;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-      z-index: 1000;
-    }
-  </style>
-  <script>
-    window.onload = function() {
-      if (!localStorage.getItem('cookieAccepted')) {
-        document.getElementById('cookieConsent').style.display = 'block';
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Cookie Consent Alert — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="cookie-consent-alert.html" aria-current="page">Cookie Consent</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Cookie Consent Alert</h2>
+          <div class="section-desc">Valide alertas de consentimento de cookies. Esta página simula um banner de cookies que aparece na primeira visita e pode ser aceito ou recusado, comum em sites que seguem LGPD/GDPR.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Banner de Cookies</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Um banner de cookies aparecerá automaticamente se você ainda não aceitou. Teste a automação de aceitação/recusa de cookies.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-reset-cookies" class="btn btn-secondary" data-testid="btn-reset-cookies">Resetar Consentimento</button>
+            </div>
+
+            <div id="cookie-consent" data-testid="cookie-consent" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); color: var(--text); padding: var(--spacing-md); text-align: center; z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); border-top: 2px solid var(--accent);">
+              <div style="max-width: 800px; margin: 0 auto;">
+                <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>🍪 Este site usa cookies</strong></p>
+                <p style="margin: 0 0 var(--spacing-md) 0; color: var(--muted); font-size: var(--font-size-sm);">Utilizamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com nossa política de cookies.</p>
+                <div style="display: flex; gap: var(--spacing-sm); justify-content: center; flex-wrap: wrap;">
+                  <button id="btn-aceitar-cookies" class="btn" data-testid="btn-aceitar-cookies">Aceitar Cookies</button>
+                  <button id="btn-recusar-cookies" class="btn btn-secondary" data-testid="btn-recusar-cookies">Recusar</button>
+                  <button id="btn-politica-cookies" class="btn btn-secondary" data-testid="btn-politica-cookies">Política de Cookies</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="cookie-status" data-testid="cookie-status" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+              <p class="muted" style="margin: 0;">Verificando consentimento de cookies...</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar banner que aparece na primeira visita</li>
+                <li>Validar aceitação de cookies</li>
+                <li>Testar recusa de cookies</li>
+                <li>Validar que banner não aparece após aceitar</li>
+                <li>Testar persistência em localStorage</li>
+                <li>Validar botão de política de cookies</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Aceitar cookies
+cy.get('[data-testid="cookie-consent"]').should('be.visible')
+cy.get('[data-testid="btn-aceitar-cookies"]').click()
+cy.get('[data-testid="cookie-consent"]').should('not.be.visible')
+cy.window().its('localStorage.cookieAccepted').should('eq', 'true')
+
+// Recusar cookies
+cy.get('[data-testid="btn-recusar-cookies"]').click()
+cy.window().its('localStorage.cookieAccepted').should('eq', 'false')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Aceitar cookies
+await page.getByTestId('cookie-consent').waitFor({ state: 'visible' })
+await page.getByTestId('btn-aceitar-cookies').click()
+await expect(page.getByTestId('cookie-consent')).not.toBeVisible()
+const accepted = await page.evaluate(() => localStorage.getItem('cookieAccepted'))
+expect(accepted).toBe('true')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Aceitar cookies
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+wait.until(ExpectedConditions.visibilityOfElementLocated(
+  By.cssSelector("[data-testid='cookie-consent']")
+));
+driver.findElement(By.cssSelector("[data-testid='btn-aceitar-cookies']")).click();
+wait.until(ExpectedConditions.invisibilityOfElementLocated(
+  By.cssSelector("[data-testid='cookie-consent']")
+));
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Aceitar cookies
+expect(page).to have_css('[data-testid="cookie-consent"]', visible: true)
+click_button '[data-testid="btn-aceitar-cookies"]'
+expect(page).to have_no_css('[data-testid="cookie-consent"]', visible: true)
+accepted = page.evaluate_script('localStorage.getItem("cookieAccepted")')
+expect(accepted).to eq('true')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Aceitar cookies
+    Wait Until Element Is Visible    css:[data-testid="cookie-consent"]    timeout=5s
+    Click Button    css:[data-testid="btn-aceitar-cookies"]
+    Wait Until Element Is Not Visible    css:[data-testid="cookie-consent"]    timeout=5s
+    ${accepted}=    Execute JavaScript    return localStorage.getItem('cookieAccepted')
+    Should Be Equal    ${accepted}    true
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="cookie-consent"</code> - Banner de cookies</li>
+                <li><code>data-testid="btn-aceitar-cookies"</code> - Botão aceitar</li>
+                <li><code>data-testid="btn-recusar-cookies"</code> - Botão recusar</li>
+                <li><code>data-testid="btn-politica-cookies"</code> - Botão política</li>
+                <li><code>data-testid="btn-reset-cookies"</code> - Botão resetar</li>
+                <li><code>data-testid="cookie-status"</code> - Status do consentimento</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      const cookieConsent = document.getElementById('cookie-consent');
+      const btnAceitar = document.getElementById('btn-aceitar-cookies');
+      const btnRecusar = document.getElementById('btn-recusar-cookies');
+      const btnPolitica = document.getElementById('btn-politica-cookies');
+      const btnReset = document.getElementById('btn-reset-cookies');
+      const statusEl = document.getElementById('cookie-status');
+
+      function atualizarStatus() {
+        const accepted = localStorage.getItem('cookieAccepted');
+        if (accepted === 'true') {
+          statusEl.innerHTML = '<p style="margin: 0; color: var(--accent);"><strong>✅ Cookies aceitos</strong></p>';
+        } else if (accepted === 'false') {
+          statusEl.innerHTML = '<p style="margin: 0; color: var(--muted);"><strong>Cookies recusados</strong></p>';
+        } else {
+          statusEl.innerHTML = '<p class="muted" style="margin: 0;">Nenhum consentimento registrado.</p>';
+        }
       }
-    };
-    function aceitarCookies() {
-      localStorage.setItem('cookieAccepted', 'true');
-      document.getElementById('cookieConsent').style.display = 'none';
-    }
-  </script>
-</head>
-<body>
-  <h1>Cookie Consent Alert</h1>
-  <div id="cookieConsent">
-    Este site utiliza cookies para melhorar sua experiência.
-    <button onclick="aceitarCookies()">Aceitar</button>
-  </div>
-  <a href="../../../index.html">Voltar</a>
-</body>
+
+      function aceitarCookies() {
+        localStorage.setItem('cookieAccepted', 'true');
+        cookieConsent.style.display = 'none';
+        atualizarStatus();
+        window.showToast('Cookies aceitos!');
+      }
+
+      function recusarCookies() {
+        localStorage.setItem('cookieAccepted', 'false');
+        cookieConsent.style.display = 'none';
+        atualizarStatus();
+        window.showToast('Cookies recusados!');
+      }
+
+      function mostrarPolitica() {
+        window.showToast('Política de cookies: Este site usa cookies para melhorar a experiência do usuário.');
+      }
+
+      function resetCookies() {
+        localStorage.removeItem('cookieAccepted');
+        cookieConsent.style.display = 'block';
+        atualizarStatus();
+        window.showToast('Consentimento resetado!');
+      }
+
+      btnAceitar.addEventListener('click', aceitarCookies);
+      btnRecusar.addEventListener('click', recusarCookies);
+      btnPolitica.addEventListener('click', mostrarPolitica);
+      btnReset.addEventListener('click', resetCookies);
+
+      // Verificar se já aceitou
+      window.addEventListener('load', function() {
+        if (!localStorage.getItem('cookieAccepted')) {
+          cookieConsent.style.display = 'block';
+        }
+        atualizarStatus();
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

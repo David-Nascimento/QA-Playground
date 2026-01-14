@@ -1,39 +1,230 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>JQuery UI Menus — QA Playground</title>
-  <link rel="stylesheet" href="../../../css/styles.css" />
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
-</head>
-<body>
-  <main class="container">
-    <h1>JQuery UI Menus</h1>
-    <p>Valide menus e navegação com JQuery UI.</p>
-    <ul id="menu">
-      <li>Arquivo
-        <ul>
-          <li>Novo</li>
-          <li>Abrir</li>
-          <li>Salvar</li>
-        </ul>
-      </li>
-      <li>Editar
-        <ul>
-          <li>Copiar</li>
-          <li>Colar</li>
-        </ul>
-      </li>
-      <li>Ajuda</li>
-    </ul>
-  </main>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-  <script>
-    $(function() {
-      $("#menu").menu();
-    });
-  </script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>JQuery UI Menus — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="jquery-ui-menus.html" aria-current="page">JQuery UI Menus</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>JQuery UI Menus</h2>
+          <div class="section-desc">Valide menus e navegação com JQuery UI. Esta página permite testar a automação de menus jQuery UI, navegação em submenus e interação com itens de menu.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Menu JQuery UI</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Clique nos itens do menu abaixo para abrir submenus. Teste a navegação e interação com menus jQuery UI.
+            </p>
+
+            <div style="margin-bottom: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md);">
+              <ul id="menu" data-testid="menu-jquery" style="list-style: none; padding: 0; margin: 0;">
+                <li data-testid="menu-item-arquivo">Arquivo
+                  <ul>
+                    <li data-testid="menu-item-novo">Novo</li>
+                    <li data-testid="menu-item-abrir">Abrir</li>
+                    <li data-testid="menu-item-salvar">Salvar</li>
+                    <li data-testid="menu-item-sair">Sair</li>
+                  </ul>
+                </li>
+                <li data-testid="menu-item-editar">Editar
+                  <ul>
+                    <li data-testid="menu-item-copiar">Copiar</li>
+                    <li data-testid="menu-item-colar">Colar</li>
+                    <li data-testid="menu-item-recortar">Recortar</li>
+                  </ul>
+                </li>
+                <li data-testid="menu-item-ajuda">Ajuda
+                  <ul>
+                    <li data-testid="menu-item-sobre">Sobre</li>
+                    <li data-testid="menu-item-documentacao">Documentação</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+
+            <div id="menu-result" data-testid="menu-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+              <p class="muted" style="margin: 0;">Clique em um item do menu para ver o resultado.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar abertura de menus e submenus</li>
+                <li>Validar clique em itens de menu</li>
+                <li>Testar navegação em menus aninhados</li>
+                <li>Validar que submenus aparecem ao passar o mouse</li>
+                <li>Testar seleção de itens específicos</li>
+                <li>Validar eventos de menu jQuery UI</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Clicar em item de menu
+cy.get('[data-testid="menu-item-arquivo"]').trigger('mouseover')
+cy.get('[data-testid="menu-item-novo"]').should('be.visible').click()
+cy.get('[data-testid="menu-result"]').should('contain', 'Novo')
+
+// Navegar em submenu
+cy.get('[data-testid="menu-item-editar"]').trigger('mouseover')
+cy.get('[data-testid="menu-item-copiar"]').click()
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Interagir com menu
+await page.getByTestId('menu-item-arquivo').hover()
+await page.getByTestId('menu-item-salvar').click()
+await expect(page.getByTestId('menu-result')).toContainText('Salvar')
+
+// Navegar em submenu
+await page.getByTestId('menu-item-editar').hover()
+await page.getByTestId('menu-item-copiar').click()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Menu jQuery UI
+WebElement arquivo = driver.findElement(By.cssSelector("[data-testid='menu-item-arquivo']"));
+Actions actions = new Actions(driver);
+actions.moveToElement(arquivo).perform();
+WebElement novo = driver.findElement(By.cssSelector("[data-testid='menu-item-novo']"));
+actions.moveToElement(novo).click().perform();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Interagir com menu
+find('[data-testid="menu-item-arquivo"]').hover
+find('[data-testid="menu-item-novo"]').click
+expect(page).to have_content('Novo', within: '[data-testid="menu-result"]')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Clicar em item de menu
+    Mouse Over    css:[data-testid="menu-item-arquivo"]
+    Wait Until Element Is Visible    css:[data-testid="menu-item-novo"]    timeout=2s
+    Click Element    css:[data-testid="menu-item-novo"]
+    Element Should Contain    css:[data-testid="menu-result"]    Novo
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="menu-jquery"</code> - Menu principal</li>
+                <li><code>data-testid="menu-item-arquivo"</code> - Item Arquivo</li>
+                <li><code>data-testid="menu-item-novo"</code> - Item Novo</li>
+                <li><code>data-testid="menu-item-editar"</code> - Item Editar</li>
+                <li><code>data-testid="menu-item-ajuda"</code> - Item Ajuda</li>
+                <li><code>data-testid="menu-result"</code> - Resultado da ação</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script>
+      $(function() {
+        $("#menu").menu({
+          select: function(event, ui) {
+            const itemText = ui.item.text();
+            const timestamp = new Date().toLocaleTimeString('pt-BR');
+            document.getElementById('menu-result').innerHTML = `
+              <p style="margin: 0; color: var(--accent);"><strong>✅ Item selecionado: ${itemText}</strong></p>
+              <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+            `;
+            window.showToast(`Menu "${itemText}" selecionado!`);
+          }
+        });
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

@@ -1,44 +1,315 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cypress Spies, Stubs e Clocks — QA Playground</title>
-  <link rel="stylesheet" href="../../../css/styles.css" />
-</head>
-<body>
-  <main class="container">
-    <h1>Cypress Spies, Stubs e Clocks</h1>
-    <p>Pratique técnicas avançadas de automação com Cypress: espiões, stubs e manipulação de tempo.</p>
-    <h2>Exemplo de Função para Espionar</h2>
-    <button id="btn-alert" data-testid="btn-alert">Disparar alerta</button>
-    <h2>Exemplo de XHR para Stub</h2>
-    <button id="btn-xhr" data-testid="btn-xhr">Buscar dados simulados</button>
-    <div id="xhr-result" style="margin-top:10px;"></div>
-    <h2>Exemplo de Clock/Timer</h2>
-    <button id="btn-timer" data-testid="btn-timer">Iniciar timer de 3s</button>
-    <div id="timer-result" style="margin-top:10px;"></div>
-  </main>
-  <script>
-    // Função para espiar com Cypress
-    document.getElementById('btn-alert').onclick = function() {
-      alert('Alerta disparado!');
-    };
-    // Simulação de XHR para stub
-    document.getElementById('btn-xhr').onclick = function() {
-      fetch('https://jsonplaceholder.typicode.com/users/1')
-        .then(r=>r.json())
-        .then(data=>{
-          document.getElementById('xhr-result').innerHTML = 'Nome: '+data.name+'<br>Email: '+data.email;
-        });
-    };
-    // Timer para clock
-    document.getElementById('btn-timer').onclick = function() {
-      document.getElementById('timer-result').textContent = 'Aguardando...';
-      setTimeout(()=>{
-        document.getElementById('timer-result').textContent = 'Timer finalizado!';
-      }, 3000);
-    };
-  </script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Cypress Spies, Stubs e Clocks — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Interações (Sênior)</a></li>
+            <li><a href="cypress.html" aria-current="page">Cypress</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Cypress Spies, Stubs e Clocks</h2>
+          <div class="section-desc">Pratique técnicas avançadas de automação com Cypress: espiões (spies), stubs e manipulação de tempo (clocks). Essas funcionalidades permitem controlar comportamentos externos e testar cenários complexos de forma isolada.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Exemplo de Função para Espionar (Spy)</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Use <code>cy.spy()</code> para observar chamadas de funções sem alterar seu comportamento.
+            </p>
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-alert" class="btn" data-testid="btn-alert">Disparar alerta</button>
+            </div>
+            <div id="alert-result" data-testid="alert-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 50px;">
+              <p class="muted" style="margin: 0;">Nenhum alerta disparado ainda.</p>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Exemplo de XHR/Fetch para Stub</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Use <code>cy.intercept()</code> ou <code>cy.stub()</code> para interceptar e mockar requisições HTTP.
+            </p>
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-xhr" class="btn" data-testid="btn-xhr">Buscar dados simulados</button>
+            </div>
+            <div id="xhr-result" data-testid="xhr-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent-2); min-height: 50px;">
+              <p class="muted" style="margin: 0;">Nenhuma requisição realizada ainda.</p>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Exemplo de Clock/Timer</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Use <code>cy.clock()</code> e <code>cy.tick()</code> para controlar o tempo e testar timers, delays e timeouts.
+            </p>
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-timer" class="btn" data-testid="btn-timer">Iniciar timer de 3s</button>
+              <button id="btn-reset-timer" class="btn btn-secondary" data-testid="btn-reset-timer">Resetar</button>
+            </div>
+            <div id="timer-result" data-testid="timer-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 50px;">
+              <p class="muted" style="margin: 0;">Timer não iniciado.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Espionar chamadas de funções (window.alert, console.log, etc.)</li>
+                <li>Interceptar e mockar requisições HTTP (fetch, XMLHttpRequest)</li>
+                <li>Controlar timers e delays para testes mais rápidos</li>
+                <li>Validar que funções foram chamadas com os parâmetros corretos</li>
+                <li>Testar comportamentos assíncronos de forma determinística</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Espiar função alert
+cy.window().then((win) => {
+  cy.stub(win, 'alert').as('alertStub')
+})
+cy.get('[data-testid="btn-alert"]').click()
+cy.get('@alertStub').should('have.been.called')
+
+// Interceptar fetch
+cy.intercept('GET', '**/users/1', { fixture: 'user.json' }).as('getUser')
+cy.get('[data-testid="btn-xhr"]').click()
+cy.wait('@getUser')
+
+// Controlar timer
+cy.clock()
+cy.get('[data-testid="btn-timer"]').click()
+cy.tick(3000)
+cy.get('[data-testid="timer-result"]').should('contain', 'Timer finalizado')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Espiar e stub
+await page.route('**/users/1', route => route.fulfill({ json: { name: 'Mock User' } }))
+await page.getByTestId('btn-xhr').click()
+
+// Controlar timer
+await page.getByTestId('btn-timer').click()
+await page.waitForTimeout(3000)
+await expect(page.getByTestId('timer-result')).toContainText('Timer finalizado')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Interceptar requisições (requer biblioteca adicional)
+// Use bibliotecas como WireMock ou MockServer para interceptar requisições
+// Ou use Chrome DevTools Protocol para interceptar requisições
+
+// Controlar timer (simulação)
+driver.findElement(By.cssSelector("[data-testid='btn-timer']")).click();
+Thread.sleep(3000);
+WebElement result = driver.findElement(By.cssSelector("[data-testid='timer-result']"));
+assert result.getText().contains("Timer finalizado");
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Stub de requisições
+page.driver.browser.execute_script("window.fetch = function() { return Promise.resolve({json: () => Promise.resolve({name: 'Mock User'})}); }")
+click_button '[data-testid="btn-xhr"]'
+
+# Controlar timer
+click_button '[data-testid="btn-timer"]'
+sleep 3
+expect(page).to have_content('Timer finalizado', within: '[data-testid="timer-result"]')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Interceptar requisições
+    # Use bibliotecas como requests-mock ou configure proxy
+    # Para timer, aguarde o tempo necessário
+    Click Element    css:[data-testid="btn-timer"]
+    Sleep    3s
+    Element Should Contain    css:[data-testid="timer-result"]    Timer finalizado
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="btn-alert"</code> - Botão para disparar alerta</li>
+                <li><code>data-testid="alert-result"</code> - Resultado do alerta</li>
+                <li><code>data-testid="btn-xhr"</code> - Botão para buscar dados</li>
+                <li><code>data-testid="xhr-result"</code> - Resultado da requisição</li>
+                <li><code>data-testid="btn-timer"</code> - Botão para iniciar timer</li>
+                <li><code>data-testid="timer-result"</code> - Resultado do timer</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      // Função para espiar com Cypress
+      document.getElementById('btn-alert').addEventListener('click', function() {
+        window.alert('Alerta disparado! Esta função pode ser espionada com cy.spy() ou cy.stub().');
+        const resultEl = document.getElementById('alert-result');
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        resultEl.innerHTML = `
+          <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>✅ Alerta disparado:</strong></p>
+          <p style="margin: 0; color: var(--muted);">A função window.alert() foi chamada</p>
+          <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+        `;
+      });
+
+      // Simulação de XHR/Fetch para stub
+      document.getElementById('btn-xhr').addEventListener('click', function() {
+        const resultEl = document.getElementById('xhr-result');
+        resultEl.innerHTML = '<span class="muted">Carregando...</span>';
+        
+        // Simular delay de rede
+        setTimeout(() => {
+          // Dados mockados (em um teste real, você usaria cy.intercept())
+          const mockData = {
+            id: 1,
+            name: 'João Silva',
+            email: 'joao@exemplo.com',
+            username: 'joaosilva'
+          };
+          
+          const timestamp = new Date().toLocaleTimeString('pt-BR');
+          resultEl.innerHTML = `
+            <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>✅ Dados recebidos:</strong></p>
+            <pre style="margin: 0; font-size: var(--font-size-sm); color: var(--muted);">${JSON.stringify(mockData, null, 2)}</pre>
+            <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+          `;
+          window.showToast('Dados carregados com sucesso!');
+        }, 800);
+      });
+
+      // Timer para clock
+      let timerInterval = null;
+      let timerSeconds = 0;
+      
+      document.getElementById('btn-timer').addEventListener('click', function() {
+        const resultEl = document.getElementById('timer-result');
+        const btn = this;
+        
+        if (timerInterval) {
+          clearInterval(timerInterval);
+        }
+        
+        timerSeconds = 0;
+        btn.disabled = true;
+        resultEl.innerHTML = '<span class="muted">Timer iniciado... 0s</span>';
+        
+        timerInterval = setInterval(() => {
+          timerSeconds++;
+          resultEl.innerHTML = `<span class="muted">Timer em execução... ${timerSeconds}s</span>`;
+          
+          if (timerSeconds >= 3) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            btn.disabled = false;
+            const timestamp = new Date().toLocaleTimeString('pt-BR');
+            resultEl.innerHTML = `
+              <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>✅ Timer finalizado:</strong></p>
+              <p style="margin: 0; color: var(--muted);">Timer de 3 segundos concluído</p>
+              <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+            `;
+            window.showToast('Timer finalizado!');
+          }
+        }, 1000);
+      });
+      
+      document.getElementById('btn-reset-timer').addEventListener('click', function() {
+        if (timerInterval) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+        }
+        document.getElementById('btn-timer').disabled = false;
+        document.getElementById('timer-result').innerHTML = '<p class="muted" style="margin: 0;">Timer não iniciado.</p>';
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          const tabs = tabsContainer.querySelectorAll('.test-tab');
+          tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              
+              const targetId = this.dataset.target;
+              if (!targetId) return;
+              
+              // Remove active de todas as abas
+              tabs.forEach(t => t.classList.remove('active'));
+              document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+              // Adiciona active na aba clicada
+              this.classList.add('active');
+              const targetContent = document.getElementById(targetId);
+              if (targetContent) {
+                targetContent.classList.add('active');
+              }
+            });
+          });
+        }
+
+        // Aguardar DOM estar pronto
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          setTimeout(initTabs, 50);
+        }
+      })();
+    </script>
+  </body>
 </html>

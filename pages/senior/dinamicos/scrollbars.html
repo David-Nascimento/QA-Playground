@@ -1,25 +1,263 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Scrollbars</title>
-  <link rel="stylesheet" href="../../../css/styles.css">
-  <style>
-    #scrollArea {
-      width: 300px;
-      height: 100px;
-      overflow: auto;
-      background: #222;
-      color: #fff;
-      padding: 10px;
-    }
-  </style>
-</head>
-<body>
-  <h1>Scrollbars</h1>
-  <div id="scrollArea">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum euismod, nisl vel tincidunt dictum, sapien urna cursus enim, nec dictum massa enim nec urna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam euismod, urna eu tincidunt consectetur, nisi nisl aliquam enim, nec dictum massa enim nec urna.</p>
-  </div>
-  <a href="../../../index.html">Voltar</a>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Scrollbars — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="scrollbars.html" aria-current="page">Scrollbars</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Scrollbars</h2>
+          <div class="section-desc">Teste barras de rolagem customizadas e nativas. Esta página permite testar a automação de scroll, validação de conteúdo em áreas com scroll e interação com elementos que requerem rolagem para serem visíveis.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Área com Scroll</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              A área abaixo possui scroll. Teste a rolagem e validação de conteúdo que requer scroll para ser visível.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-scroll-top" class="btn btn-secondary" data-testid="btn-scroll-top">Rolar para o Topo</button>
+              <button id="btn-scroll-bottom" class="btn btn-secondary" data-testid="btn-scroll-bottom">Rolar para o Final</button>
+              <button id="btn-scroll-middle" class="btn btn-secondary" data-testid="btn-scroll-middle">Rolar para o Meio</button>
+            </div>
+
+            <div id="scroll-area" data-testid="scroll-area" style="width: 100%; height: 300px; overflow: auto; background: var(--surface); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md); padding: var(--spacing-md); margin-bottom: var(--spacing-md);">
+              <div id="scroll-content" data-testid="scroll-content">
+                <p id="item-top" data-testid="item-top" style="padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-md);"><strong>Item no Topo</strong> - Este é o primeiro item da lista.</p>
+                <p style="padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-md);">Item 2 - Conteúdo intermediário.</p>
+                <p style="padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-md);">Item 3 - Mais conteúdo.</p>
+                <p style="padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-md);">Item 4 - Continuando a lista.</p>
+                <p style="padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-md);">Item 5 - Meio da lista.</p>
+                <p id="item-middle" data-testid="item-middle" style="padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-md);"><strong>Item no Meio</strong> - Este item está no meio da lista.</p>
+                <p style="padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-md);">Item 7 - Mais conteúdo.</p>
+                <p style="padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-md);">Item 8 - Continuando.</p>
+                <p style="padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-md);">Item 9 - Quase no final.</p>
+                <p id="item-bottom" data-testid="item-bottom" style="padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-md);"><strong>Item no Final</strong> - Este é o último item da lista.</p>
+              </div>
+            </div>
+
+            <div id="scroll-status" data-testid="scroll-status" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+              <p class="muted" style="margin: 0;">Use os botões ou role manualmente para testar.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar scroll programático (topo, meio, final)</li>
+                <li>Validar que elementos ficam visíveis após scroll</li>
+                <li>Testar scroll até elemento específico</li>
+                <li>Validar posição de scroll</li>
+                <li>Testar interação com elementos após scroll</li>
+                <li>Validar conteúdo que requer scroll para ser visto</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Scroll até elemento
+cy.get('[data-testid="scroll-area"]').scrollTo('bottom')
+cy.get('[data-testid="item-bottom"]').should('be.visible')
+
+// Scroll até elemento específico
+cy.get('[data-testid="item-middle"]').scrollIntoView()
+cy.get('[data-testid="item-middle"]').should('be.visible')
+
+// Validar posição de scroll
+cy.get('[data-testid="scroll-area"]').scrollTo(0, 500)
+cy.get('[data-testid="scroll-area"]').should(($el) => {
+  expect($el[0].scrollTop).to.be.greaterThan(0)
+})
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Scroll até elemento
+await page.getByTestId('item-bottom').scrollIntoViewIfNeeded()
+await expect(page.getByTestId('item-bottom')).toBeVisible()
+
+// Scroll até meio
+await page.getByTestId('item-middle').scrollIntoViewIfNeeded()
+await expect(page.getByTestId('item-middle')).toBeVisible()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Scroll até elemento
+WebElement element = driver.findElement(By.cssSelector("[data-testid='item-bottom']"));
+JavascriptExecutor js = (JavascriptExecutor) driver;
+js.executeScript("arguments[0].scrollIntoView(true);", element);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+wait.until(ExpectedConditions.visibilityOf(element));
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Scroll até elemento
+scroll_to('[data-testid="item-bottom"]')
+expect(page).to have_css('[data-testid="item-bottom"]', visible: true)
+
+# Scroll até meio
+scroll_to('[data-testid="item-middle"]')
+expect(page).to have_css('[data-testid="item-middle"]', visible: true)
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Scroll até elemento
+    Scroll Element Into View    css:[data-testid="item-bottom"]
+    Wait Until Element Is Visible    css:[data-testid="item-bottom"]    timeout=5s
+
+Scroll até meio
+    Scroll Element Into View    css:[data-testid="item-middle"]
+    Wait Until Element Is Visible    css:[data-testid="item-middle"]    timeout=5s
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="scroll-area"</code> - Área com scroll</li>
+                <li><code>data-testid="scroll-content"</code> - Conteúdo rolável</li>
+                <li><code>data-testid="item-top"</code> - Item no topo</li>
+                <li><code>data-testid="item-middle"</code> - Item no meio</li>
+                <li><code>data-testid="item-bottom"</code> - Item no final</li>
+                <li><code>data-testid="btn-scroll-top"</code> - Botão scroll topo</li>
+                <li><code>data-testid="btn-scroll-bottom"</code> - Botão scroll final</li>
+                <li><code>data-testid="scroll-status"</code> - Status do scroll</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      const scrollArea = document.getElementById('scroll-area');
+      const statusEl = document.getElementById('scroll-status');
+      const itemTop = document.getElementById('item-top');
+      const itemMiddle = document.getElementById('item-middle');
+      const itemBottom = document.getElementById('item-bottom');
+
+      function updateStatus(position) {
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        statusEl.innerHTML = `
+          <p style="margin: 0;"><strong>✅ Scroll realizado: ${position}</strong></p>
+          <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+        `;
+      }
+
+      document.getElementById('btn-scroll-top').addEventListener('click', function() {
+        scrollArea.scrollTo({ top: 0, behavior: 'smooth' });
+        updateStatus('Topo');
+        window.showToast('Rolado para o topo!');
+      });
+
+      document.getElementById('btn-scroll-bottom').addEventListener('click', function() {
+        scrollArea.scrollTo({ top: scrollArea.scrollHeight, behavior: 'smooth' });
+        updateStatus('Final');
+        window.showToast('Rolado para o final!');
+      });
+
+      document.getElementById('btn-scroll-middle').addEventListener('click', function() {
+        itemMiddle.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        updateStatus('Meio');
+        window.showToast('Rolado para o meio!');
+      });
+
+      // Atualizar status ao rolar manualmente
+      scrollArea.addEventListener('scroll', function() {
+        const scrollTop = this.scrollTop;
+        const scrollHeight = this.scrollHeight;
+        const clientHeight = this.clientHeight;
+        const percent = Math.round((scrollTop / (scrollHeight - clientHeight)) * 100);
+        statusEl.innerHTML = `
+          <p style="margin: 0;"><strong>📊 Posição do scroll: ${percent}%</strong></p>
+          <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Scroll manual detectado</p>
+        `;
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

@@ -1,15 +1,293 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Múltiplas Janelas</title>
-  <link rel="stylesheet" href="../../../css/styles.css">
-</head>
-<body>
-  <h1>Múltiplas Janelas</h1>
-  <p>Clique no botão para abrir uma nova janela:</p>
-  <button onclick="window.open('https://www.google.com', '_blank')">Abrir Google em nova janela</button>
-  <p>Dica: Automatize a troca entre janelas!</p>
-  <a href="../../../index.html">Voltar</a>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Múltiplas Janelas — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="multiplas-janelas.html" aria-current="page">Múltiplas Janelas</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Múltiplas Janelas</h2>
+          <div class="section-desc">Valide abertura e controle de múltiplas janelas. Esta página permite testar a automação de múltiplas janelas, troca de contexto entre janelas e validação de conteúdo em janelas abertas.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Abrir Novas Janelas</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Clique nos botões abaixo para abrir novas janelas. Teste a troca de contexto entre janelas.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md); display: flex; flex-wrap: wrap; gap: var(--spacing-sm);">
+              <button id="btn-open-window-1" class="btn" data-testid="btn-abrir-janela-1">Abrir Janela 1</button>
+              <button id="btn-open-window-2" class="btn" data-testid="btn-abrir-janela-2">Abrir Janela 2</button>
+              <button id="btn-open-window-3" class="btn" data-testid="btn-abrir-janela-3">Abrir Janela 3</button>
+            </div>
+
+            <div id="windows-status" data-testid="windows-status" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 100px;">
+              <p class="muted" style="margin: 0;">Nenhuma janela aberta ainda.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Abrir novas janelas do navegador</li>
+                <li>Trocar contexto entre múltiplas janelas</li>
+                <li>Validar conteúdo em janelas abertas</li>
+                <li>Fechar janelas específicas</li>
+                <li>Contar número de janelas abertas</li>
+                <li>Validar que ações em uma janela não afetam outras</li>
+                <li>Testar comunicação entre janelas (postMessage)</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Múltiplas janelas
+cy.get('[data-testid="btn-abrir-janela-1"]').click()
+cy.window().then((win) => {
+  const newWindow = win.open('about:blank', '_blank')
+  cy.wrap(newWindow).should('exist')
+})
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Múltiplas janelas
+const [newPage] = await Promise.all([
+  context.waitForEvent('page'),
+  page.click('[data-testid="btn-abrir-janela-1"]')
+])
+await newPage.waitForLoadState()
+await newPage.getByText('Conteúdo').click()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Múltiplas janelas
+String mainWindow = driver.getWindowHandle();
+driver.findElement(By.cssSelector("[data-testid='btn-abrir-janela-1']")).click();
+Set&lt;String&gt; windows = driver.getWindowHandles();
+for (String window : windows) {
+  if (!window.equals(mainWindow)) {
+    driver.switchTo().window(window);
+    break;
+  }
+}
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Múltiplas janelas
+main_window = page.driver.browser.window_handles.first
+click_button '[data-testid="btn-abrir-janela-1"]'
+new_window = page.driver.browser.window_handles.last
+page.driver.browser.switch_to.window(new_window)
+expect(page).to have_content('Conteúdo')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Abrir e interagir com nova janela
+    ${main_window}=    Get Window Handles
+    Click Button    css:[data-testid="btn-abrir-janela-1"]
+    ${all_windows}=    Get Window Handles
+    Switch Window    ${all_windows}[1]
+    Page Should Contain    Conteúdo
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="btn-abrir-janela-1"</code> - Botão abrir janela 1</li>
+                <li><code>data-testid="btn-abrir-janela-2"</code> - Botão abrir janela 2</li>
+                <li><code>data-testid="btn-abrir-janela-3"</code> - Botão abrir janela 3</li>
+                <li><code>data-testid="windows-status"</code> - Status das janelas</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      let windowCount = 0;
+      const openWindows = [];
+
+      function updateStatus() {
+        const statusEl = document.getElementById('windows-status');
+        if (openWindows.length === 0) {
+          statusEl.innerHTML = '<p class="muted" style="margin: 0;">Nenhuma janela aberta ainda.</p>';
+        } else {
+          statusEl.innerHTML = `
+            <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>Janelas Abertas: ${openWindows.length}</strong></p>
+            <ul style="margin: 0; padding-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+              ${openWindows.map((win, idx) => `<li>Janela ${idx + 1} - ${win.closed ? 'Fechada' : 'Aberta'}</li>`).join('')}
+            </ul>
+          `;
+        }
+      }
+
+      function createWindowContent(title, color) {
+        return `
+          <!DOCTYPE html>
+          <html lang="pt-BR">
+          <head>
+            <meta charset="utf-8">
+            <title>${title}</title>
+            <style>
+              body {
+                font-family: Inter, sans-serif;
+                padding: 40px;
+                margin: 0;
+                background: ${color};
+                color: white;
+                text-align: center;
+              }
+              h1 {
+                margin-top: 100px;
+              }
+              button {
+                background: white;
+                color: ${color};
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: 600;
+                margin-top: 20px;
+              }
+            </style>
+          </head>
+          <body>
+            <h1>${title}</h1>
+            <p>Esta é uma janela aberta para testes de automação.</p>
+            <p>Você pode fechar esta janela clicando no botão abaixo ou usando o X do navegador.</p>
+            <button onclick="window.close()">Fechar Janela</button>
+          </body>
+          </html>
+        `;
+      }
+
+      function openWindow(num) {
+        const windowContent = createWindowContent(
+          `Janela ${num}`,
+          num === 1 ? '#7aa874' : num === 2 ? '#d6a35f' : '#a87a7a'
+        );
+        
+        const newWindow = window.open('', `window-${num}`, 'width=600,height=400');
+        if (newWindow) {
+          newWindow.document.write(windowContent);
+          newWindow.document.close();
+          openWindows.push(newWindow);
+          
+          // Monitorar fechamento da janela
+          const checkClosed = setInterval(() => {
+            if (newWindow.closed) {
+              const index = openWindows.indexOf(newWindow);
+              if (index > -1) {
+                openWindows.splice(index, 1);
+              }
+              updateStatus();
+              clearInterval(checkClosed);
+            }
+          }, 500);
+          
+          updateStatus();
+          window.showToast(`Janela ${num} aberta!`);
+        } else {
+          window.showToast('Bloqueador de pop-up pode estar ativo!');
+        }
+      }
+
+      document.getElementById('btn-open-window-1').addEventListener('click', () => openWindow(1));
+      document.getElementById('btn-open-window-2').addEventListener('click', () => openWindow(2));
+      document.getElementById('btn-open-window-3').addEventListener('click', () => openWindow(3));
+
+      // Atualizar status periodicamente
+      setInterval(updateStatus, 1000);
+      updateStatus();
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

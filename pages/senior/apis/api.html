@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
@@ -33,7 +33,7 @@
           <div class="section-desc">Simule chamadas de API REST para testar integração e validação de respostas. Endpoints mockados para prática de testes de API.</div>
         </div>
 
-        <div class="subsections">
+        <div class="subsections subsections-vertical">
           <div class="subsection">
             <h3>GET /users</h3>
             <p class="muted" style="margin-bottom: var(--spacing-md);">Buscar lista de usuários (simulado).</p>
@@ -90,6 +90,41 @@
               <li><code>GET /users</code> - Retorna lista de usuários</li>
               <li><code>POST /users</code> - Cria um novo usuário</li>
             </ul>
+
+            <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+            <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm);"><code>// Cypress - Testar API GET
+cy.intercept('GET', '**/users', { fixture: 'users.json' }).as('getUsers');
+cy.get('[data-testid="btn-get-users"]').click();
+cy.wait('@getUsers');
+cy.get('[data-testid="resultado-api-users"]').should('contain', 'users');
+
+// Testar API POST
+cy.get('[data-testid="input-nome-usuario"]').type('João');
+cy.get('[data-testid="input-email-usuario"]').type('joao@exemplo.com');
+cy.get('[data-testid="btn-post-user"]').click();
+cy.get('[data-testid="resultado-api-post"]').should('contain', 'Created');
+
+// Playwright - Testar API
+await page.getByTestId('btn-get-users').click();
+await page.waitForTimeout(1000);
+const result = await page.getByTestId('resultado-api-users').textContent();
+expect(result).toContain('users');
+
+// Selenium (Java) - Validar resposta da API
+driver.findElement(By.cssSelector("[data-testid='btn-get-users']")).click();
+Thread.sleep(1000);
+WebElement result = driver.findElement(By.cssSelector("[data-testid='resultado-api-users']"));
+assert result.getText().contains("users");
+
+// Capybara (Ruby) - Testar API
+click_button '[data-testid="btn-get-users"]'
+sleep 1
+expect(page).to have_content('users', within: '[data-testid="resultado-api-users"]')
+
+// Robot Framework - Testar API
+Click Button    [data-testid="btn-get-users"]
+Sleep    1s
+Element Should Contain    [data-testid="resultado-api-users"]    users</code></pre>
 
             <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
             <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">

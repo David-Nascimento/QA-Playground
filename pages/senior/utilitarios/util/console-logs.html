@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Console Logs — QA Playground</title>
+    <link rel="stylesheet" href="../../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../../index.html">Início</a></li>
+            <li><a href="../index.html">Utilitários</a></li>
+            <li><a href="console-logs.html" aria-current="page">Console Logs</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Verificar Console Logs</h2>
+          <div class="section-desc">Teste e valide mensagens no console do navegador. Esta página permite testar a captura de logs do console, validação de mensagens e integração com ferramentas de automação.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Gerar Logs no Console</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Clique nos botões abaixo para gerar diferentes tipos de logs no console. Abra o DevTools (F12) para visualizar os logs.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md); display: flex; flex-wrap: wrap; gap: var(--spacing-sm);">
+              <button id="btn-log" class="btn" data-testid="btn-log">console.log()</button>
+              <button id="btn-warn" class="btn btn-secondary" data-testid="btn-warn">console.warn()</button>
+              <button id="btn-error" class="btn" data-testid="btn-error" style="background: var(--danger);">console.error()</button>
+              <button id="btn-info" class="btn btn-secondary" data-testid="btn-info">console.info()</button>
+              <button id="btn-debug" class="btn btn-secondary" data-testid="btn-debug">console.debug()</button>
+            </div>
+
+            <div id="console-result" data-testid="console-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 100px;">
+              <p class="muted" style="margin: 0;">Nenhum log gerado ainda. Abra o DevTools (F12) para ver os logs no console.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Capturar e validar logs do console</li>
+                <li>Testar diferentes tipos de logs (log, warn, error, info, debug)</li>
+                <li>Validar mensagens de erro no console</li>
+                <li>Testar filtragem de logs por tipo</li>
+                <li>Validar que logs aparecem no momento correto</li>
+                <li>Testar integração com ferramentas de automação</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Capturar logs do console
+cy.window().then((win) => {
+  cy.stub(win.console, 'log').as('consoleLog')
+})
+cy.get('[data-testid="btn-log"]').click()
+cy.get('@consoleLog').should('have.been.called')
+
+// Capturar console.error
+cy.window().then((win) => {
+  cy.stub(win.console, 'error').as('consoleError')
+})
+cy.get('[data-testid="btn-error"]').click()
+cy.get('@consoleError').should('have.been.called')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Capturar logs
+page.on('console', msg => {
+  console.log('Console log:', msg.text())
+})
+await page.click('[data-testid="btn-log"]')
+
+// Capturar console.error
+page.on('console', msg => {
+  if (msg.type() === 'error') {
+    console.log('Console error:', msg.text())
+  }
+})
+await page.click('[data-testid="btn-error"]')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Capturar logs do console
+LogEntries logs = driver.manage().logs().get(LogType.BROWSER);
+driver.findElement(By.cssSelector("[data-testid='btn-log']")).click();
+for (LogEntry entry : logs) {
+  System.out.println("Console: " + entry.getMessage());
+}
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Capturar logs
+page.driver.browser.logs.get(:browser).each do |log|
+  puts "Console: #{log.message}"
+end
+click_button '[data-testid="btn-log"]'
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Capturar logs do console
+    ${logs}=    Get Browser Logs
+    FOR    ${log}    IN    @{logs}
+        Log    ${log}[message]
+    END
+    Click Button    css:[data-testid="btn-log"]
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="btn-log"</code> - Botão console.log</li>
+                <li><code>data-testid="btn-warn"</code> - Botão console.warn</li>
+                <li><code>data-testid="btn-error"</code> - Botão console.error</li>
+                <li><code>data-testid="btn-info"</code> - Botão console.info</li>
+                <li><code>data-testid="btn-debug"</code> - Botão console.debug</li>
+                <li><code>data-testid="console-result"</code> - Área de resultados</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../../js/app.js"></script>
+    <script>
+      const resultEl = document.getElementById('console-result');
+      let logCount = 0;
+      
+      function updateResult(type, message) {
+        logCount++;
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        const typeColors = {
+          log: 'var(--text)',
+          warn: 'var(--accent-2)',
+          error: 'var(--danger)',
+          info: 'var(--accent)',
+          debug: 'var(--muted)'
+        };
+        
+        const existing = resultEl.innerHTML;
+        resultEl.innerHTML = `
+          <div style="margin-bottom: var(--spacing-sm); padding-bottom: var(--spacing-sm); border-bottom: 1px solid rgba(122, 168, 116, 0.2);">
+            <strong style="color: ${typeColors[type]};">[${type.toUpperCase()}]</strong> ${message}
+            <span style="color: var(--muted); font-size: var(--font-size-sm); margin-left: var(--spacing-sm);">${timestamp}</span>
+          </div>
+          ${existing.includes('Nenhum log') ? '' : existing}
+        `;
+      }
+      
+      document.getElementById('btn-log').addEventListener('click', function() {
+        const message = `Log #${logCount + 1}: Mensagem de log normal`;
+        console.log(message);
+        updateResult('log', message);
+      });
+      
+      document.getElementById('btn-warn').addEventListener('click', function() {
+        const message = `Aviso #${logCount + 1}: Esta é uma mensagem de aviso`;
+        console.warn(message);
+        updateResult('warn', message);
+      });
+      
+      document.getElementById('btn-error').addEventListener('click', function() {
+        const message = `Erro #${logCount + 1}: Esta é uma mensagem de erro`;
+        console.error(message);
+        updateResult('error', message);
+      });
+      
+      document.getElementById('btn-info').addEventListener('click', function() {
+        const message = `Info #${logCount + 1}: Esta é uma mensagem informativa`;
+        console.info(message);
+        updateResult('info', message);
+      });
+      
+      document.getElementById('btn-debug').addEventListener('click', function() {
+        const message = `Debug #${logCount + 1}: Esta é uma mensagem de debug`;
+        console.debug(message);
+        updateResult('debug', message);
+      });
+      
+      // Log inicial
+      console.log('Página Console Logs carregada. Abra o DevTools para ver os logs.');
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          const tabs = tabsContainer.querySelectorAll('.test-tab');
+          tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              
+              const targetId = this.dataset.target;
+              if (!targetId) return;
+              
+              // Remove active de todas as abas
+              tabs.forEach(t => t.classList.remove('active'));
+              document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+              // Adiciona active na aba clicada
+              this.classList.add('active');
+              const targetContent = document.getElementById(targetId);
+              if (targetContent) {
+                targetContent.classList.add('active');
+              }
+            });
+          });
+        }
+
+        // Aguardar DOM estar pronto
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          setTimeout(initTabs, 50);
+        }
+      })();
+    </script>
+  </body>
+</html>

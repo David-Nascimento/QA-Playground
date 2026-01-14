@@ -1,24 +1,261 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Cars Showroom</title>
-  <link rel="stylesheet" href="../../../css/styles.css">
-  <script>
-    function mostrarCarro(modelo) {
-      document.getElementById('detalhes').innerText = 'Você selecionou: ' + modelo;
-    }
-  </script>
-</head>
-<body>
-  <h1>Cars Showroom</h1>
-  <select onchange="mostrarCarro(this.value)">
-    <option value="">Selecione um carro</option>
-    <option value="Sedan">Sedan</option>
-    <option value="SUV">SUV</option>
-    <option value="Hatch">Hatch</option>
-  </select>
-  <div id="detalhes"></div>
-  <a href="../../../index.html">Voltar</a>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Cars Showroom — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="cars-showroom.html" aria-current="page">Cars Showroom</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Cars Showroom</h2>
+          <div class="section-desc">Explore e teste funcionalidades de uma loja de carros. Esta página simula uma vitrine de carros com filtros, seleção de modelos e visualização de detalhes, permitindo testar automação de e-commerce complexo.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Vitrine de Carros</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Selecione um modelo de carro para ver os detalhes. Use os filtros para refinar sua busca.
+            </p>
+
+            <div class="form-group" style="margin-bottom: var(--spacing-md);">
+              <label for="filtro-categoria">Filtrar por Categoria</label>
+              <select id="filtro-categoria" data-testid="select-filtro-categoria" style="width: 100%; padding: var(--spacing-sm);">
+                <option value="">Todas as categorias</option>
+                <option value="Sedan">Sedan</option>
+                <option value="SUV">SUV</option>
+                <option value="Hatch">Hatch</option>
+                <option value="Esportivo">Esportivo</option>
+              </select>
+            </div>
+
+            <div id="carros-grid" data-testid="carros-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-md); margin-bottom: var(--spacing-md);">
+              <!-- Carros serão gerados via JavaScript -->
+            </div>
+
+            <div id="detalhes-carro" data-testid="detalhes-carro" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 100px;">
+              <p class="muted" style="margin: 0;">Selecione um carro para ver os detalhes.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Filtrar carros por categoria</li>
+                <li>Selecionar um carro específico</li>
+                <li>Validar que detalhes são exibidos</li>
+                <li>Testar múltiplas seleções</li>
+                <li>Validar filtros dinâmicos</li>
+                <li>Testar navegação entre diferentes carros</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Filtrar e selecionar carro
+cy.get('[data-testid="select-filtro-categoria"]').select('SUV')
+cy.get('[data-testid="carro-suv-1"]').should('be.visible')
+cy.get('[data-testid="btn-selecionar-suv-1"]').click()
+cy.get('[data-testid="detalhes-carro"]').should('contain', 'SUV')
+
+// Selecionar carro específico
+cy.get('[data-testid="btn-selecionar-sedan-1"]').click()
+cy.get('[data-testid="detalhes-carro"]').should('contain', 'Sedan')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Filtrar carros
+await page.getByTestId('select-filtro-categoria').selectOption('Hatch')
+await expect(page.getByTestId('carro-hatch-1')).toBeVisible()
+await page.getByTestId('btn-selecionar-hatch-1').click()
+await expect(page.getByTestId('detalhes-carro')).toContainText('Hatch')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Filtrar e selecionar carro
+Select categoria = new Select(driver.findElement(By.cssSelector("[data-testid='select-filtro-categoria']")));
+categoria.selectByVisibleText("SUV");
+WebElement carro = driver.findElement(By.cssSelector("[data-testid='carro-suv-1']"));
+assert carro.isDisplayed();
+driver.findElement(By.cssSelector("[data-testid='btn-selecionar-suv-1']")).click();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Filtrar carros
+select 'SUV', from: '[data-testid="select-filtro-categoria"]'
+expect(page).to have_css('[data-testid="carro-suv-1"]', visible: true)
+click_button '[data-testid="btn-selecionar-suv-1"]'
+expect(page).to have_content('SUV', within: '[data-testid="detalhes-carro"]')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Filtrar e selecionar carro
+    Select From List By Label    css:[data-testid="select-filtro-categoria"]    SUV
+    Element Should Be Visible    css:[data-testid="carro-suv-1"]
+    Click Button    css:[data-testid="btn-selecionar-suv-1"]
+    Element Should Contain    css:[data-testid="detalhes-carro"]    SUV
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="select-filtro-categoria"</code> - Filtro de categoria</li>
+                <li><code>data-testid="carros-grid"</code> - Grid de carros</li>
+                <li><code>data-testid="carro-{categoria}-{id}"</code> - Card de carro</li>
+                <li><code>data-testid="btn-selecionar-{categoria}-{id}"</code> - Botão selecionar</li>
+                <li><code>data-testid="detalhes-carro"</code> - Área de detalhes</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      const carros = [
+        { id: 1, modelo: 'Sedan Premium', categoria: 'Sedan', preco: 85000, ano: 2024 },
+        { id: 2, modelo: 'SUV Adventure', categoria: 'SUV', preco: 120000, ano: 2024 },
+        { id: 3, modelo: 'Hatch Compact', categoria: 'Hatch', preco: 65000, ano: 2023 },
+        { id: 4, modelo: 'Esportivo Turbo', categoria: 'Esportivo', preco: 180000, ano: 2024 },
+        { id: 5, modelo: 'Sedan Executivo', categoria: 'Sedan', preco: 95000, ano: 2024 },
+        { id: 6, modelo: 'SUV Family', categoria: 'SUV', preco: 110000, ano: 2023 }
+      ];
+
+      function renderizarCarros(categoriaFiltro = '') {
+        const grid = document.getElementById('carros-grid');
+        const carrosFiltrados = categoriaFiltro ? carros.filter(c => c.categoria === categoriaFiltro) : carros;
+        
+        grid.innerHTML = carrosFiltrados.map(carro => `
+          <div id="carro-${carro.categoria.toLowerCase()}-${carro.id}" data-testid="carro-${carro.categoria.toLowerCase()}-${carro.id}" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border: 1px solid rgba(122, 168, 116, 0.2);">
+            <h4 style="margin-top: 0;">${carro.modelo}</h4>
+            <p style="margin: var(--spacing-xs) 0; color: var(--muted); font-size: var(--font-size-sm);">Categoria: ${carro.categoria}</p>
+            <p style="margin: var(--spacing-xs) 0; color: var(--accent); font-size: var(--font-size-lg); font-weight: 600;">R$ ${carro.preco.toLocaleString('pt-BR')}</p>
+            <p style="margin: var(--spacing-xs) 0 var(--spacing-sm) 0; color: var(--muted); font-size: var(--font-size-sm);">Ano: ${carro.ano}</p>
+            <button class="btn" data-testid="btn-selecionar-${carro.categoria.toLowerCase()}-${carro.id}" onclick="mostrarDetalhes(${carro.id})">Ver Detalhes</button>
+          </div>
+        `).join('');
+      }
+
+      function mostrarDetalhes(carroId) {
+        const carro = carros.find(c => c.id === carroId);
+        if (carro) {
+          const detalhesEl = document.getElementById('detalhes-carro');
+          detalhesEl.innerHTML = `
+            <h4 style="margin-top: 0; color: var(--accent);">${carro.modelo}</h4>
+            <div style="margin-top: var(--spacing-sm);">
+              <p style="margin: var(--spacing-xs) 0;"><strong>Categoria:</strong> ${carro.categoria}</p>
+              <p style="margin: var(--spacing-xs) 0;"><strong>Preço:</strong> <span style="color: var(--accent); font-weight: 600;">R$ ${carro.preco.toLocaleString('pt-BR')}</span></p>
+              <p style="margin: var(--spacing-xs) 0;"><strong>Ano:</strong> ${carro.ano}</p>
+              <p style="margin: var(--spacing-xs) 0;"><strong>Status:</strong> Disponível</p>
+            </div>
+            <div style="margin-top: var(--spacing-md);">
+              <button class="btn" data-testid="btn-solicitar-info-${carro.id}" onclick="solicitarInfo(${carro.id})">Solicitar Informações</button>
+            </div>
+          `;
+          window.showToast(`Detalhes de "${carro.modelo}" exibidos!`);
+        }
+      }
+
+      function solicitarInfo(carroId) {
+        const carro = carros.find(c => c.id === carroId);
+        window.showToast(`Informações sobre "${carro.modelo}" solicitadas!`);
+      }
+
+      window.mostrarDetalhes = mostrarDetalhes;
+      window.solicitarInfo = solicitarInfo;
+
+      document.getElementById('filtro-categoria').addEventListener('change', function() {
+        renderizarCarros(this.value);
+        if (this.value) {
+          window.showToast(`Filtrado por: ${this.value}`);
+        }
+      });
+
+      renderizarCarros();
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

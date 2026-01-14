@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Upload Seguro — QA Playground</title>
+    <link rel="stylesheet" href="../../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../../index.html">Início</a></li>
+            <li><a href="../index.html">Utilitários</a></li>
+            <li><a href="secure-upload.html" aria-current="page">Upload Seguro</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Upload Seguro de Arquivo</h2>
+          <div class="section-desc">Teste upload de arquivos com autenticação e segurança. Esta página simula um sistema de upload seguro que requer autenticação e validação de arquivos antes de permitir o upload.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Autenticação para Upload</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Faça login para fazer upload de arquivos. Use: <strong>usuario: admin</strong> e <strong>senha: admin123</strong>
+            </p>
+
+            <div class="form-grid" style="margin-bottom: var(--spacing-md);">
+              <div class="form-group">
+                <label for="upload-username">Usuário</label>
+                <input id="upload-username" type="text" placeholder="Digite o usuário" data-testid="input-usuario-upload" />
+              </div>
+              <div class="form-group">
+                <label for="upload-password">Senha</label>
+                <input id="upload-password" type="password" placeholder="Digite a senha" data-testid="input-senha-upload" />
+              </div>
+            </div>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-login-upload" class="btn" data-testid="btn-login-upload">Fazer Login</button>
+            </div>
+
+            <div id="upload-auth-status" data-testid="upload-auth-status" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px; display: none;">
+              <p class="muted" style="margin: 0;">Não autenticado.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Área de Upload</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Após autenticação, você poderá fazer upload de arquivos. Formatos permitidos: PDF, DOCX, TXT, JPG, PNG (máx. 5MB)
+            </p>
+
+            <div id="upload-area" data-testid="upload-area" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent-2);">
+              <div id="upload-form" data-testid="upload-form" style="display: none;">
+                <div class="form-group" style="margin-bottom: var(--spacing-md);">
+                  <label for="file-input">Selecionar Arquivo</label>
+                  <input 
+                    id="file-input" 
+                    type="file" 
+                    data-testid="input-arquivo"
+                    accept=".pdf,.docx,.txt,.jpg,.jpeg,.png"
+                  />
+                </div>
+
+                <div id="file-info" data-testid="file-info" style="display: none; padding: var(--spacing-md); background: var(--bg); border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-md);">
+                  <p style="margin: 0 0 var(--spacing-xs) 0;"><strong>Arquivo selecionado:</strong></p>
+                  <div id="file-details" style="color: var(--muted); font-size: var(--font-size-sm);"></div>
+                </div>
+
+                <div class="controls">
+                  <button id="btn-upload" class="btn" data-testid="btn-upload" disabled>⬆️ Fazer Upload</button>
+                  <button id="btn-cancel-upload" class="btn btn-secondary" data-testid="btn-cancel-upload" style="display: none;">Cancelar</button>
+                </div>
+
+                <div id="upload-progress" data-testid="upload-progress" style="display: none; margin-top: var(--spacing-md);">
+                  <div style="background: var(--bg); border-radius: var(--border-radius-sm); padding: var(--spacing-sm); margin-bottom: var(--spacing-xs);">
+                    <div id="progress-bar" style="background: var(--accent); height: 20px; border-radius: var(--border-radius-sm); width: 0%; transition: width 0.3s;"></div>
+                  </div>
+                  <p id="progress-text" style="text-align: center; color: var(--muted); font-size: var(--font-size-sm); margin: 0;">0%</p>
+                </div>
+
+                <div id="upload-result" data-testid="upload-result" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); min-height: 60px; display: none;"></div>
+              </div>
+              <div id="upload-login-required" data-testid="upload-login-required">
+                <p class="muted" style="text-align: center;">Faça login para fazer upload de arquivos.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar autenticação antes do upload</li>
+                <li>Validar que uploads só funcionam após login</li>
+                <li>Testar validação de tipo de arquivo</li>
+                <li>Validar limite de tamanho de arquivo</li>
+                <li>Testar barra de progresso durante upload</li>
+                <li>Validar tratamento de erros de upload</li>
+                <li>Testar cancelamento de upload</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Credenciais de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Usuário: <code>admin</code></li>
+                <li>Senha: <code>admin123</code></li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Login e upload
+cy.get('[data-testid="input-usuario-upload"]').type('admin')
+cy.get('[data-testid="input-senha-upload"]').type('admin123')
+cy.get('[data-testid="btn-login-upload"]').click()
+cy.get('[data-testid="input-arquivo"]').selectFile('cypress/fixtures/arquivo.pdf')
+cy.get('[data-testid="btn-upload"]').should('not.be.disabled').click()
+cy.get('[data-testid="upload-progress"]').should('be.visible')
+cy.get('[data-testid="upload-result"]', { timeout: 10000 }).should('contain', 'concluído')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Upload com autenticação
+await page.getByTestId('input-usuario-upload').fill('admin')
+await page.getByTestId('input-senha-upload').fill('admin123')
+await page.getByTestId('btn-login-upload').click()
+await page.getByTestId('input-arquivo').setInputFiles('arquivo.pdf')
+await page.getByTestId('btn-upload').click()
+await expect(page.getByTestId('upload-result')).toBeVisible()
+
+// Aguardar progresso
+await expect(page.getByTestId('upload-progress')).toBeVisible()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Upload com autenticação
+driver.findElement(By.cssSelector("[data-testid='input-usuario-upload']")).sendKeys("admin");
+driver.findElement(By.cssSelector("[data-testid='input-senha-upload']")).sendKeys("admin123");
+driver.findElement(By.cssSelector("[data-testid='btn-login-upload']")).click();
+WebElement fileInput = driver.findElement(By.cssSelector("[data-testid='input-arquivo']"));
+fileInput.sendKeys(System.getProperty("user.dir") + "/arquivo.pdf");
+driver.findElement(By.cssSelector("[data-testid='btn-upload']")).click();
+WebElement result = driver.findElement(By.cssSelector("[data-testid='upload-result']"));
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+wait.until(ExpectedConditions.visibilityOf(result));
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Upload com autenticação
+fill_in '[data-testid="input-usuario-upload"]', with: 'admin'
+fill_in '[data-testid="input-senha-upload"]', with: 'admin123'
+click_button '[data-testid="btn-login-upload"]'
+attach_file '[data-testid="input-arquivo"]', 'arquivo.pdf'
+click_button '[data-testid="btn-upload"]'
+expect(page).to have_css('[data-testid="upload-result"]', visible: true, wait: 10)
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Login e upload seguro
+    Input Text    css:[data-testid="input-usuario-upload"]    admin
+    Input Text    css:[data-testid="input-senha-upload"]    admin123
+    Click Button    css:[data-testid="btn-login-upload"]
+    Choose File    css:[data-testid="input-arquivo"]    arquivo.pdf
+    Click Button    css:[data-testid="btn-upload"]
+    Wait Until Element Is Visible    css:[data-testid="upload-result"]    timeout=10s
+                </code></pre>
+              
+              </div>
+click_button '[data-testid="btn-upload"]'
+expect(page).to have_css('[data-testid="upload-result"]', visible: true, wait: 10)
+
+// Robot Framework - Upload com autenticação
+Input Text    [data-testid="input-usuario-upload"]    admin
+Input Text    [data-testid="input-senha-upload"]    admin123
+Click Button    [data-testid="btn-login-upload"]
+Choose File    [data-testid="input-arquivo"]    arquivo.pdf
+Click Button    [data-testid="btn-upload"]
+Wait Until Element Is Visible    [data-testid="upload-result"]    timeout=10s</code></pre>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="input-usuario-upload"</code> - Campo usuário</li>
+                <li><code>data-testid="input-senha-upload"</code> - Campo senha</li>
+                <li><code>data-testid="btn-login-upload"</code> - Botão login</li>
+                <li><code>data-testid="input-arquivo"</code> - Input de arquivo</li>
+                <li><code>data-testid="btn-upload"</code> - Botão de upload</li>
+                <li><code>data-testid="upload-progress"</code> - Barra de progresso</li>
+                <li><code>data-testid="upload-result"</code> - Resultado do upload</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../../js/app.js"></script>
+    <script>
+      let isAuthenticated = false;
+      let currentFile = null;
+      let uploadInterval = null;
+
+      const allowedTypes = ['.pdf', '.docx', '.txt', '.jpg', '.jpeg', '.png'];
+      const maxSize = 5 * 1024 * 1024; // 5MB
+
+      function updateUploadArea() {
+        const statusEl = document.getElementById('upload-auth-status');
+        const formEl = document.getElementById('upload-form');
+        const loginRequiredEl = document.getElementById('upload-login-required');
+
+        if (isAuthenticated) {
+          statusEl.style.display = 'block';
+          statusEl.innerHTML = '<p style="margin: 0; color: var(--accent);"><strong>✅ Autenticado</strong> - Você pode fazer upload de arquivos</p>';
+          formEl.style.display = 'block';
+          loginRequiredEl.style.display = 'none';
+        } else {
+          statusEl.style.display = 'block';
+          statusEl.innerHTML = '<p style="margin: 0; color: var(--danger);"><strong>❌ Não autenticado</strong> - Faça login para fazer upload</p>';
+          formEl.style.display = 'none';
+          loginRequiredEl.style.display = 'block';
+        }
+      }
+
+      document.getElementById('btn-login-upload').addEventListener('click', function() {
+        const username = document.getElementById('upload-username').value.trim();
+        const password = document.getElementById('upload-password').value.trim();
+
+        if (username === 'admin' && password === 'admin123') {
+          isAuthenticated = true;
+          updateUploadArea();
+          window.showToast('Login realizado com sucesso!');
+        } else {
+          window.showToast('Credenciais inválidas! Use: admin / admin123');
+        }
+      });
+
+      document.getElementById('file-input').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const fileInfoEl = document.getElementById('file-info');
+        const fileDetailsEl = document.getElementById('file-details');
+        const btnUpload = document.getElementById('btn-upload');
+        const resultEl = document.getElementById('upload-result');
+
+        resultEl.style.display = 'none';
+
+        if (!file) {
+          fileInfoEl.style.display = 'none';
+          btnUpload.disabled = true;
+          return;
+        }
+
+        // Validar tipo
+        const fileExt = '.' + file.name.split('.').pop().toLowerCase();
+        if (!allowedTypes.includes(fileExt)) {
+          window.showToast('Tipo de arquivo não permitido! Use: PDF, DOCX, TXT, JPG ou PNG');
+          this.value = '';
+          fileInfoEl.style.display = 'none';
+          btnUpload.disabled = true;
+          return;
+        }
+
+        // Validar tamanho
+        if (file.size > maxSize) {
+          window.showToast('Arquivo muito grande! Tamanho máximo: 5MB');
+          this.value = '';
+          fileInfoEl.style.display = 'none';
+          btnUpload.disabled = true;
+          return;
+        }
+
+        currentFile = file;
+        fileInfoEl.style.display = 'block';
+        fileDetailsEl.innerHTML = `
+          <strong>${file.name}</strong><br>
+          Tamanho: ${(file.size / 1024 / 1024).toFixed(2)} MB<br>
+          Tipo: ${file.type || 'Não especificado'}
+        `;
+        btnUpload.disabled = false;
+        document.getElementById('btn-cancel-upload').style.display = 'inline-block';
+      });
+
+      document.getElementById('btn-upload').addEventListener('click', function() {
+        if (!currentFile) return;
+
+        const progressEl = document.getElementById('upload-progress');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const resultEl = document.getElementById('upload-result');
+        const btnUpload = this;
+        const btnCancel = document.getElementById('btn-cancel-upload');
+
+        btnUpload.disabled = true;
+        btnCancel.disabled = true;
+        progressEl.style.display = 'block';
+        resultEl.style.display = 'none';
+
+        let progress = 0;
+        uploadInterval = setInterval(() => {
+          progress += Math.random() * 15;
+          if (progress > 100) progress = 100;
+
+          progressBar.style.width = progress + '%';
+          progressText.textContent = Math.round(progress) + '%';
+
+          if (progress >= 100) {
+            clearInterval(uploadInterval);
+            progressEl.style.display = 'none';
+            
+            const timestamp = new Date().toLocaleTimeString('pt-BR');
+            resultEl.style.display = 'block';
+            resultEl.innerHTML = `
+              <p style="margin: 0 0 var(--spacing-sm) 0; color: var(--accent);"><strong>✅ Upload concluído com sucesso!</strong></p>
+              <p style="margin: 0; color: var(--muted);">Arquivo: ${currentFile.name}</p>
+              <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+            `;
+            
+            btnUpload.disabled = false;
+            btnCancel.disabled = false;
+            document.getElementById('file-input').value = '';
+            document.getElementById('file-info').style.display = 'none';
+            currentFile = null;
+            window.showToast('Upload concluído com sucesso!');
+          }
+        }, 200);
+      });
+
+      document.getElementById('btn-cancel-upload').addEventListener('click', function() {
+        if (uploadInterval) {
+          clearInterval(uploadInterval);
+          uploadInterval = null;
+        }
+        document.getElementById('upload-progress').style.display = 'none';
+        document.getElementById('file-input').value = '';
+        document.getElementById('file-info').style.display = 'none';
+        document.getElementById('btn-upload').disabled = true;
+        this.style.display = 'none';
+        currentFile = null;
+        window.showToast('Upload cancelado!');
+      });
+
+      // Inicializar
+      updateUploadArea();
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          const tabs = tabsContainer.querySelectorAll('.test-tab');
+          tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              
+              const targetId = this.dataset.target;
+              if (!targetId) return;
+              
+              // Remove active de todas as abas
+              tabs.forEach(t => t.classList.remove('active'));
+              document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+              // Adiciona active na aba clicada
+              this.classList.add('active');
+              const targetContent = document.getElementById(targetId);
+              if (targetContent) {
+                targetContent.classList.add('active');
+              }
+            });
+          });
+        }
+
+        // Aguardar DOM estar pronto
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          setTimeout(initTabs, 50);
+        }
+      })();
+    </script>
+  </body>
+</html>

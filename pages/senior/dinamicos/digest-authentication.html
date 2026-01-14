@@ -1,20 +1,267 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Digest Authentication</title>
-  <link rel="stylesheet" href="../../../css/styles.css">
-</head>
-<body>
-  <h1>Digest Authentication</h1>
-  <p>Simule o envio de usuário e senha para autenticação digest HTTP.</p>
-  <form onsubmit="alert('Digest Authentication simulada!'); return false;">
-    <label for="usuario">Usuário:</label><br>
-    <input type="text" id="usuario" name="usuario" required><br><br>
-    <label for="senha">Senha:</label><br>
-    <input type="password" id="senha" name="senha" required><br><br>
-    <button type="submit">Entrar</button>
-  </form>
-  <a href="../../../index.html">Voltar</a>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Digest Authentication — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="../apis/index.html">APIs</a></li>
+            <li><a href="digest-authentication.html" aria-current="page">Digest Authentication</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Digest Authentication</h2>
+          <div class="section-desc">Teste autenticação Digest HTTP. Esta página simula um formulário de autenticação Digest onde usuário e senha são enviados via HTTP Digest Authentication. Use: <strong>admin</strong> / <strong>admin</strong></div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Formulário de Autenticação Digest</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Digite as credenciais para autenticação Digest. Credenciais corretas: <strong>admin</strong> / <strong>admin</strong>
+            </p>
+
+            <form id="digest-form" data-testid="form-digest" onsubmit="return false;">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="usuario-digest">Usuário</label>
+                  <input 
+                    type="text" 
+                    id="usuario-digest" 
+                    name="usuario" 
+                    data-testid="input-usuario-digest"
+                    placeholder="Digite o usuário"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="senha-digest">Senha</label>
+                  <input 
+                    type="password" 
+                    id="senha-digest" 
+                    name="senha" 
+                    data-testid="input-senha-digest"
+                    placeholder="Digite a senha"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="controls" style="margin-top: var(--spacing-md);">
+                <button type="submit" class="btn" data-testid="btn-entrar-digest">Entrar</button>
+                <button type="button" class="btn btn-secondary" data-testid="btn-limpar-digest">Limpar</button>
+              </div>
+            </form>
+
+            <div id="digest-result" data-testid="digest-result" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 100px;">
+              <p class="muted" style="margin: 0;">Aguardando autenticação...</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar login com credenciais corretas</li>
+                <li>Validar login com credenciais incorretas</li>
+                <li>Testar autenticação Digest HTTP</li>
+                <li>Validar mensagens de erro de autenticação</li>
+                <li>Testar geração de hash MD5 para Digest</li>
+                <li>Validar que sessão é mantida após login</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Credenciais de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Usuário: <code>admin</code></li>
+                <li>Senha: <code>admin</code></li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Autenticação Digest
+cy.get('[data-testid="input-usuario-digest"]').type('admin')
+cy.get('[data-testid="input-senha-digest"]').type('admin')
+cy.get('[data-testid="btn-entrar-digest"]').click()
+cy.get('[data-testid="digest-result"]').should('contain', 'Autenticado')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Autenticação Digest
+await page.getByTestId('input-usuario-digest').fill('admin')
+await page.getByTestId('input-senha-digest').fill('admin')
+await page.getByTestId('btn-entrar-digest').click()
+await expect(page.getByTestId('digest-result')).toContainText('Autenticado')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Autenticação Digest
+driver.findElement(By.cssSelector("[data-testid='input-usuario-digest']")).sendKeys("admin");
+driver.findElement(By.cssSelector("[data-testid='input-senha-digest']")).sendKeys("admin");
+driver.findElement(By.cssSelector("[data-testid='btn-entrar-digest']")).click();
+WebElement result = driver.findElement(By.cssSelector("[data-testid='digest-result']"));
+assert result.getText().contains("Autenticado");
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Autenticação Digest
+fill_in '[data-testid="input-usuario-digest"]', with: 'admin'
+fill_in '[data-testid="input-senha-digest"]', with: 'admin'
+click_button '[data-testid="btn-entrar-digest"]'
+expect(page).to have_content('Autenticado', within: '[data-testid="digest-result"]')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Autenticação Digest
+    Input Text    css:[data-testid="input-usuario-digest"]    admin
+    Input Text    css:[data-testid="input-senha-digest"]    admin
+    Click Button    css:[data-testid="btn-entrar-digest"]
+    Element Should Contain    css:[data-testid="digest-result"]    Autenticado
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="form-digest"</code> - Formulário de autenticação</li>
+                <li><code>data-testid="input-usuario-digest"</code> - Campo usuário</li>
+                <li><code>data-testid="input-senha-digest"</code> - Campo senha</li>
+                <li><code>data-testid="btn-entrar-digest"</code> - Botão entrar</li>
+                <li><code>data-testid="digest-result"</code> - Resultado da autenticação</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      const form = document.getElementById('digest-form');
+      const usuarioInput = document.getElementById('usuario-digest');
+      const senhaInput = document.getElementById('senha-digest');
+      const resultEl = document.getElementById('digest-result');
+      const btnLimpar = document.getElementById('btn-limpar-digest');
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const usuario = usuarioInput.value.trim();
+        const senha = senhaInput.value.trim();
+
+        if (!usuario || !senha) {
+          resultEl.innerHTML = `
+            <p style="margin: 0; color: var(--danger);"><strong>❌ Erro:</strong> Preencha todos os campos</p>
+          `;
+          return;
+        }
+
+        // Simular autenticação Digest (em produção, usaria MD5 hash)
+        setTimeout(() => {
+          if (usuario === 'admin' && senha === 'admin') {
+            const timestamp = new Date().toLocaleTimeString('pt-BR');
+            resultEl.innerHTML = `
+              <p style="margin: 0 0 var(--spacing-sm) 0; color: var(--accent);"><strong>✅ Autenticado com sucesso!</strong></p>
+              <p style="margin: 0; color: var(--muted);">Usuário: ${usuario}</p>
+              <p style="margin: var(--spacing-xs) 0 0 0; color: var(--muted); font-size: var(--font-size-sm);">Autenticação HTTP Digest simulada</p>
+              <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+            `;
+            resultEl.style.borderLeftColor = 'var(--accent)';
+            window.showToast('Autenticação Digest bem-sucedida!');
+          } else {
+            resultEl.innerHTML = `
+              <p style="margin: 0; color: var(--danger);"><strong>❌ Credenciais inválidas</strong></p>
+              <p style="margin: var(--spacing-xs) 0 0 0; color: var(--muted); font-size: var(--font-size-sm);">Usuário ou senha incorretos. Use: admin / admin</p>
+            `;
+            resultEl.style.borderLeftColor = 'var(--danger)';
+            window.showToast('Credenciais inválidas!');
+          }
+        }, 500);
+      });
+
+      btnLimpar.addEventListener('click', function() {
+        usuarioInput.value = '';
+        senhaInput.value = '';
+        resultEl.innerHTML = '<p class="muted" style="margin: 0;">Aguardando autenticação...</p>';
+        resultEl.style.borderLeftColor = 'var(--accent)';
+        usuarioInput.focus();
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

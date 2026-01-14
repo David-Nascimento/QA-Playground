@@ -1,39 +1,343 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Large & Deep DOM — QA Playground</title>
-  <link rel="stylesheet" href="../../../css/styles.css" />
-</head>
-<body>
-  <main class="container">
-    <h1>Large & Deep DOM</h1>
-    <p>Teste automação em um DOM extenso, com muitos elementos e profundidade de aninhamento.</p>
-    <div id="large-dom">
-      <ul>
-        <li>Nível 1
-          <ul>
-            <li>Nível 2
-              <ul>
-                <li>Nível 3
-                  <ul>
-                    <li>Nível 4
-                      <ul>
-                        <li>Nível 5</li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Large & Deep DOM — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="large-dom.html" aria-current="page">Large & Deep DOM</a></li>
           </ul>
-        </li>
-      </ul>
-      <div style="margin-top:16px;">
-        <button class="btn" data-testid="btn-find">Encontrar elemento profundo</button>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
       </div>
-    </div>
-  </main>
-</body>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Large & Deep DOM</h2>
+          <div class="section-desc">Valide performance e automação em DOMs extensos. Esta página contém muitos elementos e profundidade de aninhamento, simulando aplicações complexas para testar seletores e performance de automação.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>DOM Extenso e Profundo</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              O DOM abaixo contém muitos elementos aninhados. Teste a seleção de elementos em diferentes níveis de profundidade.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-find-deep" class="btn" data-testid="btn-encontrar-profundo">Encontrar Elemento Profundo</button>
+              <button id="btn-count-elements" class="btn btn-secondary" data-testid="btn-contar-elementos">Contar Elementos</button>
+              <button id="btn-generate-more" class="btn btn-secondary" data-testid="btn-gerar-mais">Gerar Mais Elementos</button>
+            </div>
+
+            <div id="large-dom" data-testid="large-dom" style="max-height: 500px; overflow-y: auto; padding: var(--spacing-md); background: var(--surface); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <!-- DOM será gerado via JavaScript -->
+            </div>
+
+            <div id="dom-result" data-testid="dom-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+              <p class="muted" style="margin: 0;">Aguardando ação...</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Desafios de Automação:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>DOMs com muitos elementos (1000+)</li>
+                <li>Profundidade de aninhamento elevada (5+ níveis)</li>
+                <li>Performance de seletores em DOMs grandes</li>
+                <li>Seleção de elementos em níveis profundos</li>
+                <li>Validação de elementos específicos em meio a muitos outros</li>
+                <li>Testes de performance e tempo de execução</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Estratégias Recomendadas:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Use seletores específicos e diretos quando possível</li>
+                <li>Prefira <code>data-testid</code> para seleção rápida</li>
+                <li>Evite seletores muito genéricos (ex: div div div)</li>
+                <li>Use XPath ou CSS específicos para elementos profundos</li>
+                <li>Considere esperar elementos aparecerem antes de interagir</li>
+                <li>Monitore performance de testes em DOMs grandes</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Encontrar elemento profundo
+cy.get('[data-testid="large-dom"]')
+  .find('[data-testid="elemento-profundo-5"]')
+  .should('be.visible')
+  .click()
+
+// Contar elementos
+cy.get('[data-testid="large-dom"]').find('li').should('have.length.greaterThan', 100)
+
+// Clicar em botão e validar resultado
+cy.get('[data-testid="btn-encontrar-profundo"]').click()
+cy.get('[data-testid="dom-result"]').should('contain', 'Elemento profundo encontrado')
+
+// Contar elementos via botão
+cy.get('[data-testid="btn-contar-elementos"]').click()
+cy.get('[data-testid="dom-result"]').should('contain', 'Contagem de Elementos')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Seleção eficiente
+const deepElement = page.getByTestId('large-dom').getByTestId('elemento-profundo-5')
+await expect(deepElement).toBeVisible()
+await deepElement.click()
+
+// Contar elementos
+const liCount = await page.getByTestId('large-dom').locator('li').count()
+expect(liCount).toBeGreaterThan(100)
+
+// Clicar em botão e validar resultado
+await page.getByTestId('btn-encontrar-profundo').click()
+await expect(page.getByTestId('dom-result')).toContainText('Elemento profundo encontrado')
+
+// Contar elementos via botão
+await page.getByTestId('btn-contar-elementos').click()
+await expect(page.getByTestId('dom-result')).toContainText('Contagem de Elementos')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium Java - XPath para elementos profundos
+WebElement deep = driver.findElement(By.xpath(
+  "//div[@data-testid='large-dom']//li[@data-testid='elemento-profundo-5']"
+));
+assert deep.isDisplayed();
+deep.click();
+
+// Contar elementos
+List&lt;WebElement&gt; liElements = driver.findElements(
+  By.cssSelector("[data-testid='large-dom'] li")
+);
+assert liElements.size() > 100;
+
+// Clicar em botão e validar resultado
+driver.findElement(By.cssSelector("[data-testid='btn-encontrar-profundo']")).click();
+WebElement result = driver.findElement(By.cssSelector("[data-testid='dom-result']"));
+assert result.getText().contains("Elemento profundo encontrado");
+
+// Contar elementos via botão
+driver.findElement(By.cssSelector("[data-testid='btn-contar-elementos']")).click();
+assert result.getText().contains("Contagem de Elementos");
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Encontrar elemento profundo
+within('[data-testid="large-dom"]') do
+  find('[data-testid="elemento-profundo-5"]').click
+end
+
+# Contar elementos
+expect(page).to have_css('[data-testid="large-dom"] li', minimum: 100)
+
+# Clicar em botão e validar resultado
+find('[data-testid="btn-encontrar-profundo"]').click
+expect(find('[data-testid="dom-result"]')).to have_content('Elemento profundo encontrado')
+
+# Contar elementos via botão
+find('[data-testid="btn-contar-elementos"]').click
+expect(find('[data-testid="dom-result"]')).to have_content('Contagem de Elementos')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Encontrar elemento profundo
+    Click Element    css:[data-testid="btn-encontrar-profundo"]
+    Element Should Contain    css:[data-testid="dom-result"]    Elemento profundo encontrado
+
+Contar elementos
+    Click Element    css:[data-testid="btn-contar-elementos"]
+    Element Should Contain    css:[data-testid="dom-result"]    Contagem de Elementos
+    ${count}=    Get Element Count    css:[data-testid="large-dom"] li
+    Should Be True    ${count} > 100
+
+Clicar em elemento profundo
+    Click Element    css:[data-testid="large-dom"] css:[data-testid="elemento-profundo-5"]
+    Element Should Be Visible    css:[data-testid="elemento-profundo-5"]
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="large-dom"</code> - Container do DOM grande</li>
+                <li><code>data-testid="btn-encontrar-profundo"</code> - Botão encontrar elemento profundo</li>
+                <li><code>data-testid="btn-contar-elementos"</code> - Botão contar elementos</li>
+                <li><code>data-testid="elemento-profundo-{nivel}"</code> - Elementos em diferentes níveis</li>
+                <li><code>data-testid="dom-result"</code> - Área de resultados</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      const largeDom = document.getElementById('large-dom');
+      const resultEl = document.getElementById('dom-result');
+      let elementCount = 0;
+
+      function generateDOM(levels = 5, itemsPerLevel = 3) {
+        let html = '';
+        elementCount = 0;
+
+        function generateLevel(currentLevel, maxLevel, parentId) {
+          if (currentLevel > maxLevel) return '';
+          
+          let levelHtml = '<ul style="margin-left: var(--spacing-md);">';
+          for (let i = 1; i <= itemsPerLevel; i++) {
+            elementCount++;
+            const itemId = `item-${currentLevel}-${i}`;
+            const testId = `elemento-profundo-${currentLevel}`;
+            levelHtml += `
+              <li data-testid="${testId}" id="${itemId}" style="margin-bottom: var(--spacing-xs); padding: var(--spacing-xs); background: rgba(122, 168, 116, ${0.1 / currentLevel}); border-radius: var(--border-radius-sm);">
+                Nível ${currentLevel} - Item ${i} (ID: ${itemId})
+                ${generateLevel(currentLevel + 1, maxLevel, itemId)}
+              </li>
+            `;
+          }
+          levelHtml += '</ul>';
+          return levelHtml;
+        }
+
+        html = generateLevel(1, levels, 'large-dom');
+        largeDom.innerHTML = html;
+      }
+
+      function findDeepElement() {
+        const deepElement = largeDom.querySelector('[data-testid="elemento-profundo-5"]');
+        if (deepElement) {
+          deepElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          deepElement.style.background = 'var(--accent)';
+          deepElement.style.color = 'white';
+          deepElement.style.padding = 'var(--spacing-sm)';
+          deepElement.style.borderRadius = 'var(--border-radius-sm)';
+          
+          setTimeout(() => {
+            deepElement.style.background = '';
+            deepElement.style.color = '';
+          }, 2000);
+          
+          const timestamp = new Date().toLocaleTimeString('pt-BR');
+          resultEl.innerHTML = `
+            <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>✅ Elemento profundo encontrado:</strong></p>
+            <p style="margin: 0; color: var(--muted);">Elemento no nível 5 foi localizado e destacado</p>
+            <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+          `;
+          window.showToast('Elemento profundo encontrado!');
+        }
+      }
+
+      function countElements() {
+        const allElements = largeDom.querySelectorAll('*');
+        const liElements = largeDom.querySelectorAll('li');
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        
+        resultEl.innerHTML = `
+          <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>📊 Contagem de Elementos:</strong></p>
+          <p style="margin: 0; color: var(--muted);">Total de elementos: ${allElements.length}</p>
+          <p style="margin: 0; color: var(--muted);">Elementos &lt;li&gt;: ${liElements.length}</p>
+          <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+        `;
+        window.showToast(`Encontrados ${allElements.length} elementos!`);
+      }
+
+      function generateMore() {
+        generateDOM(6, 4);
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        resultEl.innerHTML = `
+          <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>✅ Mais elementos gerados:</strong></p>
+          <p style="margin: 0; color: var(--muted);">DOM expandido com mais elementos e níveis</p>
+          <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+        `;
+        window.showToast('Mais elementos gerados!');
+      }
+
+      document.getElementById('btn-find-deep').addEventListener('click', findDeepElement);
+      document.getElementById('btn-count-elements').addEventListener('click', countElements);
+      document.getElementById('btn-generate-more').addEventListener('click', generateMore);
+
+      // Gerar DOM inicial
+      generateDOM(5, 3);
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

@@ -1,15 +1,301 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>IFrame</title>
-  <link rel="stylesheet" href="../../../css/styles.css">
-</head>
-<body>
-  <h1>IFrame</h1>
-  <p>Teste a interação com elementos dentro de um <strong>iframe</strong> abaixo:</p>
-  <iframe src="https://www.wikipedia.org" width="600" height="400" title="Wikipedia"></iframe>
-  <p>Dica: Tente automatizar ações dentro do iframe!</p>
-  <a href="../../../index.html">Voltar</a>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>IFrame — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="iframe.html" aria-current="page">IFrame</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>IFrame</h2>
+          <div class="section-desc">Teste interações dentro de iframes. Esta página permite praticar a automação de elementos dentro de frames, troca de contexto e validação de conteúdo em iframes.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>IFrame com Conteúdo Interno</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              O iframe abaixo contém um formulário simples. Teste a interação com elementos dentro do iframe.
+            </p>
+
+            <div style="margin-bottom: var(--spacing-md);">
+              <iframe 
+                id="test-iframe" 
+                data-testid="test-iframe"
+                src="about:blank"
+                style="width: 100%; min-height: 400px; border: 2px solid rgba(122, 168, 116, 0.3); border-radius: var(--border-radius-md);"
+                title="IFrame de Teste"
+              ></iframe>
+            </div>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-load-iframe" class="btn" data-testid="btn-carregar-iframe">Carregar Conteúdo no IFrame</button>
+            </div>
+
+            <div id="iframe-result" data-testid="iframe-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+              <p class="muted" style="margin: 0;">IFrame não carregado ainda.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Trocar contexto para dentro do iframe</li>
+                <li>Interagir com elementos dentro do iframe</li>
+                <li>Validar conteúdo dentro do iframe</li>
+                <li>Voltar ao contexto principal após interação</li>
+                <li>Testar múltiplos iframes na mesma página</li>
+                <li>Validar que elementos do iframe não são acessíveis do contexto principal</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Interagir com iframe
+cy.get('[data-testid="test-iframe"]')
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then(cy.wrap)
+  .find('[data-testid="input-iframe"]')
+  .type('Texto no iframe')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Interagir com iframe
+const frame = await page.frameLocator('[data-testid="test-iframe"]')
+await frame.getByTestId('input-iframe').fill('Texto no iframe')
+
+// Clicar em botão dentro do iframe
+await frame.getByTestId('btn-iframe').click()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Interagir com iframe
+driver.switchTo().frame(driver.findElement(By.cssSelector("[data-testid='test-iframe']")));
+WebElement input = driver.findElement(By.cssSelector("[data-testid='input-iframe']"));
+input.sendKeys("Texto no iframe");
+driver.switchTo().defaultContent();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Interagir com iframe
+within_frame('[data-testid="test-iframe"]') do
+  fill_in '[data-testid="input-iframe"]', with: 'Texto no iframe'
+end
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Interagir com iframe
+    Select Frame    css:[data-testid="test-iframe"]
+    Input Text    css:[data-testid="input-iframe"]    Texto no iframe
+    Unselect Frame
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="test-iframe"</code> - IFrame principal</li>
+                <li><code>data-testid="btn-carregar-iframe"</code> - Botão para carregar conteúdo</li>
+                <li><code>data-testid="input-iframe"</code> - Input dentro do iframe</li>
+                <li><code>data-testid="btn-iframe"</code> - Botão dentro do iframe</li>
+                <li><code>data-testid="iframe-result"</code> - Área de resultados</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      document.getElementById('btn-load-iframe').addEventListener('click', function() {
+        const iframe = document.getElementById('test-iframe');
+        const resultEl = document.getElementById('iframe-result');
+        
+        const iframeContent = `
+          <!DOCTYPE html>
+          <html lang="pt-BR">
+          <head>
+            <meta charset="utf-8">
+            <style>
+              body {
+                font-family: Inter, sans-serif;
+                padding: 20px;
+                margin: 0;
+                background: #f5f5f5;
+              }
+              .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+              }
+              h2 {
+                color: #7aa874;
+                margin-top: 0;
+              }
+              .form-group {
+                margin-bottom: 15px;
+              }
+              label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: 600;
+              }
+              input {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
+              }
+              button {
+                background: #7aa874;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: 600;
+              }
+              button:hover {
+                background: #6a9764;
+              }
+              #result {
+                margin-top: 15px;
+                padding: 10px;
+                background: #f0f0f0;
+                border-radius: 4px;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <h2>Formulário dentro do IFrame</h2>
+              <p>Este formulário está dentro de um iframe. Teste a automação de elementos dentro do frame.</p>
+              <div class="form-group">
+                <label for="input-iframe">Nome:</label>
+                <input type="text" id="input-iframe" data-testid="input-iframe" placeholder="Digite seu nome">
+              </div>
+              <div class="form-group">
+                <label for="input-email-iframe">Email:</label>
+                <input type="email" id="input-email-iframe" data-testid="input-email-iframe" placeholder="email@exemplo.com">
+              </div>
+              <button id="btn-iframe" data-testid="btn-iframe">Enviar</button>
+              <div id="result" data-testid="result-iframe"></div>
+            </div>
+            <script>
+              document.getElementById('btn-iframe').addEventListener('click', function() {
+                const name = document.getElementById('input-iframe').value;
+                const email = document.getElementById('input-email-iframe').value;
+                const result = document.getElementById('result');
+                if (name && email) {
+                  result.innerHTML = '<strong>Dados enviados:</strong><br>Nome: ' + name + '<br>Email: ' + email;
+                  result.style.color = '#7aa874';
+                } else {
+                  result.innerHTML = '<strong style="color: red;">Preencha todos os campos!</strong>';
+                }
+              });
+            </script>
+          </body>
+          </html>
+        `;
+        
+        iframe.srcdoc = iframeContent;
+        
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        resultEl.innerHTML = `
+          <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>✅ IFrame carregado:</strong></p>
+          <p style="margin: 0; color: var(--muted);">Conteúdo do iframe foi carregado com sucesso</p>
+          <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+        `;
+        window.showToast('IFrame carregado!');
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

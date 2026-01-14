@@ -1,47 +1,252 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Exit Intent</title>
-  <link rel="stylesheet" href="../../../css/styles.css">
-  <style>
-    #modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.7);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-    #modalContent {
-      background: #222;
-      color: #fff;
-      padding: 30px;
-      border-radius: 8px;
-      text-align: center;
-    }
-  </style>
-  <script>
-    document.addEventListener('mouseleave', function(e) {
-      if (e.clientY < 10) {
-        document.getElementById('modal').style.display = 'flex';
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Exit Intent — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="exit-intent.html" aria-current="page">Exit Intent</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Exit Intent</h2>
+          <div class="section-desc">Valide pop-ups exibidos ao tentar sair da página. Esta página detecta quando o mouse sai da área da página (exit intent) e exibe um modal, técnica comum em marketing para reter visitantes.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Modal de Exit Intent</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Mova o mouse para fora da área da página (em direção ao topo) para disparar o modal de exit intent. Ou use o botão abaixo para simular.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-simular-exit" class="btn" data-testid="btn-simular-exit">Simular Exit Intent</button>
+            </div>
+
+            <div id="exit-modal" data-testid="exit-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000;">
+              <div id="exit-modal-content" data-testid="exit-modal-content" style="background: var(--surface); color: var(--text); padding: var(--spacing-xl); border-radius: var(--border-radius-md); text-align: center; max-width: 500px; box-shadow: var(--shadow-lg);">
+                <h3 style="margin-top: 0; color: var(--accent-2);">Espere! Não vá embora ainda!</h3>
+                <p style="margin-bottom: var(--spacing-md);">Temos uma oferta especial para você!</p>
+                <p style="margin-bottom: var(--spacing-md); color: var(--muted); font-size: var(--font-size-sm);">Este modal apareceu porque detectamos que você estava saindo.</p>
+                <div style="display: flex; gap: var(--spacing-sm); justify-content: center;">
+                  <button id="btn-fechar-exit" class="btn" data-testid="btn-fechar-exit">Fechar</button>
+                  <button id="btn-aceitar-oferta" class="btn" data-testid="btn-aceitar-oferta" style="background: var(--accent-2);">Aceitar Oferta</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="exit-status" data-testid="exit-status" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+              <p class="muted" style="margin: 0;">Mova o mouse para fora da página para disparar o modal.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar detecção de exit intent (mouse saindo da página)</li>
+                <li>Validar que modal aparece ao detectar saída</li>
+                <li>Testar fechamento do modal</li>
+                <li>Validar botões dentro do modal</li>
+                <li>Testar simulação programática de exit intent</li>
+                <li>Validar que modal não aparece múltiplas vezes</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Simular exit intent
+cy.get('body').trigger('mouseleave', { clientY: -10 })
+cy.get('[data-testid="exit-modal"]').should('be.visible')
+cy.get('[data-testid="btn-fechar-exit"]').click()
+cy.get('[data-testid="exit-modal"]').should('not.be.visible')
+
+// Ou usar botão de simulação
+cy.get('[data-testid="btn-simular-exit"]').click()
+cy.get('[data-testid="exit-modal"]').should('be.visible')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Simular exit intent
+await page.mouse.move(0, -10) // Mover para fora da página
+await page.getByTestId('exit-modal').waitFor({ state: 'visible' })
+await page.getByTestId('btn-fechar-exit').click()
+
+// Usar botão de simulação
+await page.getByTestId('btn-simular-exit').click()
+await expect(page.getByTestId('exit-modal')).toBeVisible()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Simular exit intent via JavaScript
+JavascriptExecutor js = (JavascriptExecutor) driver;
+js.executeScript("document.dispatchEvent(new MouseEvent('mouseleave', {clientY: -10}));");
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+wait.until(ExpectedConditions.visibilityOfElementLocated(
+  By.cssSelector("[data-testid='exit-modal']")
+));
+driver.findElement(By.cssSelector("[data-testid='btn-fechar-exit']")).click();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Simular exit intent
+page.execute_script("document.dispatchEvent(new MouseEvent('mouseleave', {clientY: -10}));")
+expect(page).to have_css('[data-testid="exit-modal"]', visible: true, wait: 5)
+click_button '[data-testid="btn-fechar-exit"]'
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Simular exit intent
+    Execute JavaScript    document.dispatchEvent(new MouseEvent('mouseleave', {clientY: -10}))
+    Wait Until Element Is Visible    css:[data-testid="exit-modal"]    timeout=5s
+    Click Button    css:[data-testid="btn-fechar-exit"]
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="exit-modal"</code> - Modal de exit intent</li>
+                <li><code>data-testid="exit-modal-content"</code> - Conteúdo do modal</li>
+                <li><code>data-testid="btn-fechar-exit"</code> - Botão fechar</li>
+                <li><code>data-testid="btn-aceitar-oferta"</code> - Botão aceitar oferta</li>
+                <li><code>data-testid="btn-simular-exit"</code> - Botão simular exit intent</li>
+                <li><code>data-testid="exit-status"</code> - Status do modal</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      const exitModal = document.getElementById('exit-modal');
+      const btnFechar = document.getElementById('btn-fechar-exit');
+      const btnAceitar = document.getElementById('btn-aceitar-oferta');
+      const btnSimular = document.getElementById('btn-simular-exit');
+      const statusEl = document.getElementById('exit-status');
+      let modalJaExibido = false;
+
+      function mostrarModal() {
+        if (modalJaExibido) return;
+        exitModal.style.display = 'flex';
+        modalJaExibido = true;
+        statusEl.innerHTML = '<p style="margin: 0; color: var(--accent-2);"><strong>✅ Exit intent detectado - Modal exibido</strong></p>';
       }
-    });
-    function fecharModal() {
-      document.getElementById('modal').style.display = 'none';
-    }
-  </script>
-</head>
-<body>
-  <h1>Exit Intent</h1>
-  <div id="modal">
-    <div id="modalContent">
-      <h2>Antes de sair...</h2>
-      <p>Você está saindo da página. Gostaria de deixar um feedback?</p>
-      <button onclick="fecharModal()">Fechar</button>
-    </div>
-  </div>
-  <a href="../../../index.html">Voltar</a>
-</body>
+
+      function fecharModal() {
+        exitModal.style.display = 'none';
+        statusEl.innerHTML = '<p style="margin: 0; color: var(--muted);">Modal fechado.</p>';
+        window.showToast('Modal fechado!');
+      }
+
+      function aceitarOferta() {
+        exitModal.style.display = 'none';
+        statusEl.innerHTML = '<p style="margin: 0; color: var(--accent-2);"><strong>✅ Oferta aceita!</strong></p>';
+        window.showToast('Oferta aceita!');
+      }
+
+      // Detectar exit intent (mouse saindo da página)
+      document.addEventListener('mouseleave', function(e) {
+        if (e.clientY < 10) {
+          mostrarModal();
+        }
+      });
+
+      btnFechar.addEventListener('click', fecharModal);
+      btnAceitar.addEventListener('click', aceitarOferta);
+      btnSimular.addEventListener('click', function() {
+        modalJaExibido = false;
+        mostrarModal();
+      });
+
+      // Fechar ao clicar no overlay
+      exitModal.addEventListener('click', function(e) {
+        if (e.target === exitModal) {
+          fecharModal();
+        }
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

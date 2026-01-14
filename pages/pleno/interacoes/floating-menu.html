@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
@@ -16,10 +16,8 @@
         <nav class="et-nav" aria-label="Navegação principal">
           <ul class="et-nav-list">
             <li><a href="../../../index.html">Início</a></li>
-            <li><a href="../../../fundamentos.html">Fundamentos</a></li>
-            <li><a href="../../../junior/formularios/">Formulários</a></li>
-            <li><a href="../tabelas/">Tabelas (Pleno)</a></li>
-            <li><a href="index.html">Interações (Pleno)</a></li>
+            <li><a href="../../fundamentos.html">Fundamentos</a></li>
+            <li><a href="../../junior/formularios/">Formulários</a></li>
           </ul>
         </nav>
         <div class="et-header-actions">
@@ -30,9 +28,9 @@
 
     <main class="container">
       <section class="section">
-        <div class="section-header">
+          <div class="section-header">
           <h2>Floating Menu</h2>
-          <div class="section-desc">Pratique testes de menus flutuantes e fixos na tela. Esta página é ideal para testar automação de elementos com posição fixa, validação de menus que permanecem visíveis ao rolar a página e interações com elementos flutuantes.</div>
+          <div class="section-desc">Pratique testes de menus integrados ao conteúdo. Esta página é ideal para testar automação de elementos de menu, validação de interações com menus e elementos de navegação.</div>
         </div>
 
         <div class="subsections subsections-vertical">
@@ -41,21 +39,20 @@
             <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
-                <li>Testar menus flutuantes com posição fixa</li>
-                <li>Validar que menus permanecem visíveis ao rolar a página</li>
-                <li>Praticar automação de elementos com position: fixed</li>
-                <li>Testar interações com menus flutuantes</li>
+                <li>Testar menus integrados ao conteúdo</li>
+                <li>Validar estrutura e elementos do menu</li>
+                <li>Praticar automação de elementos de menu</li>
+                <li>Testar interações com menus</li>
                 <li>Validar comportamento em diferentes resoluções de tela</li>
-                <li>Testar menus que aparecem/desaparecem dinamicamente</li>
-                <li>Validar z-index e sobreposição de elementos</li>
+                <li>Testar cliques em itens do menu</li>
+                <li>Validar feedback visual de interações</li>
               </ul>
               
               <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Como Utilizar:</strong></p>
               <ol style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
-                <li>Observe o menu flutuante no canto superior direito</li>
-                <li>Role a página para verificar que o menu permanece fixo</li>
+                <li>Observe o menu flutuante na área de conteúdo abaixo</li>
                 <li>Clique nos itens do menu para testar interações</li>
-                <li>Valide que o menu está sempre visível</li>
+                <li>Valide que o menu está visível e funcional</li>
                 <li>Use os <code>data-testid</code> para criar testes automatizados</li>
               </ol>
             </div>
@@ -63,27 +60,25 @@
 
           <div class="subsection">
             <h3>Menu Flutuante</h3>
-            <p class="muted" style="margin-bottom: var(--spacing-md);">O menu abaixo permanece fixo mesmo ao rolar a página.</p>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">O menu abaixo está integrado ao conteúdo da página.</p>
             
-            <div class="floating-menu" data-testid="floating-menu">
-              <div class="floating-menu-header" data-testid="floating-menu-header">Menu Flutuante</div>
-              <div class="floating-menu-items">
-                <a href="#" class="floating-menu-item" data-testid="menu-item-home" onclick="handleMenuClick('Home'); return false;">Home</a>
-                <a href="#" class="floating-menu-item" data-testid="menu-item-about" onclick="handleMenuClick('Sobre'); return false;">Sobre</a>
-                <a href="#" class="floating-menu-item" data-testid="menu-item-contact" onclick="handleMenuClick('Contato'); return false;">Contato</a>
+            <div class="floating-menu-wrapper">
+              <div class="floating-menu" data-testid="floating-menu">
+                <header class="floating-menu-header" data-testid="floating-menu-header">
+                  <h4 class="floating-menu-title">Menu Flutuante</h4>
+                </header>
+                <nav class="floating-menu-nav">
+                  <div class="floating-menu-items">
+                    <a href="#" class="floating-menu-item" data-testid="menu-item-home" onclick="handleMenuClick('Home'); return false;">Home</a>
+                    <a href="#" class="floating-menu-item" data-testid="menu-item-about" onclick="handleMenuClick('Sobre'); return false;">Sobre</a>
+                    <a href="#" class="floating-menu-item" data-testid="menu-item-contact" onclick="handleMenuClick('Contato'); return false;">Contato</a>
+                  </div>
+                </nav>
               </div>
             </div>
 
             <div id="menu-result" data-testid="menu-result" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); min-height: 50px;">
               <p class="muted">Clique em um item do menu para ver o resultado...</p>
-            </div>
-
-            <div style="margin-top: var(--spacing-xl); padding: var(--spacing-xl); background: var(--surface); border-radius: var(--border-radius-md);">
-              <h3>Conteúdo para Rolar</h3>
-              <p style="margin-top: var(--spacing-md);">Role esta página para verificar que o menu flutuante permanece fixo no canto superior direito.</p>
-              <p style="margin-top: var(--spacing-md);">Este é um exemplo de conteúdo longo para demonstrar o comportamento do menu flutuante.</p>
-              <div style="height: 800px; margin-top: var(--spacing-lg);"></div>
-              <p>Continue rolando para ver o menu permanecer fixo.</p>
             </div>
           </div>
 
@@ -92,11 +87,10 @@
             <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
-                <li>Validar que menu está visível e fixo</li>
-                <li>Rolar página e validar que menu permanece fixo</li>
+                <li>Validar que menu está visível</li>
                 <li>Clicar em itens do menu e validar ações</li>
                 <li>Testar menu em diferentes resoluções de tela</li>
-                <li>Validar posição do menu (top, right)</li>
+                <li>Validar estrutura e elementos do menu</li>
               </ul>
               
               <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
@@ -124,8 +118,6 @@
                 <pre id="tab-cypress" class="test-code active"><code>
 // Cypress - Testar menu flutuante
 cy.get('[data-testid="floating-menu"]').should('be.visible')
-cy.scrollTo('bottom')
-cy.get('[data-testid="floating-menu"]').should('be.visible')
 cy.get('[data-testid="menu-item-home"]').click()
 cy.get('[data-testid="menu-result"]').should('contain', 'Home')
 cy.get('[data-testid="menu-item-about"]').click()
@@ -134,8 +126,6 @@ cy.get('[data-testid="menu-result"]').should('contain', 'Sobre')
               
                 <pre id="tab-playwright" class="test-code"><code>
 // Playwright - Testar menu flutuante
-await expect(page.getByTestId('floating-menu')).toBeVisible()
-await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
 await expect(page.getByTestId('floating-menu')).toBeVisible()
 await page.getByTestId('menu-item-home').click()
 await expect(page.getByTestId('menu-result')).toContainText('Home')
@@ -147,9 +137,6 @@ await expect(page.getByTestId('menu-result')).toContainText('Sobre')
 // Selenium Java - Testar menu flutuante
 WebElement menu = driver.findElement(By.cssSelector("[data-testid='floating-menu']"));
 assert menu.isDisplayed();
-((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
-Thread.sleep(500);
-assert menu.isDisplayed();
 driver.findElement(By.cssSelector("[data-testid='menu-item-home']")).click();
 WebElement result = driver.findElement(By.cssSelector("[data-testid='menu-result']"));
 assert result.getText().contains("Home");
@@ -157,8 +144,6 @@ assert result.getText().contains("Home");
               
                 <pre id="tab-capybara" class="test-code"><code>
 # Capybara (Ruby) - Testar menu flutuante
-expect(find('[data-testid="floating-menu"]')).to be_visible
-page.execute_script('window.scrollTo(0, document.body.scrollHeight)')
 expect(find('[data-testid="floating-menu"]')).to be_visible
 find('[data-testid="menu-item-home"]').click
 expect(find('[data-testid="menu-result"]')).to have_content('Home')
@@ -169,8 +154,6 @@ expect(find('[data-testid="menu-result"]')).to have_content('Sobre')
                 <pre id="tab-robot" class="test-code"><code>
 *** Test Cases ***
 Testar menu flutuante
-    Element Should Be Visible    css:[data-testid="floating-menu"]
-    Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
     Element Should Be Visible    css:[data-testid="floating-menu"]
     Click Element    css:[data-testid="menu-item-home"]
     Element Should Contain    css:[data-testid="menu-result"]    Home
@@ -241,24 +224,44 @@ Testar menu flutuante
       })();
     </script>
     <style>
+      .floating-menu-wrapper {
+        position: relative;
+        margin-bottom: var(--spacing-md);
+      }
+
       .floating-menu {
-        position: fixed;
-        top: 80px;
-        right: 40px;
+        position: relative;
         background: var(--surface);
-        border: 2px solid var(--border);
+        border: 2px solid rgba(0, 0, 0, 0.1);
         border-radius: var(--border-radius-md);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        z-index: 1000;
         min-width: 200px;
+        max-width: 300px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
       }
 
       .floating-menu-header {
         padding: var(--spacing-md);
         background: var(--accent);
         color: white;
-        font-weight: 600;
         border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+        margin: 0;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .floating-menu-title {
+        margin: 0;
+        font-size: var(--font-size-base);
+        font-weight: 600;
+        color: white;
+      }
+
+      .floating-menu-nav {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
       }
 
       .floating-menu-items {
@@ -270,12 +273,13 @@ Testar menu flutuante
         padding: var(--spacing-md);
         color: var(--text);
         text-decoration: none;
-        border-bottom: 1px solid var(--border);
-        transition: background 0.2s ease;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        transition: background 0.2s ease, color 0.2s ease;
+        display: block;
       }
 
       .floating-menu-item:hover {
-        background: var(--surface-hover);
+        background: rgba(122, 168, 116, 0.1);
         color: var(--accent);
       }
 
@@ -285,9 +289,7 @@ Testar menu flutuante
 
       @media (max-width: 768px) {
         .floating-menu {
-          right: 10px;
-          top: 70px;
-          min-width: 150px;
+          max-width: 100%;
         }
       }
     </style>

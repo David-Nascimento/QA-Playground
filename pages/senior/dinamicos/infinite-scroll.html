@@ -1,33 +1,284 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Infinite Scroll — QA Playground</title>
-  <link rel="stylesheet" href="../../../css/styles.css" />
-</head>
-<body>
-  <main class="container">
-    <h1>Infinite Scroll</h1>
-    <p>Valide carregamento infinito de conteúdo ao rolar a página.</p>
-    <ul id="scroll-list"></ul>
-  </main>
-  <script>
-    let count = 0;
-    function addItems() {
-      const ul = document.getElementById('scroll-list');
-      for(let i=0;i<10;i++){
-        const li = document.createElement('li');
-        li.textContent = 'Item '+(++count);
-        ul.appendChild(li);
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Infinite Scroll — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="infinite-scroll.html" aria-current="page">Infinite Scroll</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Infinite Scroll</h2>
+          <div class="section-desc">Valide carregamento infinito de conteúdo. Esta página simula scroll infinito onde novos itens são carregados automaticamente ao rolar até o final da página.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Lista com Scroll Infinito</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Role a página para baixo para carregar mais itens automaticamente. Novos itens serão adicionados quando você chegar perto do final.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-reset-scroll" class="btn btn-secondary" data-testid="btn-reset-scroll">Resetar Lista</button>
+              <button id="btn-scroll-to-bottom" class="btn btn-secondary" data-testid="btn-scroll-bottom">Rolar até o Final</button>
+            </div>
+
+            <div id="scroll-container" data-testid="scroll-container" style="max-height: 500px; overflow-y: auto; padding: var(--spacing-md); background: var(--surface); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <ul id="scroll-list" data-testid="scroll-list" style="list-style: none; padding: 0; margin: 0;"></ul>
+            </div>
+
+            <div id="scroll-status" data-testid="scroll-status" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+              <p class="muted" style="margin: 0;">Aguardando scroll...</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Rolar página até o final para carregar mais itens</li>
+                <li>Validar que novos itens são adicionados automaticamente</li>
+                <li>Testar múltiplos carregamentos de scroll infinito</li>
+                <li>Validar contagem total de itens carregados</li>
+                <li>Testar scroll programático até o final</li>
+                <li>Validar performance com muitos itens carregados</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Testar infinite scroll
+cy.get('[data-testid="scroll-list"]').find('li').should('have.length', 10)
+cy.get('[data-testid="scroll-container"]').scrollTo('bottom')
+cy.wait(1000)
+cy.get('[data-testid="scroll-list"]').find('li').should('have.length', 20)
+cy.get('[data-testid="scroll-container"]').scrollTo('bottom')
+cy.wait(1000)
+cy.get('[data-testid="scroll-list"]').find('li').should('have.length', 30)
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Scroll infinito
+await page.getByTestId('scroll-list').locator('li').first().waitFor()
+let itemCount = await page.getByTestId('scroll-list').locator('li').count()
+const container = page.getByTestId('scroll-container')
+await container.evaluate(el => el.scrollTop = el.scrollHeight)
+await page.waitForTimeout(1000)
+let newCount = await page.getByTestId('scroll-list').locator('li').count()
+expect(newCount).toBeGreaterThan(itemCount)
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Scroll infinito
+List&lt;WebElement&gt; items = driver.findElements(By.cssSelector("[data-testid='scroll-list'] li"));
+int initialCount = items.size();
+WebElement container = driver.findElement(By.cssSelector("[data-testid='scroll-container']"));
+JavascriptExecutor js = (JavascriptExecutor) driver;
+js.executeScript("arguments[0].scrollTop = arguments[0].scrollHeight;", container);
+Thread.sleep(1000);
+items = driver.findElements(By.cssSelector("[data-testid='scroll-list'] li"));
+assert items.size() > initialCount;
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Scroll infinito
+initial_count = all('[data-testid="scroll-list"] li').count
+container = find('[data-testid="scroll-container"]')
+page.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', container.native)
+sleep 1
+new_count = all('[data-testid="scroll-list"] li').count
+expect(new_count).to be > initial_count
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Testar infinite scroll
+    ${initial_count}=    Get Element Count    css:[data-testid="scroll-list"] li
+    ${container}=    Get Element    css:[data-testid="scroll-container"]
+    Execute JavaScript    arguments[0].scrollTop = arguments[0].scrollHeight;    ARGUMENTS    ${container}
+    Sleep    1s
+    ${new_count}=    Get Element Count    css:[data-testid="scroll-list"] li
+    Should Be True    ${new_count} > ${initial_count}
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="scroll-container"</code> - Container com scroll</li>
+                <li><code>data-testid="scroll-list"</code> - Lista de itens</li>
+                <li><code>data-testid="item-{n}"</code> - Itens individuais</li>
+                <li><code>data-testid="btn-reset-scroll"</code> - Botão resetar</li>
+                <li><code>data-testid="scroll-status"</code> - Status do scroll</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      let count = 0;
+      let isLoading = false;
+      const scrollList = document.getElementById('scroll-list');
+      const scrollContainer = document.getElementById('scroll-container');
+      const statusEl = document.getElementById('scroll-status');
+
+      function addItems() {
+        if (isLoading) return;
+        isLoading = true;
+        
+        const loadingItem = document.createElement('li');
+        loadingItem.textContent = 'Carregando...';
+        loadingItem.style.cssText = 'padding: var(--spacing-sm); color: var(--muted); font-style: italic; text-align: center;';
+        loadingItem.setAttribute('data-testid', 'loading-indicator');
+        scrollList.appendChild(loadingItem);
+
+        setTimeout(() => {
+          if (loadingItem.parentNode) {
+            scrollList.removeChild(loadingItem);
+          }
+          
+          for (let i = 0; i < 10; i++) {
+            const li = document.createElement('li');
+            li.textContent = `Item ${++count}`;
+            li.style.cssText = 'padding: var(--spacing-sm); margin-bottom: var(--spacing-xs); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm);';
+            li.setAttribute('data-testid', `item-${count}`);
+            scrollList.appendChild(li);
+          }
+          
+          isLoading = false;
+          updateStatus();
+          
+          // Verificar novamente após adicionar itens (caso o scroll já esteja no final)
+          setTimeout(checkScroll, 100);
+        }, 500);
       }
-    }
-    window.addEventListener('scroll', function() {
-      if(window.innerHeight + window.scrollY >= document.body.offsetHeight-10) {
+
+      function updateStatus() {
+        const itemCount = scrollList.querySelectorAll('li').length;
+        statusEl.innerHTML = `
+          <p style="margin: 0;"><strong>📊 Status:</strong> ${itemCount} itens carregados</p>
+          <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Role para baixo para carregar mais itens</p>
+        `;
+      }
+
+      function resetList() {
+        count = 0;
+        scrollList.innerHTML = '';
         addItems();
+        scrollContainer.scrollTop = 0;
+        window.showToast('Lista resetada!');
       }
-    });
-    addItems();
-  </script>
-</body>
+
+      function checkScroll() {
+        if (isLoading) return;
+        
+        const scrollTop = scrollContainer.scrollTop;
+        const scrollHeight = scrollContainer.scrollHeight;
+        const clientHeight = scrollContainer.clientHeight;
+        
+        // Verificar se está próximo do final (dentro de 50px)
+        if (scrollTop + clientHeight >= scrollHeight - 50) {
+          addItems();
+        }
+      }
+
+      scrollContainer.addEventListener('scroll', checkScroll);
+
+      document.getElementById('btn-reset-scroll').addEventListener('click', resetList);
+      document.getElementById('btn-scroll-to-bottom').addEventListener('click', function() {
+        scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior: 'smooth' });
+        // Aguardar um pouco e verificar novamente após o scroll suave
+        setTimeout(checkScroll, 600);
+      });
+
+      // Carregar itens iniciais
+      addItems();
+      
+      // Atualizar status inicial
+      updateStatus();
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

@@ -1,47 +1,228 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Entry Ad</title>
-  <link rel="stylesheet" href="../../../css/styles.css">
-  <style>
-    #modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.7);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-    #modalContent {
-      background: #222;
-      color: #fff;
-      padding: 30px;
-      border-radius: 8px;
-      text-align: center;
-    }
-  </style>
-  <script>
-    window.onload = function() {
-      setTimeout(function() {
-        document.getElementById('modal').style.display = 'flex';
-      }, 1000);
-    };
-    function fecharModal() {
-      document.getElementById('modal').style.display = 'none';
-    }
-  </script>
-</head>
-<body>
-  <h1>Entry Ad</h1>
-  <div id="modal">
-    <div id="modalContent">
-      <h2>Anúncio de Entrada</h2>
-      <p>Este anúncio aparece ao entrar na página.</p>
-      <button onclick="fecharModal()">Fechar</button>
-    </div>
-  </div>
-  <a href="../../../index.html">Voltar</a>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Entry Ad — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="entry-ad.html" aria-current="page">Entry Ad</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Entry Ad</h2>
+          <div class="section-desc">Teste pop-ups e anúncios exibidos ao entrar na página. Esta página simula um modal que aparece automaticamente após o carregamento da página, comum em sites de marketing.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Modal de Entrada</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Um modal aparecerá automaticamente após 1 segundo. Teste a automação de fechamento e interação com modais.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-mostrar-modal" class="btn" data-testid="btn-mostrar-modal">Mostrar Modal Novamente</button>
+            </div>
+
+            <div id="entry-modal" data-testid="entry-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000;">
+              <div id="modal-content" data-testid="modal-content" style="background: var(--surface); color: var(--text); padding: var(--spacing-xl); border-radius: var(--border-radius-md); text-align: center; max-width: 500px; box-shadow: var(--shadow-lg);">
+                <h3 style="margin-top: 0; color: var(--accent);">Anúncio de Entrada</h3>
+                <p style="margin-bottom: var(--spacing-md);">Este anúncio aparece ao entrar na página.</p>
+                <p style="margin-bottom: var(--spacing-md); color: var(--muted); font-size: var(--font-size-sm);">Teste a automação de fechamento deste modal.</p>
+                <button id="btn-fechar-modal" class="btn" data-testid="btn-fechar-modal">Fechar</button>
+              </div>
+            </div>
+
+            <div id="modal-status" data-testid="modal-status" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+              <p class="muted" style="margin: 0;">Modal será exibido automaticamente em breve...</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar modal que aparece automaticamente</li>
+                <li>Validar que modal aparece após delay</li>
+                <li>Testar fechamento de modal</li>
+                <li>Validar que modal não reaparece após fechado</li>
+                <li>Testar interação com conteúdo do modal</li>
+                <li>Validar overlay/backdrop do modal</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Aguardar e fechar modal
+cy.get('[data-testid="entry-modal"]', { timeout: 2000 }).should('be.visible')
+cy.get('[data-testid="btn-fechar-modal"]').click()
+cy.get('[data-testid="entry-modal"]').should('not.be.visible')
+
+// Validar conteúdo do modal
+cy.get('[data-testid="modal-content"]').should('contain', 'Anúncio de Entrada')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Fechar modal
+await page.getByTestId('entry-modal').waitFor({ state: 'visible' })
+await page.getByTestId('btn-fechar-modal').click()
+await expect(page.getByTestId('entry-modal')).not.toBeVisible()
+
+// Validar conteúdo do modal
+await expect(page.getByTestId('modal-content')).toContainText('Anúncio de Entrada')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Fechar modal
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+WebElement modal = wait.until(ExpectedConditions.visibilityOfElementLocated(
+  By.cssSelector("[data-testid='entry-modal']")
+));
+driver.findElement(By.cssSelector("[data-testid='btn-fechar-modal']")).click();
+wait.until(ExpectedConditions.invisibilityOfElementLocated(
+  By.cssSelector("[data-testid='entry-modal']")
+));
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Fechar modal
+expect(page).to have_css('[data-testid="entry-modal"]', visible: true, wait: 5)
+click_button '[data-testid="btn-fechar-modal"]'
+expect(page).to have_no_css('[data-testid="entry-modal"]', visible: true)
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Fechar modal de entrada
+    Wait Until Element Is Visible    css:[data-testid="entry-modal"]    timeout=5s
+    Click Button    css:[data-testid="btn-fechar-modal"]
+    Wait Until Element Is Not Visible    css:[data-testid="entry-modal"]    timeout=5s
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="entry-modal"</code> - Modal de entrada</li>
+                <li><code>data-testid="modal-content"</code> - Conteúdo do modal</li>
+                <li><code>data-testid="btn-fechar-modal"</code> - Botão fechar</li>
+                <li><code>data-testid="btn-mostrar-modal"</code> - Botão mostrar novamente</li>
+                <li><code>data-testid="modal-status"</code> - Status do modal</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      const modal = document.getElementById('entry-modal');
+      const btnFechar = document.getElementById('btn-fechar-modal');
+      const btnMostrar = document.getElementById('btn-mostrar-modal');
+      const statusEl = document.getElementById('modal-status');
+
+      function mostrarModal() {
+        modal.style.display = 'flex';
+        statusEl.innerHTML = '<p style="margin: 0; color: var(--accent);"><strong>✅ Modal exibido</strong></p>';
+      }
+
+      function fecharModal() {
+        modal.style.display = 'none';
+        statusEl.innerHTML = '<p style="margin: 0; color: var(--muted);">Modal fechado.</p>';
+        window.showToast('Modal fechado!');
+      }
+
+      btnFechar.addEventListener('click', fecharModal);
+      btnMostrar.addEventListener('click', mostrarModal);
+
+      // Fechar ao clicar no overlay
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          fecharModal();
+        }
+      });
+
+      // Mostrar modal automaticamente após 1 segundo
+      setTimeout(mostrarModal, 1000);
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

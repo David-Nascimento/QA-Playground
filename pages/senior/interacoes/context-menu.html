@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Menu de Contexto — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Interações (Sênior)</a></li>
+            <li><a href="context-menu.html" aria-current="page">Menu de Contexto</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Menu de Contexto</h2>
+          <div class="section-desc">Simule interações com menus de contexto (clique direito). Esta página permite testar a automação de menus contextuais, validação de opções e tratamento de eventos de clique direito.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Área Interativa</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Clique com o botão direito na área abaixo para abrir o menu de contexto.
+            </p>
+
+            <div 
+              id="context-area" 
+              data-testid="context-area"
+              style="padding: var(--spacing-xl); border: 2px dashed rgba(122, 168, 116, 0.3); border-radius: var(--border-radius-md); background: var(--surface); min-height: 200px; text-align: center; cursor: context-menu; position: relative;"
+            >
+              <p style="color: var(--muted); margin: 0;">Clique com o botão direito aqui</p>
+            </div>
+
+            <div id="context-menu" data-testid="context-menu" style="display: none; position: absolute; background: var(--surface); border: 1px solid rgba(122, 168, 116, 0.3); border-radius: var(--border-radius-sm); box-shadow: var(--shadow-md); padding: var(--spacing-xs); min-width: 200px; z-index: 1000;">
+              <button class="context-menu-item" data-testid="menu-item-copiar" data-action="copiar">📋 Copiar</button>
+              <button class="context-menu-item" data-testid="menu-item-colar" data-action="colar">📄 Colar</button>
+              <button class="context-menu-item" data-testid="menu-item-recortar" data-action="recortar">✂️ Recortar</button>
+              <hr style="margin: var(--spacing-xs) 0; border: none; border-top: 1px solid rgba(122, 168, 116, 0.2);">
+              <button class="context-menu-item" data-testid="menu-item-inspecionar" data-action="inspecionar">🔍 Inspecionar</button>
+              <button class="context-menu-item" data-testid="menu-item-propriedades" data-action="propriedades">⚙️ Propriedades</button>
+            </div>
+
+            <div id="context-result" data-testid="context-result" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+              <p class="muted" style="margin: 0;">Nenhuma ação do menu de contexto realizada ainda.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Simular clique direito (contextmenu event)</li>
+                <li>Validar que o menu de contexto aparece</li>
+                <li>Testar cliques em itens do menu</li>
+                <li>Validar que o menu fecha após seleção</li>
+                <li>Testar fechamento do menu ao clicar fora</li>
+                <li>Validar ações executadas pelos itens do menu</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Simular clique direito
+cy.get('[data-testid="context-area"]').rightclick()
+cy.get('[data-testid="context-menu"]').should('be.visible')
+cy.get('[data-testid="menu-item-copiar"]').click()
+cy.get('[data-testid="context-result"]').should('contain', 'Copiar')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Clique direito
+await page.getByTestId('context-area').click({ button: 'right' })
+await expect(page.getByTestId('context-menu')).toBeVisible()
+await page.getByTestId('menu-item-colar').click()
+await expect(page.getByTestId('context-result')).toContainText('Colar')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Clique direito
+WebElement area = driver.findElement(By.cssSelector("[data-testid='context-area']"));
+Actions actions = new Actions(driver);
+actions.contextClick(area).perform();
+WebElement menu = driver.findElement(By.cssSelector("[data-testid='context-menu']"));
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+wait.until(ExpectedConditions.visibilityOf(menu));
+menu.findElement(By.cssSelector("[data-testid='menu-item-copiar']")).click();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Clique direito
+find('[data-testid="context-area"]').right_click
+expect(page).to have_css('[data-testid="context-menu"]', visible: true)
+click_button '[data-testid="menu-item-copiar"]'
+expect(page).to have_content('Copiar', within: '[data-testid="context-result"]')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Simular clique direito
+    Open Context Menu    css:[data-testid="context-area"]
+    Wait Until Element Is Visible    css:[data-testid="context-menu"]    timeout=5s
+    Click Element    css:[data-testid="menu-item-copiar"]
+    Element Should Contain    css:[data-testid="context-result"]    Copiar
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="context-area"</code> - Área clicável</li>
+                <li><code>data-testid="context-menu"</code> - Menu de contexto</li>
+                <li><code>data-testid="menu-item-copiar"</code> - Item Copiar</li>
+                <li><code>data-testid="menu-item-colar"</code> - Item Colar</li>
+                <li><code>data-testid="menu-item-recortar"</code> - Item Recortar</li>
+                <li><code>data-testid="menu-item-inspecionar"</code> - Item Inspecionar</li>
+                <li><code>data-testid="menu-item-propriedades"</code> - Item Propriedades</li>
+                <li><code>data-testid="context-result"</code> - Área de resultados</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <style>
+      .context-menu-item {
+        display: block;
+        width: 100%;
+        padding: var(--spacing-sm) var(--spacing-md);
+        background: transparent;
+        border: none;
+        text-align: left;
+        cursor: pointer;
+        color: var(--text);
+        font-size: var(--font-size-sm);
+        border-radius: var(--border-radius-sm);
+        transition: background 0.2s;
+      }
+      
+      .context-menu-item:hover {
+        background: rgba(122, 168, 116, 0.1);
+      }
+      
+      .context-menu-item:active {
+        background: rgba(122, 168, 116, 0.2);
+      }
+    </style>
+    <script>
+      const contextArea = document.getElementById('context-area');
+      const contextMenu = document.getElementById('context-menu');
+      const contextResult = document.getElementById('context-result');
+      
+      let menuVisible = false;
+      
+      // Abrir menu de contexto
+      contextArea.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        menuVisible = true;
+        contextMenu.style.display = 'block';
+        contextMenu.style.left = e.pageX + 'px';
+        contextMenu.style.top = e.pageY + 'px';
+      });
+      
+      // Fechar menu ao clicar fora
+      document.addEventListener('click', function(e) {
+        if (menuVisible && !contextMenu.contains(e.target) && !contextArea.contains(e.target)) {
+          contextMenu.style.display = 'none';
+          menuVisible = false;
+        }
+      });
+      
+      // Fechar menu ao pressionar Escape
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && menuVisible) {
+          contextMenu.style.display = 'none';
+          menuVisible = false;
+        }
+      });
+      
+      // Ações dos itens do menu
+      const menuItems = contextMenu.querySelectorAll('.context-menu-item');
+      menuItems.forEach(item => {
+        item.addEventListener('click', function() {
+          const action = this.dataset.action;
+          const actionName = this.textContent.trim();
+          
+          contextMenu.style.display = 'none';
+          menuVisible = false;
+          
+          const timestamp = new Date().toLocaleTimeString('pt-BR');
+          contextResult.innerHTML = `
+            <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>✅ Ação executada:</strong></p>
+            <p style="margin: 0; color: var(--muted);">${actionName}</p>
+            <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+          `;
+          
+          window.showToast(`Ação "${actionName}" executada!`);
+        });
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          const tabs = tabsContainer.querySelectorAll('.test-tab');
+          tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              
+              const targetId = this.dataset.target;
+              if (!targetId) return;
+              
+              // Remove active de todas as abas
+              tabs.forEach(t => t.classList.remove('active'));
+              document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+              // Adiciona active na aba clicada
+              this.classList.add('active');
+              const targetContent = document.getElementById(targetId);
+              if (targetContent) {
+                targetContent.classList.add('active');
+              }
+            });
+          });
+        }
+
+        // Aguardar DOM estar pronto
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          setTimeout(initTabs, 50);
+        }
+      })();
+    </script>
+  </body>
+</html>

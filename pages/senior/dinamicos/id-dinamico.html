@@ -1,22 +1,248 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>ID Dinâmico</title>
-  <link rel="stylesheet" href="../../../css/styles.css">
-  <script>
-    function gerarId() {
-      const id = 'id-' + Math.floor(Math.random()*10000);
-      document.getElementById('dinamico').id = id;
-      document.getElementById('novoId').innerText = 'Novo ID: ' + id;
-    }
-  </script>
-</head>
-<body>
-  <h1>ID Dinâmico</h1>
-  <div id="dinamico" style="background:#222;color:#fff;padding:10px;">Elemento com ID dinâmico</div>
-  <button onclick="gerarId()">Gerar novo ID</button>
-  <div id="novoId"></div>
-  <a href="../../../index.html">Voltar</a>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ID Dinâmico — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="id-dinamico.html" aria-current="page">ID Dinâmico</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>ID Dinâmico</h2>
+          <div class="section-desc">Valide elementos com IDs que mudam dinamicamente. Esta página demonstra o desafio de testar elementos cujos IDs são gerados dinamicamente, exigindo estratégias robustas de seleção.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Elementos com ID Dinâmico</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Os elementos abaixo têm IDs que mudam a cada interação. Use <code>data-testid</code> ou outras estratégias para seleção estável.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-gerar-id" class="btn" data-testid="btn-gerar-id">Gerar Novo ID</button>
+              <button id="btn-reset" class="btn btn-secondary" data-testid="btn-reset">Resetar</button>
+            </div>
+
+            <div id="container-dinamico" data-testid="container-dinamico" style="padding: var(--spacing-lg); background: var(--surface); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <div id="elemento-dinamico" data-testid="elemento-dinamico" style="padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm); text-align: center;">
+                <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>Elemento com ID Dinâmico</strong></p>
+                <p id="id-display" data-testid="id-display" style="margin: 0; color: var(--muted); font-size: var(--font-size-sm);">ID atual: elemento-dinamico</p>
+              </div>
+            </div>
+
+            <div id="id-result" data-testid="id-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+              <p class="muted" style="margin: 0;">ID inicial: elemento-dinamico</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Desafios de Automação:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>IDs que mudam a cada renderização ou interação</li>
+                <li>Seletores por ID não funcionam de forma confiável</li>
+                <li>Necessidade de estratégias alternativas de seleção</li>
+                <li>Validação de elementos mesmo com IDs variáveis</li>
+                <li>Testes que devem funcionar independente do ID</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Estratégias Recomendadas:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Use <code>data-testid</code> para seleção estável (recomendado)</li>
+                <li>Prefira seletores por conteúdo quando apropriado</li>
+                <li>Use seletores CSS por posição relativa</li>
+                <li>Evite depender de IDs que mudam</li>
+                <li>Use XPath com funções de texto ou atributos estáveis</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Usar data-testid (recomendado)
+cy.get('[data-testid="elemento-dinamico"]').should('be.visible')
+cy.get('[data-testid="btn-gerar-id"]').click()
+cy.get('[data-testid="elemento-dinamico"]').should('be.visible') // Ainda funciona!
+
+// Seleção por conteúdo
+cy.contains('Elemento com ID Dinâmico').should('be.visible')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Usar data-testid
+await page.getByTestId('elemento-dinamico').isVisible()
+await page.getByTestId('btn-gerar-id').click()
+await page.getByTestId('elemento-dinamico').isVisible() // Ainda funciona!
+
+// Seleção por conteúdo
+await expect(page.getByText('Elemento com ID Dinâmico')).toBeVisible()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Evitar seleção por ID dinâmico
+// ❌ Ruim: driver.findElement(By.id("id-12345"));
+// ✅ Bom: 
+WebElement elemento = driver.findElement(By.cssSelector("[data-testid='elemento-dinamico']"));
+driver.findElement(By.cssSelector("[data-testid='btn-gerar-id']")).click();
+elemento = driver.findElement(By.cssSelector("[data-testid='elemento-dinamico']"));
+assert elemento.isDisplayed();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Usar data-testid
+expect(page).to have_css('[data-testid="elemento-dinamico"]', visible: true)
+click_button '[data-testid="btn-gerar-id"]'
+expect(page).to have_css('[data-testid="elemento-dinamico"]', visible: true)
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Testar elemento com ID dinâmico
+    Element Should Be Visible    css:[data-testid="elemento-dinamico"]
+    Click Button    css:[data-testid="btn-gerar-id"]
+    Element Should Be Visible    css:[data-testid="elemento-dinamico"]
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="container-dinamico"</code> - Container principal</li>
+                <li><code>data-testid="elemento-dinamico"</code> - Elemento com ID dinâmico (estável)</li>
+                <li><code>data-testid="id-display"</code> - Exibição do ID atual</li>
+                <li><code>data-testid="btn-gerar-id"</code> - Botão gerar novo ID</li>
+                <li><code>data-testid="id-result"</code> - Área de resultados</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      let idCounter = 0;
+
+      function gerarId() {
+        idCounter++;
+        const novoId = 'id-dinamico-' + Math.floor(Math.random() * 10000) + '-' + Date.now();
+        const elemento = document.getElementById('elemento-dinamico');
+        const idDisplay = document.getElementById('id-display');
+        const resultEl = document.getElementById('id-result');
+        
+        // Mudar o ID do elemento
+        elemento.id = novoId;
+        
+        // Atualizar display
+        idDisplay.textContent = `ID atual: ${novoId}`;
+        
+        // Atualizar resultado
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        resultEl.innerHTML = `
+          <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>✅ Novo ID gerado:</strong></p>
+          <p style="margin: 0; color: var(--muted);">ID anterior foi alterado</p>
+          <p style="margin: 0; color: var(--muted); font-family: monospace; font-size: var(--font-size-sm);">Novo ID: ${novoId}</p>
+          <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+          <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--accent);">💡 Dica: Use data-testid para seleção estável!</p>
+        `;
+        
+        window.showToast('Novo ID gerado!');
+      }
+
+      function reset() {
+        idCounter = 0;
+        const elemento = document.getElementById('elemento-dinamico');
+        const idDisplay = document.getElementById('id-display');
+        const resultEl = document.getElementById('id-result');
+        
+        // Restaurar ID inicial
+        elemento.id = 'elemento-dinamico';
+        idDisplay.textContent = 'ID atual: elemento-dinamico';
+        resultEl.innerHTML = '<p class="muted" style="margin: 0;">ID inicial: elemento-dinamico</p>';
+        window.showToast('ID resetado!');
+      }
+
+      document.getElementById('btn-gerar-id').addEventListener('click', gerarId);
+      document.getElementById('btn-reset').addEventListener('click', reset);
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

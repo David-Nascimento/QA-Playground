@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Meu Endereço IP — QA Playground</title>
+    <link rel="stylesheet" href="../../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../../index.html">Início</a></li>
+            <li><a href="../index.html">Utilitários</a></li>
+            <li><a href="myip.html" aria-current="page">Meu IP</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Meu Endereço IP</h2>
+          <div class="section-desc">Descubra e valide o IP público do usuário. Esta página permite testar a detecção de IP, validação de formato e integração com APIs de geolocalização.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Informações de IP</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Clique no botão abaixo para buscar seu endereço IP público.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-fetch-ip" class="btn" data-testid="btn-fetch-ip">Buscar Meu IP</button>
+              <button id="btn-copy-ip" class="btn btn-secondary" data-testid="btn-copy-ip" style="display: none;">Copiar IP</button>
+            </div>
+
+            <div id="ip-result" data-testid="ip-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 100px;">
+              <p class="muted" style="margin: 0;">Nenhum IP buscado ainda.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar busca de IP público via API</li>
+                <li>Validar formato do endereço IP (IPv4/IPv6)</li>
+                <li>Testar tratamento de erros de rede</li>
+                <li>Validar informações de geolocalização</li>
+                <li>Testar funcionalidade de copiar IP</li>
+                <li>Validar estados de carregamento</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Buscar e validar IP
+cy.get('[data-testid="btn-fetch-ip"]').click()
+cy.get('[data-testid="ip-address"]', { timeout: 2000 }).should('be.visible')
+cy.get('[data-testid="ip-address"]').should('match', /^\d+\.\d+\.\d+\.\d+$/)
+cy.get('[data-testid="btn-copy-ip"]').click()
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Validar IP
+await page.getByTestId('btn-fetch-ip').click()
+await expect(page.getByTestId('ip-address')).toBeVisible()
+const ip = await page.getByTestId('ip-address').textContent()
+expect(ip).toMatch(/^\d+\.\d+\.\d+\.\d+$/)
+
+// Copiar IP
+await page.getByTestId('btn-copy-ip').click()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Validar formato de IP
+driver.findElement(By.cssSelector("[data-testid='btn-fetch-ip']")).click();
+Thread.sleep(2000);
+WebElement ipElement = driver.findElement(By.cssSelector("[data-testid='ip-address']"));
+String ip = ipElement.getText();
+assert ip.matches("\\d+\\.\\d+\\.\\d+\\.\\d+");
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Validar IP
+click_button '[data-testid="btn-fetch-ip"]'
+expect(page).to have_css('[data-testid="ip-address"]', text: /^\d+\.\d+\.\d+\.\d+$/, wait: 2)
+click_button '[data-testid="btn-copy-ip"]'
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Buscar e validar IP
+    Click Button    css:[data-testid="btn-fetch-ip"]
+    Wait Until Element Is Visible    css:[data-testid="ip-address"]    timeout=2s
+    Element Text Should Match Regexp    css:[data-testid="ip-address"]    \\d+\\.\\d+\\.\\d+\\.\\d+
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="btn-fetch-ip"</code> - Botão para buscar IP</li>
+                <li><code>data-testid="btn-copy-ip"</code> - Botão para copiar IP</li>
+                <li><code>data-testid="ip-result"</code> - Área de resultados</li>
+                <li><code>data-testid="ip-address"</code> - Endereço IP exibido</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../../js/app.js"></script>
+    <script>
+      const btnFetch = document.getElementById('btn-fetch-ip');
+      const btnCopy = document.getElementById('btn-copy-ip');
+      const resultEl = document.getElementById('ip-result');
+      
+      btnFetch.addEventListener('click', function() {
+        resultEl.innerHTML = '<span class="muted">Buscando IP...</span>';
+        btnFetch.disabled = true;
+        
+        // Simular busca de IP (em produção, usaria uma API real como ipify.org)
+        setTimeout(() => {
+          // IP simulado para demonstração
+          const mockIP = '192.168.1.' + Math.floor(Math.random() * 255);
+          const mockData = {
+            ip: mockIP,
+            country: 'Brasil',
+            city: 'São Paulo',
+            timezone: 'America/Sao_Paulo',
+            isp: 'ISP Exemplo'
+          };
+          
+          const timestamp = new Date().toLocaleTimeString('pt-BR');
+          resultEl.innerHTML = `
+            <div style="margin-bottom: var(--spacing-sm);">
+              <strong>Endereço IP:</strong>
+              <div id="ip-address" data-testid="ip-address" style="color: var(--accent); font-size: var(--font-size-lg); font-weight: 600; margin-top: var(--spacing-xs);">${mockData.ip}</div>
+            </div>
+            <div style="margin-top: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1px solid rgba(122, 168, 116, 0.2);">
+              <div style="margin-bottom: var(--spacing-xs);"><strong>País:</strong> <span style="color: var(--muted);">${mockData.country}</span></div>
+              <div style="margin-bottom: var(--spacing-xs);"><strong>Cidade:</strong> <span style="color: var(--muted);">${mockData.city}</span></div>
+              <div style="margin-bottom: var(--spacing-xs);"><strong>Timezone:</strong> <span style="color: var(--muted);">${mockData.timezone}</span></div>
+              <div style="margin-bottom: var(--spacing-xs);"><strong>ISP:</strong> <span style="color: var(--muted);">${mockData.isp}</span></div>
+            </div>
+            <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+          `;
+          
+          btnFetch.disabled = false;
+          btnCopy.style.display = 'inline-block';
+          window.showToast('IP encontrado com sucesso!');
+        }, 1000);
+      });
+      
+      btnCopy.addEventListener('click', function() {
+        const ipElement = document.getElementById('ip-address');
+        if (ipElement) {
+          const ip = ipElement.textContent;
+          navigator.clipboard.writeText(ip).then(() => {
+            window.showToast('IP copiado para a área de transferência!');
+          }).catch(() => {
+            window.showToast('Erro ao copiar IP');
+          });
+        }
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          const tabs = tabsContainer.querySelectorAll('.test-tab');
+          tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              
+              const targetId = this.dataset.target;
+              if (!targetId) return;
+              
+              // Remove active de todas as abas
+              tabs.forEach(t => t.classList.remove('active'));
+              document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+              // Adiciona active na aba clicada
+              this.classList.add('active');
+              const targetContent = document.getElementById(targetId);
+              if (targetContent) {
+                targetContent.classList.add('active');
+              }
+            });
+          });
+        }
+
+        // Aguardar DOM estar pronto
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          setTimeout(initTabs, 50);
+        }
+      })();
+    </script>
+  </body>
+</html>

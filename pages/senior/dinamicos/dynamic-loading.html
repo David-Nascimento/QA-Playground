@@ -1,22 +1,243 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Dynamic Loading</title>
-  <link rel="stylesheet" href="../../../css/styles.css">
-  <script>
-    function carregarConteudo() {
-      document.getElementById('carregar').innerHTML = '<span>Carregando...</span>';
-      setTimeout(function() {
-        document.getElementById('carregar').innerHTML = '<strong>Conteúdo carregado dinamicamente!</strong>';
-      }, 2000);
-    }
-  </script>
-</head>
-<body>
-  <h1>Dynamic Loading</h1>
-  <button onclick="carregarConteudo()">Carregar Conteúdo</button>
-  <div id="carregar"></div>
-  <a href="../../../index.html">Voltar</a>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Dynamic Loading — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="dynamic-loading.html" aria-current="page">Dynamic Loading</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Dynamic Loading</h2>
+          <div class="section-desc">Teste carregamento dinâmico de elementos. Esta página permite testar a automação de elementos que aparecem após um delay, validação de estados de carregamento e waits explícitos.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Carregamento Dinâmico</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Clique no botão abaixo para carregar conteúdo dinamicamente. O conteúdo aparecerá após um delay.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-carregar" class="btn" data-testid="btn-carregar-conteudo">Carregar Conteúdo</button>
+              <button id="btn-reset-loading" class="btn btn-secondary" data-testid="btn-reset-loading">Resetar</button>
+            </div>
+
+            <div id="loading-area" data-testid="loading-area" style="min-height: 200px; padding: var(--spacing-lg); background: var(--surface); border: 2px dashed rgba(122, 168, 116, 0.3); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md); text-align: center;">
+              <p class="muted" style="margin: 0;">Clique no botão acima para carregar conteúdo.</p>
+            </div>
+
+            <div id="loading-status" data-testid="loading-status" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+              <p class="muted" style="margin: 0;">Aguardando carregamento...</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar carregamento de conteúdo após delay</li>
+                <li>Validar estado de "carregando" antes do conteúdo aparecer</li>
+                <li>Testar waits explícitos para elementos dinâmicos</li>
+                <li>Validar que conteúdo aparece após carregamento</li>
+                <li>Testar múltiplos carregamentos</li>
+                <li>Validar tratamento de timeouts</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Aguardar elemento dinâmico
+cy.get('[data-testid="btn-carregar-conteudo"]').click()
+cy.get('[data-testid="conteudo-carregado"]', { timeout: 5000 }).should('be.visible')
+cy.get('[data-testid="conteudo-carregado"]').should('contain', 'Carregado')
+
+// Aguardar texto específico
+cy.get('[data-testid="btn-carregar-conteudo"]').click()
+cy.contains('[data-testid="conteudo-carregado"]', 'Carregado', { timeout: 5000 })
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Wait for element
+await page.getByTestId('btn-carregar-conteudo').click()
+await page.getByTestId('conteudo-carregado').waitFor({ state: 'visible' })
+await expect(page.getByTestId('conteudo-carregado')).toContainText('Carregado')
+
+// Aguardar texto específico
+await page.getByTestId('conteudo-carregado').waitFor({ 
+  state: 'visible',
+  timeout: 5000 
+})
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Explicit wait
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+driver.findElement(By.cssSelector("[data-testid='btn-carregar-conteudo']")).click();
+WebElement loaded = wait.until(ExpectedConditions.visibilityOfElementLocated(
+  By.cssSelector("[data-testid='conteudo-carregado']")
+));
+assert loaded.getText().contains("Carregado");
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Aguardar conteúdo carregar
+click_button '[data-testid="btn-carregar-conteudo"]'
+expect(page).to have_css('[data-testid="conteudo-carregado"]', visible: true, wait: 5)
+expect(page).to have_content('Carregado', wait: 5)
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Aguardar carregamento
+    Click Button    css:[data-testid="btn-carregar-conteudo"]
+    Wait Until Element Is Visible    css:[data-testid="conteudo-carregado"]    timeout=5s
+    Element Should Contain    css:[data-testid="conteudo-carregado"]    Carregado
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="btn-carregar-conteudo"</code> - Botão carregar</li>
+                <li><code>data-testid="loading-area"</code> - Área de carregamento</li>
+                <li><code>data-testid="loading-indicator"</code> - Indicador de carregamento</li>
+                <li><code>data-testid="conteudo-carregado"</code> - Conteúdo após carregar</li>
+                <li><code>data-testid="loading-status"</code> - Status do carregamento</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      const loadingArea = document.getElementById('loading-area');
+      const statusEl = document.getElementById('loading-status');
+      const btnCarregar = document.getElementById('btn-carregar');
+
+      function carregarConteudo() {
+        btnCarregar.disabled = true;
+        
+        loadingArea.innerHTML = `
+          <div data-testid="loading-indicator" style="color: var(--accent);">
+            <p style="margin: 0; font-size: var(--font-size-lg);">⏳</p>
+            <p style="margin: var(--spacing-sm) 0 0 0;">Carregando...</p>
+          </div>
+        `;
+        
+        statusEl.innerHTML = '<p style="margin: 0; color: var(--muted);">Carregando conteúdo...</p>';
+
+        setTimeout(function() {
+          loadingArea.innerHTML = `
+            <div data-testid="conteudo-carregado" style="padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-md);">
+              <p style="margin: 0 0 var(--spacing-sm) 0; color: var(--accent); font-size: var(--font-size-lg); font-weight: 600;">✅ Conteúdo carregado dinamicamente!</p>
+              <p style="margin: 0; color: var(--muted);">Este conteúdo foi carregado após um delay de 2 segundos.</p>
+              <p style="margin: var(--spacing-sm) 0 0 0; color: var(--muted); font-size: var(--font-size-sm);">Horário: ${new Date().toLocaleTimeString('pt-BR')}</p>
+            </div>
+          `;
+          
+          const timestamp = new Date().toLocaleTimeString('pt-BR');
+          statusEl.innerHTML = `
+            <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>✅ Carregamento concluído:</strong></p>
+            <p style="margin: 0; color: var(--muted);">Conteúdo carregado com sucesso</p>
+            <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+          `;
+          
+          btnCarregar.disabled = false;
+          window.showToast('Conteúdo carregado!');
+        }, 2000);
+      }
+
+      function resetLoading() {
+        loadingArea.innerHTML = '<p class="muted" style="margin: 0;">Clique no botão acima para carregar conteúdo.</p>';
+        statusEl.innerHTML = '<p class="muted" style="margin: 0;">Aguardando carregamento...</p>';
+        btnCarregar.disabled = false;
+      }
+
+      document.getElementById('btn-carregar').addEventListener('click', carregarConteudo);
+      document.getElementById('btn-reset-loading').addEventListener('click', resetLoading);
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

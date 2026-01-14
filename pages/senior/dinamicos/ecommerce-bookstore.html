@@ -1,22 +1,303 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Ecommerce BookStore</title>
-  <link rel="stylesheet" href="../../../css/styles.css">
-  <script>
-    function adicionarAoCarrinho(livro) {
-      alert('Livro "' + livro + '" adicionado ao carrinho!');
-    }
-  </script>
-</head>
-<body>
-  <h1>Ecommerce BookStore</h1>
-  <ul>
-    <li>Livro A <button onclick="adicionarAoCarrinho('Livro A')">Comprar</button></li>
-    <li>Livro B <button onclick="adicionarAoCarrinho('Livro B')">Comprar</button></li>
-    <li>Livro C <button onclick="adicionarAoCarrinho('Livro C')">Comprar</button></li>
-  </ul>
-  <a href="../../../index.html">Voltar</a>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Ecommerce BookStore — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="ecommerce-bookstore.html" aria-current="page">Ecommerce BookStore</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Ecommerce BookStore</h2>
+          <div class="section-desc">Simule compras e fluxos de e-commerce de livros. Esta página permite testar a automação de um e-commerce completo, incluindo navegação de produtos, adição ao carrinho e processo de checkout.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Catálogo de Livros</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Explore os livros disponíveis e adicione ao carrinho. Teste o fluxo completo de compra.
+            </p>
+
+            <div id="livros-grid" data-testid="livros-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-md); margin-bottom: var(--spacing-md);">
+              <!-- Livros serão gerados via JavaScript -->
+            </div>
+
+            <div id="carrinho-container" data-testid="carrinho-container" style="margin-top: var(--spacing-lg); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent-2);">
+              <h4 style="margin-top: 0;">🛒 Carrinho de Compras</h4>
+              <div id="carrinho-itens" data-testid="carrinho-itens" style="min-height: 50px;">
+                <p class="muted" style="margin: 0;">Carrinho vazio</p>
+              </div>
+              <div id="carrinho-total" data-testid="carrinho-total" style="margin-top: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1px solid rgba(122, 168, 116, 0.2);">
+                <p style="margin: 0; font-weight: 600;">Total: R$ 0,00</p>
+              </div>
+              <div class="controls" style="margin-top: var(--spacing-md);">
+                <button id="btn-finalizar-compra" class="btn" data-testid="btn-finalizar-compra" disabled>Finalizar Compra</button>
+                <button id="btn-limpar-carrinho" class="btn btn-secondary" data-testid="btn-limpar-carrinho" style="display: none;">Limpar Carrinho</button>
+              </div>
+            </div>
+
+            <div id="compra-result" data-testid="compra-result" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px; display: none;">
+              <p class="muted" style="margin: 0;">Aguardando finalização...</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Navegar pelo catálogo de livros</li>
+                <li>Adicionar livros ao carrinho</li>
+                <li>Validar que itens aparecem no carrinho</li>
+                <li>Testar cálculo de total do carrinho</li>
+                <li>Testar remoção de itens do carrinho</li>
+                <li>Validar fluxo de finalização de compra</li>
+                <li>Testar carrinho vazio e validações</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Adicionar livro ao carrinho
+cy.get('[data-testid="btn-adicionar-livro-1"]').click()
+cy.get('[data-testid="carrinho-itens"]').should('contain', 'Livro 1')
+cy.get('[data-testid="carrinho-total"]').should('contain', 'R$')
+
+// Finalizar compra
+cy.get('[data-testid="btn-finalizar-compra"]').should('not.be.disabled').click()
+cy.get('[data-testid="compra-result"]').should('contain', 'compra finalizada')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Fluxo completo
+await page.getByTestId('btn-adicionar-livro-1').click()
+await expect(page.getByTestId('carrinho-itens')).toContainText('Livro 1')
+await page.getByTestId('btn-finalizar-compra').click()
+await expect(page.getByTestId('compra-result')).toBeVisible()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Adicionar ao carrinho
+driver.findElement(By.cssSelector("[data-testid='btn-adicionar-livro-1']")).click();
+WebElement carrinho = driver.findElement(By.cssSelector("[data-testid='carrinho-itens']"));
+assert carrinho.getText().contains("Livro 1");
+driver.findElement(By.cssSelector("[data-testid='btn-finalizar-compra']")).click();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Fluxo de compra
+click_button '[data-testid="btn-adicionar-livro-1"]'
+expect(page).to have_content('Livro 1', within: '[data-testid="carrinho-itens"]')
+click_button '[data-testid="btn-finalizar-compra"]'
+expect(page).to have_css('[data-testid="compra-result"]', visible: true)
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Adicionar livro e finalizar compra
+    Click Element    css:[data-testid="btn-adicionar-livro-1"]
+    Element Should Contain    css:[data-testid="carrinho-itens"]    Livro 1
+    Click Element    css:[data-testid="btn-finalizar-compra"]
+    Element Should Be Visible    css:[data-testid="compra-result"]
+                </code></pre>
+              
+              </div>
+
+// Robot Framework - Fluxo de compra
+Click Button    [data-testid="btn-adicionar-livro-1"]
+Element Should Contain    [data-testid="carrinho-itens"]    Livro 1
+Click Button    [data-testid="btn-finalizar-compra"]
+Element Should Be Visible    [data-testid="compra-result"]</code></pre>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="livros-grid"</code> - Grid de livros</li>
+                <li><code>data-testid="livro-{id}"</code> - Card de livro</li>
+                <li><code>data-testid="btn-adicionar-livro-{id}"</code> - Botão adicionar</li>
+                <li><code>data-testid="carrinho-itens"</code> - Itens do carrinho</li>
+                <li><code>data-testid="carrinho-total"</code> - Total do carrinho</li>
+                <li><code>data-testid="btn-finalizar-compra"</code> - Botão finalizar</li>
+                <li><code>data-testid="compra-result"</code> - Resultado da compra</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      const livros = [
+        { id: 1, titulo: 'Testes Automatizados com Cypress', preco: 89.90 },
+        { id: 2, titulo: 'Playwright: Automação Moderna', preco: 79.90 },
+        { id: 3, titulo: 'Selenium WebDriver Avançado', preco: 94.90 },
+        { id: 4, titulo: 'QA: Fundamentos e Práticas', preco: 69.90 }
+      ];
+
+      let carrinho = [];
+
+      function renderizarLivros() {
+        const grid = document.getElementById('livros-grid');
+        grid.innerHTML = livros.map(livro => `
+          <div id="livro-${livro.id}" data-testid="livro-${livro.id}" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border: 1px solid rgba(122, 168, 116, 0.2);">
+            <h4 style="margin-top: 0;">${livro.titulo}</h4>
+            <p style="margin: var(--spacing-sm) 0; color: var(--accent); font-size: var(--font-size-lg); font-weight: 600;">R$ ${livro.preco.toFixed(2)}</p>
+            <button class="btn" data-testid="btn-adicionar-livro-${livro.id}" onclick="adicionarAoCarrinho(${livro.id})">Adicionar ao Carrinho</button>
+          </div>
+        `).join('');
+      }
+
+      function adicionarAoCarrinho(livroId) {
+        const livro = livros.find(l => l.id === livroId);
+        if (livro) {
+          carrinho.push(livro);
+          atualizarCarrinho();
+          window.showToast(`"${livro.titulo}" adicionado ao carrinho!`);
+        }
+      }
+
+      function atualizarCarrinho() {
+        const itensEl = document.getElementById('carrinho-itens');
+        const totalEl = document.getElementById('carrinho-total');
+        const btnFinalizar = document.getElementById('btn-finalizar-compra');
+        const btnLimpar = document.getElementById('btn-limpar-carrinho');
+
+        if (carrinho.length === 0) {
+          itensEl.innerHTML = '<p class="muted" style="margin: 0;">Carrinho vazio</p>';
+          totalEl.innerHTML = '<p style="margin: 0; font-weight: 600;">Total: R$ 0,00</p>';
+          btnFinalizar.disabled = true;
+          btnLimpar.style.display = 'none';
+        } else {
+          const total = carrinho.reduce((sum, item) => sum + item.preco, 0);
+          itensEl.innerHTML = carrinho.map((item, idx) => `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--spacing-xs) 0; border-bottom: 1px solid rgba(122, 168, 116, 0.1);">
+              <span>${item.titulo}</span>
+              <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                <span style="color: var(--accent); font-weight: 600;">R$ ${item.preco.toFixed(2)}</span>
+                <button class="btn btn-secondary" data-testid="btn-remover-${item.id}" onclick="removerDoCarrinho(${idx})" style="padding: 2px 8px; font-size: 12px;">Remover</button>
+              </div>
+            </div>
+          `).join('');
+          totalEl.innerHTML = `<p style="margin: 0; font-weight: 600; color: var(--accent); font-size: var(--font-size-lg);">Total: R$ ${total.toFixed(2)}</p>`;
+          btnFinalizar.disabled = false;
+          btnLimpar.style.display = 'inline-block';
+        }
+      }
+
+      function removerDoCarrinho(index) {
+        const livro = carrinho[index];
+        carrinho.splice(index, 1);
+        atualizarCarrinho();
+        window.showToast(`"${livro.titulo}" removido do carrinho!`);
+      }
+
+      function limparCarrinho() {
+        carrinho = [];
+        atualizarCarrinho();
+        window.showToast('Carrinho limpo!');
+      }
+
+      function finalizarCompra() {
+        const total = carrinho.reduce((sum, item) => sum + item.preco, 0);
+        const resultEl = document.getElementById('compra-result');
+        resultEl.style.display = 'block';
+        resultEl.innerHTML = `
+          <p style="margin: 0 0 var(--spacing-sm) 0; color: var(--accent);"><strong>✅ Compra finalizada com sucesso!</strong></p>
+          <p style="margin: 0; color: var(--muted);">Itens: ${carrinho.length}</p>
+          <p style="margin: 0; color: var(--muted);">Total: R$ ${total.toFixed(2)}</p>
+          <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${new Date().toLocaleTimeString('pt-BR')}</p>
+        `;
+        carrinho = [];
+        atualizarCarrinho();
+        window.showToast('Compra finalizada!');
+      }
+
+      window.adicionarAoCarrinho = adicionarAoCarrinho;
+      window.removerDoCarrinho = removerDoCarrinho;
+
+      document.getElementById('btn-finalizar-compra').addEventListener('click', finalizarCompra);
+      document.getElementById('btn-limpar-carrinho').addEventListener('click', limparCarrinho);
+
+      renderizarLivros();
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

@@ -1,16 +1,268 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>JavaScript Error — QA Playground</title>
-  <link rel="stylesheet" href="../../../css/styles.css" />
-</head>
-<body>
-  <main class="container">
-    <h1>JavaScript Error</h1>
-    <p>Simule e capture erros de JavaScript na página.</p>
-    <button onclick="naoExisteFuncao()" class="btn" data-testid="btn-error">Disparar erro</button>
-  </main>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>JavaScript Error — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="js-error.html" aria-current="page">JavaScript Error</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>JavaScript Error</h2>
+          <div class="section-desc">Simule e capture erros de JavaScript na página. Esta página permite testar a detecção de erros JavaScript, validação de tratamento de erros e integração com ferramentas de automação que capturam erros do console.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Gerar Erros JavaScript</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Clique nos botões abaixo para gerar diferentes tipos de erros JavaScript. Abra o DevTools (F12) para visualizar os erros no console.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md); display: flex; flex-wrap: wrap; gap: var(--spacing-sm);">
+              <button id="btn-error-reference" class="btn" data-testid="btn-error-reference" style="background: var(--danger);">Erro de Referência</button>
+              <button id="btn-error-type" class="btn" data-testid="btn-error-type" style="background: var(--danger);">Erro de Tipo</button>
+              <button id="btn-error-syntax" class="btn" data-testid="btn-error-syntax" style="background: var(--danger);">Erro de Sintaxe</button>
+              <button id="btn-error-custom" class="btn" data-testid="btn-error-custom" style="background: var(--danger);">Erro Customizado</button>
+            </div>
+
+            <div id="error-status" data-testid="error-status" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 100px;">
+              <p class="muted" style="margin: 0;">Nenhum erro gerado ainda. Clique nos botões acima para gerar erros JavaScript.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Capturar erros JavaScript no console</li>
+                <li>Validar que erros são detectados corretamente</li>
+                <li>Testar diferentes tipos de erros (ReferenceError, TypeError, SyntaxError)</li>
+                <li>Validar mensagens de erro exibidas</li>
+                <li>Testar tratamento de erros não capturados</li>
+                <li>Validar integração com ferramentas de automação</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Capturar erros JavaScript
+cy.window().then((win) => {
+  win.addEventListener('error', (e) => {
+    expect(e.message).to.include('ReferenceError')
+  })
+})
+cy.get('[data-testid="btn-error-reference"]').click()
+
+// Capturar erro de sintaxe
+cy.get('[data-testid="btn-error-syntax"]').click()
+cy.window().its('console').then((console) => {
+  cy.stub(console, 'error').as('consoleError')
+})
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Capturar erros
+page.on('pageerror', error => {
+  console.log('Erro capturado:', error.message)
+})
+await page.click('[data-testid="btn-error-reference"]')
+
+// Capturar erro de sintaxe
+await page.click('[data-testid="btn-error-syntax"]')
+const errors = await page.evaluate(() => window.errors || [])
+expect(errors.length).toBeGreaterThan(0)
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Verificar logs de console
+LogEntries logs = driver.manage().logs().get(LogType.BROWSER);
+for (LogEntry entry : logs) {
+  if (entry.getLevel() == Level.SEVERE) {
+    System.out.println("Erro: " + entry.getMessage());
+  }
+}
+
+// Clicar em botão que gera erro
+driver.findElement(By.cssSelector("[data-testid='btn-error-reference']")).click();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Capturar erros JavaScript
+page.driver.browser.logs.get(:browser).each do |log|
+  puts "Erro: #{log.message}" if log.level == 'SEVERE'
+end
+
+# Clicar em botão que gera erro
+find('[data-testid="btn-error-reference"]').click
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Capturar erros JavaScript
+    ${logs}=    Get Browser Logs
+    FOR    ${log}    IN    @{logs}
+        Log    ${log}[message]
+    END
+    Click Element    css:[data-testid="btn-error-reference"]
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="btn-error-reference"</code> - Botão erro de referência</li>
+                <li><code>data-testid="btn-error-type"</code> - Botão erro de tipo</li>
+                <li><code>data-testid="btn-error-syntax"</code> - Botão erro de sintaxe</li>
+                <li><code>data-testid="btn-error-custom"</code> - Botão erro customizado</li>
+                <li><code>data-testid="error-status"</code> - Status dos erros</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+      const errorStatus = document.getElementById('error-status');
+      let errorCount = 0;
+
+      function updateErrorStatus(type, message) {
+        errorCount++;
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        errorStatus.innerHTML = `
+          <p style="margin: 0 0 var(--spacing-sm) 0;"><strong style="color: var(--danger);">❌ Erro #${errorCount} gerado:</strong></p>
+          <p style="margin: 0; color: var(--muted);"><strong>Tipo:</strong> ${type}</p>
+          <p style="margin: 0; color: var(--muted);"><strong>Mensagem:</strong> ${message}</p>
+          <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+          <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Abra o DevTools (F12) para ver o erro no console.</p>
+        `;
+      }
+
+      document.getElementById('btn-error-reference').addEventListener('click', function() {
+        try {
+          // Referência a variável não definida
+          naoExisteFuncao();
+        } catch (e) {
+          updateErrorStatus('ReferenceError', e.message);
+          throw e; // Re-lançar para aparecer no console
+        }
+      });
+
+      document.getElementById('btn-error-type').addEventListener('click', function() {
+        try {
+          // Tentar chamar algo que não é função
+          const obj = null;
+          obj.metodo();
+        } catch (e) {
+          updateErrorStatus('TypeError', e.message);
+          throw e;
+        }
+      });
+
+      document.getElementById('btn-error-syntax').addEventListener('click', function() {
+        try {
+          // Erro de sintaxe (será capturado no load)
+          eval('function() { return }');
+        } catch (e) {
+          updateErrorStatus('SyntaxError', e.message);
+          throw e;
+        }
+      });
+
+      document.getElementById('btn-error-custom').addEventListener('click', function() {
+        try {
+          throw new Error('Este é um erro customizado para testes de automação');
+        } catch (e) {
+          updateErrorStatus('Error (Customizado)', e.message);
+          throw e;
+        }
+      });
+
+      // Capturar erros não tratados
+      window.addEventListener('error', function(e) {
+        console.error('Erro capturado:', e.message, e.filename, e.lineno);
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Teste Flaky — QA Playground</title>
+    <link rel="stylesheet" href="../../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../../index.html">Início</a></li>
+            <li><a href="../index.html">Utilitários</a></li>
+            <li><a href="flaky.html" aria-current="page">Teste Flaky</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Exemplo de Teste Flaky</h2>
+          <div class="section-desc">Simule e identifique testes intermitentes (flaky). Esta página demonstra comportamentos que podem causar testes flaky, como elementos que aparecem aleatoriamente, delays variáveis e condições de corrida.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Elemento com Aparição Aleatória</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Este elemento aparece aleatoriamente após um delay variável, simulando um teste flaky.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-trigger-flaky" class="btn" data-testid="btn-trigger-flaky">Disparar Elemento Flaky</button>
+            </div>
+
+            <div id="flaky-container" data-testid="flaky-container" style="min-height: 150px; padding: var(--spacing-md); border: 2px dashed rgba(122, 168, 116, 0.3); border-radius: var(--border-radius-md); background: var(--surface); position: relative;">
+              <p class="muted" style="margin: 0; text-align: center; padding-top: 50px;">Aguardando elemento aparecer...</p>
+            </div>
+
+            <div id="flaky-result" data-testid="flaky-result" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+              <p class="muted" style="margin: 0;">Nenhum elemento flaky detectado ainda.</p>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Elemento com Delay Variável</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Este botão muda de estado após um delay aleatório, simulando condições de corrida.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-delay-flaky" class="btn" data-testid="btn-delay-flaky">Iniciar Ação com Delay</button>
+            </div>
+
+            <div id="delay-result" data-testid="delay-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent-2); min-height: 60px;">
+              <p class="muted" style="margin: 0;">Aguardando ação...</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Características de Testes Flaky:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Elementos que aparecem/disparecem aleatoriamente</li>
+                <li>Delays variáveis que causam condições de corrida</li>
+                <li>Estados que mudam antes do teste verificar</li>
+                <li>Dependências de timing que não são estáveis</li>
+                <li>Elementos que podem ou não aparecer baseado em probabilidade</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Estratégias para Lidar com Flaky Tests:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Use waits explícitos e robustos</li>
+                <li>Implemente retry logic quando apropriado</li>
+                <li>Evite depender de timing fixo</li>
+                <li>Use seletores estáveis (data-testid)</li>
+                <li>Valide estados, não apenas presença de elementos</li>
+                <li>Isolate testes para evitar dependências</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Aguardar elemento flaky com retry
+cy.get('[data-testid="btn-trigger-flaky"]').click()
+cy.get('[data-testid="flaky-element"]', { timeout: 5000 }).should('be.visible').then(() => {
+  cy.get('[data-testid="flaky-result"]').should('contain', 'detectado')
+})
+
+// Usar retry para elemento que pode não aparecer
+cy.get('[data-testid="btn-trigger-flaky"]').click()
+cy.get('[data-testid="flaky-element"]', { timeout: 10000 }).should('exist')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Wait robusto para elemento flaky
+await page.getByTestId('btn-trigger-flaky').click()
+await page.getByTestId('flaky-element').waitFor({ state: 'visible', timeout: 10000 }).catch(() => {
+  // Elemento pode não aparecer - comportamento flaky
+})
+
+// Aguardar com retry
+try {
+  await page.getByTestId('flaky-element').waitFor({ state: 'visible', timeout: 10000 })
+} catch (e) {
+  // Elemento não apareceu - comportamento flaky esperado
+}
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Wait com timeout maior
+driver.findElement(By.cssSelector("[data-testid='btn-trigger-flaky']")).click();
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+try {
+  wait.until(ExpectedConditions.visibilityOfElementLocated(
+    By.cssSelector("[data-testid='flaky-element']")
+  ));
+} catch (TimeoutException e) {
+  // Elemento não apareceu - comportamento flaky
+}
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Aguardar elemento flaky
+click_button '[data-testid="btn-trigger-flaky"]'
+begin
+  expect(page).to have_css('[data-testid="flaky-element"]', visible: true, wait: 10)
+rescue Capybara::ElementNotFound
+  # Elemento não apareceu - comportamento flaky
+end
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Aguardar elemento flaky
+    Click Button    css:[data-testid="btn-trigger-flaky"]
+    Run Keyword And Ignore Error    Wait Until Element Is Visible    css:[data-testid="flaky-element"]    timeout=10s
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="btn-trigger-flaky"</code> - Botão para disparar elemento flaky</li>
+                <li><code>data-testid="flaky-container"</code> - Container do elemento flaky</li>
+                <li><code>data-testid="flaky-element"</code> - Elemento que aparece aleatoriamente</li>
+                <li><code>data-testid="btn-delay-flaky"</code> - Botão com delay variável</li>
+                <li><code>data-testid="delay-result"</code> - Resultado do delay</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../../js/app.js"></script>
+    <script>
+      // Elemento flaky que aparece aleatoriamente
+      document.getElementById('btn-trigger-flaky').addEventListener('click', function() {
+        const container = document.getElementById('flaky-container');
+        const resultEl = document.getElementById('flaky-result');
+        
+        container.innerHTML = '<p class="muted" style="margin: 0; text-align: center; padding-top: 50px;">Aguardando elemento aparecer...</p>';
+        resultEl.innerHTML = '<p class="muted" style="margin: 0;">Aguardando...</p>';
+        
+        // Delay aleatório entre 500ms e 3000ms (simula flaky)
+        const delay = Math.random() * 2500 + 500;
+        const willAppear = Math.random() > 0.2; // 80% de chance de aparecer
+        
+        setTimeout(() => {
+          if (willAppear) {
+            const flakyElement = document.createElement('div');
+            flakyElement.id = 'flaky-element';
+            flakyElement.setAttribute('data-testid', 'flaky-element');
+            flakyElement.style.cssText = 'padding: var(--spacing-lg); background: var(--accent); color: white; border-radius: var(--border-radius-md); text-align: center; font-weight: 600;';
+            flakyElement.textContent = '✅ Elemento Flaky Apareceu!';
+            
+            container.innerHTML = '';
+            container.appendChild(flakyElement);
+            
+            const timestamp = new Date().toLocaleTimeString('pt-BR');
+            resultEl.innerHTML = `
+              <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>✅ Elemento detectado:</strong></p>
+              <p style="margin: 0; color: var(--muted);">Elemento apareceu após ${Math.round(delay)}ms</p>
+              <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+            `;
+            window.showToast('Elemento flaky apareceu!');
+          } else {
+            container.innerHTML = '<p class="muted" style="margin: 0; text-align: center; padding-top: 50px;">Elemento não apareceu desta vez (comportamento flaky)</p>';
+            resultEl.innerHTML = '<p style="margin: 0; color: var(--danger);">❌ Elemento não apareceu - comportamento flaky detectado!</p>';
+            window.showToast('Elemento não apareceu (flaky)!');
+          }
+        }, delay);
+      });
+      
+      // Delay variável
+      document.getElementById('btn-delay-flaky').addEventListener('click', function() {
+        const btn = this;
+        const resultEl = document.getElementById('delay-result');
+        
+        btn.disabled = true;
+        resultEl.innerHTML = '<span class="muted">Processando...</span>';
+        
+        // Delay aleatório entre 1s e 5s
+        const delay = Math.random() * 4000 + 1000;
+        
+        setTimeout(() => {
+          const timestamp = new Date().toLocaleTimeString('pt-BR');
+          resultEl.innerHTML = `
+            <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>✅ Ação concluída:</strong></p>
+            <p style="margin: 0; color: var(--muted);">Ação finalizada após ${Math.round(delay)}ms (delay variável)</p>
+            <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+          `;
+          btn.disabled = false;
+          window.showToast('Ação concluída!');
+        }, delay);
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          const tabs = tabsContainer.querySelectorAll('.test-tab');
+          tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              
+              const targetId = this.dataset.target;
+              if (!targetId) return;
+              
+              // Remove active de todas as abas
+              tabs.forEach(t => t.classList.remove('active'));
+              document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+              // Adiciona active na aba clicada
+              this.classList.add('active');
+              const targetContent = document.getElementById(targetId);
+              if (targetContent) {
+                targetContent.classList.add('active');
+              }
+            });
+          });
+        }
+
+        // Aguardar DOM estar pronto
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          setTimeout(initTabs, 50);
+        }
+      })();
+    </script>
+  </body>
+</html>

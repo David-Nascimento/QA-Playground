@@ -1,17 +1,288 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Página de Feedback</title>
-  <link rel="stylesheet" href="../../../css/styles.css">
-</head>
-<body>
-  <h1>Página de Feedback</h1>
-  <form>
-    <label for="feedback">Seu feedback:</label><br>
-    <textarea id="feedback" name="feedback" required></textarea><br><br>
-    <button type="submit">Enviar</button>
-  </form>
-  <a href="../../../index.html">Voltar</a>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Página de Feedback — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="pagina-feedback.html" aria-current="page">Feedback</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Página de Feedback</h2>
+          <div class="section-desc">Envie e valide feedbacks de usuários. Esta página permite testar a automação de formulários de feedback, validação de mensagens e envio de avaliações.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Enviar Feedback</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Compartilhe sua opinião e feedback sobre o QA Playground.
+            </p>
+
+            <form id="feedback-form" data-testid="form-feedback" onsubmit="return false;">
+              <div class="form-group">
+                <label for="rating-feedback">Avaliação</label>
+                <div id="rating-container" data-testid="rating-container" style="display: flex; gap: var(--spacing-sm); margin-bottom: var(--spacing-md);">
+                  <button type="button" class="rating-btn" data-rating="1" data-testid="rating-1">⭐</button>
+                  <button type="button" class="rating-btn" data-rating="2" data-testid="rating-2">⭐⭐</button>
+                  <button type="button" class="rating-btn" data-rating="3" data-testid="rating-3">⭐⭐⭐</button>
+                  <button type="button" class="rating-btn" data-rating="4" data-testid="rating-4">⭐⭐⭐⭐</button>
+                  <button type="button" class="rating-btn" data-rating="5" data-testid="rating-5">⭐⭐⭐⭐⭐</button>
+                </div>
+                <input type="hidden" id="rating-value" data-testid="rating-value" value="0" />
+              </div>
+              <div class="form-group">
+                <label for="feedback-text">Seu feedback</label>
+                <textarea 
+                  id="feedback-text" 
+                  name="feedback" 
+                  data-testid="textarea-feedback"
+                  placeholder="Digite seu feedback aqui..."
+                  rows="5"
+                  required
+                ></textarea>
+              </div>
+              <div class="controls" style="margin-top: var(--spacing-md);">
+                <button type="submit" class="btn" data-testid="btn-enviar-feedback">Enviar Feedback</button>
+                <button type="button" class="btn btn-secondary" data-testid="btn-limpar-feedback">Limpar</button>
+              </div>
+            </form>
+
+            <div id="feedback-result" data-testid="feedback-result" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px; display: none;">
+              <p class="muted" style="margin: 0;">Aguardando envio...</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Selecionar avaliação (estrelas)</li>
+                <li>Preencher campo de feedback</li>
+                <li>Testar envio de feedback</li>
+                <li>Validar que avaliação é obrigatória</li>
+                <li>Testar limpeza de formulário</li>
+                <li>Validar mensagem de sucesso após envio</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Enviar feedback
+cy.get('[data-testid="rating-5"]').click()
+cy.get('[data-testid="rating-value"]').should('have.value', '5')
+cy.get('[data-testid="textarea-feedback"]').type('Ótimo projeto!')
+cy.get('[data-testid="btn-enviar-feedback"]').click()
+cy.get('[data-testid="feedback-result"]').should('contain', 'enviado')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Enviar feedback
+await page.getByTestId('rating-4').click()
+await page.getByTestId('textarea-feedback').fill('Feedback de teste')
+await page.getByTestId('btn-enviar-feedback').click()
+await expect(page.getByTestId('feedback-result')).toContainText('enviado')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Enviar feedback
+driver.findElement(By.cssSelector("[data-testid='rating-5']")).click();
+driver.findElement(By.cssSelector("[data-testid='textarea-feedback']")).sendKeys("Ótimo projeto!");
+driver.findElement(By.cssSelector("[data-testid='btn-enviar-feedback']")).click();
+WebElement result = driver.findElement(By.cssSelector("[data-testid='feedback-result']"));
+assert result.getText().contains("enviado");
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Enviar feedback
+find('[data-testid="rating-5"]').click
+fill_in '[data-testid="textarea-feedback"]', with: 'Ótimo projeto!'
+click_button '[data-testid="btn-enviar-feedback"]'
+expect(page).to have_content('enviado', within: '[data-testid="feedback-result"]')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Enviar feedback
+    Click Element    css:[data-testid="rating-5"]
+    Input Text    css:[data-testid="textarea-feedback"]    Ótimo projeto!
+    Click Button    css:[data-testid="btn-enviar-feedback"]
+    Element Should Contain    css:[data-testid="feedback-result"]    enviado
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="form-feedback"</code> - Formulário de feedback</li>
+                <li><code>data-testid="rating-{1-5}"</code> - Botões de avaliação</li>
+                <li><code>data-testid="rating-value"</code> - Valor da avaliação</li>
+                <li><code>data-testid="textarea-feedback"</code> - Campo de feedback</li>
+                <li><code>data-testid="btn-enviar-feedback"</code> - Botão enviar</li>
+                <li><code>data-testid="feedback-result"</code> - Resultado do envio</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <style>
+      .rating-btn {
+        background: transparent;
+        border: 2px solid rgba(122, 168, 116, 0.3);
+        border-radius: var(--border-radius-sm);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        cursor: pointer;
+        font-size: var(--font-size-lg);
+        transition: all 0.2s;
+      }
+      .rating-btn:hover {
+        border-color: var(--accent);
+        background: rgba(122, 168, 116, 0.1);
+      }
+      .rating-btn.selected {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: white;
+      }
+    </style>
+    <script>
+      const form = document.getElementById('feedback-form');
+      const ratingBtns = document.querySelectorAll('.rating-btn');
+      const ratingValue = document.getElementById('rating-value');
+      const resultEl = document.getElementById('feedback-result');
+      const btnLimpar = document.getElementById('btn-limpar-feedback');
+
+      ratingBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          ratingBtns.forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+          ratingValue.value = this.dataset.rating;
+        });
+      });
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const rating = ratingValue.value;
+        const feedback = document.getElementById('feedback-text').value.trim();
+
+        if (rating === '0') {
+          window.showToast('Selecione uma avaliação!');
+          return;
+        }
+
+        if (!feedback) {
+          window.showToast('Digite seu feedback!');
+          return;
+        }
+
+        resultEl.style.display = 'block';
+        resultEl.innerHTML = '<p class="muted" style="margin: 0;">Enviando feedback...</p>';
+
+        setTimeout(() => {
+          const timestamp = new Date().toLocaleTimeString('pt-BR');
+          resultEl.innerHTML = `
+            <p style="margin: 0 0 var(--spacing-sm) 0; color: var(--accent);"><strong>✅ Feedback enviado com sucesso!</strong></p>
+            <p style="margin: 0; color: var(--muted);">Avaliação: ${'⭐'.repeat(parseInt(rating))} (${rating}/5)</p>
+            <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+          `;
+          resultEl.style.borderLeftColor = 'var(--accent)';
+          form.reset();
+          ratingBtns.forEach(b => b.classList.remove('selected'));
+          ratingValue.value = '0';
+          window.showToast('Feedback enviado!');
+        }, 1000);
+      });
+
+      btnLimpar.addEventListener('click', function() {
+        form.reset();
+        ratingBtns.forEach(b => b.classList.remove('selected'));
+        ratingValue.value = '0';
+        resultEl.style.display = 'none';
+        document.getElementById('feedback-text').focus();
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>

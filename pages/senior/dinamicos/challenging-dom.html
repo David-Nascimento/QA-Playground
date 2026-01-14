@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
@@ -33,7 +33,7 @@
           <div class="section-desc">Teste automação em DOMs complexos e desafiadores. Este desafio apresenta elementos com classes dinâmicas, IDs variáveis e conteúdo que muda constantemente - um cenário realista para testar suas habilidades de automação.</div>
         </div>
 
-        <div class="subsections">
+        <div class="subsections subsections-vertical">
           <div class="subsection">
             <h3>DOM Dinâmico com Classes Aleatórias</h3>
             <p class="muted" style="margin-bottom: var(--spacing-md);">
@@ -86,6 +86,73 @@
                 <li>Valide estados, não apenas classes</li>
                 <li>Use waits explícitos para elementos dinâmicos</li>
               </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Usar data-testid (recomendado)
+cy.get('[data-testid="btn-a"]').click()
+cy.get('[data-testid="resultado-acao"]').should('contain', 'Botão A')
+cy.get('[data-testid="box1"]').should('be.visible')
+
+// Testar botão B
+cy.get('[data-testid="btn-b"]').click()
+cy.get('[data-testid="resultado-acao"]').should('contain', 'Botão B')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Seleção estável
+await page.getByTestId('btn-b').click()
+await expect(page.getByTestId('resultado-acao')).toContainText('Botão B')
+
+// Testar botão A
+await page.getByTestId('btn-a').click()
+await expect(page.getByTestId('resultado-acao')).toContainText('Botão A')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Usar data-testid
+driver.findElement(By.cssSelector("[data-testid='btn-a']")).click();
+WebElement resultado = driver.findElement(By.cssSelector("[data-testid='resultado-acao']"));
+assert resultado.getText().contains("Botão A");
+
+// Testar botão B
+driver.findElement(By.cssSelector("[data-testid='btn-b']")).click();
+assert resultado.getText().contains("Botão B");
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Seleção estável
+click_button '[data-testid="btn-a"]'
+expect(page).to have_content('Botão A', within: '[data-testid="resultado-acao"]')
+
+# Testar botão B
+click_button '[data-testid="btn-b"]'
+expect(page).to have_content('Botão B', within: '[data-testid="resultado-acao"]')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Testar botão A
+    Click Button    css:[data-testid="btn-a"]
+    Element Should Contain    css:[data-testid="resultado-acao"]    Botão A
+
+Testar botão B
+    Click Button    css:[data-testid="btn-b"]
+    Element Should Contain    css:[data-testid="resultado-acao"]    Botão B
+                </code></pre>
+              
+              </div>
 
               <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
@@ -223,6 +290,45 @@
       
       // Inicialização
       shuffleClasses();
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
     </script>
   </body>
 </html>

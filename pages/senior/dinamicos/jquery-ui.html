@@ -1,30 +1,205 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>JQuery UI — QA Playground</title>
-  <link rel="stylesheet" href="../../../css/styles.css" />
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
-</head>
-<body>
-  <main class="container">
-    <h1>JQuery UI</h1>
-    <p>Teste widgets e interações JQuery UI.</p>
-    <div id="draggable" style="width:120px;height:60px;background:#e0e0e0;line-height:60px;text-align:center;">Arraste-me</div>
-    <div id="droppable" style="width:120px;height:60px;background:#b2dfdb;line-height:60px;text-align:center;margin-top:20px;">Solte aqui</div>
-  </main>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-  <script>
-    $(function() {
-      $("#draggable").draggable();
-      $("#droppable").droppable({
-        drop: function(event, ui) {
-          $(this).html('Soltou!');
-        }
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>JQuery UI — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/styles.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">Dinâmicos</a></li>
+            <li><a href="jquery-ui.html" aria-current="page">JQuery UI</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>JQuery UI</h2>
+          <div class="section-desc">Teste widgets e interações JQuery UI. Esta página permite testar a automação de componentes jQuery UI, incluindo drag and drop, widgets interativos e elementos que dependem de bibliotecas externas.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Widgets JQuery UI</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Teste os widgets jQuery UI abaixo. Arraste o elemento arrastável até a zona de soltura.
+            </p>
+
+            <div style="margin-bottom: var(--spacing-lg); padding: var(--spacing-lg); background: var(--surface); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md);">
+              <div id="draggable" data-testid="draggable-jquery" style="width: 120px; height: 60px; background: var(--accent); color: white; line-height: 60px; text-align: center; border-radius: var(--border-radius-sm); cursor: move; margin-bottom: var(--spacing-md);">Arraste-me</div>
+              <div id="droppable" data-testid="droppable-jquery" style="width: 200px; height: 100px; background: rgba(122, 168, 116, 0.2); line-height: 100px; text-align: center; border-radius: var(--border-radius-sm); border: 2px dashed rgba(122, 168, 116, 0.5);">Solte aqui</div>
+            </div>
+
+            <div id="jquery-result" data-testid="jquery-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+              <p class="muted" style="margin: 0;">Arraste o elemento acima até a zona de soltura.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar drag and drop com jQuery UI</li>
+                <li>Validar que elemento foi arrastado corretamente</li>
+                <li>Testar drop em zona de soltura</li>
+                <li>Validar eventos de jQuery UI</li>
+                <li>Testar interação com widgets jQuery</li>
+                <li>Validar que jQuery UI está carregado</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Drag and drop jQuery UI
+cy.get('[data-testid="draggable-jquery"]').trigger('mousedown', { which: 1 })
+cy.get('[data-testid="droppable-jquery"]').trigger('mousemove').trigger('mouseup')
+cy.get('[data-testid="droppable-jquery"]').should('contain', 'Soltou')
+
+// Validar que jQuery UI está carregado
+cy.window().its('jQuery.ui').should('exist')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Drag and drop
+await page.getByTestId('draggable-jquery').dragTo(page.getByTestId('droppable-jquery'))
+await expect(page.getByTestId('droppable-jquery')).toContainText('Soltou')
+
+// Validar jQuery UI
+const jqueryUI = await page.evaluate(() => window.jQuery && window.jQuery.ui)
+expect(jqueryUI).toBeTruthy()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Drag and drop jQuery UI
+WebElement source = driver.findElement(By.cssSelector("[data-testid='draggable-jquery']"));
+WebElement target = driver.findElement(By.cssSelector("[data-testid='droppable-jquery']"));
+Actions actions = new Actions(driver);
+actions.dragAndDrop(source, target).perform();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Drag and drop
+source = find('[data-testid="draggable-jquery"]')
+target = find('[data-testid="droppable-jquery"]')
+source.drag_to(target)
+expect(page).to have_content('Soltou', within: '[data-testid="droppable-jquery"]')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Drag and drop jQuery UI
+    Drag And Drop    css:[data-testid="draggable-jquery"]    css:[data-testid="droppable-jquery"]
+    Element Should Contain    css:[data-testid="droppable-jquery"]    Soltou
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="draggable-jquery"</code> - Elemento arrastável</li>
+                <li><code>data-testid="droppable-jquery"</code> - Zona de soltura</li>
+                <li><code>data-testid="jquery-result"</code> - Resultado da interação</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script src="../../../js/app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script>
+      $(function() {
+        $("#draggable").draggable();
+        $("#droppable").droppable({
+          accept: "#draggable",
+          hoverClass: "ui-state-hover",
+          drop: function(event, ui) {
+            $(this).html('<strong>Soltou!</strong>');
+            $(this).css('background', 'rgba(122, 168, 116, 0.3)');
+            document.getElementById('jquery-result').innerHTML = `
+              <p style="margin: 0; color: var(--accent);"><strong>✅ Drop realizado com sucesso!</strong></p>
+              <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${new Date().toLocaleTimeString('pt-BR')}</p>
+            `;
+            window.showToast('Drop realizado!');
+          }
+        });
       });
-    });
-  </script>
-</body>
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
 </html>
