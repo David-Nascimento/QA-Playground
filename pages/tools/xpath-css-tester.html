@@ -155,6 +155,90 @@
         background: var(--success);
         color: white;
       }
+      .card-primary {
+        border-left: 4px solid var(--accent);
+      }
+      .card-secondary {
+        border-left: 4px solid var(--accent-2);
+      }
+      .card-tertiary {
+        border-left: 4px solid var(--info);
+      }
+      #range-value {
+        display: inline-block;
+        margin-left: var(--spacing-sm);
+        font-weight: 600;
+        color: var(--accent);
+      }
+      .btn:disabled,
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+      input:disabled,
+      input[readonly] {
+        opacity: 0.7;
+        cursor: not-allowed;
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+      input[readonly] {
+        cursor: default;
+      }
+      .toggle-controls {
+        display: flex;
+        gap: var(--spacing-xs);
+        flex-wrap: wrap;
+      }
+      .toggle-btn {
+        padding: 6px 12px;
+        font-size: var(--font-size-sm);
+        background: var(--surface);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius-sm);
+        cursor: pointer;
+        transition: all var(--transition);
+        color: var(--text);
+        font-weight: 500;
+      }
+      .toggle-btn:hover:not(:disabled) {
+        background: rgba(122, 168, 116, 0.1);
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .toggle-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .list-item {
+        padding: var(--spacing-sm) var(--spacing-md);
+        margin-bottom: var(--spacing-xs);
+        border-radius: var(--border-radius-sm);
+        transition: background var(--transition);
+      }
+      .list-item.active {
+        background: rgba(122, 168, 116, 0.1);
+        color: var(--accent);
+        font-weight: 600;
+      }
+      .list-item.selected {
+        background: rgba(122, 168, 116, 0.2);
+        border-left: 3px solid var(--accent);
+      }
+      .list-item.disabled {
+        opacity: 0.5;
+        color: var(--muted);
+      }
+      dl dt {
+        font-weight: 600;
+        margin-top: var(--spacing-sm);
+        color: var(--accent);
+      }
+      dl dd {
+        margin-left: var(--spacing-md);
+        margin-bottom: var(--spacing-sm);
+        color: var(--muted);
+      }
       @media (max-width: 900px) {
         .tester-container {
           grid-template-columns: 1fr;
@@ -191,7 +275,7 @@
         <!-- Tester Interativo -->
         <div class="tester-container">
           <div class="tester-panel">
-            <h3>🔍 Testador XPath</h3>
+            <h3>Testador XPath</h3>
             <input type="text" id="xpath-input" class="selector-input" placeholder="Ex: //button[@id='btn-submit']" />
             <button class="test-button" onclick="testXPath()">Testar XPath</button>
             <button class="test-button" onclick="highlightXPath()">Destacar Elementos</button>
@@ -199,7 +283,7 @@
           </div>
 
           <div class="tester-panel">
-            <h3>🎨 Testador CSS</h3>
+            <h3>Testador CSS</h3>
             <input type="text" id="css-input" class="selector-input" placeholder="Ex: #btn-submit ou button.btn-primary" />
             <button class="test-button" onclick="testCSS()">Testar CSS</button>
             <button class="test-button" onclick="highlightCSS()">Destacar Elementos</button>
@@ -209,7 +293,7 @@
 
         <!-- Exemplos de XPath -->
         <div class="example-section">
-          <h3>📚 Exemplos de XPath</h3>
+          <h3>Exemplos de XPath</h3>
           <p>Seletores XPath comumente utilizados em automação de testes:</p>
           
           <div class="example-grid">
@@ -332,12 +416,96 @@
               <div class="example-code">//button[@id='submit' or @class='btn-primary']</div>
               <div class="example-desc">Combina condições com OR</div>
             </div>
+
+            <div class="example-card">
+              <h4>Por NOT</h4>
+              <div class="example-code">//input[not(@disabled)]</div>
+              <div class="example-desc">Inputs que não estão desabilitados</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Ancestral</h4>
+              <div class="example-code">//input[@id='email']/ancestor::form</div>
+              <div class="example-desc">Form ancestral do input</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Descendentes Diretos</h4>
+              <div class="example-code">//form/child::input</div>
+              <div class="example-desc">Apenas inputs filhos diretos de form</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Valor de Atributo</h4>
+              <div class="example-code">//input[@value='Buscar']</div>
+              <div class="example-desc">Input com valor específico</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Atributo Normalizado</h4>
+              <div class="example-code">//div[normalize-space(@class)='card']</div>
+              <div class="example-desc">Remove espaços extras do atributo</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Texto Normalizado</h4>
+              <div class="example-code">//button[normalize-space(text())='Enviar']</div>
+              <div class="example-desc">Texto sem espaços extras</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Posição Relativa</h4>
+              <div class="example-code">//ul/li[position() &lt; 3]</div>
+              <div class="example-desc">Primeiros 2 itens (use &lt; para menor que)</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Múltiplas Classes</h4>
+              <div class="example-code">//div[contains(@class, 'btn') and contains(@class, 'primary')]</div>
+              <div class="example-desc">Elemento com múltiplas classes</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Atributo Data</h4>
+              <div class="example-code">//*[@data-cy='submit-button']</div>
+              <div class="example-desc">Seletor por atributo data-cy (Cypress)</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Atributo Aria</h4>
+              <div class="example-code">//button[@aria-label='Fechar']</div>
+              <div class="example-desc">Botão com label de acessibilidade</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Nome de Tag Dinâmico</h4>
+              <div class="example-code">//*[local-name()='input']</div>
+              <div class="example-desc">Todos os inputs independente do namespace</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Texto que Inicia</h4>
+              <div class="example-code">//button[starts-with(text(), 'Enviar')]</div>
+              <div class="example-desc">Botão cujo texto começa com 'Enviar'</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Texto que Termina</h4>
+              <div class="example-code">//button[ends-with(text(), 'Formulário')]</div>
+              <div class="example-desc">Botão cujo texto termina com 'Formulário'</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Atributo com Espaço</h4>
+              <div class="example-code">//div[contains(concat(' ', @class, ' '), ' card ')]</div>
+              <div class="example-desc">Classe exata mesmo com múltiplas classes</div>
+            </div>
           </div>
         </div>
 
         <!-- Exemplos de CSS -->
         <div class="example-section">
-          <h3>🎨 Exemplos de CSS Selectors</h3>
+          <h3>Exemplos de CSS Selectors</h3>
           <p>Seletores CSS comumente utilizados em automação de testes:</p>
           
           <div class="example-grid">
@@ -486,88 +654,600 @@
             </div>
 
             <div class="example-card">
-              <h4>Por Texto (CSS não suporta, mas pode usar)</h4>
+              <h4>Por Texto (CSS não suporta)</h4>
               <div class="example-code">button:contains('Enviar')</div>
-              <div class="example-desc">⚠️ Não funciona em CSS puro (use XPath)</div>
+              <div class="example-desc">Não funciona em CSS puro (use XPath)</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Atributo com Espaço</h4>
+              <div class="example-code">div[class~='card']</div>
+              <div class="example-desc">Classe exata mesmo com múltiplas classes</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Atributo Data</h4>
+              <div class="example-code">[data-cy='submit-button']</div>
+              <div class="example-desc">Seletor por atributo data-cy (Cypress)</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Atributo Aria</h4>
+              <div class="example-code">button[aria-label='Fechar']</div>
+              <div class="example-desc">Botão com label de acessibilidade</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Estado Focus</h4>
+              <div class="example-code">input:focus</div>
+              <div class="example-desc">Input em foco</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Estado Required</h4>
+              <div class="example-code">input:required</div>
+              <div class="example-desc">Input obrigatório</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Estado Optional</h4>
+              <div class="example-code">input:optional</div>
+              <div class="example-desc">Input opcional</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Estado Valid</h4>
+              <div class="example-code">input:valid</div>
+              <div class="example-desc">Input com valor válido</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Estado Invalid</h4>
+              <div class="example-code">input:invalid</div>
+              <div class="example-desc">Input com valor inválido</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Estado Enabled</h4>
+              <div class="example-code">button:enabled</div>
+              <div class="example-desc">Botão habilitado</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Estado Read-only</h4>
+              <div class="example-code">input[readonly]</div>
+              <div class="example-desc">Input somente leitura</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Atributo Múltiplo</h4>
+              <div class="example-code">input[type='text'][name='email']</div>
+              <div class="example-desc">Múltiplos atributos combinados</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Atributo Não Vazio</h4>
+              <div class="example-code">input[value]:not([value=''])</div>
+              <div class="example-desc">Input com valor preenchido</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Atributo Ausente</h4>
+              <div class="example-code">input:not([disabled])</div>
+              <div class="example-desc">Input sem atributo disabled</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Tipo de Input</h4>
+              <div class="example-code">input[type='email']</div>
+              <div class="example-desc">Input do tipo email</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Tipo de Input Password</h4>
+              <div class="example-code">input[type='password']</div>
+              <div class="example-desc">Input do tipo senha</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Tipo de Input Number</h4>
+              <div class="example-code">input[type='number']</div>
+              <div class="example-desc">Input do tipo número</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Tipo de Input Date</h4>
+              <div class="example-code">input[type='date']</div>
+              <div class="example-desc">Input do tipo data</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Tipo de Input Checkbox</h4>
+              <div class="example-code">input[type='checkbox']</div>
+              <div class="example-desc">Input do tipo checkbox</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Tipo de Input Radio</h4>
+              <div class="example-code">input[type='radio']</div>
+              <div class="example-desc">Input do tipo radio</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Tipo de Input Submit</h4>
+              <div class="example-code">input[type='submit']</div>
+              <div class="example-desc">Input do tipo submit</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Tipo de Input Button</h4>
+              <div class="example-code">input[type='button']</div>
+              <div class="example-desc">Input do tipo button</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Tipo de Input File</h4>
+              <div class="example-code">input[type='file']</div>
+              <div class="example-desc">Input do tipo file</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Tipo de Input Hidden</h4>
+              <div class="example-code">input[type='hidden']</div>
+              <div class="example-desc">Input do tipo hidden</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Tipo de Input Range</h4>
+              <div class="example-code">input[type='range']</div>
+              <div class="example-desc">Input do tipo range (slider)</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Tipo de Input Search</h4>
+              <div class="example-code">input[type='search']</div>
+              <div class="example-desc">Input do tipo search</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Tipo de Input Tel</h4>
+              <div class="example-code">input[type='tel']</div>
+              <div class="example-desc">Input do tipo telefone</div>
+            </div>
+
+            <div class="example-card">
+              <h4>Por Tipo de Input URL</h4>
+              <div class="example-code">input[type='url']</div>
+              <div class="example-desc">Input do tipo URL</div>
             </div>
           </div>
         </div>
 
         <!-- Área de Demonstração -->
         <div class="demo-elements">
-          <h3>🧪 Área de Demonstração</h3>
-          <p>Use os elementos abaixo para testar seus seletores XPath e CSS:</p>
+          <h3>Área de Demonstração</h3>
+          <p>Use os elementos abaixo para testar seus seletores XPath e CSS. Esta área contém diversos tipos de elementos HTML comuns em aplicações web:</p>
           
-          <form id="demo-form" data-testid="demo-form">
-            <div class="form-group">
-              <label for="demo-email" data-testid="email-label">Email:</label>
-              <input type="email" id="demo-email" name="email" class="form-input" data-testid="email-input" placeholder="teste@exemplo.com" />
-            </div>
-            
-            <div class="form-group">
-              <label for="demo-password">Senha:</label>
-              <input type="password" id="demo-password" name="password" class="form-input" data-testid="password-input" />
-            </div>
-            
-            <div class="form-group">
-              <label>
-                <input type="checkbox" id="demo-checkbox" name="remember" data-testid="remember-checkbox" />
-                Lembrar-me
-              </label>
-            </div>
-            
-            <div class="form-group">
-              <div>
-                <strong>Gênero:</strong>
+          <!-- Formulário Completo -->
+          <div style="margin-bottom: var(--spacing-xl);">
+            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Formulário de Registro</h4>
+            <form id="demo-form" data-testid="demo-form" class="form-grid">
+              <div class="form-group">
+                <label for="demo-email" data-testid="email-label">Email:</label>
+                <input type="email" id="demo-email" name="email" class="form-input" data-testid="email-input" placeholder="teste@exemplo.com" required />
               </div>
-              <div class="radio-group">
+              
+              <div class="form-group">
+                <label for="demo-password">Senha:</label>
+                <input type="password" id="demo-password" name="password" class="form-input" data-testid="password-input" required />
+              </div>
+              
+              <div class="form-group">
+                <label for="demo-name">Nome Completo:</label>
+                <input type="text" id="demo-name" name="name" class="form-input" data-testid="name-input" placeholder="João Silva" />
+              </div>
+              
+              <div class="form-group">
+                <label for="demo-phone">Telefone:</label>
+                <input type="tel" id="demo-phone" name="phone" class="form-input" data-testid="phone-input" placeholder="(11) 99999-9999" />
+              </div>
+              
+              <div class="form-group">
+                <label for="demo-url">Website:</label>
+                <input type="url" id="demo-url" name="url" class="form-input" data-testid="url-input" placeholder="https://exemplo.com" />
+              </div>
+              
+              <div class="form-group">
+                <label for="demo-number">Idade:</label>
+                <input type="number" id="demo-number" name="age" class="form-input" data-testid="age-input" min="18" max="100" value="25" />
+              </div>
+              
+              <div class="form-group">
+                <label for="demo-date">Data de Nascimento:</label>
+                <input type="date" id="demo-date" name="birthdate" class="form-input" data-testid="date-input" />
+              </div>
+              
+              <div class="form-group">
+                <label for="demo-search">Buscar:</label>
+                <input type="search" id="demo-search" name="search" class="form-input" data-testid="search-input" placeholder="Digite sua busca..." />
+              </div>
+              
+              <div class="form-group">
+                <label for="demo-range">Nível de Satisfação:</label>
+                <input type="range" id="demo-range" name="satisfaction" class="form-input" data-testid="range-input" min="0" max="10" value="5" />
+                <span id="range-value" data-testid="range-value">5</span>
+              </div>
+              
+              <div class="form-group">
+                <label for="demo-color">Cor Favorita:</label>
+                <input type="color" id="demo-color" name="color" class="form-input" data-testid="color-input" value="#7aa874" />
+              </div>
+              
+              <div class="form-group">
+                <label for="demo-file">Anexar Arquivo:</label>
+                <input type="file" id="demo-file" name="file" class="form-input" data-testid="file-input" accept=".pdf,.doc,.docx" />
+              </div>
+              
+              <div class="form-group">
+                <label for="demo-select">País:</label>
+                <select id="demo-select" name="country" class="form-input" data-testid="country-select">
+                  <option value="">Selecione...</option>
+                  <option value="br" data-testid="option-br">Brasil</option>
+                  <option value="us" data-testid="option-us">Estados Unidos</option>
+                  <option value="uk" data-testid="option-uk">Reino Unido</option>
+                  <option value="fr" data-testid="option-fr">França</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="demo-textarea">Mensagem:</label>
+                <textarea id="demo-textarea" name="message" class="form-input" data-testid="message-textarea" rows="4" placeholder="Digite sua mensagem..."></textarea>
+              </div>
+              
+              <div class="form-group">
                 <label>
-                  <input type="radio" name="gender" value="male" data-testid="gender-male" />
-                  Masculino
-                </label>
-                <label>
-                  <input type="radio" name="gender" value="female" data-testid="gender-female" />
-                  Feminino
+                  <input type="checkbox" id="demo-checkbox" name="remember" data-testid="remember-checkbox" checked />
+                  Lembrar-me
                 </label>
               </div>
-            </div>
-            
-            <button type="button" id="btn-submit" class="btn btn-primary" data-testid="submit-btn">Enviar Formulário</button>
-            <button type="button" id="btn-cancel" class="btn btn-secondary" data-testid="cancel-btn">Cancelar</button>
-            <button type="button" class="btn" data-testid="action-btn">Ação</button>
-          </form>
+              
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" id="demo-checkbox-2" name="newsletter" data-testid="newsletter-checkbox" />
+                  Receber newsletter
+                </label>
+              </div>
+              
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" id="demo-checkbox-3" name="terms" data-testid="terms-checkbox" />
+                  Aceito os termos e condições
+                </label>
+              </div>
+              
+              <div class="form-group">
+                <div>
+                  <strong>Gênero:</strong>
+                </div>
+                <div class="radio-group">
+                  <label>
+                    <input type="radio" name="gender" value="male" data-testid="gender-male" checked />
+                    Masculino
+                  </label>
+                  <label>
+                    <input type="radio" name="gender" value="female" data-testid="gender-female" />
+                    Feminino
+                  </label>
+                  <label>
+                    <input type="radio" name="gender" value="other" data-testid="gender-other" />
+                    Outro
+                  </label>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <div>
+                  <strong>Preferência de Contato:</strong>
+                </div>
+                <div class="radio-group">
+                  <label>
+                    <input type="radio" name="contact" value="email" data-testid="contact-email" />
+                    Email
+                  </label>
+                  <label>
+                    <input type="radio" name="contact" value="phone" data-testid="contact-phone" />
+                    Telefone
+                  </label>
+                </div>
+              </div>
+              
+              <div class="form-group form-full">
+                <button type="button" id="btn-submit" class="btn btn-primary" data-testid="submit-btn">Enviar Formulário</button>
+                <button type="button" id="btn-cancel" class="btn btn-secondary" data-testid="cancel-btn">Cancelar</button>
+                <button type="button" class="btn" data-testid="action-btn">Ação</button>
+                <button type="reset" class="btn" data-testid="reset-btn">Limpar</button>
+                <input type="submit" value="Submit Input" class="btn" data-testid="submit-input" />
+                <input type="button" value="Button Input" class="btn" data-testid="button-input" />
+              </div>
+            </form>
+          </div>
           
-          <div class="card-grid" style="margin-top: var(--spacing-lg);">
-            <div class="card card-primary" data-testid="card-1">
-              <h3>Card 1</h3>
-              <p>Este é o primeiro card de exemplo.</p>
-              <a href="#" class="btn">Acessar</a>
-            </div>
-            
-            <div class="card card-secondary" data-testid="card-2">
-              <h3>Card 2</h3>
-              <p>Este é o segundo card de exemplo.</p>
-              <a href="#" class="btn">Acessar</a>
-            </div>
-            
-            <div class="card card-tertiary" data-testid="card-3">
-              <h3>Card 3</h3>
-              <p>Este é o terceiro card de exemplo.</p>
-              <a href="#" class="btn">Acessar</a>
+          <!-- Cards -->
+          <div style="margin-bottom: var(--spacing-xl);">
+            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Cards de Produtos</h4>
+            <div class="card-grid">
+              <div class="card card-primary" data-testid="card-1" data-product-id="prod-001">
+                <h3>Produto 1</h3>
+                <p>Este é o primeiro produto de exemplo com descrição detalhada.</p>
+                <p class="muted" data-testid="price-1">R$ 99,90</p>
+                <a href="#" class="btn" data-testid="buy-btn-1">Comprar</a>
+              </div>
+              
+              <div class="card card-secondary" data-testid="card-2" data-product-id="prod-002">
+                <h3>Produto 2</h3>
+                <p>Este é o segundo produto de exemplo com descrição detalhada.</p>
+                <p class="muted" data-testid="price-2">R$ 149,90</p>
+                <a href="#" class="btn" data-testid="buy-btn-2">Comprar</a>
+              </div>
+              
+              <div class="card card-tertiary" data-testid="card-3" data-product-id="prod-003">
+                <h3>Produto 3</h3>
+                <p>Este é o terceiro produto de exemplo com descrição detalhada.</p>
+                <p class="muted" data-testid="price-3">R$ 199,90</p>
+                <a href="#" class="btn" data-testid="buy-btn-3">Comprar</a>
+              </div>
+              
+              <div class="card" data-testid="card-4" data-product-id="prod-004">
+                <h3>Produto 4</h3>
+                <p>Este é o quarto produto de exemplo com descrição detalhada.</p>
+                <p class="muted" data-testid="price-4">R$ 249,90</p>
+                <a href="#" class="btn" data-testid="buy-btn-4">Comprar</a>
+              </div>
             </div>
           </div>
           
-          <ul id="demo-list" style="margin-top: var(--spacing-lg);">
-            <li data-testid="list-item-1">Item 1 da lista</li>
-            <li data-testid="list-item-2">Item 2 da lista</li>
-            <li data-testid="list-item-3">Item 3 da lista</li>
-            <li data-testid="list-item-4">Item 4 da lista</li>
-          </ul>
+          <!-- Listas e Navegação -->
+          <div style="margin-bottom: var(--spacing-xl);">
+            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Listas e Navegação</h4>
+            
+            <!-- Lista Não Ordenada Simples -->
+            <div style="margin-bottom: var(--spacing-lg);">
+              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista Não Ordenada (ul)</h5>
+              <ul id="demo-list" data-testid="unordered-list" style="margin-bottom: var(--spacing-md); list-style: disc; padding-left: var(--spacing-lg);">
+                <li data-testid="list-item-1" data-category="tech" data-priority="high">Item 1 da lista - Tecnologia</li>
+                <li data-testid="list-item-2" data-category="design" data-priority="medium">Item 2 da lista - Design</li>
+                <li data-testid="list-item-3" data-category="tech" data-priority="low">Item 3 da lista - Tecnologia</li>
+                <li data-testid="list-item-4" data-category="business" data-priority="high">Item 4 da lista - Negócios</li>
+                <li data-testid="list-item-5" data-category="tech" data-priority="medium">Item 5 da lista - Tecnologia</li>
+                <li data-testid="list-item-6" data-category="marketing" data-priority="low">Item 6 da lista - Marketing</li>
+              </ul>
+            </div>
+            
+            <!-- Lista Ordenada -->
+            <div style="margin-bottom: var(--spacing-lg);">
+              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista Ordenada (ol)</h5>
+              <ol id="demo-ordered-list" data-testid="ordered-list" style="margin-bottom: var(--spacing-md); padding-left: var(--spacing-lg);">
+                <li data-testid="ordered-item-1" data-step="1">Primeiro item ordenado</li>
+                <li data-testid="ordered-item-2" data-step="2">Segundo item ordenado</li>
+                <li data-testid="ordered-item-3" data-step="3">Terceiro item ordenado</li>
+                <li data-testid="ordered-item-4" data-step="4">Quarto item ordenado</li>
+                <li data-testid="ordered-item-5" data-step="5">Quinto item ordenado</li>
+              </ol>
+            </div>
+            
+            <!-- Lista Aninhada -->
+            <div style="margin-bottom: var(--spacing-lg);">
+              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista Aninhada</h5>
+              <ul id="demo-nested-list" data-testid="nested-list" style="margin-bottom: var(--spacing-md); list-style: disc; padding-left: var(--spacing-lg);">
+                <li data-testid="nested-parent-1">Categoria A
+                  <ul style="margin-top: var(--spacing-xs); margin-bottom: var(--spacing-xs);">
+                    <li data-testid="nested-child-1">Subitem A.1</li>
+                    <li data-testid="nested-child-2">Subitem A.2</li>
+                    <li data-testid="nested-child-3">Subitem A.3</li>
+                  </ul>
+                </li>
+                <li data-testid="nested-parent-2">Categoria B
+                  <ul style="margin-top: var(--spacing-xs); margin-bottom: var(--spacing-xs);">
+                    <li data-testid="nested-child-4">Subitem B.1</li>
+                    <li data-testid="nested-child-5">Subitem B.2</li>
+                  </ul>
+                </li>
+                <li data-testid="nested-parent-3">Categoria C</li>
+              </ul>
+            </div>
+            
+            <!-- Menu de Navegação -->
+            <div style="margin-bottom: var(--spacing-lg);">
+              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Menu de Navegação</h5>
+              <nav data-testid="navigation-menu" aria-label="Menu de navegação principal">
+                <ul class="et-nav-list" style="display: flex; flex-wrap: wrap; gap: var(--spacing-md); list-style: none; padding: 0; margin: 0;">
+                  <li data-testid="nav-item-home">
+                    <a href="https://www.google.com" data-testid="nav-link-home" data-nav-section="main">Home</a>
+                  </li>
+                  <li data-testid="nav-item-about">
+                    <a href="https://www.google.com" data-testid="nav-link-about" data-nav-section="main">Sobre</a>
+                  </li>
+                  <li data-testid="nav-item-services">
+                    <a href="https://www.google.com" data-testid="nav-link-services" data-nav-section="main">Serviços</a>
+                  </li>
+                  <li data-testid="nav-item-products">
+                    <a href="https://www.google.com" data-testid="nav-link-products" data-nav-section="main">Produtos</a>
+                  </li>
+                  <li data-testid="nav-item-contact">
+                    <a href="https://www.google.com" data-testid="nav-link-contact" data-nav-section="main">Contato</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            
+            <!-- Lista de Definição -->
+            <div style="margin-bottom: var(--spacing-lg);">
+              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista de Definição (dl)</h5>
+              <dl id="demo-definition-list" data-testid="definition-list" style="margin-bottom: var(--spacing-md);">
+                <dt data-testid="term-1" data-category="tech">HTML</dt>
+                <dd data-testid="definition-1">HyperText Markup Language - Linguagem de marcação para web</dd>
+                <dt data-testid="term-2" data-category="tech">CSS</dt>
+                <dd data-testid="definition-2">Cascading Style Sheets - Folhas de estilo em cascata</dd>
+                <dt data-testid="term-3" data-category="tech">JavaScript</dt>
+                <dd data-testid="definition-3">Linguagem de programação para desenvolvimento web</dd>
+              </dl>
+            </div>
+            
+            <!-- Lista com Links -->
+            <div style="margin-bottom: var(--spacing-lg);">
+              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista com Links</h5>
+              <ul id="demo-link-list" data-testid="link-list" style="list-style: none; padding: 0; margin: 0;">
+                <li data-testid="link-list-item-1">
+                  <a href="https://www.google.com" data-testid="list-link-1" data-link-category="external">Link Externo 1</a>
+                </li>
+                <li data-testid="link-list-item-2">
+                  <a href="https://www.google.com" data-testid="list-link-2" data-link-category="internal">Link Interno 1</a>
+                </li>
+                <li data-testid="link-list-item-3">
+                  <a href="https://www.google.com" data-testid="list-link-3" data-link-category="external">Link Externo 2</a>
+                </li>
+                <li data-testid="link-list-item-4">
+                  <a href="https://www.google.com" data-testid="list-link-4" data-link-category="internal">Link Interno 2</a>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- Breadcrumb -->
+            <div style="margin-bottom: var(--spacing-lg);">
+              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Breadcrumb (Navegação Hierárquica)</h5>
+              <nav aria-label="Breadcrumb" data-testid="breadcrumb-nav">
+                <ol id="demo-breadcrumb" data-testid="breadcrumb-list" style="display: flex; list-style: none; padding: 0; margin: 0; gap: var(--spacing-sm); flex-wrap: wrap;">
+                  <li data-testid="breadcrumb-item-1">
+                    <a href="https://www.google.com" data-testid="breadcrumb-link-1">Home</a>
+                  </li>
+                  <li data-testid="breadcrumb-separator-1" style="color: var(--muted);">/</li>
+                  <li data-testid="breadcrumb-item-2">
+                    <a href="https://www.google.com" data-testid="breadcrumb-link-2">Categoria</a>
+                  </li>
+                  <li data-testid="breadcrumb-separator-2" style="color: var(--muted);">/</li>
+                  <li data-testid="breadcrumb-item-3" style="color: var(--text); font-weight: 600;">Página Atual</li>
+                </ol>
+              </nav>
+            </div>
+            
+            <!-- Lista com Classes e Estados -->
+            <div style="margin-bottom: var(--spacing-lg);">
+              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista com Classes e Estados</h5>
+              <ul id="demo-styled-list" data-testid="styled-list" style="list-style: none; padding: 0; margin: 0;">
+                <li class="list-item active" data-testid="styled-item-1" data-state="active">Item Ativo</li>
+                <li class="list-item" data-testid="styled-item-2" data-state="inactive">Item Inativo</li>
+                <li class="list-item disabled" data-testid="styled-item-3" data-state="disabled">Item Desabilitado</li>
+                <li class="list-item selected" data-testid="styled-item-4" data-state="selected">Item Selecionado</li>
+                <li class="list-item" data-testid="styled-item-5" data-state="inactive">Item Normal</li>
+              </ul>
+            </div>
+          </div>
           
-          <div style="margin-top: var(--spacing-lg);">
-            <span class="badge badge-primary" data-testid="badge-1">Badge 1</span>
-            <span class="badge badge-secondary" data-testid="badge-2">Badge 2</span>
-            <span class="badge badge-success" data-testid="badge-3">Badge 3</span>
+          <!-- Tabela -->
+          <div style="margin-bottom: var(--spacing-xl);">
+            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Tabela de Dados</h4>
+            <table class="table" data-testid="demo-table">
+              <thead>
+                <tr>
+                  <th data-testid="th-name">Nome</th>
+                  <th data-testid="th-email">Email</th>
+                  <th data-testid="th-role">Cargo</th>
+                  <th data-testid="th-status">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-testid="row-1" data-user-id="user-001">
+                  <td data-testid="cell-name-1">João Silva</td>
+                  <td data-testid="cell-email-1">joao@exemplo.com</td>
+                  <td data-testid="cell-role-1">Desenvolvedor</td>
+                  <td data-testid="cell-status-1">Ativo</td>
+                </tr>
+                <tr data-testid="row-2" data-user-id="user-002">
+                  <td data-testid="cell-name-2">Maria Santos</td>
+                  <td data-testid="cell-email-2">maria@exemplo.com</td>
+                  <td data-testid="cell-role-2">Designer</td>
+                  <td data-testid="cell-status-2">Ativo</td>
+                </tr>
+                <tr data-testid="row-3" data-user-id="user-003">
+                  <td data-testid="cell-name-3">Pedro Costa</td>
+                  <td data-testid="cell-email-3">pedro@exemplo.com</td>
+                  <td data-testid="cell-role-3">Gerente</td>
+                  <td data-testid="cell-status-3">Inativo</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- Badges e Tags -->
+          <div style="margin-bottom: var(--spacing-xl);">
+            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Badges e Tags</h4>
+            <div>
+              <span class="badge badge-primary" data-testid="badge-1" data-tag="primary">Badge Primário</span>
+              <span class="badge badge-secondary" data-testid="badge-2" data-tag="secondary">Badge Secundário</span>
+              <span class="badge badge-success" data-testid="badge-3" data-tag="success">Badge Sucesso</span>
+              <span class="badge" style="background: var(--danger); color: white;" data-testid="badge-4" data-tag="danger">Badge Erro</span>
+              <span class="badge" style="background: var(--warning); color: var(--text);" data-testid="badge-5" data-tag="warning">Badge Aviso</span>
+              <span class="badge" style="background: var(--info); color: white;" data-testid="badge-6" data-tag="info">Badge Info</span>
+            </div>
+          </div>
+          
+          <!-- Links e Navegação -->
+          <div style="margin-bottom: var(--spacing-xl);">
+            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Links e Navegação</h4>
+            <div>
+              <a href="#" class="btn" data-testid="link-primary" data-link-type="internal">Link Interno</a>
+              <a href="https://exemplo.com" target="_blank" class="btn" data-testid="link-external" data-link-type="external">Link Externo</a>
+              <a href="#section-1" class="btn" data-testid="link-anchor" data-link-type="anchor">Link Âncora</a>
+              <a href="mailto:teste@exemplo.com" class="btn" data-testid="link-email" data-link-type="email">Link Email</a>
+              <a href="tel:+5511999999999" class="btn" data-testid="link-tel" data-link-type="tel">Link Telefone</a>
+            </div>
+          </div>
+          
+          <!-- Elementos Especiais -->
+          <div style="margin-bottom: var(--spacing-xl);">
+            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Elementos Especiais</h4>
+            <p style="margin-bottom: var(--spacing-md); color: var(--muted); font-size: var(--font-size-sm);">
+              Use os botões ao lado de cada elemento para alternar entre estados habilitado e desabilitado:
+            </p>
+            
+            <!-- Botão com Toggle -->
+            <div style="display: flex; gap: var(--spacing-md); align-items: center; margin-bottom: var(--spacing-md); flex-wrap: wrap;">
+              <button type="button" class="btn" id="demo-toggle-btn" data-testid="btn-toggle-enabled">Botão de Teste</button>
+              <div class="toggle-controls" style="margin: 0;">
+                <button type="button" class="toggle-btn" id="toggle-enabled-btn" data-action="enable">Habilitar</button>
+                <button type="button" class="toggle-btn" id="toggle-disabled-btn" data-action="disable">Desabilitar</button>
+              </div>
+              <span id="btn-status" style="font-size: var(--font-size-sm); color: var(--success); font-weight: 600;">Habilitado</span>
+            </div>
+            
+            <!-- Input com Toggle -->
+            <div style="display: flex; gap: var(--spacing-md); align-items: center; margin-bottom: var(--spacing-md); flex-wrap: wrap;">
+              <input type="text" class="form-input" id="demo-toggle-input" value="Campo de teste" data-testid="input-enabled" style="max-width: 300px;" />
+              <div class="toggle-controls" style="margin: 0;">
+                <button type="button" class="toggle-btn" id="toggle-enabled-input" data-action="enable-input">Habilitar</button>
+                <button type="button" class="toggle-btn" id="toggle-disabled-input" data-action="disable-input">Desabilitar</button>
+              </div>
+              <span id="input-status" style="font-size: var(--font-size-sm); color: var(--success); font-weight: 600;">Habilitado</span>
+            </div>
+            
+            <div style="margin-top: var(--spacing-lg); padding-top: var(--spacing-lg); border-top: 1px solid rgba(0, 0, 0, 0.1);">
+              <h5 style="color: var(--accent); margin-bottom: var(--spacing-sm);">Exemplos Estáticos (sempre desabilitados/readonly):</h5>
+              <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap; align-items: center;">
+                <button type="button" class="btn" disabled data-testid="btn-disabled">Botão Desabilitado</button>
+                <input type="text" class="form-input" readonly value="Campo somente leitura" data-testid="input-readonly" style="max-width: 300px;" />
+                <input type="text" class="form-input" disabled value="Campo desabilitado" data-testid="input-disabled" style="max-width: 300px;" />
+              </div>
+            </div>
+          </div>
+          
+          <!-- Divs com Classes Múltiplas -->
+          <div style="margin-bottom: var(--spacing-xl);">
+            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Elementos com Múltiplas Classes</h4>
+            <div>
+              <div class="card btn primary large" data-testid="multi-class-1">Card com classes: card, btn, primary, large</div>
+              <div class="badge badge-primary success active" data-testid="multi-class-2">Badge com múltiplas classes</div>
+              <button class="btn btn-primary btn-large btn-rounded" data-testid="multi-class-3">Botão com múltiplas classes</button>
+            </div>
           </div>
         </div>
 
@@ -609,9 +1289,9 @@
           }
           
           if (nodes.length === 0) {
-            resultDiv.innerHTML = '<span class="result-error">❌ Nenhum elemento encontrado com este XPath.</span>';
+            resultDiv.innerHTML = '<span class="result-error">Nenhum elemento encontrado com este XPath.</span>';
           } else {
-            resultDiv.innerHTML = `<span class="result-success">✅ Encontrado(s) ${nodes.length} elemento(s):</span><br>`;
+            resultDiv.innerHTML = `<span class="result-success">Encontrado(s) ${nodes.length} elemento(s):</span><br>`;
             nodes.forEach((node, index) => {
               const tag = node.tagName || node.nodeName;
               const id = node.id ? ` id="${node.id}"` : '';
@@ -621,7 +1301,7 @@
             });
           }
         } catch (e) {
-          resultDiv.innerHTML = `<span class="result-error">❌ Erro: ${e.message}</span>`;
+          resultDiv.innerHTML = `<span class="result-error">Erro: ${e.message}</span>`;
         }
       }
 
@@ -646,17 +1326,17 @@
           }
           
           if (nodes.length === 0) {
-            resultDiv.innerHTML = '<span class="result-error">❌ Nenhum elemento encontrado com este XPath.</span>';
+            resultDiv.innerHTML = '<span class="result-error">Nenhum elemento encontrado com este XPath.</span>';
           } else {
             nodes.forEach(node => {
               if (node.nodeType === Node.ELEMENT_NODE) {
                 node.classList.add('highlight');
               }
             });
-            resultDiv.innerHTML = `<span class="result-success">✅ ${nodes.length} elemento(s) destacado(s) em amarelo.</span>`;
+            resultDiv.innerHTML = `<span class="result-success">${nodes.length} elemento(s) destacado(s) em amarelo.</span>`;
           }
         } catch (e) {
-          resultDiv.innerHTML = `<span class="result-error">❌ Erro: ${e.message}</span>`;
+          resultDiv.innerHTML = `<span class="result-error">Erro: ${e.message}</span>`;
         }
       }
 
@@ -673,9 +1353,9 @@
           const elements = document.querySelectorAll(css);
           
           if (elements.length === 0) {
-            resultDiv.innerHTML = '<span class="result-error">❌ Nenhum elemento encontrado com este seletor CSS.</span>';
+            resultDiv.innerHTML = '<span class="result-error">Nenhum elemento encontrado com este seletor CSS.</span>';
           } else {
-            resultDiv.innerHTML = `<span class="result-success">✅ Encontrado(s) ${elements.length} elemento(s):</span><br>`;
+            resultDiv.innerHTML = `<span class="result-success">Encontrado(s) ${elements.length} elemento(s):</span><br>`;
             elements.forEach((el, index) => {
               const tag = el.tagName || el.nodeName;
               const id = el.id ? ` id="${el.id}"` : '';
@@ -685,7 +1365,7 @@
             });
           }
         } catch (e) {
-          resultDiv.innerHTML = `<span class="result-error">❌ Erro: ${e.message}</span>`;
+          resultDiv.innerHTML = `<span class="result-error">Erro: ${e.message}</span>`;
         }
       }
 
@@ -703,29 +1383,300 @@
           const elements = document.querySelectorAll(css);
           
           if (elements.length === 0) {
-            resultDiv.innerHTML = '<span class="result-error">❌ Nenhum elemento encontrado com este seletor CSS.</span>';
+            resultDiv.innerHTML = '<span class="result-error">Nenhum elemento encontrado com este seletor CSS.</span>';
           } else {
             elements.forEach(el => {
               el.classList.add('highlight');
             });
-            resultDiv.innerHTML = `<span class="result-success">✅ ${elements.length} elemento(s) destacado(s) em amarelo.</span>`;
+            resultDiv.innerHTML = `<span class="result-success">${elements.length} elemento(s) destacado(s) em amarelo.</span>`;
           }
         } catch (e) {
-          resultDiv.innerHTML = `<span class="result-error">❌ Erro: ${e.message}</span>`;
+          resultDiv.innerHTML = `<span class="result-error">Erro: ${e.message}</span>`;
         }
       }
 
-      // Permitir Enter para testar
-      document.getElementById('xpath-input').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          testXPath();
+      // Inicializar quando o DOM estiver pronto
+      document.addEventListener('DOMContentLoaded', function() {
+        // Permitir Enter para testar
+        const xpathInput = document.getElementById('xpath-input');
+        const cssInput = document.getElementById('css-input');
+        
+        if (xpathInput) {
+          xpathInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+              testXPath();
+            }
+          });
         }
-      });
 
-      document.getElementById('css-input').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          testCSS();
+        if (cssInput) {
+          cssInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+              testCSS();
+            }
+          });
         }
+
+        // Atualizar valor do range
+        const rangeInput = document.getElementById('demo-range');
+        const rangeValue = document.getElementById('range-value');
+        if (rangeInput && rangeValue) {
+          rangeInput.addEventListener('input', function() {
+            rangeValue.textContent = this.value;
+          });
+          // Inicializar valor
+          rangeValue.textContent = rangeInput.value;
+        }
+
+        // Funcionalidade dos botões do formulário
+        const submitBtn = document.getElementById('btn-submit');
+        if (submitBtn) {
+          submitBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const form = document.getElementById('demo-form');
+            if (form) {
+              const formData = new FormData(form);
+              const data = {};
+              for (let [key, value] of formData.entries()) {
+                data[key] = value;
+              }
+              console.log('Dados do formulário:', data);
+              if (window.showToast) {
+                window.showToast('Formulário enviado! (veja o console)');
+              }
+            }
+          });
+        }
+
+        const cancelBtn = document.getElementById('btn-cancel');
+        if (cancelBtn) {
+          cancelBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (window.showToast) {
+              window.showToast('Ação cancelada');
+            }
+          });
+        }
+
+        const actionBtn = document.querySelector('[data-testid="action-btn"]');
+        if (actionBtn) {
+          actionBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (window.showToast) {
+              window.showToast('Ação executada');
+            }
+          });
+        }
+
+        // Botão habilitado original (estático)
+        const enabledBtn = document.querySelector('[data-testid="btn-enabled"]');
+        if (enabledBtn) {
+          enabledBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (window.showToast) {
+              window.showToast('Botão habilitado clicado!');
+            }
+          });
+        }
+
+        // Funcionalidade de toggle para habilitar/desabilitar elementos
+        const toggleEnabledBtn = document.getElementById('toggle-enabled-btn');
+        const toggleDisabledBtn = document.getElementById('toggle-disabled-btn');
+        const toggleEnabledInput = document.getElementById('toggle-enabled-input');
+        const toggleDisabledInput = document.getElementById('toggle-disabled-input');
+        const demoToggleBtn = document.getElementById('demo-toggle-btn');
+        const demoToggleInput = document.getElementById('demo-toggle-input');
+        const btnStatus = document.getElementById('btn-status');
+        const inputStatus = document.getElementById('input-status');
+
+        function updateButtonStatus() {
+          if (demoToggleBtn) {
+            const isDisabled = demoToggleBtn.disabled;
+            if (btnStatus) {
+              btnStatus.textContent = isDisabled ? 'Desabilitado' : 'Habilitado';
+              btnStatus.style.color = isDisabled ? 'var(--danger)' : 'var(--success)';
+            }
+            if (toggleEnabledBtn) {
+              toggleEnabledBtn.disabled = !isDisabled;
+            }
+            if (toggleDisabledBtn) {
+              toggleDisabledBtn.disabled = isDisabled;
+            }
+          }
+        }
+
+        function updateInputStatus() {
+          if (demoToggleInput) {
+            const isDisabled = demoToggleInput.disabled || demoToggleInput.readOnly;
+            if (inputStatus) {
+              inputStatus.textContent = isDisabled ? 'Desabilitado' : 'Habilitado';
+              inputStatus.style.color = isDisabled ? 'var(--danger)' : 'var(--success)';
+            }
+            if (toggleEnabledInput) {
+              toggleEnabledInput.disabled = !isDisabled;
+            }
+            if (toggleDisabledInput) {
+              toggleDisabledInput.disabled = isDisabled;
+            }
+          }
+        }
+
+        if (toggleEnabledBtn && demoToggleBtn) {
+          toggleEnabledBtn.addEventListener('click', function() {
+            demoToggleBtn.disabled = false;
+            demoToggleBtn.removeAttribute('disabled');
+            updateButtonStatus();
+            if (window.showToast) {
+              window.showToast('Botão habilitado!');
+            }
+          });
+        }
+
+        if (toggleDisabledBtn && demoToggleBtn) {
+          toggleDisabledBtn.addEventListener('click', function() {
+            demoToggleBtn.disabled = true;
+            demoToggleBtn.setAttribute('disabled', 'disabled');
+            updateButtonStatus();
+            if (window.showToast) {
+              window.showToast('Botão desabilitado!');
+            }
+          });
+        }
+
+        if (toggleEnabledInput && demoToggleInput) {
+          toggleEnabledInput.addEventListener('click', function() {
+            demoToggleInput.disabled = false;
+            demoToggleInput.readOnly = false;
+            demoToggleInput.removeAttribute('disabled');
+            demoToggleInput.removeAttribute('readonly');
+            updateInputStatus();
+            if (window.showToast) {
+              window.showToast('Input habilitado!');
+            }
+          });
+        }
+
+        if (toggleDisabledInput && demoToggleInput) {
+          toggleDisabledInput.addEventListener('click', function() {
+            demoToggleInput.disabled = true;
+            demoToggleInput.setAttribute('disabled', 'disabled');
+            updateInputStatus();
+            if (window.showToast) {
+              window.showToast('Input desabilitado!');
+            }
+          });
+        }
+
+        // Atualizar status inicial e adicionar listener ao botão toggle
+        if (demoToggleBtn) {
+          demoToggleBtn.addEventListener('click', function(e) {
+            if (this.disabled) {
+              e.preventDefault();
+              e.stopPropagation();
+              if (window.showToast) {
+                window.showToast('Botão está desabilitado e não pode ser clicado!');
+              }
+              return false;
+            }
+            if (window.showToast) {
+              window.showToast('Botão toggle clicado!');
+            }
+          });
+          updateButtonStatus();
+        }
+
+        if (demoToggleInput) {
+          demoToggleInput.addEventListener('focus', function() {
+            if (this.disabled || this.readOnly) {
+              this.blur();
+              if (window.showToast) {
+                window.showToast('Input está desabilitado e não pode ser editado!');
+              }
+            }
+          });
+          demoToggleInput.addEventListener('input', function() {
+            if (this.disabled || this.readOnly) {
+              this.value = 'Campo habilitado';
+            }
+          });
+          updateInputStatus();
+        }
+
+        const resetBtn = document.querySelector('[data-testid="reset-btn"]');
+        if (resetBtn) {
+          resetBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const form = document.getElementById('demo-form');
+            if (form) {
+              form.reset();
+              if (rangeValue) {
+                rangeValue.textContent = rangeInput ? rangeInput.value : '5';
+              }
+              if (window.showToast) {
+                window.showToast('Formulário limpo');
+              }
+            }
+          });
+        }
+
+        // Funcionalidade dos botões de compra
+        document.querySelectorAll('[data-testid^="buy-btn"]').forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const card = this.closest('[data-product-id]');
+            const productId = card ? (card.dataset.productId || 'desconhecido') : 'desconhecido';
+            if (window.showToast) {
+              window.showToast(`Produto ${productId} adicionado ao carrinho!`);
+            }
+          });
+        });
+
+        // Funcionalidade dos links
+        document.querySelectorAll('[data-link-type]').forEach(link => {
+          link.addEventListener('click', function(e) {
+            const linkType = this.dataset.linkType;
+            if (linkType === 'internal' || linkType === 'anchor') {
+              e.preventDefault();
+              if (window.showToast) {
+                window.showToast(`Link ${linkType} clicado`);
+              }
+            }
+          });
+        });
+
+        // Funcionalidade dos checkboxes e radios
+        document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(input => {
+          input.addEventListener('change', function() {
+            const testId = this.dataset.testid;
+            if (testId && window.showToast) {
+              const type = this.type;
+              const action = this.checked ? 'marcado' : 'desmarcado';
+              window.showToast(`${type} ${testId} ${action}`);
+            }
+          });
+        });
+
+        // Funcionalidade dos selects
+        const countrySelect = document.getElementById('demo-select');
+        if (countrySelect) {
+          countrySelect.addEventListener('change', function() {
+            if (window.showToast) {
+              window.showToast(`País selecionado: ${this.options[this.selectedIndex].text}`);
+            }
+          });
+        }
+
+        // Funcionalidade dos inputs
+        document.querySelectorAll('.form-input').forEach(input => {
+          input.addEventListener('blur', function() {
+            if (this.value && window.showToast) {
+              const testId = this.getAttribute('data-testid');
+              if (testId) {
+                console.log(`Campo ${testId} preenchido com: ${this.value}`);
+              }
+            }
+          });
+        });
       });
     </script>
   </body>
