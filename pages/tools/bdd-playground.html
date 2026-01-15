@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>BDD Playground — Validação de Cenários Gherkin — QA Playground</title>
     <link rel="stylesheet" href="../../css/main.css" />
-    <link rel="stylesheet" href="../../css/bdd.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
@@ -171,13 +170,13 @@ Dica: Use o botão 'Carregar Exemplo' para ver exemplos mais complexos por níve
       </div>
     </footer>
 
-    <script src="../../js/main.js"></script>
+    <script type="module" src="../../js/index.js"></script>
+    <!-- Módulos BDD legados mantidos para compatibilidade -->
+    <script src="../../js/modules/bdd/bdd.sessions.js"></script>
     <script src="../../js/modules/bdd/bdd.parser.js"></script>
     <script src="../../js/modules/bdd/bdd.rules.js"></script>
     <script src="../../js/modules/bdd/bdd.validator.js"></script>
     <script src="../../js/modules/bdd/bdd.score.js"></script>
     <script src="../../js/modules/bdd/bdd.feedback.js"></script>
-    <script src="../../js/modules/bdd/bdd.sessions.js"></script>
-    <script src="../../js/bdd.js"></script>
   </body>
 </html>

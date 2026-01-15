@@ -1,0 +1,301 @@
+// ========================================
+// XPath & CSS Tester - Estilos Específicos
+// ========================================
+
+.tester-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+  margin: var(--spacing-lg) 0;
+
+  @include respond-to(lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tester-panel {
+  @include card-surface;
+  padding: var(--spacing-lg);
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    color: var(--accent);
+  }
+}
+
+.selector-input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-md);
+  font-family: $font-family-mono;
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-sm);
+  background: var(--surface);
+  color: var(--text);
+  @include transition(border-color, box-shadow);
+  outline: none;
+
+  &:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(122, 168, 116, 0.1);
+  }
+}
+
+.test-button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--accent);
+  color: $color-white;
+  border: none;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  font-weight: $font-weight-semibold;
+  margin-right: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+  @include transition(background, border, color);
+
+  @include hover-state {
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+  }
+}
+
+.result-box {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  min-height: 100px;
+  font-family: $font-family-mono;
+  font-size: var(--font-size-sm);
+  overflow-x: auto;
+}
+
+.result-success {
+  color: var(--success);
+}
+
+.result-error {
+  color: var(--danger);
+}
+
+.example-section {
+  margin: var(--spacing-xl) 0;
+  padding: var(--spacing-lg);
+  @include card-surface;
+
+  h3 {
+    color: var(--accent);
+    margin-top: 0;
+  }
+}
+
+.example-grid {
+  @include grid-responsive(300px);
+  margin-top: var(--spacing-md);
+}
+
+.example-card {
+  background: rgba(0, 0, 0, 0.02);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  border-left: 3px solid var(--accent);
+
+  h4 {
+    margin-top: 0;
+    font-size: var(--font-size-base);
+    color: var(--text);
+  }
+}
+
+.example-code {
+  background: rgba(0, 0, 0, 0.05);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-family: $font-family-mono;
+  font-size: var(--font-size-sm);
+  margin: var(--spacing-sm) 0;
+  overflow-x: auto;
+}
+
+.example-desc {
+  @include text-muted;
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.demo-elements {
+  @include card-surface;
+  padding: var(--spacing-lg);
+  margin: var(--spacing-xl) 0;
+
+  h3 {
+    margin-top: 0;
+    color: var(--accent);
+  }
+}
+
+.highlight {
+  background: rgba(255, 248, 200, 0.15) !important;
+  border: 3px solid #ffd54f !important;
+  box-shadow: 0 0 0 2px rgba(255, 213, 79, 0.2),
+    0 0 15px rgba(255, 213, 79, 0.25),
+    0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  outline: 2px solid #ffb74d !important;
+  outline-offset: 2px !important;
+  position: relative !important;
+  z-index: z-index('tooltip') !important;
+  transition: all 0.3s ease !important;
+}
+
+.form-input {
+  padding: 12px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--font-size-base);
+  font-family: var(--font-family);
+  width: 100%;
+  margin-top: var(--spacing-xs);
+  @include transition(border-color, box-shadow);
+  outline: none;
+
+  &:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(122, 168, 116, 0.1);
+  }
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: $font-weight-semibold;
+  margin-right: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.badge-primary {
+  background: var(--accent);
+  color: $color-white;
+}
+
+.badge-secondary {
+  background: var(--accent-2);
+  color: $color-white;
+}
+
+.badge-success {
+  background: var(--success);
+  color: $color-white;
+}
+
+.card-primary {
+  border-left: 4px solid var(--accent);
+}
+
+.card-secondary {
+  border-left: 4px solid var(--accent-2);
+}
+
+.card-tertiary {
+  border-left: 4px solid var(--info);
+}
+
+#range-value {
+  display: inline-block;
+  margin-left: var(--spacing-sm);
+  font-weight: $font-weight-semibold;
+  color: var(--accent);
+}
+
+.btn:disabled,
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+input:disabled,
+input[readonly] {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+input[readonly] {
+  cursor: default;
+}
+
+.toggle-controls {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+}
+
+.toggle-btn {
+  padding: 6px 12px;
+  font-size: var(--font-size-sm);
+  background: var(--surface);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  @include transition(all);
+  color: var(--text);
+  font-weight: $font-weight-medium;
+
+  @include hover-state {
+    &:not(:disabled) {
+      background: rgba(122, 168, 116, 0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.list-item {
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin-bottom: var(--spacing-xs);
+  border-radius: var(--border-radius-sm);
+  @include transition(background);
+
+  &.active {
+    background: rgba(122, 168, 116, 0.1);
+    color: var(--accent);
+    font-weight: $font-weight-semibold;
+  }
+
+  &.selected {
+    background: rgba(122, 168, 116, 0.2);
+    border-left: 3px solid var(--accent);
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    @include text-muted;
+  }
+}
+
+dl {
+  dt {
+    font-weight: $font-weight-semibold;
+    margin-top: var(--spacing-sm);
+    color: var(--accent);
+  }
+
+  dd {
+    margin-left: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    @include text-muted;
+  }
+}

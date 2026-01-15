@@ -1,0 +1,30 @@
+{
+  "name": "qa-playground",
+  "version": "1.0.0",
+  "description": "Plataforma educacional para prática de testes de software",
+  "private": true,
+  "scripts": {
+    "build:css": "sass styles/main.scss css/main.css --style=expanded --source-map",
+    "watch:css": "sass styles/main.scss css/main.css --watch --style=expanded --source-map",
+    "build:ts": "tsc",
+    "watch:ts": "tsc --watch",
+    "build": "npm run build:css && npm run build:ts",
+    "watch": "npm run watch:css & npm run watch:ts",
+    "serve": "npx http-server -p 8000 -o",
+    "dev": "npm run watch",
+    "start": "npm run build && npm run serve",
+    "vercel-build": "npm run build"
+  },
+  "keywords": [
+    "qa",
+    "testing",
+    "education",
+    "playground"
+  ],
+  "author": "David Nascimento",
+  "license": "MIT",
+  "devDependencies": {
+    "sass": "^1.69.0",
+    "typescript": "^5.3.0"
+  }
+}

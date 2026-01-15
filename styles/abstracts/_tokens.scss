@@ -1,0 +1,98 @@
+// ========================================
+// Design Tokens - CSS Variables
+// ========================================
+
+:root {
+  // === Cores Tema Claro ===
+  --bg: #{$color-bg-light};
+  --surface: #{$color-surface-light};
+  --text: #{$color-text-light};
+  --muted: #{$color-muted-light};
+  --accent: #{$color-accent-primary};
+  --accent-2: #{$color-accent-secondary};
+  
+  // === Cores Funcionais ===
+  --danger: #{$color-danger};
+  --success: #{$color-success};
+  --warning: #{$color-warning};
+  --info: #{$color-info};
+  
+  // === Espaçamento ===
+  --spacing-xs: #{$spacing-xs};
+  --spacing-sm: #{$spacing-sm};
+  --spacing-md: #{$spacing-md};
+  --spacing-lg: #{$spacing-lg};
+  --spacing-xl: #{$spacing-xl};
+  
+  // === Tipografia ===
+  --font-family: #{$font-family-base};
+  --font-size-xs: #{$font-size-xs};
+  --font-size-sm: #{$font-size-sm};
+  --font-size-base: #{$font-size-base};
+  --font-size-lg: #{$font-size-lg};
+  --font-size-xl: #{$font-size-xl};
+  --font-size-2xl: #{$font-size-2xl};
+  --font-size-3xl: #{$font-size-3xl};
+  
+  // === Sombras ===
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  
+  // === Bordas ===
+  --border-radius-sm: #{$border-radius-sm};
+  --border-radius-md: #{$border-radius-md};
+  --border-radius-lg: #{$border-radius-lg};
+  --border-radius-xl: #{$border-radius-xl};
+  
+  // === Transições ===
+  --transition: #{$transition-base};
+  --transition-fast: #{$transition-fast};
+  
+  // === Layout ===
+  --header-height: #{$header-height};
+}
+
+// === Tema Escuro (Preferência do Sistema) ===
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #{$color-bg-dark};
+    --surface: #{$color-surface-dark};
+    --text: #{$color-text-dark};
+    --muted: #{$color-muted-dark};
+    --accent: #{$color-accent-primary-dark};
+    --accent-2: #{$color-accent-secondary-dark};
+    --shadow-sm: #{$shadow-sm-dark};
+    --shadow-md: #{$shadow-md-dark};
+    --shadow-lg: #{$shadow-lg-dark};
+  }
+}
+
+// === Tema Escuro (Forçado) ===
+:root[data-theme="dark"],
+html[data-theme="dark"],
+body[data-theme="dark"] {
+  --bg: #{$color-bg-dark};
+  --surface: #{$color-surface-dark};
+  --text: #{$color-text-dark};
+  --muted: #{$color-muted-dark};
+  --accent: #{$color-accent-primary-dark};
+  --accent-2: #{$color-accent-secondary-dark};
+  --shadow-sm: #{$shadow-sm-dark};
+  --shadow-md: #{$shadow-md-dark};
+  --shadow-lg: #{$shadow-lg-dark};
+}
+
+// === Tema Claro (Forçado) ===
+:root[data-theme="light"],
+html[data-theme="light"] {
+  --bg: #{$color-bg-light};
+  --surface: #{$color-surface-light};
+  --text: #{$color-text-light};
+  --muted: #{$color-muted-light};
+  --accent: #{$color-accent-primary};
+  --accent-2: #{$color-accent-secondary};
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+}

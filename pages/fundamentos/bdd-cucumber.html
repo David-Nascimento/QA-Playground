@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Módulo 9: BDD e Cucumber — Fundamentos de Testes</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="index.html">Fundamentos</a></li>
+            <li><a href="../tools/mobile-playground.html">Mobile</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Módulo 9: BDD e Cucumber</h1>
+          <div class="section-desc">
+            Entenda Behavior-Driven Development (BDD), aprenda a escrever cenários em Gherkin, e compreenda como o Cucumber funciona na prática de testes, facilitando colaboração entre equipes técnicas e não técnicas.
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>O que é BDD (Behavior-Driven Development)?</h2>
+          
+          <div class="content-card">
+            <h3>Definição</h3>
+            <p><span class="highlight-text">BDD (Behavior-Driven Development)</span> é uma metodologia de desenvolvimento de software que enfatiza a colaboração entre desenvolvedores, QAs e stakeholders não técnicos. O BDD foca em descrever o comportamento do software em linguagem natural, facilitando a comunicação e garantindo que todos entendam o que está sendo desenvolvido e testado.</p>
+            <p>O BDD foi criado por Dan North como uma evolução do TDD (Test-Driven Development), com o objetivo de tornar os testes mais legíveis e compreensíveis para pessoas não técnicas.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Princípios Fundamentais do BDD</h3>
+            <ul>
+              <li><strong>Linguagem Ubíqua:</strong> Usa uma linguagem comum que todos podem entender, reduzindo ambiguidades e mal-entendidos</li>
+              <li><strong>Foco no Comportamento:</strong> Descreve o que o sistema deve fazer, não como fazer tecnicamente</li>
+              <li><strong>Colaboração:</strong> Envolve desenvolvedores, QAs e stakeholders na definição de requisitos</li>
+              <li><strong>Documentação Viva:</strong> Os cenários servem como documentação executável e sempre atualizada</li>
+              <li><strong>Especificação por Exemplo:</strong> Usa exemplos concretos para descrever comportamentos</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Gherkin - A Linguagem do BDD</h2>
+
+          <div class="content-card">
+            <h3>O que é Gherkin?</h3>
+            <p><span class="highlight-text">Gherkin</span> é uma linguagem estruturada em texto simples que permite descrever comportamentos de software de forma legível tanto para humanos quanto para máquinas. É a linguagem padrão usada pelo Cucumber e outras ferramentas BDD.</p>
+            <p>Gherkin usa palavras-chave específicas (Feature, Scenario, Given, When, Then, etc.) para estruturar cenários de teste de forma clara e padronizada.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Estrutura Básica de um Cenário Gherkin</h3>
+            <pre style="background: rgba(0, 0, 0, 0.05); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-family: 'Courier New', monospace; font-size: var(--font-size-sm); line-height: 1.6;"><code>Feature: Nome da funcionalidade
+  Como [tipo de usuário]
+  Eu quero [ação]
+  Para [benefício]
+
+  Scenario: Descrição do cenário
+    Given [estado inicial]
+    When [ação realizada]
+    Then [resultado esperado]</code></pre>
+          </div>
+
+          <div class="content-card">
+            <h3>Palavras-chave do Gherkin</h3>
+            <ul>
+              <li><strong>Feature:</strong> Descreve a funcionalidade ou regra de negócio sendo testada</li>
+              <li><strong>Scenario:</strong> Descreve um caso de teste específico</li>
+              <li><strong>Given:</strong> Define o estado inicial ou pré-condições (contexto)</li>
+              <li><strong>When:</strong> Descreve a ação ou evento que dispara o comportamento</li>
+              <li><strong>Then:</strong> Define o resultado esperado ou validação</li>
+              <li><strong>And / But:</strong> Permitem continuar steps do mesmo tipo sem repetir a palavra-chave</li>
+              <li><strong>Background:</strong> Define steps comuns a todos os cenários de uma feature</li>
+              <li><strong>Scenario Outline:</strong> Permite testar o mesmo cenário com diferentes dados</li>
+              <li><strong>Examples:</strong> Fornece dados para Scenario Outline em formato de tabela</li>
+              <li><strong>Rule:</strong> Agrupa cenários relacionados a uma mesma regra de negócio</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Exemplos Práticos de Gherkin</h2>
+
+          <div class="content-card">
+            <h3>Cenário Simples</h3>
+            <pre style="background: rgba(0, 0, 0, 0.05); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-family: 'Courier New', monospace; font-size: var(--font-size-sm); line-height: 1.6;"><code>Feature: Login de usuário
+  Como usuário do sistema
+  Eu quero fazer login
+  Para acessar minha conta
+
+  Scenario: Login com credenciais válidas
+    Given que o usuário está na página de login
+    When o usuário preenche email e senha corretos
+    Then o usuário deve ser redirecionado para o dashboard
+    And deve aparecer uma mensagem de boas-vindas</code></pre>
+          </div>
+
+          <div class="content-card">
+            <h3>Cenário com Background e Scenario Outline</h3>
+            <pre style="background: rgba(0, 0, 0, 0.05); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-family: 'Courier New', monospace; font-size: var(--font-size-sm); line-height: 1.6;"><code>Feature: Processamento de pedidos
+  Como vendedor
+  Eu quero processar pedidos
+  Para entregar produtos aos clientes
+
+  Background:
+    Given que o sistema está operacional
+    And existe um catálogo de produtos disponível
+
+  Scenario Outline: Aprovação automática de pedidos
+    Given que existe um pedido com valor de "&lt;valor&gt;"
+    And o cliente tem histórico de pagamento "&lt;historico&gt;"
+    When o sistema processa o pedido
+    Then o pedido deve ser "&lt;status&gt;"
+
+    Examples:
+      | valor | historico | status    |
+      | 500   | em dia    | aprovado  |
+      | 1500  | em dia    | pendente  |
+      | 500   | atrasado  | pendente  |</code></pre>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>O que é Cucumber?</h2>
+
+          <div class="content-card">
+            <h3>Introdução ao Cucumber</h3>
+            <p><span class="highlight-text">Cucumber</span> é uma ferramenta open-source que suporta BDD. Ele permite escrever testes em Gherkin e executá-los automaticamente. O Cucumber lê especificações escritas em linguagem natural e as traduz em código executável através de step definitions.</p>
+            <p>O Cucumber foi criado para facilitar a comunicação entre equipes técnicas e não técnicas, permitindo que stakeholders participem ativamente da definição de requisitos e testes.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Como o Cucumber Funciona</h3>
+            <ol>
+              <li><strong>Escreva cenários em Gherkin:</strong> Descreva comportamentos em linguagem natural usando a sintaxe Gherkin em arquivos .feature</li>
+              <li><strong>Crie Step Definitions:</strong> Implemente o código que executa cada step (Given, When, Then) em sua linguagem de programação preferida</li>
+              <li><strong>Execute os testes:</strong> O Cucumber lê os arquivos .feature, encontra as step definitions correspondentes e executa os testes</li>
+              <li><strong>Analise os resultados:</strong> O Cucumber gera relatórios mostrando quais cenários passaram ou falharam, facilitando a identificação de problemas</li>
+            </ol>
+          </div>
+
+          <div class="content-card">
+            <h3>Benefícios do Cucumber e BDD</h3>
+            <ul>
+              <li><strong>Documentação Viva:</strong> Os cenários servem como documentação sempre atualizada e executável</li>
+              <li><strong>Colaboração:</strong> Facilita comunicação entre equipes técnicas e não técnicas</li>
+              <li><strong>Clareza:</strong> Cenários escritos em linguagem natural são fáceis de entender</li>
+              <li><strong>Rastreabilidade:</strong> Cada cenário está diretamente ligado a um requisito ou regra de negócio</li>
+              <li><strong>Reutilização:</strong> Steps podem ser reutilizados em múltiplos cenários</li>
+              <li><strong>Validação Contínua:</strong> Garante que o software sempre atende aos comportamentos especificados</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Boas Práticas em BDD</h2>
+
+          <div class="content-card">
+            <h3>1. Use Linguagem de Negócio</h3>
+            <p>Evite termos técnicos. Escreva cenários que stakeholders não técnicos possam entender.</p>
+            <p><strong>Bom:</strong> "Quando o usuário submete o formulário de cadastro"</p>
+            <p><strong>Ruim:</strong> "Quando a API recebe um POST request no endpoint /users"</p>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Foque no Comportamento, Não na Interface</h3>
+            <p>Descreva o que acontece, não como interagir com elementos de UI. Isso torna os testes mais resilientes a mudanças na interface.</p>
+            <p><strong>Bom:</strong> "Quando o usuário faz login"</p>
+            <p><strong>Ruim:</strong> "Quando o usuário clica no botão de login com ID 'btn-submit'"</p>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Mantenha Cenários Independentes</h3>
+            <p>Cada cenário deve poder ser executado isoladamente. Use Background para pré-condições comuns entre cenários.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Use Scenario Outline para Dados Variados</h3>
+            <p>Quando precisar testar o mesmo comportamento com diferentes dados, use Scenario Outline ao invés de criar múltiplos cenários separados.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>5. Given-When-Then na Ordem Correta</h3>
+            <p>Sempre mantenha a ordem: Given (estado) → When (ação) → Then (resultado). Esta ordem reflete o fluxo natural do comportamento e facilita a leitura.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>6. Um When por Cenário</h3>
+            <p>Cada cenário deve testar uma única ação. Se precisar de múltiplas ações, considere dividir em cenários separados ou usar And para ações relacionadas.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>7. Then é Obrigatório</h3>
+            <p>Todo cenário deve ter pelo menos um Then para validar o resultado esperado. Sem validação, não há como confirmar se o comportamento está correto.</p>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Ferramentas e Recursos</h2>
+
+          <div class="content-card">
+            <h3>Ferramentas BDD</h3>
+            <ul>
+              <li><strong>Cucumber:</strong> A ferramenta mais popular para BDD, suporta múltiplas linguagens (Java, JavaScript, Ruby, Python, etc.)</li>
+              <li><strong>SpecFlow:</strong> Implementação do Cucumber para .NET</li>
+              <li><strong>Behave:</strong> Framework BDD para Python</li>
+              <li><strong>JBehave:</strong> Framework BDD para Java</li>
+              <li><strong>Gauge:</strong> Framework de testes open-source que suporta BDD</li>
+            </ul>
+          </div>
+
+          <div class="content-card" style="background: rgba(122, 168, 116, 0.1); border-left-color: var(--accent);">
+            <h3>BDD Playground - Validador de Cenários Gherkin</h3>
+            <p>Pratique e valide seus cenários BDD usando nosso validador interativo. A ferramenta permite:</p>
+            <ul>
+              <li>Escrever e validar cenários Gherkin em tempo real</li>
+              <li>Receber feedback educacional sobre erros e melhorias</li>
+              <li>Obter score de qualidade e evoluir por níveis (Básico → Especialista)</li>
+              <li>Aprender regras de estrutura, semântica, linguagem e modelagem avançada</li>
+            </ul>
+            <p style="margin-top: var(--spacing-md);">
+              <a href="../tools/bdd-playground.html" class="btn btn-primary" style="display: inline-block;">
+                Acessar BDD Playground
+              </a>
+            </p>
+            <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm);">
+              O BDD Playground é uma ferramenta educacional que ajuda você a aprender e praticar BDD, validando automaticamente seus cenários e fornecendo feedback detalhado para melhorar sua escrita.
+            </p>
+          </div>
+
+          <div class="content-card">
+            <h3>Links e Recursos do Cucumber</h3>
+            <ul>
+              <li><a href="https://cucumber.io" target="_blank">Cucumber.io - Site Oficial</a></li>
+              <li><a href="https://cucumber.io/docs" target="_blank">Documentação do Cucumber</a></li>
+              <li><a href="https://cucumber.io/docs/gherkin" target="_blank">Documentação do Gherkin</a></li>
+              <li><a href="https://cucumber.io/docs/gherkin/reference" target="_blank">Referência da Sintaxe Gherkin</a></li>
+              <li><a href="https://github.com/cucumber/cucumber/tree/main/gherkin/testdata" target="_blank">Exemplos de Arquivos .feature (GitHub)</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Navegação entre módulos -->
+        <div class="module-navigation">
+          <a href="encontrar-reportar-bugs.html" class="module-nav-link module-nav-link--prev">← Anterior: Encontrar e Reportar Bugs</a>
+          <a href="testes-nao-funcionais.html" class="module-nav-link module-nav-link--next">Próximo: Testes Não Funcionais →</a>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

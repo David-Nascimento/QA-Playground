@@ -1,0 +1,47 @@
+// ========================================
+// Funções SCSS - Cálculos e Utilitários
+// ========================================
+
+// === Espaçamento ===
+@function spacing($multiplier: 1) {
+  @return $spacing-base * $multiplier;
+}
+
+// === Conversão de Pixels para Rem ===
+@function rem($pixels, $base: 16) {
+  @return ($pixels / $base) * 1rem;
+}
+
+// === Conversão de Pixels para Em ===
+@function em($pixels, $context: 16) {
+  @return ($pixels / $context) * 1em;
+}
+
+// === Cálculo de Opacidade ===
+@function rgba-color($color, $opacity: 1) {
+  @return rgba($color, $opacity);
+}
+
+// === Largura do Container ===
+@function container-width($padding: true) {
+  @if $padding {
+    @return calc(#{$container-max-width} + var(--spacing-lg) * 2);
+  } @else {
+    @return $container-max-width;
+  }
+}
+
+// === Z-index Scale ===
+@function z-index($level) {
+  $z-indexes: (
+    'dropdown': 1000,
+    'sticky': 1020,
+    'fixed': 1030,
+    'modal-backdrop': 1040,
+    'modal': 1050,
+    'popover': 1060,
+    'tooltip': 1070,
+  );
+  
+  @return map-get($z-indexes, $level);
+}

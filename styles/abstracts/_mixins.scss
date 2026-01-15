@@ -1,0 +1,147 @@
+// ========================================
+// Mixins - Funções Reutilizáveis
+// ========================================
+
+// === Breakpoints ===
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == sm {
+    @media (max-width: #{$breakpoint-sm - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (max-width: #{$breakpoint-md - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (max-width: #{$breakpoint-lg - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (max-width: #{$breakpoint-xl - 1px}) {
+      @content;
+    }
+  }
+}
+
+// === Estados de Hover ===
+@mixin hover-state {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin focus-visible {
+  &:focus-visible {
+    @content;
+  }
+}
+
+// === Transições ===
+@mixin transition($properties...) {
+  $transitions: ();
+  @each $property in $properties {
+    $transitions: append($transitions, #{$property} $transition-base, comma);
+  }
+  transition: $transitions;
+}
+
+// === Estados Visuais ===
+@mixin focus-ring($color: var(--accent), $offset: 3px) {
+  &:focus-visible {
+    outline: 3px solid $color;
+    outline-offset: $offset;
+    border-radius: var(--border-radius-sm);
+  }
+}
+
+@mixin button-reset {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+// === Layout ===
+@mixin container {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// === Cards e Superfícies ===
+@mixin card-surface {
+  background: var(--surface);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+@mixin card-interactive {
+  @include card-surface;
+  transition: transform $transition-base, box-shadow $transition-base;
+  
+  @include hover-state {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+// === Tipografia ===
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-muted {
+  color: var(--muted);
+  font-size: var(--font-size-base);
+}
+
+// === Grid Responsivo ===
+@mixin grid-responsive($min-width: 280px) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+  gap: var(--spacing-lg);
+}
+
+// === Visibilidade ===
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@mixin visually-visible {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}

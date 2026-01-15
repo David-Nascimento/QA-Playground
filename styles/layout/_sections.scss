@@ -1,0 +1,56 @@
+// ========================================
+// Sections - Estrutura de Seções
+// ========================================
+
+.section {
+  background: transparent;
+  padding: var(--spacing-lg) 0;
+  margin-bottom: var(--spacing-xl);
+}
+
+.section-title {
+  font-size: var(--font-size-2xl);
+  font-weight: $font-weight-bold;
+  margin-bottom: var(--spacing-xl);
+  color: var(--text);
+  text-align: left;
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+  
+  @include respond-to(md) {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  padding-left: var(--spacing-md);
+  border-bottom: 2px solid rgba(122, 168, 116, 0.2);
+  position: relative;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    min-height: 40px;
+    background: linear-gradient(180deg, var(--accent), var(--accent-2));
+    border-radius: 2px;
+  }
+  
+  h2 {
+    margin: 0;
+    font-size: var(--font-size-2xl);
+  }
+}
+
+.section-desc {
+  @include text-muted;
+  line-height: $line-height-base;
+}

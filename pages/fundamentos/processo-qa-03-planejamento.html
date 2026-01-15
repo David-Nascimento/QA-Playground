@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Processo QA 03: Planejamento de Testes — Fundamentos de Testes</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="index.html">Fundamentos</a></li>
+            <li><a href="../tools/mobile-playground.html">Mobile</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Processo QA: Etapa 03 — Planejamento de Testes</h1>
+          <div class="section-desc">
+            Terceira etapa do processo: planejar como os testes serão executados. Um bom planejamento define estratégia, cronograma, recursos e abordagem de testes que será seguida.
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Objetivo da Etapa</h2>
+          <p>Planejar a estratégia e abordagem de testes, definir cronograma, alocar recursos, e criar um plano detalhado de como os testes serão executados ao longo do projeto.</p>
+        </div>
+
+        <div class="content-section">
+          <h2>Atividades Principais</h2>
+
+          <div class="content-card">
+            <h3>1. Desenvolver Estratégia de Testes</h3>
+            <p>A estratégia de testes define a abordagem geral que será usada. É o "como" dos testes.</p>
+            <p><strong>O que definir:</strong></p>
+            <ul>
+              <li>Objetivos de teste e escopo</li>
+              <li>Abordagem de teste (manual, automação, ou híbrida)</li>
+              <li>Níveis de teste e quando serão executados</li>
+              <li>Tipos de teste que serão aplicados</li>
+              <li>Critérios de suspensão e retomada de testes</li>
+              <li>Critérios de saída de testes</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Planejar Recursos</h3>
+            <p>Identificar e alocar recursos necessários para executar os testes.</p>
+            <p><strong>O que planejar:</strong></p>
+            <ul>
+              <li>Equipe de testes (quantidade, habilidades, responsabilidades)</li>
+              <li>Ambientes de teste necessários</li>
+              <li>Ferramentas e infraestrutura</li>
+              <li>Dados de teste necessários</li>
+              <li>Orçamento e recursos financeiros</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Criar Cronograma</h3>
+            <p>Definir quando cada atividade de teste será executada e quanto tempo levará.</p>
+            <p><strong>O que incluir:</strong></p>
+            <ul>
+              <li>Datas de início e fim de fases de teste</li>
+              <li>Marcos importantes (milestones)</li>
+              <li>Dependências com desenvolvimento</li>
+              <li>Buffer para imprevistos</li>
+              <li>Atividades paralelas ou sequenciais</li>
+            </ul>
+            <p><strong>Dica:</strong> Seja realista com estimativas. É melhor superestimar do que prometer prazos impossíveis.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Identificar Riscos e Mitigações</h3>
+            <p>Identificar riscos que podem impactar os testes e planejar como mitigá-los.</p>
+            <p><strong>Riscos comuns:</strong></p>
+            <ul>
+              <li>Atrasos no desenvolvimento impactando início dos testes</li>
+              <li>Ambientes de teste indisponíveis ou instáveis</li>
+              <li>Mudanças frequentes de requisitos</li>
+              <li>Recursos limitados ou indisponíveis</li>
+              <li>Falta de documentação ou requisitos incompletos</li>
+            </ul>
+            <p><strong>Mitigações:</strong> Para cada risco, defina uma estratégia de mitigação ou plano de contingência.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>5. Definir Métricas e Relatórios</h3>
+            <p>Estabelecer quais métricas serão acompanhadas e como os resultados serão reportados.</p>
+            <p><strong>Métricas úteis:</strong></p>
+            <ul>
+              <li>Progresso de execução de testes</li>
+              <li>Cobertura de testes</li>
+              <li>Taxa de defeitos encontrados vs. corrigidos</li>
+              <li>Taxa de passagem/falha de testes</li>
+              <li>Tempo médio para correção de bugs</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Entregáveis desta Etapa</h2>
+
+          <div class="content-card">
+            <h3>Plano de Testes</h3>
+            <p>O documento principal desta etapa é o Plano de Testes, que deve incluir:</p>
+            <ul>
+              <li>Estratégia de testes</li>
+              <li>Cronograma detalhado</li>
+              <li>Alocação de recursos</li>
+              <li>Riscos identificados e mitigações</li>
+              <li>Critérios de entrada e saída</li>
+              <li>Métricas a serem acompanhadas</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Checklist de Verificação</h2>
+
+          <div class="content-card">
+            <p>Antes de avançar para a próxima etapa, verifique se:</p>
+            <ul>
+              <li>Estratégia de testes foi definida e documentada</li>
+              <li>Recursos foram identificados e alocados</li>
+              <li>Cronograma foi criado e acordado</li>
+              <li>Riscos foram identificados e mitigações planejadas</li>
+              <li>Métricas e relatórios foram definidos</li>
+              <li>Plano de testes foi revisado e aprovado</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Boas Práticas</h2>
+
+          <div class="content-card">
+            <h3>1. Seja Detalhado, mas Flexível</h3>
+            <p>Crie um plano detalhado, mas mantenha flexibilidade para ajustes. Mudanças são comuns em projetos, e o plano deve poder se adaptar.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Envolva Stakeholders</h3>
+            <p>Envolva stakeholders no planejamento. Sua visão ajuda a priorizar e garantir que o plano atende expectativas.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Revise Regularmente</h3>
+            <p>O plano de testes não é estático. Revise e atualize conforme o projeto evolui e novas informações surgem.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Use Histórico</h3>
+            <p>Use dados de projetos anteriores para melhorar estimativas e planejamento. Histórico ajuda a ser mais preciso.</p>
+          </div>
+        </div>
+
+        <!-- Navegação entre módulos -->
+        <div class="module-navigation">
+          <a href="processo-qa-02-padroes-metodos.html" class="module-nav-link module-nav-link--prev">← Anterior: Padrões e Métodos</a>
+          <a href="processo-qa-04-desenvolvimento-casos.html" class="module-nav-link module-nav-link--next">Próximo: Desenvolvimento de Casos de Teste →</a>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

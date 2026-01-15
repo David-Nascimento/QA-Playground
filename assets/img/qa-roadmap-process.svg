@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" style="display: block;">
+  <defs>
+    <!-- Arrow Markers -->
+    <!-- Seta para direita (→) -->
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <polygon points="0 0, 10 5, 0 10" fill="#7aa874" stroke="none"/>
+    </marker>
+    <!-- Seta para baixo (↓) -->
+    <marker id="arrowhead-down" markerWidth="10" markerHeight="10" refX="5" refY="9" orient="auto" markerUnits="userSpaceOnUse">
+      <polygon points="0 0, 5 10, 10 0" fill="#7aa874" stroke="none"/>
+    </marker>
+    <!-- Seta para esquerda (←) -->
+    <marker id="arrowhead-left" markerWidth="10" markerHeight="10" refX="1" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <polygon points="10 0, 0 5, 10 10" fill="#7aa874" stroke="none"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#ffffff"/>
+  
+  <!-- Title -->
+  <text x="600" y="40" font-family="Inter, sans-serif" font-size="32" font-weight="700" text-anchor="middle" fill="#1a252f">
+    QA Roadmap - Processo Completo
+  </text>
+  
+  <!-- Top Row: Steps 01-04 -->
+  <!-- Step 01 -->
+  <g transform="translate(50, 100)">
+    <rect x="0" y="0" width="220" height="140" rx="8" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+    <text x="110" y="35" font-family="Inter, sans-serif" font-size="24" font-weight="700" text-anchor="middle" fill="#ffffff">01</text>
+    <text x="110" y="65" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" fill="#ffffff">Requisitos e</text>
+    <text x="110" y="85" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" fill="#ffffff">Escopo do Projeto</text>
+  </g>
+  
+  <!-- Arrow 01 -> 02 -->
+  <line x1="270" y1="170" x2="310" y2="170" stroke="#7aa874" stroke-width="4" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 02 -->
+  <g transform="translate(320, 100)">
+    <rect x="0" y="0" width="220" height="140" rx="8" fill="#e67e22" stroke="#d35400" stroke-width="2"/>
+    <text x="110" y="35" font-family="Inter, sans-serif" font-size="24" font-weight="700" text-anchor="middle" fill="#ffffff">02</text>
+    <text x="110" y="60" font-family="Inter, sans-serif" font-size="12" font-weight="600" text-anchor="middle" fill="#ffffff">Estabelecer Padrões</text>
+    <text x="110" y="78" font-family="Inter, sans-serif" font-size="12" font-weight="600" text-anchor="middle" fill="#ffffff">e Métodos QA</text>
+  </g>
+  
+  <!-- Arrow 02 -> 03 -->
+  <line x1="540" y1="170" x2="580" y2="170" stroke="#7aa874" stroke-width="4" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 03 -->
+  <g transform="translate(590, 100)">
+    <rect x="0" y="0" width="220" height="140" rx="8" fill="#27ae60" stroke="#229954" stroke-width="2"/>
+    <text x="110" y="35" font-family="Inter, sans-serif" font-size="24" font-weight="700" text-anchor="middle" fill="#ffffff">03</text>
+    <text x="110" y="70" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" fill="#ffffff">Planejamento</text>
+    <text x="110" y="90" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" fill="#ffffff">de Testes</text>
+  </g>
+  
+  <!-- Arrow 03 -> 04 -->
+  <line x1="810" y1="170" x2="850" y2="170" stroke="#7aa874" stroke-width="4" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 04 -->
+  <g transform="translate(860, 100)">
+    <rect x="0" y="0" width="220" height="140" rx="8" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+    <text x="110" y="35" font-family="Inter, sans-serif" font-size="24" font-weight="700" text-anchor="middle" fill="#ffffff">04</text>
+    <text x="110" y="65" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" fill="#ffffff">Desenvolvimento</text>
+    <text x="110" y="85" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" fill="#ffffff">de Casos de Teste</text>
+  </g>
+  
+  <!-- Arrow 04 -> 05 (down) -->
+  <line x1="970" y1="240" x2="970" y2="460" stroke="#7aa874" stroke-width="4" marker-end="url(#arrowhead-down)"/>
+  
+  <!-- Bottom Row: Steps 05-08 (right to left) -->
+  <!-- Step 05 -->
+  <g transform="translate(860, 480)">
+    <rect x="0" y="0" width="220" height="140" rx="8" fill="#8b4513" stroke="#6b3410" stroke-width="2"/>
+    <text x="110" y="35" font-family="Inter, sans-serif" font-size="24" font-weight="700" text-anchor="middle" fill="#ffffff">05</text>
+    <text x="110" y="65" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" fill="#ffffff">Execução de</text>
+    <text x="110" y="85" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" fill="#ffffff">Testes de QA</text>
+  </g>
+  
+  <!-- Arrow 05 -> 06 (left) -->
+  <line x1="860" y1="550" x2="820" y2="550" stroke="#7aa874" stroke-width="4" marker-end="url(#arrowhead-left)"/>
+  
+  <!-- Step 06 -->
+  <g transform="translate(590, 480)">
+    <rect x="0" y="0" width="220" height="140" rx="8" fill="#d35400" stroke="#a04000" stroke-width="2"/>
+    <text x="110" y="35" font-family="Inter, sans-serif" font-size="24" font-weight="700" text-anchor="middle" fill="#ffffff">06</text>
+    <text x="110" y="65" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" fill="#ffffff">Teste de Aceitação</text>
+    <text x="110" y="85" font-family="Inter, sans-serif" font-size="13" font-weight="600" text-anchor="middle" fill="#ffffff">do Usuário</text>
+  </g>
+  
+  <!-- Arrow 06 -> 07 (left) -->
+  <line x1="590" y1="550" x2="550" y2="550" stroke="#7aa874" stroke-width="4" marker-end="url(#arrowhead-left)"/>
+  
+  <!-- Step 07 -->
+  <g transform="translate(320, 480)">
+    <rect x="0" y="0" width="220" height="140" rx="8" fill="#1e8449" stroke="#145a32" stroke-width="2"/>
+    <text x="110" y="35" font-family="Inter, sans-serif" font-size="24" font-weight="700" text-anchor="middle" fill="#ffffff">07</text>
+    <text x="110" y="70" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" fill="#ffffff">Validação</text>
+    <text x="110" y="90" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" fill="#ffffff">do Sistema</text>
+  </g>
+  
+  <!-- Arrow 07 -> 08 (left) -->
+  <line x1="320" y1="550" x2="280" y2="550" stroke="#7aa874" stroke-width="4" marker-end="url(#arrowhead-left)"/>
+  
+  <!-- Step 08 -->
+  <g transform="translate(50, 480)">
+    <rect x="0" y="0" width="220" height="140" rx="8" fill="#2c3e50" stroke="#1a252f" stroke-width="2"/>
+    <text x="110" y="30" font-family="Inter, sans-serif" font-size="22" font-weight="700" text-anchor="middle" fill="#ffffff">08</text>
+    <text x="110" y="55" font-family="Inter, sans-serif" font-size="11" font-weight="600" text-anchor="middle" fill="#ffffff">Lições Aprendidas</text>
+    <text x="110" y="73" font-family="Inter, sans-serif" font-size="11" font-weight="600" text-anchor="middle" fill="#ffffff">e Melhoria</text>
+    <text x="110" y="91" font-family="Inter, sans-serif" font-size="11" font-weight="600" text-anchor="middle" fill="#ffffff">Contínua</text>
+  </g>
+  
+  <!-- Loop Arrow: 08 -> 01 (curved up and right) -->
+  <path d="M 110 480 Q 110 350 270 170" stroke="#7aa874" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Loop Label -->
+  <text x="120" y="320" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#7aa874" transform="rotate(-30 120 320)">
+    Melhoria Contínua
+  </text>
+  
+  <!-- Legend/Description -->
+  <text x="600" y="720" font-family="Inter, sans-serif" font-size="14" font-weight="400" text-anchor="middle" fill="#666666">
+    Ciclo completo do processo de QA: desde a análise inicial até a melhoria contínua
+  </text>
+  
+  <!-- Key Points -->
+  <g transform="translate(100, 750)">
+    <text x="0" y="0" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#2c3e50">Fluxo:</text>
+    <text x="60" y="0" font-family="Inter, sans-serif" font-size="12" fill="#666666">01→02→03→04 ↓ 05←06←07←08 ↶ (loop contínuo)</text>
+  </g>
+</svg>

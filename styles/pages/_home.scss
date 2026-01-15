@@ -1,0 +1,399 @@
+// ========================================
+// Home - Página Inicial
+// ========================================
+
+// === Hero Section ===
+.hero {
+  padding: var(--spacing-xl) 0 calc(var(--spacing-xl) * 1.5);
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  
+  h1 {
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-3xl);
+    font-weight: $font-weight-bold;
+    color: var(--text);
+  }
+  
+  @include respond-to(md) {
+    padding: var(--spacing-lg) 0 var(--spacing-xl);
+    
+    h1 {
+      font-size: var(--font-size-2xl);
+    }
+  }
+}
+
+.hero-subtitle {
+  color: var(--text);
+  font-size: var(--font-size-xl);
+  font-weight: $font-weight-semibold;
+  margin-bottom: var(--spacing-lg);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  
+  @include respond-to(md) {
+    font-size: var(--font-size-lg);
+  }
+}
+
+.hero-description {
+  @include text-muted;
+  line-height: $line-height-relaxed;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+// === Info Blocks (Como funciona) ===
+.info-blocks {
+  @include grid-responsive(280px);
+  margin-top: var(--spacing-lg);
+  
+  @include respond-to(sm) {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+}
+
+.info-block {
+  @include card-surface;
+  padding: var(--spacing-lg);
+  
+  h3 {
+    font-size: var(--font-size-lg);
+    font-weight: $font-weight-semibold;
+    margin-bottom: var(--spacing-sm);
+    margin-top: 0;
+    color: var(--text);
+  }
+  
+  p {
+    @include text-muted;
+    line-height: $line-height-base;
+    margin: 0;
+  }
+}
+
+// === Areas List (Áreas de prática) ===
+.areas-list {
+  @include grid-responsive(320px);
+  margin-top: var(--spacing-lg);
+  
+  @include respond-to(sm) {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+}
+
+.area-item {
+  @include card-surface;
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  
+  h3 {
+    font-size: var(--font-size-lg);
+    font-weight: $font-weight-semibold;
+    margin-bottom: var(--spacing-sm);
+    margin-top: 0;
+    color: var(--text);
+  }
+  
+  p {
+    @include text-muted;
+    line-height: $line-height-base;
+    margin-bottom: var(--spacing-md);
+    flex: 1;
+  }
+}
+
+.area-link {
+  color: var(--accent);
+  font-weight: $font-weight-medium;
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  margin-top: auto;
+  display: inline-block;
+  
+  @include hover-state {
+    text-decoration: underline;
+  }
+}
+
+// === Progression Blocks ===
+.progression-blocks {
+  @include grid-responsive(300px);
+  margin-top: var(--spacing-lg);
+  
+  @include respond-to(sm) {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+}
+
+.progression-block {
+  @include card-surface;
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  
+  h3 {
+    font-size: var(--font-size-xl);
+    font-weight: $font-weight-bold;
+    margin-bottom: var(--spacing-xs);
+    margin-top: 0;
+    color: var(--text);
+  }
+  
+  > p {
+    @include text-muted;
+    margin-bottom: var(--spacing-lg);
+    font-style: italic;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--spacing-lg) 0;
+    flex: 1;
+  }
+  
+  li {
+    color: var(--text);
+    font-size: var(--font-size-base);
+    line-height: $line-height-relaxed;
+    padding-left: var(--spacing-lg);
+    position: relative;
+    margin-bottom: var(--spacing-sm);
+    
+    &::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: $font-weight-bold;
+    }
+  }
+}
+
+.progression-link {
+  color: var(--accent);
+  font-weight: $font-weight-semibold;
+  font-size: var(--font-size-base);
+  text-decoration: none;
+  margin-top: auto;
+  display: inline-block;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  
+  @include hover-state {
+    text-decoration: underline;
+  }
+}
+
+// === Tools Grid ===
+.tools-grid {
+  @include grid-responsive(350px);
+  margin-top: var(--spacing-xl);
+  gap: var(--spacing-lg);
+  
+  @include respond-to(sm) {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+}
+
+.tool-card {
+  @include card-surface;
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  @include transition(transform, box-shadow);
+  border-top: 3px solid var(--accent);
+  
+  @include hover-state {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.tool-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  
+  h3 {
+    font-size: var(--font-size-xl);
+    font-weight: $font-weight-semibold;
+    margin: 0;
+    flex: 1;
+    min-width: 200px;
+    
+    a {
+      color: var(--text);
+      text-decoration: none;
+      
+      @include hover-state {
+        color: var(--accent);
+      }
+    }
+  }
+}
+
+.tool-category {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: rgba(122, 168, 116, 0.1);
+  color: var(--accent);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.tool-description {
+  @include text-muted;
+  line-height: $line-height-relaxed;
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-size-base);
+}
+
+.tool-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--spacing-lg) 0;
+  flex: 1;
+  
+  li {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: $line-height-base;
+    padding-left: var(--spacing-lg);
+    position: relative;
+    margin-bottom: var(--spacing-xs);
+    
+    &::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: $font-weight-bold;
+      font-size: var(--font-size-base);
+    }
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.tool-link {
+  color: var(--accent);
+  font-weight: $font-weight-semibold;
+  font-size: var(--font-size-base);
+  text-decoration: none;
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  
+  @include hover-state {
+    text-decoration: underline;
+  }
+  
+  &::after {
+    content: "→";
+    transition: transform 0.2s ease;
+  }
+  
+  @include hover-state {
+    &::after {
+      transform: translateX(4px);
+    }
+  }
+}
+
+// === Audience Content ===
+.audience-content {
+  @include card-surface;
+  padding: var(--spacing-xl);
+  margin-top: var(--spacing-lg);
+  
+  @include respond-to(md) {
+    padding: var(--spacing-lg);
+  }
+  
+  > p {
+    color: var(--text);
+    font-size: var(--font-size-base);
+    line-height: $line-height-relaxed;
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+.audience-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+  li {
+    color: var(--text);
+    font-size: var(--font-size-base);
+    line-height: $line-height-relaxed;
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-lg);
+    position: relative;
+    
+    &::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    strong {
+      color: var(--text);
+      font-weight: $font-weight-semibold;
+    }
+  }
+}
+
+// === About Content ===
+.about-content {
+  @include card-surface;
+  padding: var(--spacing-xl);
+  margin-top: var(--spacing-lg);
+  
+  @include respond-to(md) {
+    padding: var(--spacing-lg);
+  }
+  
+  p {
+    color: var(--text);
+    font-size: var(--font-size-base);
+    line-height: $line-height-relaxed;
+    margin-bottom: var(--spacing-lg);
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  strong {
+    color: var(--text);
+    font-weight: $font-weight-semibold;
+  }
+}

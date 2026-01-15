@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Processo QA 05: Execução de Testes de QA — Fundamentos de Testes</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="index.html">Fundamentos</a></li>
+            <li><a href="../tools/mobile-playground.html">Mobile</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Processo QA: Etapa 05 — Execução de Testes de QA</h1>
+          <div class="section-desc">
+            Quinta etapa do processo: executar testes sistemáticos seguindo casos de teste desenvolvidos. Esta é a fase de execução onde os testes são realizados e resultados são coletados.
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Objetivo da Etapa</h2>
+          <p>Executar testes de forma sistemática seguindo casos de teste desenvolvidos, registrar resultados, identificar defeitos, e coletar evidências. Esta etapa é onde a qualidade do software é validada na prática.</p>
+        </div>
+
+        <div class="content-section">
+          <h2>Atividades Principais</h2>
+
+          <div class="content-card">
+            <h3>1. Preparação para Execução</h3>
+            <p>Antes de executar testes, é necessário preparar o ambiente e garantir que tudo está pronto.</p>
+            <p><strong>O que preparar:</strong></p>
+            <ul>
+              <li>Ambiente de teste configurado e funcional</li>
+              <li>Dados de teste preparados e disponíveis</li>
+              <li>Build do software disponível para teste</li>
+              <li>Ferramentas e acesso necessários</li>
+              <li>Casos de teste revisados e prontos</li>
+            </ul>
+            <p><strong>Dica:</strong> Verifique o ambiente antes de começar. Problemas de ambiente podem atrasar execução significativamente.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Executar Casos de Teste</h3>
+            <p>Executar testes seguindo casos de teste desenvolvidos de forma sistemática e organizada.</p>
+            <p><strong>Como executar:</strong></p>
+            <ul>
+              <li>Siga passos dos casos de teste sequencialmente</li>
+              <li>Registre resultados imediatamente (passou/falhou/bloqueado)</li>
+              <li>Capture evidências quando necessário (screenshots, logs)</li>
+              <li>Compare resultados reais com esperados</li>
+              <li>Documente observações e problemas encontrados</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Identificar e Reportar Defeitos</h3>
+            <p>Quando um teste falha, identificar se é um defeito real e reportá-lo adequadamente.</p>
+            <p><strong>O que fazer:</strong></p>
+            <ul>
+              <li>Verificar se a falha é um defeito ou problema de ambiente/dados</li>
+              <li>Reproduzir o defeito para confirmar</li>
+              <li>Criar bug report detalhado seguindo padrões estabelecidos</li>
+              <li>Priorizar defeitos conforme severidade e impacto</li>
+              <li>Atualizar status de casos de teste relacionados</li>
+            </ul>
+            <p><strong>Dica:</strong> Consulte o módulo "Encontrar e Reportar Bugs" para técnicas detalhadas.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Testes Exploratórios</h3>
+            <p>Além de testes scriptados, realizar testes exploratórios para encontrar problemas não previstos.</p>
+            <p><strong>O que fazer:</strong></p>
+            <ul>
+              <li>Explorar o software livremente</li>
+              <li>Testar cenários não cobertos por casos de teste</li>
+              <li>Usar conhecimento e experiência para encontrar problemas</li>
+              <li>Documentar descobertas importantes</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>5. Documentar e Registrar</h3>
+            <p>Manter registro detalhado de execução e resultados é essencial para rastreabilidade e análise.</p>
+            <p><strong>O que registrar:</strong></p>
+            <ul>
+              <li>Resultados de cada caso de teste executado</li>
+              <li>Evidências (screenshots, logs, vídeos)</li>
+              <li>Observações e notas importantes</li>
+              <li>Tempo gasto em execução</li>
+              <li>Problemas encontrados e bloqueadores</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>6. Monitorar Progresso</h3>
+            <p>Acompanhar progresso de execução ajuda a identificar atrasos e ajustar planejamento.</p>
+            <p><strong>O que monitorar:</strong></p>
+            <ul>
+              <li>Quantos casos foram executados vs. planejados</li>
+              <li>Taxa de passagem/falha</li>
+              <li>Defeitos encontrados e corrigidos</li>
+              <li>Bloqueadores e impedimentos</li>
+              <li>Progresso em relação ao cronograma</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Entregáveis desta Etapa</h2>
+
+          <div class="content-card">
+            <h3>Resultados e Evidências</h3>
+            <ul>
+              <li><strong>Resultados de Execução:</strong> Status de todos os casos de teste executados</li>
+              <li><strong>Bug Reports:</strong> Defeitos identificados e reportados</li>
+              <li><strong>Evidências:</strong> Screenshots, logs e outros artefatos coletados</li>
+              <li><strong>Relatório de Progresso:</strong> Status atual de execução</li>
+              <li><strong>Observações:</strong> Notas importantes sobre comportamento observado</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Checklist de Verificação</h2>
+
+          <div class="content-card">
+            <p>Durante a execução, garanta que:</p>
+            <ul>
+              <li>Casos de teste estão sendo executados conforme planejado</li>
+              <li>Resultados estão sendo registrados sistematicamente</li>
+              <li>Defeitos estão sendo reportados adequadamente</li>
+              <li>Evidências estão sendo coletadas quando necessário</li>
+              <li>Progresso está sendo monitorado e comunicado</li>
+              <li>Bloqueadores estão sendo identificados e resolvidos</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Boas Práticas</h2>
+
+          <div class="content-card">
+            <h3>1. Seja Sistemático</h3>
+            <p>Siga casos de teste de forma sistemática, mas esteja aberto a descobertas inesperadas através de testes exploratórios.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Documente Imediatamente</h3>
+            <p>Registre resultados imediatamente após executar. Deixar para depois pode levar a erros e informações perdidas.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Valide Defeitos</h3>
+            <p>Antes de reportar, certifique-se de que realmente é um defeito. Reproduza e valide o problema.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Comunique Status</h3>
+            <p>Mantenha equipe e stakeholders informados sobre progresso. Comunicação regular evita surpresas.</p>
+          </div>
+        </div>
+
+        <!-- Navegação entre módulos -->
+        <div class="module-navigation">
+          <a href="processo-qa-04-desenvolvimento-casos.html" class="module-nav-link module-nav-link--prev">← Anterior: Desenvolvimento de Casos</a>
+          <a href="processo-qa-06-teste-aceitacao.html" class="module-nav-link module-nav-link--next">Próximo: Teste de Aceitação do Usuário →</a>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

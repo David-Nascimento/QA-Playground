@@ -1,0 +1,39 @@
+// ========================================
+// Footer - Rodapé do Site
+// ========================================
+
+.site-footer {
+  margin-top: calc(var(--spacing-xl) * 2);
+  padding: var(--spacing-xl) 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: var(--font-size-sm);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  align-items: center;
+  text-align: center;
+}
+
+.footer-main {
+  font-size: var(--font-size-base);
+  color: var(--text);
+}
+
+.footer-secondary {
+  font-size: var(--font-size-sm);
+  color: var(--muted);
+  
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    
+    @include hover-state {
+      text-decoration: underline;
+    }
+  }
+}

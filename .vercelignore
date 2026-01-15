@@ -1,0 +1,34 @@
+# Arquivos que não devem ser enviados para Vercel
+# (mas os arquivos compilados precisam estar incluídos)
+
+# Código fonte (não necessário no deploy)
+src/
+styles/
+
+# Arquivos de desenvolvimento
+node_modules/
+package-lock.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Scripts de migração (não necessários no deploy)
+scripts/
+
+# Documentação de desenvolvimento
+docs/

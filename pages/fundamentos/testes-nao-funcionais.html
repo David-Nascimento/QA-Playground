@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Módulo 10: Testes Não Funcionais — Fundamentos de Testes</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="index.html">Fundamentos</a></li>
+            <li><a href="../tools/mobile-playground.html">Mobile</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Módulo 10: Testes Não Funcionais</h1>
+          <div class="section-desc">
+            Aprenda sobre testes de performance, carga, stress, segurança, usabilidade e outros aspectos não funcionais essenciais para garantir a qualidade completa do software além das funcionalidades.
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>O que são Testes Não Funcionais?</h2>
+          
+          <div class="content-card">
+            <h3>Definição</h3>
+            <p>Os <span class="highlight-text">Testes Não Funcionais (NFT - Non-Functional Testing)</span> avaliam características do software que não estão relacionadas a funcionalidades específicas, mas sim a <strong>como</strong> o sistema se comporta. Enquanto os testes funcionais verificam "o que o sistema faz", os testes não funcionais verificam "quão bem o sistema faz".</p>
+            <p>Estes testes são essenciais para garantir a qualidade geral do software e a experiência do usuário, focando em aspectos como performance, segurança, usabilidade, confiabilidade e escalabilidade.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Importância dos Testes Não Funcionais</h3>
+            <p>Os testes não funcionais são fundamentais porque:</p>
+            <ul>
+              <li>Garantem que o sistema atenda aos requisitos de qualidade esperados pelos usuários</li>
+              <li>Identificam problemas que podem impactar a experiência do usuário antes do lançamento</li>
+              <li>Validam a capacidade do sistema de suportar condições reais de uso</li>
+              <li>Protegem contra vulnerabilidades de segurança</li>
+              <li>Asseguram que o sistema seja acessível e utilizável por diferentes tipos de usuários</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Tipos de Testes Não Funcionais</h2>
+
+          <div class="content-card">
+            <h3>Testes de Performance</h3>
+            <p>Avaliam a velocidade, tempo de resposta e eficiência do sistema sob diferentes condições. Estes testes medem como o sistema se comporta em termos de velocidade e uso de recursos.</p>
+            <p><strong>O que é avaliado:</strong></p>
+            <ul>
+              <li>Tempo de resposta de requisições e transações</li>
+              <li>Throughput (taxa de processamento e transações por segundo)</li>
+              <li>Uso de recursos do sistema (CPU, memória, disco, rede)</li>
+              <li>Gargalos de performance e pontos de lentidão</li>
+              <li>Escalabilidade do sistema</li>
+            </ul>
+            <p><strong>Quando realizar:</strong> Durante o desenvolvimento, antes de releases importantes e após mudanças que possam impactar performance.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Testes de Carga (Load Testing)</h3>
+            <p>Testam o comportamento do sistema sob carga normal esperada, simulando condições de uso típicas. O objetivo é verificar se o sistema consegue lidar com a carga esperada sem degradação significativa.</p>
+            <p><strong>O que é avaliado:</strong></p>
+            <ul>
+              <li>Capacidade do sistema de suportar carga esperada</li>
+              <li>Comportamento sob condições normais de uso</li>
+              <li>Estabilidade e consistência de performance</li>
+              <li>Identificação de problemas que só aparecem sob carga</li>
+            </ul>
+            <p><strong>Quando realizar:</strong> Antes de lançamentos, após mudanças de infraestrutura e para validar capacidade planejada.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Testes de Stress (Stress Testing)</h3>
+            <p>Testam o comportamento do sistema sob carga extrema, além da capacidade normal. O objetivo é identificar os limites do sistema e como ele se comporta quando esses limites são ultrapassados.</p>
+            <p><strong>O que é avaliado:</strong></p>
+            <ul>
+              <li>Ponto de quebra do sistema (breaking point)</li>
+              <li>Mecanismos de recuperação após sobrecarga</li>
+              <li>Degradação graciosa do sistema</li>
+              <li>Comportamento em condições extremas</li>
+              <li>Resiliência e estabilidade sob stress</li>
+            </ul>
+            <p><strong>Quando realizar:</strong> Para entender os limites do sistema e validar mecanismos de proteção e recuperação.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Testes de Resiliência</h3>
+            <p>Avaliam a capacidade do sistema de se recuperar de falhas e continuar funcionando de forma adequada. Estes testes verificam a tolerância a falhas e a capacidade de recuperação automática.</p>
+            <p><strong>O que é avaliado:</strong></p>
+            <ul>
+              <li>Tolerância a falhas de componentes individuais</li>
+              <li>Mecanismos de retry e fallback</li>
+              <li>Recuperação automática após falhas</li>
+              <li>Comportamento sob condições adversas</li>
+              <li>Continuidade de serviço durante falhas parciais</li>
+            </ul>
+            <p><strong>Quando realizar:</strong> Para sistemas críticos que precisam manter disponibilidade mesmo com falhas parciais.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Testes de Segurança</h3>
+            <p>Avaliam a segurança do sistema contra ameaças e vulnerabilidades. Estes testes identificam falhas de segurança que podem ser exploradas por atacantes.</p>
+            <p><strong>O que é avaliado:</strong></p>
+            <ul>
+              <li>Vulnerabilidades conhecidas (OWASP Top 10)</li>
+              <li>Mecanismos de autenticação e autorização</li>
+              <li>Proteção de dados sensíveis e privacidade</li>
+              <li>Criptografia e comunicação segura</li>
+              <li>Resposta a tentativas de ataque</li>
+            </ul>
+            <p><strong>Quando realizar:</strong> Regularmente durante o desenvolvimento, antes de releases e após mudanças que afetem segurança.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Testes de Usabilidade</h3>
+            <p>Avaliam a facilidade de uso e experiência do usuário. Estes testes verificam se o sistema é intuitivo, acessível e agradável de usar.</p>
+            <p><strong>O que é avaliado:</strong></p>
+            <ul>
+              <li>Intuitividade da interface e facilidade de aprendizado</li>
+              <li>Acessibilidade conforme padrões WCAG</li>
+              <li>Navegação e fluxos de usuário</li>
+              <li>Feedback visual e mensagens ao usuário</li>
+              <li>Satisfação e experiência geral do usuário</li>
+            </ul>
+            <p><strong>Quando realizar:</strong> Durante o design e desenvolvimento, com usuários reais quando possível.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Testes de Compatibilidade</h3>
+            <p>Verificam se o sistema funciona corretamente em diferentes ambientes, navegadores, dispositivos e sistemas operacionais. Garantem que o sistema tenha comportamento consistente em diferentes plataformas.</p>
+            <p><strong>O que é avaliado:</strong></p>
+            <ul>
+              <li>Compatibilidade entre navegadores (Chrome, Firefox, Safari, Edge)</li>
+              <li>Responsividade em diferentes dispositivos (mobile, tablet, desktop)</li>
+              <li>Compatibilidade com diferentes versões de sistemas operacionais</li>
+              <li>Comportamento em diferentes resoluções de tela</li>
+              <li>Funcionalidade em diferentes configurações de hardware</li>
+            </ul>
+            <p><strong>Quando realizar:</strong> Antes de releases e quando há mudanças que possam afetar compatibilidade.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Testes de Escalabilidade</h3>
+            <p>Avaliam a capacidade do sistema de crescer e lidar com aumento de carga, usuários ou dados. Verificam se o sistema pode escalar horizontal ou verticalmente conforme necessário.</p>
+            <p><strong>O que é avaliado:</strong></p>
+            <ul>
+              <li>Capacidade de escalar horizontalmente (adicionar servidores)</li>
+              <li>Capacidade de escalar verticalmente (aumentar recursos)</li>
+              <li>Comportamento com crescimento de dados</li>
+              <li>Performance mantida durante escalonamento</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Testes de Confiabilidade</h3>
+            <p>Avaliam a capacidade do sistema de executar consistentemente sem falhas durante um período específico. Verificam a estabilidade e confiabilidade do sistema.</p>
+            <p><strong>O que é avaliado:</strong></p>
+            <ul>
+              <li>Taxa de falhas e tempo entre falhas</li>
+              <li>Disponibilidade do sistema</li>
+              <li>Estabilidade durante operação contínua</li>
+              <li>Recuperação de erros</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Ferramentas para Testes Não Funcionais</h2>
+
+          <div class="content-card">
+            <h3>Ferramentas de Performance e Carga</h3>
+            <p>Ferramentas especializadas para medir e analisar performance:</p>
+            <ul>
+              <li><strong>Apache JMeter:</strong> Ferramenta open-source para testes de carga e performance em aplicações web</li>
+              <li><strong>Gatling:</strong> Framework moderno de testes de carga com foco em performance e relatórios detalhados</li>
+              <li><strong>K6:</strong> Ferramenta moderna de testes de carga baseada em JavaScript</li>
+              <li><strong>Lighthouse:</strong> Ferramenta de auditoria automatizada para performance, acessibilidade e SEO</li>
+              <li><strong>WebPageTest:</strong> Ferramenta online para análise detalhada de performance de páginas web</li>
+              <li><strong>LoadRunner:</strong> Ferramenta comercial para testes de carga e performance</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Ferramentas de Segurança</h3>
+            <p>Ferramentas para identificar vulnerabilidades e testar segurança:</p>
+            <ul>
+              <li><strong>OWASP ZAP:</strong> Scanner de vulnerabilidades de segurança open-source</li>
+              <li><strong>Burp Suite:</strong> Ferramenta profissional de testes de segurança de aplicações web</li>
+              <li><strong>Nessus:</strong> Scanner de vulnerabilidades de rede e sistemas</li>
+              <li><strong>SQLMap:</strong> Ferramenta para detecção e exploração de vulnerabilidades SQL injection</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Ferramentas de Usabilidade e Acessibilidade</h3>
+            <p>Ferramentas para avaliar usabilidade e conformidade com padrões de acessibilidade:</p>
+            <ul>
+              <li><strong>axe DevTools:</strong> Suite de ferramentas para testes de acessibilidade automatizados</li>
+              <li><strong>WAVE:</strong> Ferramenta de avaliação de acessibilidade web</li>
+              <li><strong>Lighthouse:</strong> Inclui auditoria de acessibilidade em seus relatórios</li>
+              <li><strong>Pa11y:</strong> Ferramenta de linha de comando para testes de acessibilidade</li>
+            </ul>
+          </div>
+
+          <div class="content-card" style="background: rgba(122, 168, 116, 0.1); border-left-color: var(--accent);">
+            <h3>NFT Playground - Ferramenta Interativa</h3>
+            <p>Para praticar e entender melhor os Testes Não Funcionais através de simulações interativas, utilize nossa ferramenta educacional:</p>
+            <p style="margin-top: var(--spacing-md);">
+              <a href="../tools/nft-playground.html" class="btn btn-primary" style="display: inline-block;">
+                Acessar NFT Playground
+              </a>
+            </p>
+            <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm);">
+              O NFT Playground é um ambiente educacional 100% client-side que permite simular cenários de performance, resiliência e comportamento do front-end sem aplicar carga real a servidores externos. Ideal para aprendizado e demonstração de conceitos de testes não funcionais.
+            </p>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Boas Práticas em Testes Não Funcionais</h2>
+
+          <div class="content-card">
+            <h3>1. Defina Métricas e Objetivos Claros</h3>
+            <p>Estabeleça objetivos mensuráveis e métricas específicas antes de iniciar os testes. Defina critérios de aceitação baseados em requisitos não funcionais claros e mensuráveis. As métricas devem ser específicas, alcançáveis e relevantes para o contexto do sistema.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Teste em Ambientes Similares à Produção</h3>
+            <p>Quanto mais próximo do ambiente de produção, mais confiáveis serão os resultados dos testes. Configure ambientes de teste que repliquem as condições de produção, incluindo hardware, software, rede e dados similares.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Monitore Recursos Durante os Testes</h3>
+            <p>Use ferramentas de monitoramento para acompanhar CPU, memória, rede, disco e outros recursos durante a execução dos testes. O monitoramento contínuo ajuda a identificar gargalos e problemas de performance em tempo real.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Documente e Analise Resultados Completamente</h3>
+            <p>Registre todos os resultados, identifique padrões e compare com testes anteriores para avaliar melhorias ou regressões. Mantenha histórico de testes para análise de tendências e evolução do sistema.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>5. Integre Testes Não Funcionais no Pipeline CI/CD</h3>
+            <p>Inclua testes de performance e segurança no pipeline de CI/CD para detectar problemas cedo no ciclo de desenvolvimento. Automatize testes não funcionais críticos para garantir qualidade contínua.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>6. Execute Testes Regularmente</h3>
+            <p>Testes não funcionais devem ser executados regularmente, não apenas antes de releases. Integre testes contínuos para detectar regressões de performance e segurança ao longo do desenvolvimento.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>7. Considere o Contexto do Sistema</h3>
+            <p>Adapte os testes não funcionais ao contexto específico do sistema. Um sistema bancário terá requisitos diferentes de um blog pessoal. Priorize os tipos de testes mais relevantes para cada contexto.</p>
+          </div>
+        </div>
+
+        <!-- Navegação entre módulos -->
+        <div class="module-navigation">
+          <a href="bdd-cucumber.html" class="module-nav-link module-nav-link--prev">← Anterior: BDD e Cucumber</a>
+          <a href="processo-qa-01-requisitos-escopo.html" class="module-nav-link module-nav-link--next">Próximo: Processo QA 01 →</a>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </think>
+</div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

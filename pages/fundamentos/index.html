@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Fundamentos de Testes — QA Playground</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="index.html" aria-current="page">Fundamentos</a></li>
+            <li><a href="../tools/mobile-playground.html">Mobile</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Fundamentos de Testes de Software</h1>
+          <div class="section-desc">
+            Roadmap de orientação e guia de referência sobre fundamentos essenciais de testes de software baseado em ISTQB. Este material foi organizado para orientar seu caminho de aprendizado, desde os conceitos mais básicos até conhecimentos avançados. Use este guia como referência e orientação para estruturar seus estudos.
+          </div>
+        </div>
+
+        <!-- Introdução ao Roadmap -->
+        <div class="content-section">
+          <h2>Como Usar Este Roadmap</h2>
+          <p>Este não é um curso, mas sim um <strong>guia de orientação</strong> que aponta o caminho correto para desenvolver seus conhecimentos em testes de software. Cada tópico inclui conceitos essenciais, dicas práticas e indicações sobre o que estudar e como praticar.</p>
+          
+          <div class="content-card" style="background: rgba(122, 168, 116, 0.1); border-left-color: var(--accent);">
+            <h3>Para Iniciantes</h3>
+            <p>Se você está começando na área de QA ou migrando de outra área, comece pelos tópicos de <strong>Conceitos Fundamentais</strong> e <strong>Princípios Básicos</strong>. Esses são os alicerces que todo testador precisa conhecer antes de avançar.</p>
+            <p><strong>Dica:</strong> Não tente absorver tudo de uma vez. Estude cada conceito, pratique aplicando em projetos reais ou playgrounds, e só então avance para o próximo tópico.</p>
+          </div>
+
+          <div class="content-card" style="background: rgba(122, 168, 116, 0.1); border-left-color: var(--accent);">
+            <h3>De Júnior para Pleno</h3>
+            <p>Se você já domina os fundamentos básicos, foque nos tópicos de <strong>Técnicas Avançadas</strong>, <strong>BDD</strong> e <strong>Testes Não Funcionais</strong>. Esses conhecimentos são essenciais para evoluir na carreira.</p>
+            <p><strong>Dica:</strong> Combine estudo teórico com prática. Use os playgrounds disponíveis neste site para aplicar as técnicas que está aprendendo.</p>
+          </div>
+        </div>
+
+        <!-- Roadmap Visual do Processo QA -->
+        <div class="content-section">
+          <h2>Roadmap do Processo de QA</h2>
+          <p>O processo completo de Quality Assurance segue um ciclo estruturado de 8 etapas, desde a análise inicial até a melhoria contínua. Este roadmap visual orienta todo o trabalho de testes:</p>
+          
+          <!-- Imagem do Roadmap -->
+          <div style="text-align: center; margin: var(--spacing-xl) 0; padding: var(--spacing-lg); background: rgba(0,0,0,0.02); border-radius: var(--border-radius-md); overflow-x: auto;">
+            <div style="display: inline-block; min-width: 800px; max-width: 100%;">
+              <object 
+                type="image/svg+xml" 
+                data="../../assets/img/qa-roadmap-process.svg" 
+                style="width: 100%; max-width: 1200px; height: auto; border: 1px solid rgba(0,0,0,0.1); border-radius: var(--border-radius-md); box-shadow: var(--shadow-md); display: block; margin: 0 auto; background: #ffffff;"
+                aria-label="Roadmap do Processo QA - 8 etapas do ciclo completo de Quality Assurance"
+              >
+                <img 
+                  src="../../assets/img/qa-roadmap-process.svg" 
+                  alt="Roadmap do Processo QA - 8 etapas do ciclo completo de Quality Assurance. Etapas: 01 Requisitos e Escopo, 02 Padrões e Métodos, 03 Planejamento, 04 Casos de Teste, 05 Execução QA, 06 UAT, 07 Validação, 08 Melhoria Contínua" 
+                  style="width: 100%; max-width: 1200px; height: auto; border: 1px solid rgba(0,0,0,0.1); border-radius: var(--border-radius-md); box-shadow: var(--shadow-md); display: block; margin: 0 auto;"
+                />
+              </object>
+            </div>
+          </div>
+
+          <div class="content-card" style="margin-top: var(--spacing-lg); background: rgba(122, 168, 116, 0.05); border-left: 4px solid var(--accent);">
+            <h3>Fluxo do Processo</h3>
+            <p>O processo segue um fluxo linear da <strong>Etapa 01</strong> até a <strong>Etapa 04</strong>, então desce para execução (<strong>Etapa 05</strong>), avança para validações (<strong>Etapas 06 e 07</strong>), e finaliza com <strong>Etapa 08</strong>, que retorna ao início criando um ciclo de melhoria contínua.</p>
+            <p><strong>Dica:</strong> Cada etapa possui módulos detalhados abaixo que explicam as atividades, entregáveis e boas práticas específicas. Use este roadmap como guia visual enquanto estuda os módulos teóricos.</p>
+          </div>
+        </div>
+
+        <!-- Barra de Pesquisa -->
+        <div class="search-container" style="max-width: 700px; margin: 0 auto var(--spacing-xl);">
+          <label for="module-search" class="sr-only">Pesquisar módulos</label>
+          <div class="module-search-wrapper">
+            <input 
+              type="text" 
+              id="module-search" 
+              placeholder="Pesquisar módulos por título, descrição ou tópicos..." 
+              aria-label="Campo de pesquisa de módulos"
+              autocomplete="off"
+            />
+            <span class="module-search-icon" aria-hidden="true">🔍</span>
+          </div>
+          <div id="search-results"></div>
+        </div>
+
+        <!-- Módulos de Estudo -->
+        <div class="fundamentos-modules" id="modules-container">
+          
+          <!-- Módulo 1 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number" aria-label="Módulo 1">1</span>
+              <h3>Introdução e Conceitos Básicos</h3>
+            </div>
+            <p class="module-description">Aprenda o que é teste de software, por que testamos, e os conceitos fundamentais que todo QA precisa conhecer desde o início.</p>
+            <ul class="module-topics">
+              <li>O que é teste de software</li>
+              <li>Objetivos do teste</li>
+              <li>Definições essenciais (bug, defeito, falha, erro)</li>
+              <li>Ciclo de vida do teste</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Nível: Iniciante</span>
+              <span class="module-time">Tempo estimado: 1-2 horas</span>
+            </div>
+            <a href="introducao-conceitos-basicos.html" class="btn btn-primary">Iniciar Módulo 1</a>
+          </div>
+
+          <!-- Módulo 2 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number" aria-label="Módulo 2">2</span>
+              <h3>Princípios Fundamentais de Testes (ISTQB)</h3>
+            </div>
+            <p class="module-description">Os 7 princípios fundamentais de testes estabelecidos pelo ISTQB. Esses princípios orientam toda a prática de testes e são essenciais para entender a filosofia por trás do teste de software.</p>
+            <ul class="module-topics">
+              <li>Princípio 1: Teste mostra a presença de defeitos</li>
+              <li>Princípio 2: Teste exaustivo é impossível</li>
+              <li>Princípio 3: Teste antecipado economiza tempo</li>
+              <li>Princípio 4: Defeitos se agrupam</li>
+              <li>Princípio 5: Paradoxo do pesticida</li>
+              <li>Princípio 6: Teste depende do contexto</li>
+              <li>Princípio 7: Ausência de erros é uma ilusão</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Nível: Iniciante</span>
+              <span class="module-time">Tempo estimado: 2-3 horas</span>
+            </div>
+            <a href="principios-fundamentais.html" class="btn btn-primary">Iniciar Módulo 2</a>
+          </div>
+
+          <!-- Módulo 3 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">3</span>
+              <h3>Níveis e Tipos de Teste</h3>
+            </div>
+            <p class="module-description">Entenda os diferentes níveis de teste (componente, integração, sistema, aceitação) e os tipos de teste (funcional, não-funcional, estrutural, baseado em experiência).</p>
+            <ul class="module-topics">
+              <li>Níveis de teste (ISTQB)</li>
+              <li>Teste de componente (unit)</li>
+              <li>Teste de integração</li>
+              <li>Teste de sistema</li>
+              <li>Teste de aceitação</li>
+              <li>Tipos de teste funcional e não-funcional</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Nível: Iniciante</span>
+              <span class="module-time">Tempo estimado: 2-3 horas</span>
+            </div>
+            <a href="niveis-tipos-teste.html" class="btn btn-primary">Iniciar Módulo 3</a>
+          </div>
+
+          <!-- Módulo 4 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number" aria-label="Módulo 4">4</span>
+              <h3>A Pirâmide de Testes</h3>
+            </div>
+            <p class="module-description">Aprenda sobre o modelo da pirâmide de testes, a distribuição ideal de testes, e como aplicar esse conceito na prática do dia a dia.</p>
+            <ul class="module-topics">
+              <li>Conceito da pirâmide de testes</li>
+              <li>Base: Testes de unidade</li>
+              <li>Meio: Testes de integração</li>
+              <li>Topo: Testes end-to-end</li>
+              <li>Anti-padrões e como evitá-los</li>
+              <li>Aplicação prática da pirâmide</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Nível: Iniciante</span>
+              <span class="module-time">Tempo estimado: 1-2 horas</span>
+            </div>
+            <a href="piramide-testes.html" class="btn btn-primary">Iniciar Módulo 4</a>
+          </div>
+
+          <!-- Módulo 5 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">5</span>
+              <h3>Como Estudar e Praticar</h3>
+            </div>
+            <p class="module-description">Técnicas de aprendizado, métodos de estudo eficazes, e onde praticar testes para consolidar seu conhecimento e ganhar experiência prática.</p>
+            <ul class="module-topics">
+              <li>Técnicas de aprendizado ativo</li>
+              <li>Métodos de estudo eficazes</li>
+              <li>Onde e como praticar testes</li>
+              <li>Construção de portfólio</li>
+              <li>Recursos de prática disponíveis</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Nível: Iniciante</span>
+              <span class="module-time">Tempo estimado: 1 hora</span>
+            </div>
+            <a href="como-estudar-praticar.html" class="btn btn-primary">Iniciar Módulo 5</a>
+          </div>
+
+          <!-- Módulo 6 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number" aria-label="Módulo 6">6</span>
+              <h3>Técnicas de Teste</h3>
+            </div>
+            <p class="module-description">Aprenda técnicas práticas de teste como particionamento de equivalência, análise de valor limite, tabela de decisão, e técnicas de caixa branca.</p>
+            <ul class="module-topics">
+              <li>Técnicas de caixa preta</li>
+              <li>Particionamento de equivalência</li>
+              <li>Análise de valor limite</li>
+              <li>Tabela de decisão</li>
+              <li>Técnicas de caixa branca</li>
+              <li>Cobertura de código</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Nível: Iniciante a Intermediário</span>
+              <span class="module-time">Tempo estimado: 3-4 horas</span>
+            </div>
+            <a href="tecnicas-teste.html" class="btn btn-primary">Iniciar Módulo 6</a>
+          </div>
+
+          <!-- Módulo 7 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number" aria-label="Módulo 7">7</span>
+              <h3>O Que Testar e Como Testar</h3>
+            </div>
+            <p class="module-description">Aprenda a planejar e executar testes de forma sistemática, criando casos de teste eficazes e cobrindo diferentes aspectos do software.</p>
+            <ul class="module-topics">
+              <li>Planejamento de testes</li>
+              <li>Criação de casos de teste</li>
+              <li>O que testar: funcionalidade, UI, performance, segurança</li>
+              <li>Execução sistemática de testes</li>
+              <li>Documentação de evidências</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Nível: Intermediário</span>
+              <span class="module-time">Tempo estimado: 2-3 horas</span>
+            </div>
+            <a href="o-que-como-testar.html" class="btn btn-primary">Iniciar Módulo 7</a>
+          </div>
+
+          <!-- Módulo 8 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">8</span>
+              <h3>Encontrar e Reportar Bugs</h3>
+            </div>
+            <p class="module-description">Desenvolva habilidades para encontrar bugs de forma eficiente e reportá-los de maneira clara e profissional, seguindo boas práticas da indústria.</p>
+            <ul class="module-topics">
+              <li>Técnicas para encontrar bugs</li>
+              <li>Pensar como usuário</li>
+              <li>Teste exploratório</li>
+              <li>Estrutura de um bom bug report</li>
+              <li>Boas práticas de reporte</li>
+              <li>Priorização e severidade</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Nível: Intermediário</span>
+              <span class="module-time">Tempo estimado: 2 horas</span>
+            </div>
+            <a href="encontrar-reportar-bugs.html" class="btn btn-primary">Iniciar Módulo 8</a>
+          </div>
+
+          <!-- Módulo 9 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number" aria-label="Módulo 9">9</span>
+              <h3>BDD e Cucumber</h3>
+            </div>
+            <p class="module-description">Entenda Behavior-Driven Development (BDD), aprenda a escrever cenários em Gherkin, e compreenda como o Cucumber funciona na prática de testes.</p>
+            <ul class="module-topics">
+              <li>O que é BDD</li>
+              <li>Linguagem Gherkin</li>
+              <li>Estrutura de cenários BDD</li>
+              <li>Introdução ao Cucumber</li>
+              <li>Boas práticas em BDD</li>
+              <li>Ferramentas e recursos</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Nível: Intermediário a Avançado</span>
+              <span class="module-time">Tempo estimado: 4-5 horas</span>
+            </div>
+            <a href="bdd-cucumber.html" class="btn btn-primary">Iniciar Módulo 9</a>
+          </div>
+
+          <!-- Módulo 10 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">10</span>
+              <h3>Testes Não Funcionais</h3>
+            </div>
+            <p class="module-description">Aprenda sobre testes de performance, carga, stress, segurança, usabilidade e outros aspectos não funcionais essenciais para qualidade do software.</p>
+            <ul class="module-topics">
+              <li>O que são testes não funcionais</li>
+              <li>Testes de performance</li>
+              <li>Testes de carga e stress</li>
+              <li>Testes de segurança</li>
+              <li>Testes de usabilidade</li>
+              <li>Ferramentas e boas práticas</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Nível: Avançado</span>
+              <span class="module-time">Tempo estimado: 4-5 horas</span>
+            </div>
+            <a href="testes-nao-funcionais.html" class="btn btn-primary">Iniciar Módulo 10</a>
+          </div>
+
+        </div>
+
+        <!-- Processo de QA -->
+        <div class="content-section" style="margin-top: var(--spacing-xl); padding-top: var(--spacing-xl); border-top: 2px solid rgba(0,0,0,0.1);">
+          <h2>Processo de QA: Ciclo Completo</h2>
+          <p>O processo de QA segue um ciclo estruturado que orienta todo o trabalho de testes. Segue as 8 etapas do processo completo, desde requisitos até melhoria contínua:</p>
+        </div>
+
+        <div class="fundamentos-modules">
+          
+          <!-- Processo 01 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">01</span>
+              <h3>Requisitos e Escopo do Projeto</h3>
+            </div>
+            <p class="module-description">Primeira etapa: entender requisitos, definir escopo de testes, e estabelecer base para todo o processo de qualidade.</p>
+            <ul class="module-topics">
+              <li>Análise de requisitos</li>
+              <li>Definição do escopo de testes</li>
+              <li>Identificação de riscos</li>
+              <li>Documentação e comunicação</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Processo: Início</span>
+              <span class="module-time">Prioridade: Crítica</span>
+            </div>
+            <a href="processo-qa-01-requisitos-escopo.html" class="btn btn-primary">Ver Etapa 01</a>
+          </div>
+
+          <!-- Processo 02 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">02</span>
+              <h3>Estabelecer Padrões e Métodos QA</h3>
+            </div>
+            <p class="module-description">Segunda etapa: definir padrões, processos e métodos que serão seguidos durante todo o ciclo de testes.</p>
+            <ul class="module-topics">
+              <li>Definir metodologia de testes</li>
+              <li>Estabelecer padrões de documentação</li>
+              <li>Definir processos de trabalho</li>
+              <li>Configurar ferramentas</li>
+              <li>Estabelecer critérios de qualidade</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Processo: Planejamento</span>
+              <span class="module-time">Prioridade: Alta</span>
+            </div>
+            <a href="processo-qa-02-padroes-metodos.html" class="btn btn-primary">Ver Etapa 02</a>
+          </div>
+
+          <!-- Processo 03 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">03</span>
+              <h3>Planejamento de Testes</h3>
+            </div>
+            <p class="module-description">Terceira etapa: planejar estratégia, cronograma, recursos e abordagem de testes que será seguida.</p>
+            <ul class="module-topics">
+              <li>Desenvolver estratégia de testes</li>
+              <li>Planejar recursos</li>
+              <li>Criar cronograma</li>
+              <li>Identificar riscos e mitigações</li>
+              <li>Definir métricas e relatórios</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Processo: Planejamento</span>
+              <span class="module-time">Prioridade: Alta</span>
+            </div>
+            <a href="processo-qa-03-planejamento.html" class="btn btn-primary">Ver Etapa 03</a>
+          </div>
+
+          <!-- Processo 04 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">04</span>
+              <h3>Desenvolvimento de Casos de Teste</h3>
+            </div>
+            <p class="module-description">Quarta etapa: criar casos de teste detalhados que guiarão a execução sistemática de testes.</p>
+            <ul class="module-topics">
+              <li>Análise de requisitos para testes</li>
+              <li>Criar casos de teste</li>
+              <li>Priorizar casos de teste</li>
+              <li>Organizar e estruturar</li>
+              <li>Revisar e validar</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Processo: Preparação</span>
+              <span class="module-time">Prioridade: Alta</span>
+            </div>
+            <a href="processo-qa-04-desenvolvimento-casos.html" class="btn btn-primary">Ver Etapa 04</a>
+          </div>
+
+          <!-- Processo 05 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">05</span>
+              <h3>Execução de Testes de QA</h3>
+            </div>
+            <p class="module-description">Quinta etapa: executar testes sistemáticos, registrar resultados, identificar defeitos e coletar evidências.</p>
+            <ul class="module-topics">
+              <li>Preparação para execução</li>
+              <li>Executar casos de teste</li>
+              <li>Identificar e reportar defeitos</li>
+              <li>Testes exploratórios</li>
+              <li>Documentar e registrar</li>
+              <li>Monitorar progresso</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Processo: Execução</span>
+              <span class="module-time">Prioridade: Crítica</span>
+            </div>
+            <a href="processo-qa-05-execucao-qa.html" class="btn btn-primary">Ver Etapa 05</a>
+          </div>
+
+          <!-- Processo 06 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">06</span>
+              <h3>Teste de Aceitação do Usuário</h3>
+            </div>
+            <p class="module-description">Sexta etapa: validar que o software atende às necessidades e expectativas dos usuários finais.</p>
+            <ul class="module-topics">
+              <li>Preparar ambiente de UAT</li>
+              <li>Definir critérios de aceitação</li>
+              <li>Preparar cenários de UAT</li>
+              <li>Facilitar execução pelos usuários</li>
+              <li>Coletar e analisar feedback</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Processo: Validação</span>
+              <span class="module-time">Prioridade: Alta</span>
+            </div>
+            <a href="processo-qa-06-teste-aceitacao.html" class="btn btn-primary">Ver Etapa 06</a>
+          </div>
+
+          <!-- Processo 07 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">07</span>
+              <h3>Validação do Sistema</h3>
+            </div>
+            <p class="module-description">Sétima etapa: validar que o sistema completo atende requisitos e critérios de qualidade, pronto para produção.</p>
+            <ul class="module-topics">
+              <li>Consolidar resultados de todos os testes</li>
+              <li>Validar critérios de saída</li>
+              <li>Validação final de requisitos</li>
+              <li>Testes de regressão final</li>
+              <li>Revisão de qualidade</li>
+              <li>Preparar recomendação de release</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Processo: Validação Final</span>
+              <span class="module-time">Prioridade: Crítica</span>
+            </div>
+            <a href="processo-qa-07-validacao-sistema.html" class="btn btn-primary">Ver Etapa 07</a>
+          </div>
+
+          <!-- Processo 08 -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">08</span>
+              <h3>Lições Aprendidas e Melhoria Contínua</h3>
+            </div>
+            <p class="module-description">Oitava etapa: refletir sobre o processo, documentar lições aprendidas e identificar melhorias para próximos ciclos.</p>
+            <ul class="module-topics">
+              <li>Retrospectiva do processo</li>
+              <li>Analisar métricas e dados</li>
+              <li>Documentar lições aprendidas</li>
+              <li>Identificar oportunidades de melhoria</li>
+              <li>Criar plano de ação</li>
+              <li>Compartilhar conhecimento</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Processo: Melhoria Contínua</span>
+              <span class="module-time">Prioridade: Alta</span>
+            </div>
+            <a href="processo-qa-08-licoes-aprendizado.html" class="btn btn-primary">Ver Etapa 08</a>
+          </div>
+
+        </div>
+
+        <!-- Próximos Passos -->
+        <div class="content-section">
+          <h2>Próximos Passos</h2>
+          <p>Após dominar os fundamentos, você pode seguir para roadmaps específicos por nível de senioridade que orientam o desenvolvimento prático de habilidades:</p>
+          
+          <div class="content-card" style="background: rgba(122, 168, 116, 0.1); border-left-color: var(--accent);">
+            <h3>Roadmaps por Nível</h3>
+            <ul class="link-list">
+              <li><a href="../junior/index.html">Roadmap QA Júnior — Orientações para iniciantes</a></li>
+              <li><a href="../pleno/index.html">Roadmap QA Pleno — Desenvolvimento técnico e automação</a></li>
+              <li><a href="../senior/index.html">Roadmap QA Sênior — Especialização e liderança técnica</a></li>
+            </ul>
+            <p style="margin-top: var(--spacing-md);"><strong>Dica:</strong> Use os roadmaps específicos para orientar seu aprendizado prático e desenvolvimento de carreira após dominar os fundamentos teóricos.</p>
+          </div>
+        </div>
+
+        <!-- Links Úteis -->
+        <div class="content-section">
+          <h2>Recursos Adicionais</h2>
+          <div class="content-card">
+            <h3>Links e Documentos Úteis</h3>
+            <p>Acesse recursos adicionais para aprofundar seu conhecimento:</p>
+            <ul class="link-list">
+              <li><a href="recursos-links.html">Links e Documentos Úteis</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

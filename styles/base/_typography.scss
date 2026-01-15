@@ -1,0 +1,97 @@
+// ========================================
+// Tipografia - Estilos de Texto
+// ========================================
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: $line-height-base;
+  color: var(--text);
+  background: var(--bg);
+  margin: 0;
+}
+
+// === Cabeçalhos ===
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  margin-bottom: var(--spacing-md);
+  color: var(--text);
+}
+
+h1 {
+  font-size: var(--font-size-3xl);
+  @include respond-to(md) {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+h2 {
+  font-size: var(--font-size-2xl);
+  @include respond-to(md) {
+    font-size: var(--font-size-xl);
+  }
+}
+
+h3 {
+  font-size: var(--font-size-xl);
+}
+
+h4 {
+  font-size: var(--font-size-lg);
+}
+
+// === Parágrafos ===
+p {
+  margin-bottom: var(--spacing-md);
+  color: var(--text);
+  line-height: $line-height-base;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// === Links ===
+a {
+  color: var(--accent);
+  @include transition(color);
+  
+  @include hover-state {
+    opacity: 0.8;
+  }
+  
+  @include focus-visible {
+    outline-color: var(--accent);
+  }
+}
+
+// === Código ===
+code {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--accent);
+  border-radius: var(--border-radius-sm);
+  padding: 2px 6px;
+  font-size: 0.9em;
+  font-family: $font-family-mono;
+}
+
+pre {
+  font-family: $font-family-mono;
+  overflow-x: auto;
+  
+  code {
+    background: transparent;
+    padding: 0;
+  }
+}
+
+// === Texto Muted ===
+.muted {
+  color: var(--muted);
+}
+
+// === Texto Truncado ===
+.truncate {
+  @include text-truncate;
+}

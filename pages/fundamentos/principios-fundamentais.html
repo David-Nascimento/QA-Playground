@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Módulo 2: Princípios Fundamentais de Testes (ISTQB) — Fundamentos de Testes</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="index.html">Fundamentos</a></li>
+            <li><a href="../tools/mobile-playground.html">Mobile</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Módulo 2: Princípios Fundamentais de Testes (ISTQB)</h1>
+          <div class="section-desc">
+            Os 7 princípios fundamentais de testes estabelecidos pelo ISTQB. Esses princípios orientam toda a prática de testes e são essenciais para entender a filosofia por trás do teste de software.
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Os 7 Princípios Fundamentais</h2>
+          <p>O ISTQB estabeleceu sete princípios fundamentais que servem como base para a prática de testes de software. Compreender esses princípios é essencial para qualquer profissional de QA, pois eles orientam como pensamos sobre testes e como abordamos o trabalho de testar software.</p>
+        </div>
+
+        <div class="content-section">
+          <h2>Princípio 1: Teste Mostra a Presença de Defeitos</h2>
+          
+          <div class="content-card">
+            <h3>O que Significa</h3>
+            <p>Os testes podem mostrar que existem defeitos, mas não podem provar que não existem defeitos. Testar reduz a probabilidade de defeitos não descobertos, mas mesmo que nenhum defeito seja encontrado, não é uma prova de correção.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Exemplo Prático</h3>
+            <p>Se você testar um formulário de login 100 vezes e não encontrar bugs, isso não garante que não há bugs. Pode haver um bug que só ocorre em uma combinação específica de condições, como quando:</p>
+            <ul>
+              <li>O usuário está usando um navegador específico</li>
+              <li>O email contém caracteres especiais</li>
+              <li>Há uma conexão de rede instável</li>
+              <li>O servidor está sob carga pesada</li>
+            </ul>
+            <p>O teste encontrou zero defeitos nessas 100 execuções, mas isso não prova que o sistema está livre de bugs.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Implicações Práticas</h3>
+            <ul>
+              <li>Não podemos garantir que um software está 100% livre de bugs através de testes</li>
+              <li>O objetivo é reduzir o risco, não eliminá-lo completamente</li>
+              <li>Devemos comunicar aos stakeholders que testes encontram problemas, não que provam que não há problemas</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Princípio 2: Teste Exaustivo é Impossível</h2>
+          
+          <div class="content-card">
+            <h3>O que Significa</h3>
+            <p>Exceto para casos triviais, testar todas as combinações de entradas e pré-condições não é viável. Em vez de testar exaustivamente, use análise de risco e priorização para focar nos testes mais importantes.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Exemplo Prático</h3>
+            <p>Um campo de senha com 8 caracteres pode ter 95^8 combinações possíveis (mais de 6 trilhões de combinações). Testar todas seria impraticável, mesmo executando milhares de testes por segundo.</p>
+            <p>Em vez disso, focamos em:</p>
+            <ul>
+              <li>Casos de borda (senha muito curta, muito longa, caracteres especiais)</li>
+              <li>Validações (requisitos de senha forte)</li>
+              <li>Cenários críticos (senha correta/incorreta, senha vazia)</li>
+              <li>Casos baseados em análise de risco</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Implicações Práticas</h3>
+            <ul>
+              <li>Não tente testar tudo - é impossível</li>
+              <li>Use análise de risco para priorizar o que testar</li>
+              <li>Foque nos cenários mais importantes e críticos</li>
+              <li>Comunique aos stakeholders sobre as limitações dos testes</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Princípio 3: Teste Antecipado Economiza Tempo e Dinheiro</h2>
+          
+          <div class="content-card">
+            <h3>O que Significa</h3>
+            <p>Para encontrar defeitos cedo, as atividades de teste devem começar o mais cedo possível no ciclo de vida do desenvolvimento de software ou do sistema, e devem ser focadas em objetivos definidos.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Exemplo Prático</h3>
+            <p>O custo de encontrar e corrigir defeitos aumenta exponencialmente conforme o software avança no ciclo de vida:</p>
+            <ul>
+              <li><strong>Fase de Requisitos:</strong> Custo baixo - apenas reescrever documento</li>
+              <li><strong>Fase de Design:</strong> Custo moderado - ajustar design</li>
+              <li><strong>Fase de Desenvolvimento:</strong> Custo médio - corrigir código</li>
+              <li><strong>Fase de Teste:</strong> Custo alto - corrigir código, retestar, possível impacto em outras funcionalidades</li>
+              <li><strong>Produção:</strong> Custo muito alto - hotfix, possível rollback, impacto em usuários, dano à reputação</li>
+            </ul>
+            <p>Encontrar um bug na fase de requisitos custa muito menos do que encontrá-lo em produção. Por isso, revise requisitos, faça testes estáticos de código, e teste desde o início.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Implicações Práticas</h3>
+            <ul>
+              <li>Revise requisitos e designs antes do desenvolvimento</li>
+              <li>Realize testes estáticos (revisão de código, análise estática)</li>
+              <li>Inicie testes assim que houver código testável</li>
+              <li>Teste continuamente durante o desenvolvimento, não apenas no final</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Princípio 4: Defeitos se Agrupam</h2>
+          
+          <div class="content-card">
+            <h3>O que Significa</h3>
+            <p>Um pequeno número de módulos contém a maioria dos defeitos descobertos durante o pré-lançamento, ou mostra a maioria das falhas operacionais. Este fenômeno também é conhecido como "Efeito Paretto" ou "Lei 80/20" aplicada a defeitos.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Exemplo Prático</h3>
+            <p>Se você encontrar vários bugs em um módulo de pagamento, é provável que haja mais bugs lá. Isso pode ocorrer porque:</p>
+            <ul>
+              <li>O módulo é mais complexo que outros</li>
+              <li>Foi desenvolvido por alguém menos experiente</li>
+              <li>Foi desenvolvido com pressa</li>
+              <li>Tem dependências complexas</li>
+              <li>Foi modificado recentemente por vários desenvolvedores</li>
+            </ul>
+            <p>Quando encontrar vários bugs em uma área, isso é um sinal para focar testes adicionais nessa área.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Implicações Práticas</h3>
+            <ul>
+              <li>Acompanhe onde os bugs estão sendo encontrados</li>
+              <li>Foque testes adicionais em módulos com muitos defeitos</li>
+              <li>Use métricas de defeitos para priorizar onde testar</li>
+              <li>Comunique à equipe sobre módulos problemáticos</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Princípio 5: Cuidado com o Paradoxo do Pesticida</h2>
+          
+          <div class="content-card">
+            <h3>O que Significa</h3>
+            <p>Se os mesmos testes forem repetidos várias vezes, eventualmente esses testes não encontrarão mais novos defeitos. Para detectar novos defeitos, os casos de teste precisam ser regularmente revisados e atualizados.</p>
+            <p>O nome vem da analogia: se você usar o mesmo pesticida repetidamente, as pragas desenvolvem resistência. Da mesma forma, se você sempre executa os mesmos testes, eles param de encontrar novos bugs.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Exemplo Prático</h3>
+            <p>Se você sempre testa os mesmos 10 casos de teste, eventualmente pare de encontrar bugs. Isso acontece porque:</p>
+            <ul>
+              <li>Os bugs óbvios já foram encontrados e corrigidos</li>
+              <li>Novos bugs podem estar em áreas não cobertas por esses testes</li>
+              <li>Bugs podem estar em cenários que não foram testados</li>
+            </ul>
+            <p>Solução: Adicione testes exploratórios, novos cenários e casos de borda. Revise e atualize seus casos de teste regularmente.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Implicações Práticas</h3>
+            <ul>
+              <li>Revise e atualize casos de teste regularmente</li>
+              <li>Adicione novos cenários baseados em bugs encontrados</li>
+              <li>Pratique testes exploratórios além de testes scriptados</li>
+              <li>Varie suas abordagens de teste</li>
+              <li>Use diferentes técnicas de teste</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Princípio 6: Teste Depende do Contexto</h2>
+          
+          <div class="content-card">
+            <h3>O que Significa</h3>
+            <p>O teste é feito de forma diferente em contextos diferentes. Por exemplo, software de segurança crítica é testado de forma diferente de um site de e-commerce.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Exemplo Prático</h3>
+            <p><strong>Aplicativo Bancário:</strong> Precisa de testes rigorosos de segurança, validação de transações, conformidade regulatória, e testes de performance para lidar com picos de uso.</p>
+            <p><strong>Blog Pessoal:</strong> Pode focar mais em usabilidade, performance básica, e compatibilidade entre navegadores.</p>
+            <p><strong>Software Médico:</strong> Requer testes extremamente rigorosos de precisão, conformidade com padrões médicos, e testes de segurança crítica.</p>
+            <p><strong>App de Entretenimento:</strong> Foca em experiência do usuário, performance visual, e compatibilidade com diferentes dispositivos.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Implicações Práticas</h3>
+            <ul>
+              <li>Adapte sua estratégia de teste ao contexto do projeto</li>
+              <li>Priorize diferentes tipos de teste baseado no contexto</li>
+              <li>Considere requisitos regulatórios e de conformidade</li>
+              <li>Entenda o domínio do negócio antes de planejar testes</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Princípio 7: Ausência de Erros é uma Ilusão</h2>
+          
+          <div class="content-card">
+            <h3>O que Significa</h3>
+            <p>Encontrar e corrigir defeitos não ajuda se o sistema construído não for utilizável e não atender às necessidades e expectativas dos usuários.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Exemplo Prático</h3>
+            <p>Você pode ter um sistema sem bugs técnicos, mas se ele não resolver o problema do usuário ou for difícil de usar, ainda é um fracasso. Por exemplo:</p>
+            <ul>
+              <li>Um software que funciona perfeitamente, mas não resolve o problema do usuário</li>
+              <li>Uma interface que não tem bugs, mas é tão confusa que ninguém consegue usar</li>
+              <li>Um sistema rápido e estável, mas que não tem as funcionalidades que os usuários realmente precisam</li>
+            </ul>
+            <p>Um software sem bugs técnicos ainda pode ser inútil se não atender às necessidades dos usuários.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Implicações Práticas</h3>
+            <ul>
+              <li>Foque não apenas em encontrar bugs, mas em garantir que o software atende às necessidades</li>
+              <li>Inclua testes de usabilidade e experiência do usuário</li>
+              <li>Valide que o software resolve o problema do usuário</li>
+              <li>Considere não apenas o que está no código, mas o que deveria estar</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Resumo dos Princípios</h2>
+          <div class="content-card">
+            <p>Esses sete princípios formam a base da prática de testes de software. Eles nos ajudam a:</p>
+            <ul>
+              <li>Entender as limitações dos testes</li>
+              <li>Priorizar nosso trabalho de forma eficiente</li>
+              <li>Comunicar adequadamente com stakeholders</li>
+              <li>Adaptar nossa abordagem ao contexto</li>
+              <li>Focar no que realmente importa: software que funciona e atende às necessidades dos usuários</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Navegação entre módulos -->
+        <div class="module-navigation">
+          <a href="introducao-conceitos-basicos.html" class="module-nav-link module-nav-link--prev">← Anterior: Introdução</a>
+          <a href="niveis-tipos-teste.html" class="module-nav-link module-nav-link--next">Próximo: Níveis e Tipos de Teste →</a>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

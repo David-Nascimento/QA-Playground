@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Processo QA 02: Estabelecer Padrões e Métodos QA — Fundamentos de Testes</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="index.html">Fundamentos</a></li>
+            <li><a href="../tools/mobile-playground.html">Mobile</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Processo QA: Etapa 02 — Estabelecer Padrões e Métodos QA</h1>
+          <div class="section-desc">
+            Segunda etapa do processo: definir padrões, processos e métodos que serão seguidos durante todo o ciclo de testes. Estabelecer essas diretrizes garante consistência e qualidade no trabalho de QA.
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Objetivo da Etapa</h2>
+          <p>Estabelecer padrões, processos e métodos de QA que serão utilizados no projeto. Isso garante consistência, facilita comunicação, e estabelece um framework claro para o trabalho de testes.</p>
+        </div>
+
+        <div class="content-section">
+          <h2>Atividades Principais</h2>
+
+          <div class="content-card">
+            <h3>1. Definir Metodologia de Testes</h3>
+            <p>Escolher e adaptar metodologias de teste apropriadas para o contexto do projeto.</p>
+            <p><strong>O que definir:</strong></p>
+            <ul>
+              <li>Metodologia ágil (Scrum, Kanban) ou tradicional (V-Model, Waterfall)</li>
+              <li>Abordagem de testes (TDD, BDD, Testes Tradicionais)</li>
+              <li>Níveis de teste que serão aplicados (unitário, integração, sistema, aceitação)</li>
+              <li>Tipos de teste prioritários (funcional, não-funcional, regressão)</li>
+            </ul>
+            <p><strong>Dica:</strong> A metodologia deve se alinhar com a forma como a equipe de desenvolvimento trabalha. Forçar uma metodologia incompatível causa problemas.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Estabelecer Padrões de Documentação</h3>
+            <p>Definir como casos de teste, bug reports e outros artefatos serão documentados garante consistência e facilita manutenção.</p>
+            <p><strong>O que definir:</strong></p>
+            <ul>
+              <li>Template de casos de teste</li>
+              <li>Template de bug report</li>
+              <li>Estrutura de documentação de testes</li>
+              <li>Padrões de nomenclatura</li>
+              <li>Formato e estrutura de relatórios de teste</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Definir Processos de Trabalho</h3>
+            <p>Estabelecer processos claros para fluxo de trabalho, comunicação e decisões.</p>
+            <p><strong>O que definir:</strong></p>
+            <ul>
+              <li>Fluxo de criação e revisão de casos de teste</li>
+              <li>Processo de reporte e rastreamento de bugs</li>
+              <li>Critérios de entrada e saída de testes</li>
+              <li>Processo de comunicação de status e resultados</li>
+              <li>Definição de pronto (DoD - Definition of Done)</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Configurar Ferramentas</h3>
+            <p>Escolher e configurar ferramentas que serão usadas no projeto.</p>
+            <p><strong>O que configurar:</strong></p>
+            <ul>
+              <li>Ferramenta de gerenciamento de testes (TestRail, Zephyr, Azure Test Plans)</li>
+              <li>Ferramenta de gerenciamento de bugs (Jira, Bugzilla, Azure DevOps)</li>
+              <li>Ferramentas de automação (se aplicável)</li>
+              <li>Ambientes de teste</li>
+              <li>Ferramentas de comunicação e colaboração</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>5. Estabelecer Critérios de Qualidade</h3>
+            <p>Definir critérios que determinam quando algo está "pronto" ou "aprovado".</p>
+            <p><strong>O que definir:</strong></p>
+            <ul>
+              <li>Critérios de aceitação para funcionalidades</li>
+              <li>Critérios de saída de testes</li>
+              <li>Níveis de cobertura de teste esperados</li>
+              <li>Métricas de qualidade</li>
+              <li>Critérios para go/no-go de releases</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Entregáveis desta Etapa</h2>
+
+          <div class="content-card">
+            <h3>Documentos e Configurações</h3>
+            <ul>
+              <li><strong>Plano de Testes:</strong> Documento descrevendo metodologia, estratégia e abordagem</li>
+              <li><strong>Templates:</strong> Templates padronizados para casos de teste, bug reports, relatórios</li>
+              <li><strong>Processos Documentados:</strong> Fluxos de trabalho e processos definidos</li>
+              <li><strong>Configuração de Ferramentas:</strong> Ferramentas configuradas e treinamento realizado</li>
+              <li><strong>Critérios de Qualidade:</strong> Critérios definidos e comunicados</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Checklist de Verificação</h2>
+
+          <div class="content-card">
+            <p>Antes de avançar para a próxima etapa, verifique se:</p>
+            <ul>
+              <li>Metodologia de testes foi definida e acordada com equipe</li>
+              <li>Templates e padrões de documentação foram estabelecidos</li>
+              <li>Processos de trabalho foram definidos e documentados</li>
+              <li>Ferramentas foram escolhidas e configuradas</li>
+              <li>Equipe foi treinada nos padrões e processos</li>
+              <li>Critérios de qualidade foram definidos e comunicados</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Boas Práticas</h2>
+
+          <div class="content-card">
+            <h3>1. Comece Simples</h3>
+            <p>Comece com processos simples e evolua conforme necessário. Processos muito complexos desde o início podem ser difíceis de seguir e manter.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Adapte ao Contexto</h3>
+            <p>Adapte padrões e processos ao contexto específico do projeto. O que funciona para um projeto pode não funcionar para outro.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Envolva a Equipe</h3>
+            <p>Envolva toda a equipe na definição de processos. Quando pessoas participam da criação, elas são mais propensas a seguir.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Revise e Melhore</h3>
+            <p>Processos devem evoluir. Revise regularmente o que está funcionando e o que precisa ser ajustado.</p>
+          </div>
+        </div>
+
+        <!-- Navegação entre módulos -->
+        <div class="module-navigation">
+          <a href="processo-qa-01-requisitos-escopo.html" class="module-nav-link module-nav-link--prev">← Anterior: Requisitos e Escopo</a>
+          <a href="processo-qa-03-planejamento.html" class="module-nav-link module-nav-link--next">Próximo: Planejamento de Testes →</a>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

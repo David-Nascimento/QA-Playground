@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Módulo 4: A Pirâmide de Testes — Fundamentos de Testes</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="index.html">Fundamentos</a></li>
+            <li><a href="../tools/mobile-playground.html">Mobile</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Módulo 4: A Pirâmide de Testes</h1>
+          <div class="section-desc">
+            Aprenda sobre o modelo da pirâmide de testes, a distribuição ideal de testes, e como aplicar esse conceito na prática do dia a dia.
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Conceito da Pirâmide</h2>
+          
+          <div class="content-card">
+            <h3>O que é a Pirâmide de Testes</h3>
+            <p>A <span class="highlight-text">Pirâmide de Testes</span> é um modelo conceitual que representa a distribuição ideal de testes em diferentes níveis. Foi popularizada por Mike Cohn e é amplamente adotada na indústria de software.</p>
+            <p>A pirâmide sugere que devemos ter:</p>
+            <ul>
+              <li><strong>Muitos testes de unidade</strong> (base da pirâmide) - rápidos, baratos, fáceis de manter</li>
+              <li><strong>Alguns testes de integração</strong> (meio da pirâmide) - testam interações entre componentes</li>
+              <li><strong>Poucos testes end-to-end</strong> (topo da pirâmide) - lentos, caros, mas validam o sistema completo</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Representação Visual da Pirâmide -->
+        <div class="content-section">
+          <div style="margin: var(--spacing-xl) 0; display: flex; justify-content: center; align-items: flex-end; min-height: 300px;">
+            <div style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 500px;">
+              <!-- Topo: Testes E2E -->
+              <div style="background: var(--accent); color: white; padding: var(--spacing-md) var(--spacing-lg); border-radius: var(--border-radius-md) var(--border-radius-md) 0 0; width: 200px; text-align: center; margin-bottom: 2px;">
+                <strong>Testes E2E</strong>
+                <div style="font-size: var(--font-size-sm); margin-top: var(--spacing-xs);">Poucos</div>
+              </div>
+              
+              <!-- Meio: Testes de Integração -->
+              <div style="background: var(--accent-2); color: white; padding: var(--spacing-md) var(--spacing-lg); width: 300px; text-align: center; margin-bottom: 2px;">
+                <strong>Testes de Integração</strong>
+                <div style="font-size: var(--font-size-sm); margin-top: var(--spacing-xs);">Alguns</div>
+              </div>
+              
+              <!-- Base: Testes de Unidade -->
+              <div style="background: var(--success); color: white; padding: var(--spacing-md) var(--spacing-lg); border-radius: 0 0 var(--border-radius-md) var(--border-radius-md); width: 400px; text-align: center;">
+                <strong>Testes de Unidade</strong>
+                <div style="font-size: var(--font-size-sm); margin-top: var(--spacing-xs);">Muitos</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Por que a Pirâmide?</h2>
+          
+          <div class="content-card">
+            <h3>Velocidade</h3>
+            <p>Testes de unidade são muito mais rápidos que testes E2E. Você pode executar milhares em segundos, enquanto testes E2E podem levar minutos ou horas para executar.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Custo</h3>
+            <p>Testes de unidade são mais baratos de criar e manter. Eles não dependem de infraestrutura complexa, banco de dados, ou interfaces de usuário.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Feedback Rápido</h3>
+            <p>Quando um teste de unidade falha, você sabe exatamente onde está o problema. Testes E2E podem falhar por várias razões diferentes, tornando a depuração mais difícil.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Manutenibilidade</h3>
+            <p>Testes de unidade são mais estáveis e menos propensos a quebrar quando a UI muda. Testes E2E quebram frequentemente com mudanças pequenas na interface.</p>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Características de Cada Nível</h2>
+          
+          <div class="content-card">
+            <h3 style="color: var(--success);">Base: Testes de Unidade</h3>
+            <ul>
+              <li><strong>Quantidade:</strong> Muitos (70-80% dos testes)</li>
+              <li><strong>Velocidade:</strong> Muito rápidos (milissegundos)</li>
+              <li><strong>Custo:</strong> Baixo</li>
+              <li><strong>Escopo:</strong> Componente isolado</li>
+              <li><strong>Responsável:</strong> Desenvolvedores</li>
+              <li><strong>Exemplo:</strong> Testar uma função que calcula o total de um carrinho de compras</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3 style="color: var(--accent-2);">Meio: Testes de Integração</h3>
+            <ul>
+              <li><strong>Quantidade:</strong> Alguns (15-20% dos testes)</li>
+              <li><strong>Velocidade:</strong> Moderados (segundos)</li>
+              <li><strong>Custo:</strong> Médio</li>
+              <li><strong>Escopo:</strong> Múltiplos componentes trabalhando juntos</li>
+              <li><strong>Responsável:</strong> Desenvolvedores e QAs</li>
+              <li><strong>Exemplo:</strong> Testar se o módulo de autenticação se comunica corretamente com o banco de dados</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3 style="color: var(--accent);">Topo: Testes End-to-End</h3>
+            <ul>
+              <li><strong>Quantidade:</strong> Poucos (5-10% dos testes)</li>
+              <li><strong>Velocidade:</strong> Lentos (minutos)</li>
+              <li><strong>Custo:</strong> Alto</li>
+              <li><strong>Escopo:</strong> Sistema completo</li>
+              <li><strong>Responsável:</strong> QAs</li>
+              <li><strong>Exemplo:</strong> Testar o fluxo completo de compra em um e-commerce, do login até o recebimento do produto</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Anti-padrões: O que Evitar</h2>
+          
+          <div class="content-card">
+            <h3 style="color: var(--danger);">Pirâmide Invertida (Ice Cream Cone)</h3>
+            <p>Muitos testes E2E e poucos testes de unidade. Isso resulta em:</p>
+            <ul>
+              <li>Suíte de testes lenta - leva muito tempo para executar</li>
+              <li>Alto custo de manutenção - testes E2E quebram facilmente</li>
+              <li>Feedback tardio - desenvolvedores esperam muito tempo pelos resultados</li>
+              <li>Testes frágeis que quebram facilmente com mudanças pequenas</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3 style="color: var(--warning);">Cilindro (Cylinder)</h3>
+            <p>Mesma quantidade de testes em todos os níveis. Isso não é eficiente porque:</p>
+            <ul>
+              <li>Testes E2E são mais caros e lentos, então você não está otimizando recursos</li>
+              <li>Você não está aproveitando a velocidade dos testes de unidade</li>
+              <li>A suíte de testes será mais lenta do que necessário</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Como Aplicar a Pirâmide na Prática</h2>
+          
+          <div class="content-card">
+            <h3>1. Comece pela Base</h3>
+            <p>Escreva testes de unidade para cada nova funcionalidade. Garanta que a lógica de negócio básica está coberta por testes de unidade antes de criar testes de nível superior.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Adicione Testes de Integração</h3>
+            <p>Teste como os componentes trabalham juntos. Foque em interfaces críticas e integrações importantes entre módulos.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Complete com E2E</h3>
+            <p>Adicione alguns testes E2E para validar fluxos críticos do ponto de vista do usuário. Não tente testar tudo via E2E - apenas os fluxos mais importantes.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Revise Regularmente</h3>
+            <p>Se você tem muitos testes E2E, considere mover alguns para testes de unidade ou integração. Se um teste E2E quebra frequentemente por causa de mudanças na UI, considere se poderia ser um teste de unidade ou integração.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>5. Mantenha o Equilíbrio</h3>
+            <p>A pirâmide é um guia, não uma regra rígida. Adapte ao seu contexto. Alguns projetos podem precisar de mais testes E2E, enquanto outros podem focar mais em testes de unidade.</p>
+          </div>
+        </div>
+
+        <!-- Navegação entre módulos -->
+        <div class="module-navigation">
+          <a href="niveis-tipos-teste.html" class="module-nav-link module-nav-link--prev">← Anterior: Níveis e Tipos de Teste</a>
+          <a href="como-estudar-praticar.html" class="module-nav-link module-nav-link--next">Próximo: Como Estudar e Praticar →</a>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

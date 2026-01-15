@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Módulo 1: Introdução e Conceitos Básicos — Fundamentos de Testes</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="index.html">Fundamentos</a></li>
+            <li><a href="../tools/mobile-playground.html">Mobile</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Módulo 1: Introdução e Conceitos Básicos</h1>
+          <div class="section-desc">
+            Aprenda o que é teste de software, por que testamos, e os conceitos fundamentais que todo QA precisa conhecer desde o início de sua jornada.
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>O que é Teste de Software?</h2>
+          
+          <div class="content-card">
+            <h3>Definição (ISTQB)</h3>
+            <p>Segundo o <span class="highlight-text">ISTQB (International Software Testing Qualifications Board)</span>, teste de software é o processo que consiste em atividades de ciclo de vida do desenvolvimento, tanto estáticas quanto dinâmicas, preocupadas com o planejamento, preparação e avaliação de software e produtos de trabalho relacionados para determinar se eles satisfazem os requisitos especificados, para demonstrar que são adequados para o propósito e para detectar defeitos.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Definição Simplificada</h3>
+            <p>Teste de software é o processo de verificar se um sistema funciona corretamente, se atende aos requisitos especificados, e se não possui defeitos que possam impactar usuários ou o negócio.</p>
+            <p>Em outras palavras, testar é a atividade que garante que o software funciona como esperado antes de ser entregue aos usuários finais.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Por Que Testamos?</h3>
+            <p>Testamos software por diversas razões importantes:</p>
+            <ul>
+              <li><strong>Encontrar defeitos:</strong> Identificar bugs e problemas antes que cheguem aos usuários</li>
+              <li><strong>Garantir qualidade:</strong> Assegurar que o software atende aos requisitos e expectativas</li>
+              <li><strong>Reduzir riscos:</strong> Minimizar a chance de falhas em produção que possam causar prejuízos</li>
+              <li><strong>Fornecer confiança:</strong> Dar segurança à equipe e stakeholders de que o software está funcionando</li>
+              <li><strong>Melhorar a experiência do usuário:</strong> Garantir que os usuários tenham uma experiência positiva</li>
+              <li><strong>Cumprir requisitos legais e regulatórios:</strong> Em alguns setores, testes são obrigatórios</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Conceitos Fundamentais</h2>
+
+          <div class="content-card">
+            <h3>Bug, Defeito, Falha e Erro</h3>
+            <p>É importante entender a diferença entre esses termos, que são frequentemente usados como sinônimos, mas têm significados distintos:</p>
+            
+            <h4>Erro (Error)</h4>
+            <p>Um erro é uma ação humana que produz um resultado incorreto. É o ato de cometer um engano, geralmente durante o desenvolvimento do software.</p>
+            <p><strong>Exemplo:</strong> Um desenvolvedor escreve um código que calcula o desconto incorretamente porque usou a fórmula errada.</p>
+
+            <h4>Defeito (Defect)</h4>
+            <p>Um defeito é uma imperfeição ou falha no código que pode causar um comportamento incorreto. O defeito existe no código, mas pode não ter sido descoberto ainda.</p>
+            <p><strong>Exemplo:</strong> O código contém um erro lógico onde a divisão por zero não é tratada.</p>
+
+            <h4>Falha (Failure)</h4>
+            <p>Uma falha ocorre quando o software se comporta de forma diferente do esperado em execução. A falha é a manifestação visível de um defeito.</p>
+            <p><strong>Exemplo:</strong> Quando o usuário tenta calcular um desconto, o sistema exibe uma mensagem de erro ou trava.</p>
+
+            <h4>Bug</h4>
+            <p>Bug é um termo informal e amplamente usado para se referir a qualquer defeito, falha ou problema no software. Na prática, "bug" é frequentemente usado como sinônimo de "defeito" ou "falha".</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Teste vs. Depuração (Debugging)</h3>
+            <p><strong>Teste:</strong> Processo de encontrar defeitos e falhas no software.</p>
+            <p><strong>Depuração:</strong> Processo de encontrar, analisar e corrigir a causa raiz de uma falha.</p>
+            <p>Enquanto o teste identifica que algo está errado, a depuração descobre o porquê e corrige o problema. Geralmente, o teste é feito por QAs e a depuração por desenvolvedores.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Verificação vs. Validação</h3>
+            <p><strong>Verificação:</strong> "Estamos construindo o produto corretamente?" Verifica se o produto foi construído de acordo com as especificações e requisitos.</p>
+            <p><strong>Validação:</strong> "Estamos construindo o produto certo?" Valida se o produto atende às necessidades e expectativas do usuário e do negócio.</p>
+            <p><strong>Exemplo de verificação:</strong> Verificar se um formulário de login tem os campos email e senha conforme especificado.</p>
+            <p><strong>Exemplo de validação:</strong> Validar se o processo de login é intuitivo e seguro o suficiente para os usuários.</p>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Ciclo de Vida do Teste</h2>
+
+          <div class="content-card">
+            <h3>Fases do Teste</h3>
+            <p>O processo de teste segue um ciclo que se repete continuamente durante o desenvolvimento:</p>
+            
+            <h4>1. Planejamento</h4>
+            <p>Definir estratégia de teste, identificar recursos necessários, criar cronograma e determinar critérios de entrada e saída.</p>
+
+            <h4>2. Análise e Design</h4>
+            <p>Analisar requisitos, identificar condições de teste, criar casos de teste e preparar dados de teste.</p>
+
+            <h4>3. Implementação</h4>
+            <p>Desenvolver e priorizar casos de teste, criar scripts de teste automatizados (se aplicável) e preparar ambiente de teste.</p>
+
+            <h4>4. Execução</h4>
+            <p>Executar casos de teste, registrar resultados, comparar resultados esperados com reais e reportar defeitos encontrados.</p>
+
+            <h4>5. Avaliação dos Critérios de Saída e Relatório</h4>
+            <p>Avaliar se os critérios de saída foram atendidos, criar relatórios de teste e fornecer feedback sobre a qualidade do software.</p>
+
+            <h4>6. Atividades de Encerramento</h4>
+            <p>Arquivar testes e ambiente, documentar lições aprendidas e preparar entregáveis finais.</p>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Objetivos do Teste</h2>
+
+          <div class="content-card">
+            <h3>Objetivos Primários</h3>
+            <ul>
+              <li><strong>Encontrar defeitos:</strong> Identificar o maior número possível de bugs antes do lançamento</li>
+              <li><strong>Garantir qualidade:</strong> Verificar se o software atende aos requisitos e padrões de qualidade</li>
+              <li><strong>Fornecer informações:</strong> Fornecer feedback sobre a qualidade do software para stakeholders</li>
+              <li><strong>Prevenir defeitos:</strong> Identificar problemas cedo para evitar defeitos futuros</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Objetivos Secundários</h3>
+            <ul>
+              <li>Reduzir riscos de falhas em produção</li>
+              <li>Aumentar a confiança na qualidade do software</li>
+              <li>Fornecer informações para decisões de negócio (go/no-go para lançamento)</li>
+              <li>Cumprir requisitos contratuais ou regulatórios</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Navegação entre módulos -->
+        <div class="module-navigation">
+          <a href="index.html" class="module-nav-link module-nav-link--prev">Voltar ao Índice</a>
+          <a href="principios-fundamentais.html" class="module-nav-link module-nav-link--next">Próximo: Princípios Fundamentais</a>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

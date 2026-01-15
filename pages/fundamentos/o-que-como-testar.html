@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Módulo 7: O Que Testar e Como Testar — Fundamentos de Testes</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="index.html">Fundamentos</a></li>
+            <li><a href="../tools/mobile-playground.html">Mobile</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Módulo 7: O Que Testar e Como Testar</h1>
+          <div class="section-desc">
+            Aprenda a planejar e executar testes de forma sistemática, criando casos de teste eficazes e cobrindo diferentes aspectos do software de forma organizada e profissional.
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>O Que Testar</h2>
+          <p>Compreender o que testar é fundamental para garantir uma cobertura adequada do software. Diferentes aspectos do sistema precisam de diferentes tipos de testes.</p>
+        </div>
+
+        <div class="content-section">
+          <h2>Funcionalidade</h2>
+          
+          <div class="content-card">
+            <h3>Testes Funcionais</h3>
+            <p>Focam em verificar se o software faz o que deveria fazer conforme os requisitos:</p>
+            <ul>
+              <li><strong>Validação de regras de negócio:</strong> Verificar se as regras implementadas funcionam corretamente</li>
+              <li><strong>Fluxos de usuário completos:</strong> Testar jornadas completas do usuário do início ao fim</li>
+              <li><strong>Integração entre módulos:</strong> Verificar se diferentes partes do sistema trabalham juntas corretamente</li>
+              <li><strong>APIs e endpoints:</strong> Testar interfaces de comunicação e integração</li>
+              <li><strong>Validações de formulários:</strong> Verificar se campos são validados adequadamente</li>
+              <li><strong>Regras de entrada e saída:</strong> Validar se dados são processados e retornados corretamente</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Interface e Usabilidade</h2>
+          
+          <div class="content-card">
+            <h3>Testes de UI/UX</h3>
+            <p>Verificam aspectos visuais e de experiência do usuário:</p>
+            <ul>
+              <li><strong>Layout e responsividade:</strong> Verificar se a interface se adapta a diferentes tamanhos de tela</li>
+              <li><strong>Acessibilidade (WCAG):</strong> Garantir que o sistema seja acessível a todos os usuários</li>
+              <li><strong>Navegação e usabilidade:</strong> Verificar se é fácil navegar e usar o sistema</li>
+              <li><strong>Compatibilidade entre navegadores:</strong> Testar se funciona em diferentes navegadores</li>
+              <li><strong>Design system e consistência visual:</strong> Verificar se elementos seguem padrões visuais consistentes</li>
+              <li><strong>Feedback visual:</strong> Verificar se mensagens e indicações são claras</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Performance</h2>
+          
+          <div class="content-card">
+            <h3>Testes de Performance</h3>
+            <p>Avaliam a velocidade e eficiência do sistema:</p>
+            <ul>
+              <li><strong>Tempo de resposta:</strong> Verificar se o sistema responde dentro de tempos aceitáveis</li>
+              <li><strong>Capacidade e carga:</strong> Testar se o sistema suporta a carga esperada</li>
+              <li><strong>Stress e volume:</strong> Testar comportamento sob condições extremas</li>
+              <li><strong>Escalabilidade:</strong> Verificar se o sistema pode crescer conforme necessário</li>
+              <li><strong>Uso de recursos:</strong> Verificar consumo de CPU, memória, rede, disco</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Segurança</h2>
+          
+          <div class="content-card">
+            <h3>Testes de Segurança</h3>
+            <p>Verificam proteção contra vulnerabilidades e ameaças:</p>
+            <ul>
+              <li><strong>Autenticação e autorização:</strong> Verificar se apenas usuários autorizados acessam recursos</li>
+              <li><strong>Injeção SQL e XSS:</strong> Testar proteção contra ataques comuns</li>
+              <li><strong>Dados sensíveis:</strong> Verificar se informações sensíveis estão protegidas</li>
+              <li><strong>HTTPS e criptografia:</strong> Verificar se comunicações são seguras</li>
+              <li><strong>Vulnerabilidades conhecidas (OWASP Top 10):</strong> Testar contra ameaças comuns</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Qualidade de Código</h2>
+          
+          <div class="content-card">
+            <h3>Testes de Código</h3>
+            <p>Avaliam a qualidade do código fonte:</p>
+            <ul>
+              <li><strong>Cobertura de código:</strong> Verificar quantas linhas/funcionalidades estão cobertas por testes</li>
+              <li><strong>Análise estática:</strong> Identificar problemas no código sem executá-lo</li>
+              <li><strong>Code smells:</strong> Identificar padrões de código que podem indicar problemas</li>
+              <li><strong>Padrões e convenções:</strong> Verificar se o código segue padrões estabelecidos</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Como Testar: Planejamento</h2>
+
+          <div class="content-card">
+            <h3>1. Entenda os Requisitos</h3>
+            <p>Antes de começar a testar, é essencial entender completamente o que está sendo testado:</p>
+            <ul>
+              <li>Leia todos os requisitos e especificações relacionadas</li>
+              <li>Identifique ambiguidades e esclareça dúvidas com o time</li>
+              <li>Entenda o contexto de negócio e os objetivos da funcionalidade</li>
+              <li>Identifique stakeholders e entenda suas expectativas</li>
+              <li>Revisite requisitos durante o teste para garantir alinhamento</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Crie Casos de Teste</h3>
+            <p>Documente casos de teste cobrindo diferentes cenários:</p>
+            
+            <h4>Cenários Positivos (Happy Path)</h4>
+            <p>Testam o comportamento esperado quando tudo funciona corretamente. São os casos mais básicos e importantes.</p>
+            <p><strong>Exemplo:</strong> Usuário faz login com credenciais válidas e é redirecionado para o dashboard.</p>
+
+            <h4>Cenários Negativos (Validações e Erros)</h4>
+            <p>Testam o comportamento quando há erros ou dados inválidos. Verificam se o sistema trata erros adequadamente.</p>
+            <p><strong>Exemplo:</strong> Usuário tenta fazer login com senha incorreta e recebe mensagem de erro apropriada.</p>
+
+            <h4>Casos de Borda (Edge Cases)</h4>
+            <p>Testam valores nos limites ou situações extremas que podem causar problemas.</p>
+            <p><strong>Exemplo:</strong> Campo aceita máximo de 100 caracteres - testar com 99, 100 e 101 caracteres.</p>
+
+            <h4>Casos Extremos (Boundary Values)</h4>
+            <p>Similar aos casos de borda, mas focam especificamente nos valores limite.</p>
+            <p><strong>Exemplo:</strong> Campo numérico aceita valores de 1 a 100 - testar com 0, 1, 100, 101.</p>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Como Testar: Execução</h2>
+
+          <div class="content-card">
+            <h3>3. Execute Testes Sistematicamente</h3>
+            <p>Siga seus casos de teste, mas também esteja aberto a testes exploratórios:</p>
+            <ul>
+              <li>Execute casos de teste em ordem lógica</li>
+              <li>Documente resultados de cada teste</li>
+              <li>Compare resultados esperados com resultados reais</li>
+              <li>Esteja aberto a descobrir bugs não previstos nos casos de teste</li>
+              <li>Use testes exploratórios para complementar testes scriptados</li>
+            </ul>
+            <p><strong>Dica:</strong> Às vezes, os melhores bugs são encontrados quando você se desvia do script e explora o sistema livremente.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Documente Evidências</h3>
+            <p>Capture evidências que comprovem o comportamento observado. Isso é essencial para reportar bugs e para documentação:</p>
+            <ul>
+              <li><strong>Screenshots:</strong> Capture imagens do comportamento observado</li>
+              <li><strong>Logs:</strong> Salve logs do servidor ou aplicação</li>
+              <li><strong>Vídeos:</strong> Grave vídeos mostrando o comportamento (útil para bugs intermitentes)</li>
+              <li><strong>Dados de teste:</strong> Documente quais dados foram usados</li>
+              <li><strong>Passos executados:</strong> Anote exatamente o que foi feito</li>
+            </ul>
+            <p><strong>Ferramentas úteis:</strong> Lightshot, ShareX, Snipping Tool, gravadores de tela, ferramentas de captura do navegador.</p>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Estrutura de um Caso de Teste</h2>
+
+          <div class="content-card">
+            <h3>Elementos Essenciais</h3>
+            <p>Um caso de teste bem documentado deve conter:</p>
+            
+            <h4>Identificação</h4>
+            <ul>
+              <li>ID único do caso de teste</li>
+              <li>Título descritivo e claro</li>
+              <li>Categoria ou tipo de teste</li>
+            </ul>
+
+            <h4>Descrição</h4>
+            <ul>
+              <li>Objetivo do teste</li>
+              <li>Pré-condições necessárias</li>
+              <li>Dados de teste utilizados</li>
+            </ul>
+
+            <h4>Passos de Execução</h4>
+            <ul>
+              <li>Lista numerada e sequencial de ações</li>
+              <li>Passos claros e acionáveis</li>
+              <li>Específicos o suficiente para serem reproduzidos</li>
+            </ul>
+
+            <h4>Resultados Esperados</h4>
+            <ul>
+              <li>O que deve acontecer após executar os passos</li>
+              <li>Critérios de aceitação claros</li>
+            </ul>
+
+            <h4>Resultados Reais</h4>
+            <ul>
+              <li>O que realmente aconteceu</li>
+              <li>Status do teste (Passou/Falhou)</li>
+              <li>Observações adicionais</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Priorização de Testes</h2>
+
+          <div class="content-card">
+            <h3>Como Priorizar</h3>
+            <p>Nem todos os testes têm a mesma importância. Priorize baseado em:</p>
+            
+            <h4>Criticidade da Funcionalidade</h4>
+            <p>Teste primeiro funcionalidades críticas para o negócio ou que têm maior impacto se falharem.</p>
+
+            <h4>Risco</h4>
+            <p>Funcionalidades com maior risco de ter bugs devem ser testadas primeiro.</p>
+
+            <h4>Frequência de Uso</h4>
+            <p>Funcionalidades usadas frequentemente pelos usuários devem ter prioridade.</p>
+
+            <h4>Complexidade</h4>
+            <p>Funcionalidades complexas geralmente têm maior chance de bugs.</p>
+          </div>
+        </div>
+
+        <!-- Navegação entre módulos -->
+        <div class="module-navigation">
+          <a href="tecnicas-teste.html" class="module-nav-link module-nav-link--prev">← Anterior: Técnicas de Teste</a>
+          <a href="encontrar-reportar-bugs.html" class="module-nav-link module-nav-link--next">Próximo: Encontrar e Reportar Bugs →</a>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

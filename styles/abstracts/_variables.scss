@@ -1,0 +1,96 @@
+// ========================================
+// Design Tokens - Variáveis Semânticas
+// ========================================
+
+// === Cores Base ===
+$color-white: #ffffff;
+$color-black: #000000;
+
+// === Cores Tema Claro ===
+$color-bg-light: #fbf9f6;
+$color-surface-light: #ffffff;
+$color-text-light: #2b2b2b;
+$color-muted-light: #6b6b6b;
+
+// === Cores Tema Escuro ===
+$color-bg-dark: #0f1112;
+$color-surface-dark: #111416;
+$color-text-dark: #e6e6e6;
+$color-muted-dark: #9a9a9a;
+
+// === Cores de Acento ===
+$color-accent-primary: #7aa874;
+$color-accent-primary-dark: #6fb56f;
+$color-accent-secondary: #d6a35f;
+$color-accent-secondary-dark: #cfa16a;
+
+// === Cores Funcionais ===
+$color-danger: #dc3545;
+$color-success: #28a745;
+$color-warning: #ffc107;
+$color-info: #17a2b8;
+
+// === Espaçamento ===
+$spacing-base: 4px;
+$spacing-xs: $spacing-base;      // 4px
+$spacing-sm: $spacing-base * 2;  // 8px
+$spacing-md: $spacing-base * 4;  // 16px
+$spacing-lg: $spacing-base * 6;  // 24px
+$spacing-xl: $spacing-base * 8;  // 32px
+$spacing-2xl: $spacing-base * 12; // 48px
+
+// === Tipografia ===
+$font-family-base: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-family-mono: 'Courier New', monospace;
+
+$font-size-xs: 0.75rem;   // 12px
+$font-size-sm: 0.875rem;  // 14px
+$font-size-base: 1rem;    // 16px
+$font-size-lg: 1.125rem;  // 18px
+$font-size-xl: 1.25rem;   // 20px
+$font-size-2xl: 1.5rem;   // 24px
+$font-size-3xl: 1.875rem; // 30px
+
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$line-height-base: 1.6;
+$line-height-tight: 1.2;
+$line-height-relaxed: 1.8;
+
+// === Bordas ===
+$border-radius-sm: 6px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$border-radius-full: 50%;
+
+$border-width-base: 1px;
+$border-width-thick: 2px;
+$border-width-thickest: 4px;
+
+// === Sombras ===
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+$shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+$shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.12);
+
+$shadow-sm-dark: 0 1px 2px rgba(0, 0, 0, 0.2);
+$shadow-md-dark: 0 4px 8px rgba(0, 0, 0, 0.3);
+$shadow-lg-dark: 0 12px 24px rgba(0, 0, 0, 0.4);
+
+// === Transições ===
+$transition-fast: 0.15s ease;
+$transition-base: 0.2s ease;
+$transition-slow: 0.3s ease;
+
+// === Layout ===
+$container-max-width: 1200px;
+$header-height: 64px;
+
+// === Breakpoints ===
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;

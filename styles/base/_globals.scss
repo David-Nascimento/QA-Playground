@@ -1,0 +1,53 @@
+// ========================================
+// Estilos Globais - Utilitários Gerais
+// ========================================
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+// === Container Principal ===
+.container {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: calc(var(--header-height) + var(--spacing-lg)) var(--spacing-lg) var(--spacing-lg);
+  
+  @include respond-to(md) {
+    padding: calc(var(--header-height) + var(--spacing-md)) var(--spacing-md) var(--spacing-md);
+  }
+}
+
+// === Seleção de Texto ===
+::selection {
+  background: var(--accent);
+  color: $color-white;
+}
+
+::-moz-selection {
+  background: var(--accent);
+  color: $color-white;
+}
+
+// === Scrollbar (opcional) ===
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 6px;
+  
+  @include hover-state {
+    background: var(--text);
+  }
+}

@@ -1,0 +1,40 @@
+// ========================================
+// Button - Componente de Botão
+// ========================================
+
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background: var(--accent);
+  color: $color-white;
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-weight: $font-weight-semibold;
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  @include transition(background, transform);
+  text-decoration: none;
+  
+  @include hover-state {
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  @include focus-visible;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  
+  @include hover-state {
+    opacity: 0.8;
+  }
+}

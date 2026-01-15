@@ -3,11 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>QA Playground — Demo</title>
+    <title>QA Playground — Plataforma Educacional de Testes</title>
     <link rel="stylesheet" href="css/main.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
+    <!-- Header -->
     <header class="et-header">
       <div class="et-header-inner">
         <a href="index.html" class="et-logo" aria-label="Início">
@@ -15,16 +16,17 @@
         </a>
         <nav class="et-nav" aria-label="Navegação principal">
           <ul class="et-nav-list">
-            <li><a href="pages/fundamentos.html">Fundamentos</a></li>
-            <li><a href="pages/tools/mobile-playground.html">Mobile Playground</a></li>
-            <li><a href="pages/tools/nft-playground.html">NFT Playground</a></li>
-            <li><a href="pages/tools/bdd-playground.html">BDD Playground</a></li>
+            <li><a href="pages/fundamentos/index.html">Fundamentos</a></li>
+            <li><a href="pages/tools/mobile-playground.html">Mobile</a></li>
+            <li><a href="pages/tools/bdd-playground.html">BDD</a></li>
+            <li><a href="pages/tools/nft-playground.html">NFT</a></li>
             <li class="nav-dropdown">
-              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafios</button>
               <ul class="dropdown-menu">
-                <li><a href="pages/desafio/junior.html">Desafios Júnior</a></li>
-                <li><a href="pages/desafio/pleno.html">Desafios Pleno</a></li>
-                <li><a href="pages/desafio/senior.html">Desafios Sênior</a></li>
+                <li><a href="pages/desafio/index.html">Todos os Desafios</a></li>
+                <li><a href="pages/desafio/junior.html">Júnior</a></li>
+                <li><a href="pages/desafio/pleno.html">Pleno</a></li>
+                <li><a href="pages/desafio/senior.html">Sênior</a></li>
               </ul>
             </li>
           </ul>
@@ -36,106 +38,268 @@
     </header>
 
     <main class="container">
+      <!-- Hero Section -->
       <section class="hero">
-        <h1>Playground de Testes para QA Moderno</h1>
-        <p>
-            Plataforma prática para execução de testes manuais e automatizados, validação de interfaces web e simulação de APIs. 
-            Ideal para validar estratégias de testes, explorar cenários realistas e evoluir habilidades técnicas em ambientes controlados.
+        <h1>QA Playground</h1>
+        <p class="hero-subtitle">
+          Plataforma prática para aprender e evoluir em testes de software, do nível júnior ao sênior.
+        </p>
+        <p class="hero-description">
+          Ambiente educacional focado em prática real de testes funcionais, automação, APIs, BDD, mobile e testes não funcionais. 
+          Organizado por temas e níveis de senioridade, com cenários controlados e próximos da realidade.
         </p>
       </section>
 
-      <section class="cards-container">
-        <div class="search-bar-container">
-          <input type="text" id="searchInput" class="search-bar" placeholder="Pesquisar sessões..." aria-label="Pesquisar sessões">
+      <!-- Como o QA Playground funciona -->
+      <section class="section">
+        <h2 class="section-title">Como o QA Playground funciona</h2>
+        <div class="info-blocks">
+          <div class="info-block">
+            <h3>Aprendizado prático</h3>
+            <p>Cenários executáveis que permitem aplicar técnicas de teste de forma imediata, com feedback direto sobre sua abordagem.</p>
+          </div>
+          <div class="info-block">
+            <h3>Cenários realistas</h3>
+            <p>Simulações próximas de aplicações reais, com regras de negócio, validações e comportamentos dinâmicos encontrados em projetos corporativos.</p>
+          </div>
+          <div class="info-block">
+            <h3>Organização por nível e competência</h3>
+            <p>Conteúdo estruturado progressivamente, do básico ao avançado, facilitando a evolução contínua em diferentes áreas de QA.</p>
+          </div>
+          <div class="info-block">
+            <h3>Ambiente controlado para testes</h3>
+            <p>Elementos identificáveis, comportamentos estáveis e previsíveis, ideal para validação de estratégias e automação confiável.</p>
+          </div>
         </div>
-
-        <!-- Seção Júnior -->
-        <section class="section">
-          <div class="section-header">
-            <h2>Nível Júnior</h2>
-            <div class="section-desc">Conceitos básicos de QA, automação e validação de elementos simples.</div>
-          </div>
-          <div class="card-grid">
-          <!-- Júnior: exemplos básicos -->
-          <div class="card card-formulario"><h3>Entradas de Formulário</h3><p>Pratique com campos de texto, números, senhas e datas em formulários web.</p><a href="pages/junior/formularios/" class="btn">Acessar</a></div>
-          <div class="card card-tabela"><h3>Tabelas</h3><p>Teste a validação de valores em tabelas com conteúdo dinâmico e operações CRUD.</p><a href="pages/junior/tabelas/" class="btn">Acessar</a></div>
-          <div class="card card-interacao"><h3>Interações</h3><p>Pratique com botões de rádio, checkboxes, dropdowns e outros elementos de seleção.</p><a href="pages/junior/interacoes/" class="btn">Acessar</a></div>
-          </div>
-        </section>
-
-        <!-- Seção Pleno -->
-        <section class="section">
-          <div class="section-header">
-            <h2>Nível Pleno</h2>
-            <div class="section-desc">Cenários intermediários, manipulação dinâmica, tabelas, arquivos e interações mais complexas.</div>
-          </div>
-          <div class="card-grid">
-          <div class="card card-tabela"><h3>Tabelas</h3><p>Teste tabelas com paginação dinâmica, ordenação e filtros complexos.</p><a href="pages/pleno/tabelas/" class="btn">Acessar</a></div>
-          <div class="card card-interacao"><h3>Interações</h3><p>Pratique drag and drop, hovers, sliders e outras interações avançadas.</p><a href="pages/pleno/interacoes/" class="btn">Acessar</a></div>
-          <div class="card card-arquivo"><h3>Arquivos</h3><p>Teste upload e download de arquivos em diferentes formatos.</p><a href="pages/pleno/arquivos/" class="btn">Acessar</a></div>
-          </div>
-        </section>
-
-        <!-- Seção Sênior -->
-        <section class="section">
-          <div class="section-header">
-            <h2>Nível Sênior</h2>
-            <div class="section-desc">Desafios avançados, automação complexa, manipulação de DOM, APIs, autenticação e cenários reais de QA.</div>
-          </div>
-          <div class="card-grid">
-          <div class="card card-dinamico"><h3>Dinâmicos</h3><p>Teste DOMs complexos, Shadow DOM, elementos dinâmicos e cenários avançados de QA.</p><a href="pages/senior/dinamicos/" class="btn">Acessar</a></div>
-          <div class="card card-interacao"><h3>Interações Avançadas</h3><p>Pratique Cypress, iframes, múltiplas janelas e controles dinâmicos.</p><a href="pages/senior/interacoes/" class="btn">Acessar</a></div>
-          <div class="card card-dinamico"><h3>APIs e Autenticação</h3><p>Teste APIs REST, OAuth 2.0, autenticação HTTP e códigos de status.</p><a href="pages/senior/apis/" class="btn">Acessar</a></div>
-          <div class="card card-dinamico"><h3>Utilitários</h3><p>Ferramentas e utilitários: informações do navegador, IP, testes flaky e apps React.</p><a href="pages/senior/utilitarios/" class="btn">Acessar</a></div>
-          </div>
-        </section>
-
-        <!-- Seção Mobile -->
-        <section class="section">
-          <div class="section-header">
-            <h2>Mobile</h2>
-            <div class="section-desc">Testes específicos para aplicações mobile: responsividade, touch events, viewport, orientação e adaptação de layouts.</div>
-          </div>
-          <div class="card-grid">
-          <div class="card card-interacao"><h3>Responsividade</h3><p>Teste adaptação de layouts em diferentes tamanhos de tela e breakpoints responsivos.</p><a href="pages/mobile/responsividade.html" class="btn">Acessar</a></div>
-          <div class="card card-interacao"><h3>Touch Events</h3><p>Pratique testes de gestos, toques, swipe e interações touch em dispositivos móveis.</p><a href="pages/mobile/touch-events.html" class="btn">Acessar</a></div>
-          <div class="card card-interacao"><h3>Viewport e Orientação</h3><p>Teste comportamento em diferentes viewports, orientação portrait/landscape e media queries.</p><a href="pages/mobile/viewport.html" class="btn">Acessar</a></div>
-          <div class="card card-interacao"><h3>Interações Avançadas</h3><p>Teste gestos complexos: pinch/zoom, pull to refresh, scroll infinito, multi-touch e shake detection.</p><a href="pages/mobile/interacoes-avancadas.html" class="btn">Acessar</a></div>
-          </div>
-        </section>
-
-        <!-- Seção Ferramentas para QA e SDET -->
-        <section class="section">
-          <div class="section-header">
-            <h2>Ferramentas para Engenheiros QA e SDET</h2>
-            <div class="section-desc">Ferramentas práticas para auxiliar na automação de testes, validação de seletores e desenvolvimento de estratégias de teste.</div>
-          </div>
-          <div class="card-grid">
-          <div class="card card-dinamico"><h3>XPath e CSS Tester</h3><p>Teste e valide seletores XPath e CSS com exemplos práticos utilizados em automação de testes.</p><a href="pages/tools/xpath-css-tester.html" class="btn">Acessar</a></div>
-          <div class="card card-dinamico"><h3>NFT Playground</h3><p>Simulador de Testes Não Funcionais: performance, carga, stress e resiliência do front-end em ambiente educacional.</p><a href="pages/tools/nft-playground.html" class="btn">Acessar</a></div>
-          <div class="card card-dinamico"><h3>BDD Playground</h3><p>Crie, valide e avalie cenários BDD em Gherkin. Aprenda na prática com validação automática e feedback educacional.</p><a href="pages/tools/bdd-playground.html" class="btn">Acessar</a></div>
-          <div class="card card-dinamico"><h3>Cenários NFT</h3><p>Cenários práticos de testes não funcionais com situações reais para execução e prática de NFT.</p><a href="pages/tools/nft/index.html" class="btn">Acessar</a></div>
-          </div>
-        </section>
       </section>
 
-      <section class="notes">
-        <div class="notes-transparent">
-          Todas as páginas deste playground possuem elementos identificáveis (<code>id</code> e <code>data-testid</code>) para facilitar automação e inspeção. Use o botão no topo para alternar entre tema claro e escuro.
+      <!-- Áreas de prática -->
+      <section class="section">
+        <h2 class="section-title">Áreas de prática</h2>
+        <div class="areas-list">
+          <div class="area-item">
+            <h3>Testes Funcionais</h3>
+            <p>Validação de regras de negócio, fluxos de usuário e comportamentos esperados da aplicação.</p>
+            <a href="pages/junior/formularios/" class="area-link">Ver formulários e validações</a>
+          </div>
+          <div class="area-item">
+            <h3>Automação de Testes</h3>
+            <p>Elementos identificáveis e estruturas estáveis para prática com Selenium, Playwright, Cypress e outras ferramentas.</p>
+            <a href="pages/junior/interacoes/" class="area-link">Ver interações e elementos</a>
+          </div>
+          <div class="area-item">
+            <h3>APIs e Autenticação</h3>
+            <p>Simulações de APIs REST, OAuth 2.0, autenticação HTTP Basic e Digest, códigos de status e manipulação de headers.</p>
+            <a href="pages/senior/apis/" class="area-link">Ver APIs e autenticação</a>
+          </div>
+          <div class="area-item">
+            <h3>Testes Mobile</h3>
+            <p>Responsividade, touch events, viewport, orientação e interações específicas de dispositivos móveis.</p>
+            <a href="pages/mobile/index.html" class="area-link">Ver testes mobile</a>
+          </div>
+          <div class="area-item">
+            <h3>Testes Não Funcionais</h3>
+            <p>Performance, carga, stress e resiliência do front-end, com métricas e cenários controlados para análise.</p>
+            <a href="pages/tools/nft-playground.html" class="area-link">Ver NFT Playground</a>
+          </div>
+          <div class="area-item">
+            <h3>BDD</h3>
+            <p>Criação, validação e avaliação de cenários em Gherkin, com feedback automático e aprendizado prático de BDD.</p>
+            <a href="pages/tools/bdd-playground.html" class="area-link">Ver BDD Playground</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Progressão por senioridade -->
+      <section class="section">
+        <h2 class="section-title">Progressão por senioridade</h2>
+        <p style="text-align: center; margin-bottom: var(--spacing-lg); color: var(--text-secondary);">
+          Roadmaps de orientação que indicam o caminho correto para desenvolver habilidades em cada nível
+        </p>
+        <div class="progression-blocks">
+          <div class="progression-block">
+            <h3>Nível Júnior</h3>
+            <p>Fundamentos e primeiros cenários</p>
+            <ul>
+              <li>Formulários simples e validações básicas</li>
+              <li>Tabelas com conteúdo dinâmico</li>
+              <li>Interações básicas (radio, checkbox, dropdown)</li>
+              <li>Regras de negócio diretas</li>
+            </ul>
+            <div style="display: flex; gap: var(--spacing-sm); flex-direction: column; margin-top: var(--spacing-md);">
+              <a href="pages/junior/index.html" class="progression-link" style="font-weight: 600;">Ver Roadmap Júnior →</a>
+              <a href="pages/junior/formularios/" class="progression-link">Explorar práticas</a>
+            </div>
+          </div>
+          <div class="progression-block">
+            <h3>Nível Pleno</h3>
+            <p>Manipulação dinâmica e interações avançadas</p>
+            <ul>
+              <li>Tabelas com paginação e ordenação</li>
+              <li>Upload e download de arquivos</li>
+              <li>Drag and drop, hovers e sliders</li>
+              <li>Cenários intermediários de automação</li>
+            </ul>
+            <div style="display: flex; gap: var(--spacing-sm); flex-direction: column; margin-top: var(--spacing-md);">
+              <a href="pages/pleno/index.html" class="progression-link" style="font-weight: 600;">Ver Roadmap Pleno →</a>
+              <a href="pages/pleno/tabelas/" class="progression-link">Explorar práticas</a>
+            </div>
+          </div>
+          <div class="progression-block">
+            <h3>Nível Sênior</h3>
+            <p>Cenários complexos, APIs e desafios reais</p>
+            <ul>
+              <li>Shadow DOM, iframes e múltiplas janelas</li>
+              <li>Autenticação OAuth e HTTP</li>
+              <li>APIs REST e códigos de status</li>
+              <li>Comportamentos dinâmicos complexos</li>
+            </ul>
+            <div style="display: flex; gap: var(--spacing-sm); flex-direction: column; margin-top: var(--spacing-md);">
+              <a href="pages/senior/index.html" class="progression-link" style="font-weight: 600;">Ver Roadmap Sênior →</a>
+              <a href="pages/senior/dinamicos/" class="progression-link">Explorar práticas</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Playgrounds e ferramentas -->
+      <section class="section">
+        <h2 class="section-title">Playgrounds e ferramentas</h2>
+        <p style="text-align: center; margin-bottom: var(--spacing-xl); color: var(--text-secondary); max-width: 700px; margin-left: auto; margin-right: auto;">
+          Ferramentas interativas e playgrounds para prática, aprendizado e desenvolvimento de habilidades em diferentes áreas de QA
+        </p>
+        
+        <div class="tools-grid">
+          <!-- XPath & CSS Tester -->
+          <div class="tool-card">
+            <div class="tool-card-header">
+              <h3><a href="pages/tools/xpath-css-tester.html">XPath & CSS Tester</a></h3>
+              <span class="tool-category">Ferramenta</span>
+            </div>
+            <p class="tool-description">Teste e valide seletores XPath e CSS com exemplos práticos utilizados em automação de testes.</p>
+            <ul class="tool-features">
+              <li>Validação de seletores em tempo real</li>
+              <li>Exemplos práticos de elementos comuns</li>
+              <li>Feedback visual sobre correspondências</li>
+              <li>Útil para Selenium, Playwright e Cypress</li>
+            </ul>
+            <a href="pages/tools/xpath-css-tester.html" class="tool-link">Acessar ferramenta →</a>
+          </div>
+
+          <!-- BDD Playground -->
+          <div class="tool-card">
+            <div class="tool-card-header">
+              <h3><a href="pages/tools/bdd-playground.html">BDD Playground</a></h3>
+              <span class="tool-category">Playground</span>
+            </div>
+            <p class="tool-description">Crie, valide e avalie cenários BDD em Gherkin. Aprenda na prática com validação automática e feedback educacional.</p>
+            <ul class="tool-features">
+              <li>Editor interativo para cenários Gherkin</li>
+              <li>Validação automática de sintaxe</li>
+              <li>Feedback educativo sobre boas práticas</li>
+              <li>Sistema de pontuação e avaliação</li>
+              <li>Histórico de sessões e progresso</li>
+            </ul>
+            <a href="pages/tools/bdd-playground.html" class="tool-link">Acessar playground →</a>
+          </div>
+
+          <!-- NFT Playground -->
+          <div class="tool-card">
+            <div class="tool-card-header">
+              <h3><a href="pages/tools/nft-playground.html">NFT Playground</a></h3>
+              <span class="tool-category">Playground</span>
+            </div>
+            <p class="tool-description">Simulador de Testes Não Funcionais: performance, carga, stress e resiliência do front-end em ambiente educacional.</p>
+            <ul class="tool-features">
+              <li>Testes de performance e latência</li>
+              <li>Simulação de carga e stress</li>
+              <li>Testes de resiliência e timeout</li>
+              <li>Métricas e análises em tempo real</li>
+              <li>Cenários controlados para aprendizado</li>
+            </ul>
+            <a href="pages/tools/nft-playground.html" class="tool-link">Acessar playground →</a>
+          </div>
+
+          <!-- Mobile Playground -->
+          <div class="tool-card">
+            <div class="tool-card-header">
+              <h3><a href="pages/tools/mobile-playground.html">Mobile Playground</a></h3>
+              <span class="tool-category">Documentação</span>
+            </div>
+            <p class="tool-description">Documentação completa para automação mobile com simuladores Android e iOS, guias de configuração e exemplos práticos.</p>
+            <ul class="tool-features">
+              <li>Guias de configuração de ambientes</li>
+              <li>Exemplos práticos Android e iOS</li>
+              <li>Simuladores e emuladores</li>
+              <li>Responsividade e viewport</li>
+              <li>Touch events e interações mobile</li>
+            </ul>
+            <a href="pages/tools/mobile-playground.html" class="tool-link">Acessar documentação →</a>
+          </div>
+
+          <!-- Utilitários -->
+          <div class="tool-card">
+            <div class="tool-card-header">
+              <h3><a href="pages/senior/utilitarios/">Utilitários para QA e SDET</a></h3>
+              <span class="tool-category">Utilitários</span>
+            </div>
+            <p class="tool-description">Ferramentas auxiliares e utilitários para QA e SDET: informações do navegador, console logs, testes flaky e aplicações React para prática.</p>
+            <ul class="tool-features">
+              <li>Informações do navegador e ambiente</li>
+              <li>Console logs e debugging</li>
+              <li>Testes flaky e resilience</li>
+              <li>Aplicações React para prática</li>
+              <li>Ferramentas de desenvolvimento e análise</li>
+            </ul>
+            <a href="pages/senior/utilitarios/" class="tool-link">Explorar utilitários →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Para quem é o projeto -->
+      <section class="section">
+        <h2 class="section-title">Para quem é o projeto</h2>
+        <div class="audience-content">
+          <p>O QA Playground foi desenvolvido para profissionais que buscam prática real e evolução contínua em testes de software:</p>
+          <ul class="audience-list">
+            <li><strong>QAs em formação:</strong> Ambiente controlado para aplicar conceitos e técnicas aprendidas.</li>
+            <li><strong>Profissionais em evolução:</strong> Cenários progressivos que permitem avançar de forma estruturada.</li>
+            <li><strong>SDETs:</strong> Ferramentas e utilitários para automação avançada e engenharia de qualidade.</li>
+            <li><strong>Tech Leads e Educadores:</strong> Material educacional estruturado para treinamento e avaliação técnica.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Sobre o projeto -->
+      <section class="section">
+        <h2 class="section-title">Sobre o projeto</h2>
+        <div class="about-content">
+          <p>
+            O QA Playground é um projeto educacional focado em prática e qualidade de software. 
+            Não é uma ferramenta comercial, mas sim um ambiente técnico e educacional criado para a comunidade de QA.
+          </p>
+          <p>
+            Desenvolvido por <strong>David Nascimento</strong>, o projeto oferece cenários controlados, 
+            elementos identificáveis e estruturas estáveis para facilitar tanto testes manuais quanto automação.
+          </p>
+          <p>
+            Todo o conteúdo é fornecido gratuitamente para uso educacional e profissional. 
+            O projeto está disponível sob licença MIT e pode ser utilizado como parte de portfólio profissional.
+          </p>
         </div>
       </section>
     </main>
 
+    <!-- Footer -->
     <footer class="site-footer">
-      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
-        <div>QA Playground — Projeto educacional • Português</div>
-        <div style="font-size: var(--font-size-sm); color: var(--muted);">
-          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="LICENSE" style="color: var(--accent);">MIT License</a>
+      <div class="footer-content">
+        <div class="footer-main">QA Playground — Projeto educacional • Português</div>
+        <div class="footer-secondary">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="LICENSE">MIT License</a>
         </div>
       </div>
     </footer>
 
-    <script src="js/main.js"></script>
-    <script src="js/home.js"></script>
+    <script type="module" src="js/index.js"></script>
   </body>
 </html>

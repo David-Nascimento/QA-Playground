@@ -1,0 +1,39 @@
+# Dependências
+node_modules/
+package-lock.json
+yarn.lock
+
+# Arquivos compilados TypeScript
+# Nota: Para deploy na Vercel, os arquivos são gerados durante o build
+# Mantenha comentado se quiser rastrear no Git, ou descomente para ignorar
+js/core/
+js/ui/
+js/features/
+js/index.js
+js/index.js.map
+js/index.d.ts
+js/index.d.ts.map
+
+# CSS compilado
+# Nota: Para deploy na Vercel, o arquivo é gerado durante o build
+# Mantenha comentado se quiser rastrear no Git, ou descomente para ignorar
+css/main.css
+css/main.css.map
+
+# TypeScript
+*.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*

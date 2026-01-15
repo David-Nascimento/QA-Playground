@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Módulo 11: De Júnior para Pleno - Próximos Passos — Fundamentos de Testes</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="index.html">Fundamentos</a></li>
+            <li><a href="../tools/mobile-playground.html">Mobile</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Módulo 11: De Júnior para Pleno - Próximos Passos</h1>
+          <div class="section-desc">
+            Guia completo sobre o que você precisa aprender e desenvolver para evoluir do nível júnior para pleno na carreira de QA, incluindo habilidades técnicas e comportamentais essenciais.
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Diferenças entre Júnior e Pleno</h2>
+          
+          <div class="content-card">
+            <h3>QA Júnior</h3>
+            <p>Um QA Júnior geralmente:</p>
+            <ul>
+              <li>Executa casos de teste seguindo scripts pré-definidos</li>
+              <li>Reporta bugs encontrados</li>
+              <li>Precisa de orientação e supervisão</li>
+              <li>Foca em testes manuais</li>
+              <li>Entende os conceitos básicos de teste</li>
+              <li>Segue processos estabelecidos</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>QA Pleno</h3>
+            <p>Um QA Pleno geralmente:</p>
+            <ul>
+              <li>Cria e mantém casos de teste e estratégias de teste</li>
+              <li>Analisa requisitos e identifica riscos</li>
+              <li>Trabalha com maior autonomia</li>
+              <li>Automatiza testes e cria frameworks</li>
+              <li>Mentoreia juniores e participa de decisões técnicas</li>
+              <li>Contribui para melhorias de processos</li>
+              <li>Comunica eficientemente com equipes multidisciplinares</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Habilidades Técnicas Essenciais</h2>
+
+          <div class="content-card">
+            <h3>1. Automação de Testes</h3>
+            <p>Esta é uma das habilidades mais importantes para evoluir de júnior para pleno. Você precisa:</p>
+            <ul>
+              <li><strong>Dominar uma ferramenta de automação:</strong> Selenium, Playwright, ou Cypress</li>
+              <li><strong>Conhecer uma linguagem de programação:</strong> JavaScript, Python, Java ou C#</li>
+              <li><strong>Criar e manter frameworks de automação:</strong> Entender padrões Page Object Model, Page Factory</li>
+              <li><strong>Integrar testes automatizados em CI/CD:</strong> Jenkins, GitLab CI, GitHub Actions</li>
+              <li><strong>Gerenciar dados de teste:</strong> Criar e manter datasets, mocks, stubs</li>
+            </ul>
+            <p><strong>Como aprender:</strong> Pratique criando scripts de automação para cenários reais. Comece com cenários simples (login, cadastro) e evolua para fluxos mais complexos.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Testes de API</h3>
+            <p>Entender e testar APIs é fundamental:</p>
+            <ul>
+              <li><strong>Conceitos de REST e SOAP:</strong> Entender arquitetura de APIs</li>
+              <li><strong>Ferramentas:</strong> Postman, Insomnia, REST Assured, Newman</li>
+              <li><strong>Testes de contrato:</strong> Validação de schemas, formatos JSON/XML</li>
+              <li><strong>Autenticação e autorização:</strong> OAuth, JWT, API keys</li>
+              <li><strong>Testes de performance de API:</strong> Load testing em endpoints</li>
+            </ul>
+            <p><strong>Como aprender:</strong> Pratique testando APIs públicas (como GitHub API, JSONPlaceholder) e aprenda a validar respostas, status codes, e estruturas de dados.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Banco de Dados</h3>
+            <p>Conhecimento básico de SQL e bancos de dados:</p>
+            <ul>
+              <li><strong>SQL básico:</strong> SELECT, INSERT, UPDATE, DELETE, JOINs</li>
+              <li><strong>Validação de dados:</strong> Verificar se dados estão sendo salvos corretamente</li>
+              <li><strong>Testes de integridade:</strong> Constraints, foreign keys, transações</li>
+              <li><strong>Ferramentas:</strong> DBeaver, pgAdmin, MySQL Workbench</li>
+            </ul>
+            <p><strong>Como aprender:</strong> Pratique escrevendo queries SQL simples. Crie testes que validem dados no banco após ações no sistema.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Metodologias Ágeis</h3>
+            <p>Compreender como trabalhar em equipes ágeis:</p>
+            <ul>
+              <li><strong>Scrum e Kanban:</strong> Entender cerimônias e papéis</li>
+              <li><strong>Estimativas:</strong> Planning poker, story points</li>
+              <li><strong>Definição de Pronto (DoD):</strong> Critérios de aceitação</li>
+              <li><strong>Testes em sprints:</strong> Como planejar e executar testes em ciclos curtos</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>5. Testes Não Funcionais</h3>
+            <p>Além de testes funcionais, um QA Pleno precisa entender:</p>
+            <ul>
+              <li><strong>Performance:</strong> JMeter, K6, Lighthouse</li>
+              <li><strong>Segurança:</strong> OWASP Top 10, ferramentas de scan</li>
+              <li><strong>Usabilidade:</strong> Heurísticas de Nielsen, testes de acessibilidade</li>
+              <li><strong>Compatibilidade:</strong> Cross-browser, cross-device testing</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Habilidades Comportamentais (Soft Skills)</h2>
+
+          <div class="content-card">
+            <h3>1. Comunicação</h3>
+            <ul>
+              <li>Comunicar claramente bugs e problemas técnicos</li>
+              <li>Documentar adequadamente casos de teste e processos</li>
+              <li>Participar ativamente de reuniões e discussões técnicas</li>
+              <li>Saber quando e como reportar problemas</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Pensamento Crítico e Analítico</h3>
+            <ul>
+              <li>Analisar requisitos e identificar gaps</li>
+              <li>Priorizar testes baseado em risco</li>
+              <li>Questionar quando algo não faz sentido</li>
+              <li>Pensar em cenários que não estão documentados</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Autonomia e Proatividade</h3>
+            <ul>
+              <li>Trabalhar com menos supervisão</li>
+              <li>Identificar e propor melhorias em processos</li>
+              <li>Buscar soluções antes de pedir ajuda</li>
+              <li>Assumir responsabilidades e ownership</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Mentoria e Colaboração</h3>
+            <ul>
+              <li>Compartilhar conhecimento com equipe</li>
+              <li>Ajudar juniores a crescer</li>
+              <li>Colaborar efetivamente com desenvolvedores e outros stakeholders</li>
+              <li>Participar de code reviews e discussões técnicas</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Roadmap de Aprendizado</h2>
+
+          <div class="content-card">
+            <h3>Fase 1: Fundamentos Sólidos (Primeiros 3-6 meses como Pleno)</h3>
+            <ul>
+              <li>Dominar automação de testes web (escolha uma ferramenta)</li>
+              <li>Aprender uma linguagem de programação básica</li>
+              <li>Entender testes de API</li>
+              <li>Melhorar habilidades de comunicação e documentação</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Fase 2: Expansão de Conhecimentos (6-12 meses)</h3>
+            <ul>
+              <li>Criar e manter frameworks de automação</li>
+              <li>Integrar testes em pipelines CI/CD</li>
+              <li>Explorar testes não funcionais (performance, segurança)</li>
+              <li>Participar mais ativamente de decisões técnicas</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Fase 3: Especialização e Liderança (12+ meses)</h3>
+            <ul>
+              <li>Mentorear outros QAs</li>
+              <li>Contribuir para arquitetura de testes</li>
+              <li>Liderar iniciativas de melhoria de qualidade</li>
+              <li>Pensar em estratégias de teste de alto nível</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Como Estudar: Plano Prático</h2>
+
+          <div class="content-card">
+            <h3>1. Estabeleça um Cronograma</h3>
+            <p>Dedique tempo regular para estudos. Sugestão:</p>
+            <ul>
+              <li>1-2 horas por dia durante a semana</li>
+              <li>3-4 horas nos finais de semana</li>
+              <li>Foque em uma habilidade por vez</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Aprenda Fazendo</h3>
+            <p>Teoria é importante, mas prática é essencial:</p>
+            <ul>
+              <li>Crie um projeto pessoal para praticar automação</li>
+              <li>Automatize cenários de sites públicos</li>
+              <li>Participe de projetos open source</li>
+              <li>Construa um portfólio no GitHub</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Busque Certificações</h3>
+            <p>Certificações podem validar seu conhecimento:</p>
+            <ul>
+              <li><strong>ISTQB Foundation Level:</strong> Certificação básica reconhecida mundialmente</li>
+              <li><strong>Certificações de ferramentas:</strong> Selenium, Cypress, etc.</li>
+              <li><strong>Certificações cloud:</strong> AWS, Azure (se relevante)</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Participe de Comunidades</h3>
+            <ul>
+              <li>Grupos no LinkedIn e Facebook</li>
+              <li>Meetups e eventos de QA</li>
+              <li>Conferências (presenciais ou online)</li>
+              <li>Fóruns e comunidades online</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Ferramentas Recomendadas para Aprender</h2>
+
+          <div class="content-card">
+            <h3>Automação Web</h3>
+            <ul>
+              <li><strong>Selenium:</strong> Mais popular, grande comunidade</li>
+              <li><strong>Playwright:</strong> Moderno, rápido, suporta múltiplos navegadores</li>
+              <li><strong>Cypress:</strong> Fácil de aprender, bom para iniciantes em automação</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Testes de API</h3>
+            <ul>
+              <li><strong>Postman:</strong> Interface gráfica, fácil de usar</li>
+              <li><strong>REST Assured:</strong> Para testes automatizados de API em Java</li>
+              <li><strong>Newman:</strong> CLI do Postman para CI/CD</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Gerenciamento de Testes</h3>
+            <ul>
+              <li><strong>Jira:</strong> Mais usado no mercado</li>
+              <li><strong>TestRail:</strong> Especializado em gestão de testes</li>
+              <li><strong>Zephyr:</strong> Plugin do Jira para testes</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Versionamento e CI/CD</h3>
+            <ul>
+              <li><strong>Git:</strong> Controle de versão essencial</li>
+              <li><strong>Jenkins:</strong> Automação de CI/CD</li>
+              <li><strong>GitLab CI / GitHub Actions:</strong> CI/CD integrado</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Como Demonstrar Progresso</h2>
+
+          <div class="content-card">
+            <h3>1. Construa um Portfólio</h3>
+            <p>Crie projetos práticos e compartilhe no GitHub:</p>
+            <ul>
+              <li>Frameworks de automação que você criou</li>
+              <li>Scripts de teste de API</li>
+              <li>Documentação de processos e estratégias</li>
+              <li>Casos de teste bem documentados</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Documente Suas Aprendizagens</h3>
+            <ul>
+              <li>Escreva artigos ou posts sobre técnicas e ferramentas</li>
+              <li>Compartilhe conhecimento em blogs ou LinkedIn</li>
+              <li>Crie tutoriais e guias</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Participe Ativamente</h3>
+            <ul>
+              <li>Contribua em projetos open source</li>
+              <li>Participe de discussões técnicas</li>
+              <li>Ajude outros QAs iniciantes</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Checklist de Preparação para Pleno</h2>
+
+          <div class="content-card">
+            <h3>Habilidades Técnicas</h3>
+            <ul>
+              <li>Able to criar e executar scripts de automação</li>
+              <li>Conhece testes de API e ferramentas relacionadas</li>
+              <li>Entende SQL básico para validação de dados</li>
+              <li>Familiarizado com ferramentas de gerenciamento de testes</li>
+              <li>Conhece conceitos de CI/CD</li>
+              <li>Entende metodologias ágeis (Scrum, Kanban)</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Habilidades Comportamentais</h3>
+            <ul>
+              <li>Comunicação clara e efetiva</li>
+              <li>Trabalha com autonomia</li>
+              <li>Pensa criticamente e analiticamente</li>
+              <li>Colabora bem em equipe</li>
+              <li>É proativo e busca soluções</li>
+              <li>Documenta adequadamente seu trabalho</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Recursos Recomendados</h2>
+
+          <div class="content-card">
+            <h3>Livros</h3>
+            <ul>
+              <li>"The Art of Software Testing" - Glenford Myers</li>
+              <li>"Test Driven Development" - Kent Beck</li>
+              <li>"Continuous Delivery" - Jez Humble e David Farley</li>
+              <li>"Agile Testing" - Lisa Crispin e Janet Gregory</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Cursos Online</h3>
+            <ul>
+              <li>Udemy: Cursos de automação com Selenium, Cypress, Playwright</li>
+              <li>Coursera: Software Testing and Automation</li>
+              <li>Pluralsight: Testes de software e qualidade</li>
+              <li>Documentação oficial das ferramentas</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Comunidades e Recursos</h3>
+            <ul>
+              <li>Ministry of Testing</li>
+              <li>Test Automation University</li>
+              <li>Software Testing Help</li>
+              <li>QA Communities no LinkedIn</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Navegação entre módulos -->
+        <div class="module-navigation">
+          <a href="testes-nao-funcionais.html" class="module-nav-link module-nav-link--prev">← Anterior: Testes Não Funcionais</a>
+          <a href="index.html" class="module-nav-link module-nav-link--next">Voltar ao Índice →</a>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

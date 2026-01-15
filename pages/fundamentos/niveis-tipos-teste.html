@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Módulo 3: Níveis e Tipos de Teste — Fundamentos de Testes</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../index.html">Início</a></li>
+            <li><a href="index.html">Fundamentos</a></li>
+            <li><a href="../tools/mobile-playground.html">Mobile</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Módulo 3: Níveis e Tipos de Teste</h1>
+          <div class="section-desc">
+            Entenda os diferentes níveis de teste (componente, integração, sistema, aceitação) e os tipos de teste (funcional, não-funcional, estrutural, baseado em experiência) conforme definidos pelo ISTQB.
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Níveis de Teste (ISTQB)</h2>
+          <p>Os níveis de teste organizam os testes de acordo com o escopo e o objetivo. Cada nível tem um propósito específico e testa diferentes aspectos do software em diferentes momentos do desenvolvimento.</p>
+        </div>
+
+        <div class="content-section">
+          <h2>Teste de Componente (Unit Testing)</h2>
+          
+          <div class="content-card">
+            <h3>Definição</h3>
+            <p>Testa componentes individuais ou módulos do software de forma isolada. Geralmente feito por desenvolvedores, testa unidades menores de código como funções, métodos ou classes.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Características</h3>
+            <ul>
+              <li>Testa unidades isoladas de código</li>
+              <li>Rápido de executar</li>
+              <li>Fácil de automatizar</li>
+              <li>Geralmente feito por desenvolvedores</li>
+              <li>Foca em lógica de negócio e cálculos</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Exemplo</h3>
+            <p>Testar uma função que calcula desconto, verificando se retorna o valor correto para diferentes entradas:</p>
+            <ul>
+              <li>Desconto de 10% em um produto de R$ 100,00 deve retornar R$ 90,00</li>
+              <li>Desconto de 0% deve retornar o valor original</li>
+              <li>Valor negativo deve retornar erro ou tratar adequadamente</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Teste de Integração</h2>
+          
+          <div class="content-card">
+            <h3>Definição</h3>
+            <p>Testa a interação entre componentes ou sistemas. Verifica se as interfaces funcionam corretamente quando os componentes trabalham juntos.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Características</h3>
+            <ul>
+              <li>Testa múltiplos componentes trabalhando juntos</li>
+              <li>Verifica interfaces e comunicação entre componentes</li>
+              <li>Pode testar integração com sistemas externos (APIs, bancos de dados)</li>
+              <li>Pode ser feito por desenvolvedores ou QAs</li>
+              <li>Mais lento que testes de unidade</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Exemplo</h3>
+            <p>Testar se o módulo de autenticação se comunica corretamente com o módulo de perfil do usuário:</p>
+            <ul>
+              <li>Quando o usuário faz login, o perfil é carregado corretamente</li>
+              <li>Quando o perfil é atualizado, a sessão reflete as mudanças</li>
+              <li>Quando há erro na autenticação, o perfil não é carregado</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Teste de Sistema</h2>
+          
+          <div class="content-card">
+            <h3>Definição</h3>
+            <p>Testa o sistema completo e integrado. Verifica se atende aos requisitos funcionais e não-funcionais em um ambiente que simula a produção.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Características</h3>
+            <ul>
+              <li>Testa o sistema completo end-to-end</li>
+              <li>Verifica requisitos funcionais e não-funcionais</li>
+              <li>Executado em ambiente similar à produção</li>
+              <li>Geralmente feito por QAs</li>
+              <li>Inclui testes de regressão</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Exemplo</h3>
+            <p>Testar todo o fluxo de compra em um e-commerce, desde a seleção do produto até o pagamento:</p>
+            <ul>
+              <li>Adicionar produto ao carrinho</li>
+              <li>Preencher dados de entrega</li>
+              <li>Selecionar método de pagamento</li>
+              <li>Processar pagamento</li>
+              <li>Confirmar pedido</li>
+              <li>Enviar email de confirmação</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Teste de Aceitação</h2>
+          
+          <div class="content-card">
+            <h3>Definição</h3>
+            <p>Testa se o sistema atende aos critérios de aceitação do usuário. Pode ser UAT (User Acceptance Testing) ou AT (Acceptance Testing). Valida se o software está pronto para ser usado pelos usuários finais.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Características</h3>
+            <ul>
+              <li>Foca em requisitos de negócio e necessidades do usuário</li>
+              <li>Geralmente feito por usuários finais ou product owners</li>
+              <li>Pode ser feito em ambiente de produção ou staging</li>
+              <li>Valida se o software resolve o problema do usuário</li>
+              <li>Última etapa antes do lançamento</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Tipos de Teste de Aceitação</h3>
+            <ul>
+              <li><strong>UAT (User Acceptance Testing):</strong> Usuários finais testam o sistema</li>
+              <li><strong>AT (Acceptance Testing):</strong> Validação contra critérios de aceitação definidos</li>
+              <li><strong>Alpha Testing:</strong> Testes internos antes do lançamento</li>
+              <li><strong>Beta Testing:</strong> Testes com usuários externos em ambiente controlado</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Exemplo</h3>
+            <p>Usuários finais testam o sistema em ambiente de produção para validar se atende suas necessidades:</p>
+            <ul>
+              <li>O sistema permite realizar tarefas que eles precisam fazer?</li>
+              <li>A interface é intuitiva e fácil de usar?</li>
+              <li>O sistema atende aos requisitos de negócio definidos?</li>
+              <li>O desempenho é aceitável para o uso real?</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Tipos de Teste</h2>
+          <p>Os tipos de teste categorizam os testes de acordo com o que está sendo testado e como está sendo testado. Um teste pode ser classificado por múltiplos tipos simultaneamente.</p>
+        </div>
+
+        <div class="content-section">
+          <h2>Testes Funcionais</h2>
+          
+          <div class="content-card">
+            <h3>Definição</h3>
+            <p>Avaliam se o software faz o que deveria fazer, testando funcionalidades e requisitos. Focam no comportamento do sistema e nas funcionalidades implementadas.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>O que é Testado</h3>
+            <ul>
+              <li>Funcionalidades do sistema</li>
+              <li>Requisitos de negócio</li>
+              <li>Regras de negócio</li>
+              <li>Fluxos de usuário</li>
+              <li>Integrações entre módulos</li>
+              <li>Validações e regras de entrada</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Exemplo</h3>
+            <p>Testar se o botão "Adicionar ao carrinho" realmente adiciona o produto ao carrinho:</p>
+            <ul>
+              <li>Quando clicado, o produto aparece no carrinho</li>
+              <li>O preço é calculado corretamente</li>
+              <li>Múltiplos produtos podem ser adicionados</li>
+              <li>O carrinho persiste entre páginas</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Testes Não-Funcionais</h2>
+          
+          <div class="content-card">
+            <h3>Definição</h3>
+            <p>Avaliam características como performance, usabilidade, segurança, confiabilidade. Focam em "quão bem" o sistema faz, não em "o que" o sistema faz.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>O que é Testado</h3>
+            <ul>
+              <li>Performance e tempo de resposta</li>
+              <li>Usabilidade e experiência do usuário</li>
+              <li>Segurança e vulnerabilidades</li>
+              <li>Confiabilidade e estabilidade</li>
+              <li>Compatibilidade entre navegadores e dispositivos</li>
+              <li>Escalabilidade e capacidade</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Exemplo</h3>
+            <p>Testar se a página carrega em menos de 3 segundos, ou se o sistema suporta 1000 usuários simultâneos:</p>
+            <ul>
+              <li>Tempo de carregamento da página inicial</li>
+              <li>Tempo de resposta de requisições de API</li>
+              <li>Comportamento sob carga pesada</li>
+              <li>Uso de recursos (CPU, memória)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Testes Estruturais (Caixa Branca)</h2>
+          
+          <div class="content-card">
+            <h3>Definição</h3>
+            <p>Baseados na estrutura interna do código. Testam caminhos de execução, condições, loops. Requerem conhecimento do código interno do sistema.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>O que é Testado</h3>
+            <ul>
+              <li>Cobertura de código (statements, branches, conditions)</li>
+              <li>Caminhos de execução</li>
+              <li>Lógica de condições e loops</li>
+              <li>Fluxo de dados</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Exemplo</h3>
+            <p>Garantir que todas as branches de um if/else sejam testadas, ou que todos os loops sejam executados:</p>
+            <ul>
+              <li>Testar tanto o caminho true quanto false de condições</li>
+              <li>Testar loops executando 0, 1 e múltiplas iterações</li>
+              <li>Garantir que todas as linhas de código sejam executadas</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Testes Baseados em Experiência</h2>
+          
+          <div class="content-card">
+            <h3>Definição</h3>
+            <p>Baseados no conhecimento e experiência do testador. Incluem testes exploratórios e ad-hoc, onde o testador usa sua intuição e conhecimento para encontrar bugs.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>O que é Testado</h3>
+            <ul>
+              <li>Cenários não documentados</li>
+              <li>Casos de borda identificados pela experiência</li>
+              <li>Áreas de risco conhecidas</li>
+              <li>Comportamentos inesperados</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>Exemplo</h3>
+            <p>Explorar o sistema livremente, tentando quebrá-lo de formas criativas baseadas em experiência anterior:</p>
+            <ul>
+              <li>Tentar inputs inesperados baseado em bugs anteriores</li>
+              <li>Testar cenários que geralmente têm problemas</li>
+              <li>Explorar funcionalidades sem seguir scripts</li>
+              <li>Usar conhecimento de domínio para encontrar problemas</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Navegação entre módulos -->
+        <div class="module-navigation">
+          <a href="principios-fundamentais.html" class="module-nav-link module-nav-link--prev">← Anterior: Princípios Fundamentais</a>
+          <a href="piramide-testes.html" class="module-nav-link module-nav-link--next">Próximo: Pirâmide de Testes →</a>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+        <div>QA Playground — Projeto educacional • Português</div>
+        <div style="font-size: var(--font-size-sm); color: var(--muted);">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../LICENSE" style="color: var(--accent);">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>
