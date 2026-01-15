@@ -1,9 +1,9 @@
 # Arquivos que não devem ser enviados para Vercel
 # (mas os arquivos compilados precisam estar incluídos)
 
-# Código fonte (não necessário no deploy)
-src/
-styles/
+# Código fonte (não necessário no deploy, mas build precisa deles)
+# src/
+# styles/
 
 # Arquivos de desenvolvimento
 node_modules/
