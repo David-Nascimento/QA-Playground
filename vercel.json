@@ -46,132 +46,20 @@
       "destination": "/index.html"
     },
     {
-      "source": "/pages/junior$",
-      "destination": "/pages/junior/index.html"
+      "source": "/pages/:path1/:path2/:path3",
+      "destination": "/pages/:path1/:path2/:path3/index.html"
     },
     {
-      "source": "/pages/pleno$",
-      "destination": "/pages/pleno/index.html"
+      "source": "/pages/:path1/:path2",
+      "destination": "/pages/:path1/:path2/index.html"
     },
     {
-      "source": "/pages/senior$",
-      "destination": "/pages/senior/index.html"
+      "source": "/pages/:path1",
+      "destination": "/pages/:path1/index.html"
     },
     {
-      "source": "/pages/fundamentos$",
-      "destination": "/pages/fundamentos/index.html"
-    },
-    {
-      "source": "/pages/mobile$",
-      "destination": "/pages/mobile/index.html"
-    },
-    {
-      "source": "/pages/desafio$",
-      "destination": "/pages/desafio/index.html"
-    },
-    {
-      "source": "/pages/junior/$",
-      "destination": "/pages/junior/index.html"
-    },
-    {
-      "source": "/pages/pleno/$",
-      "destination": "/pages/pleno/index.html"
-    },
-    {
-      "source": "/pages/senior/$",
-      "destination": "/pages/senior/index.html"
-    },
-    {
-      "source": "/pages/fundamentos/$",
-      "destination": "/pages/fundamentos/index.html"
-    },
-    {
-      "source": "/pages/mobile/$",
-      "destination": "/pages/mobile/index.html"
-    },
-    {
-      "source": "/pages/desafio/$",
-      "destination": "/pages/desafio/index.html"
-    },
-    {
-      "source": "/pages/junior/formularios$",
-      "destination": "/pages/junior/formularios/index.html"
-    },
-    {
-      "source": "/pages/junior/formularios/$",
-      "destination": "/pages/junior/formularios/index.html"
-    },
-    {
-      "source": "/pages/junior/interacoes$",
-      "destination": "/pages/junior/interacoes/index.html"
-    },
-    {
-      "source": "/pages/junior/interacoes/$",
-      "destination": "/pages/junior/interacoes/index.html"
-    },
-    {
-      "source": "/pages/junior/tabelas$",
-      "destination": "/pages/junior/tabelas/index.html"
-    },
-    {
-      "source": "/pages/junior/tabelas/$",
-      "destination": "/pages/junior/tabelas/index.html"
-    },
-    {
-      "source": "/pages/pleno/arquivos$",
-      "destination": "/pages/pleno/arquivos/index.html"
-    },
-    {
-      "source": "/pages/pleno/arquivos/$",
-      "destination": "/pages/pleno/arquivos/index.html"
-    },
-    {
-      "source": "/pages/pleno/interacoes$",
-      "destination": "/pages/pleno/interacoes/index.html"
-    },
-    {
-      "source": "/pages/pleno/interacoes/$",
-      "destination": "/pages/pleno/interacoes/index.html"
-    },
-    {
-      "source": "/pages/pleno/tabelas$",
-      "destination": "/pages/pleno/tabelas/index.html"
-    },
-    {
-      "source": "/pages/pleno/tabelas/$",
-      "destination": "/pages/pleno/tabelas/index.html"
-    },
-    {
-      "source": "/pages/senior/apis$",
-      "destination": "/pages/senior/apis/index.html"
-    },
-    {
-      "source": "/pages/senior/apis/$",
-      "destination": "/pages/senior/apis/index.html"
-    },
-    {
-      "source": "/pages/senior/dinamicos$",
-      "destination": "/pages/senior/dinamicos/index.html"
-    },
-    {
-      "source": "/pages/senior/dinamicos/$",
-      "destination": "/pages/senior/dinamicos/index.html"
-    },
-    {
-      "source": "/pages/senior/interacoes$",
-      "destination": "/pages/senior/interacoes/index.html"
-    },
-    {
-      "source": "/pages/senior/interacoes/$",
-      "destination": "/pages/senior/interacoes/index.html"
-    },
-    {
-      "source": "/pages/senior/utilitarios$",
-      "destination": "/pages/senior/utilitarios/index.html"
-    },
-    {
-      "source": "/pages/senior/utilitarios/$",
-      "destination": "/pages/senior/utilitarios/index.html"
+      "source": "/(.*)/$",
+      "destination": "/$1/index.html"
     }
   ],
   "cleanUrls": false,
