@@ -2,7 +2,6 @@
   "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": ".",
-  "framework": null,
   "headers": [
     {
       "source": "/(.*)",
@@ -20,34 +19,12 @@
           "value": "1; mode=block"
         }
       ]
-    },
-    {
-      "source": "/js/(.*\\.js)",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/javascript; charset=utf-8"
-        }
-      ]
-    },
-    {
-      "source": "/css/(.*\\.css)",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/css; charset=utf-8"
-        }
-      ]
     }
   ],
   "rewrites": [
     {
       "source": "/",
       "destination": "/index.html"
-    },
-    {
-      "source": "/pages/(.+?)/?$",
-      "destination": "/pages/$1/index.html"
     }
   ],
   "cleanUrls": false,
