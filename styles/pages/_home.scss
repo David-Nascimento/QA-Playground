@@ -187,9 +187,54 @@
   display: inline-block;
   padding-top: var(--spacing-md);
   border-top: 1px solid rgba(0, 0, 0, 0.08);
+  @include transition(color, text-decoration);
   
   @include hover-state {
     text-decoration: underline;
+  }
+}
+
+.progression-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: auto;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  
+  > .progression-link {
+    margin-top: 0;
+    padding-top: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+    border-top: none;
+    text-align: center;
+    border-radius: var(--border-radius-sm);
+    @include transition(background, color, border);
+    
+    &.progression-link-primary {
+      background: var(--accent);
+      color: $color-white !important;
+      font-weight: $font-weight-semibold;
+      border: 2px solid var(--accent);
+      
+      @include hover-state {
+        background: transparent !important;
+        border: 2px solid var(--accent);
+        color: var(--accent) !important;
+        text-decoration: none !important;
+      }
+    }
+    
+    &:not(.progression-link-primary) {
+      border: 2px solid transparent;
+      
+      @include hover-state {
+        background: rgba(122, 168, 116, 0.1);
+        text-decoration: none;
+      }
+    }
   }
 }
 
