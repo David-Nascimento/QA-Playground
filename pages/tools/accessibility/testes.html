@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>4. Testes de Acessibilidade (Como Testar) — Acessibilidade Web — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link rel="stylesheet" href="../../../css/accessibility-playground.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="main-nav">
+          <span class="nav-toggle-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+        <nav id="main-nav" class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="../mobile-playground.html">Mobile Playground</a></li>
+            <li><a href="../bdd-playground.html">BDD Playground</a></li>
+            <li><a href="../nft-playground.html">NFT Playground</a></li>
+            <li><a href="index.html">Acessibilidade</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema" class="theme-toggle-btn"></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="a11y-container">
+        <!-- Breadcrumb -->
+        <nav class="a11y-breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Acessibilidade Web</a> / Testes de Acessibilidade
+        </nav>
+
+        <!-- Header -->
+        <div class="a11y-header">
+          <h1>4. Testes de Acessibilidade (Como Testar)</h1>
+          <p class="a11y-subtitle">
+            Aprenda a testar acessibilidade manualmente e com ferramentas automatizadas.
+          </p>
+        </div>
+
+        <!-- Content -->
+        <section class="a11y-section" id="testes">
+          
+
+          <!-- Testes Manuais -->
+          <div class="a11y-test-section">
+            <h3>Testes Manuais</h3>
+            
+            <div class="a11y-test-card">
+              <h4>Navegação Apenas com Teclado</h4>
+              <p><strong>Objetivo:</strong> Verificar se todos os elementos interativos são acessíveis via teclado.</p>
+              <div class="a11y-test-steps">
+                <h5>Passo a Passo:</h5>
+                <ol>
+                  <li><strong>Tab:</strong> Avança para o próximo elemento focável</li>
+                  <li><strong>Shift + Tab:</strong> Volta para o elemento anterior</li>
+                  <li><strong>Enter / Espaço:</strong> Ativa botões e links</li>
+                  <li><strong>Esc:</strong> Fecha modais, dropdowns e menus</li>
+                  <li><strong>Setas:</strong> Navega em listas, menus e componentes customizados</li>
+                </ol>
+              </div>
+              <div class="a11y-test-checklist">
+                <h5>Checklist:</h5>
+                <ul>
+                    <li>Todos os elementos interativos são focáveis</li>
+                    <li>Ordem de tabulação segue a lógica visual</li>
+                    <li>Foco visível em todos os elementos</li>
+                    <li>Não há "armadilhas de foco" (foco preso em modais)</li>
+                    <li>Teclas de atalho funcionam (Enter para enviar, Esc para cancelar)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="a11y-test-card">
+              <h4>Uso de Leitores de Tela</h4>
+              <p><strong>Objetivo:</strong> Verificar como leitores de tela anunciam o conteúdo e a navegação.</p>
+              <div class="a11y-test-steps">
+                <h5>Leitores de Tela Gratuitos:</h5>
+                <ul>
+                  <li><strong>NVDA:</strong> Windows (gratuito) - <a href="https://www.nvaccess.org/" target="_blank" rel="noopener">Download NVDA</a></li>
+                  <li><strong>JAWS:</strong> Windows (pago, trial disponível)</li>
+                  <li><strong>VoiceOver:</strong> Mac/iOS (integrado) - Cmd+F5 para ativar</li>
+                  <li><strong>TalkBack:</strong> Android (integrado)</li>
+                  <li><strong>Narrator:</strong> Windows (integrado) - Win+Ctrl+Enter</li>
+                </ul>
+              </div>
+              <div class="a11y-test-steps">
+                <h5>Teste com NVDA (Windows):</h5>
+                <ol>
+                  <li>Baixe e instale o NVDA</li>
+                  <li>Inicie o NVDA (Ctrl+Alt+N)</li>
+                  <li>Navegue pela página usando setas, Tab, e comandos NVDA</li>
+                  <li>Verifique se todos os elementos são anunciados corretamente</li>
+                  <li>Teste formulários, botões, links e navegação</li>
+                </ol>
+              </div>
+              <div class="a11y-test-checklist">
+                <h5>O que verificar:</h5>
+                <ul>
+                  <li>Textos alternativos de imagens são lidos</li>
+                  <li>Labels de inputs são anunciados</li>
+                  <li>Botões com aria-label são descritos corretamente</li>
+                  <li>Estrutura de cabeçalhos (H1, H2, etc.) é navegável</li>
+                  <li>Landmarks ARIA (nav, main, banner) são identificados</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="a11y-test-card">
+              <h4>Teste de Foco Visível</h4>
+              <p><strong>Objetivo:</strong> Verificar se o foco é claramente visível durante navegação por teclado.</p>
+              <div class="a11y-test-steps">
+                <h5>Como testar:</h5>
+                <ol>
+                  <li>Navegue pela página usando apenas a tecla Tab</li>
+                  <li>Observe visualmente onde o foco está em cada elemento</li>
+                  <li>Verifique se o indicador de foco é claro e visível</li>
+                  <li>Teste em diferentes navegadores (Chrome, Firefox, Safari, Edge)</li>
+                </ol>
+              </div>
+              <div class="a11y-test-checklist">
+                <h5>Verificar:</h5>
+                <ul>
+                  <li>Outline ou indicador de foco visível (mínimo 2px de espessura)</li>
+                  <li>Contraste adequado entre foco e fundo</li>
+                  <li>Foco não é removido com <code>outline: none</code> sem alternativa</li>
+                  <li><code>:focus-visible</code> usado para mostrar foco apenas em navegação por teclado</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="a11y-test-card">
+              <h4>Zoom até 200% sem Quebra</h4>
+              <p><strong>Objetivo:</strong> Verificar se o layout permanece funcional com zoom até 200%.</p>
+              <div class="a11y-test-steps">
+                <h5>Como testar:</h5>
+                <ol>
+                  <li><strong>Chrome/Firefox:</strong> Ctrl+ (Windows) ou Cmd+ (Mac) para aumentar zoom</li>
+                  <li><strong>Safari:</strong> Cmd+ para aumentar zoom</li>
+                  <li>Aumente o zoom gradualmente até 200%</li>
+                  <li>Verifique se o layout permanece funcional e legível</li>
+                  <li>Teste também no dispositivo móvel (Configurações → Tela → Tamanho da fonte)</li>
+                </ol>
+              </div>
+              <div class="a11y-test-checklist">
+                <h5>Verificar:</h5>
+                <ul>
+                  <li>Texto permanece legível sem rolagem horizontal</li>
+                  <li>Elementos interativos não ficam sobrepostos</li>
+                  <li>Navegação continua funcional</li>
+                  <li>Layout não quebra ou vaza da viewport</li>
+                  <li>Imagens escalam corretamente</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testes Automatizados -->
+          <div class="a11y-test-section">
+            <h3>Testes Automatizados</h3>
+            <p class="a11y-info">
+              <strong>Importante:</strong> Testes automatizados detectam apenas ~30-40% dos problemas de acessibilidade. 
+              Use-os como complemento aos testes manuais, não como substituto.
+            </p>
+
+            <div class="a11y-test-card">
+              <h4>Lighthouse (Acessibilidade)</h4>
+              <p><strong>Ferramenta:</strong> Integrada no Chrome DevTools, avaliador completo de performance, acessibilidade e SEO.</p>
+              <div class="a11y-test-steps">
+                <h5>Como usar:</h5>
+                <ol>
+                  <li>Abra a página no Chrome</li>
+                  <li>Pressione F12 para abrir DevTools</li>
+                  <li>Vá para a aba "Lighthouse"</li>
+                  <li>Marque "Acessibilidade" (pode marcar outras também)</li>
+                  <li>Clique em "Generate report"</li>
+                  <li>Analise os resultados e correções sugeridas</li>
+                </ol>
+              </div>
+              <div class="a11y-test-info">
+                <h5>O que avalia:</h5>
+                <ul>
+                  <li>Contraste de cores</li>
+                  <li>Textos alternativos de imagens</li>
+                  <li>Labels em formulários</li>
+                  <li>Uso correto de ARIA</li>
+                  <li>Nomes acessíveis de elementos</li>
+                  <li>Ordem de cabeçalhos</li>
+                </ul>
+              </div>
+              <div class="a11y-test-limitations">
+                <h5>Limitações:</h5>
+                <ul>
+                  <li>Não detecta problemas de lógica ou contexto</li>
+                  <li>Pode dar falsos positivos/negativos</li>
+                  <li>Não substitui testes manuais com leitores de tela</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="a11y-test-card">
+              <h4>axe DevTools</h4>
+              <p><strong>Ferramenta:</strong> Extensão de navegador baseada na biblioteca axe-core (padrão de mercado).</p>
+              <div class="a11y-test-steps">
+                <h5>Como usar:</h5>
+                <ol>
+                  <li>Instale a extensão <a href="https://www.deque.com/axe/devtools/" target="_blank" rel="noopener">axe DevTools</a></li>
+                  <li>Abra a página no navegador</li>
+                  <li>Abra DevTools (F12)</li>
+                  <li>Vá para a aba "axe DevTools"</li>
+                  <li>Clique em "Scan" para analisar a página</li>
+                  <li>Revise os problemas encontrados com explicações detalhadas</li>
+                </ol>
+              </div>
+              <div class="a11y-test-info">
+                <h5>O que avalia:</h5>
+                <ul>
+                  <li>Conformidade WCAG 2.1/2.2 (níveis A, AA, AAA)</li>
+                  <li>Melhores práticas de ARIA</li>
+                  <li>Estrutura semântica HTML</li>
+                  <li>Problemas de contraste e cor</li>
+                </ul>
+              </div>
+              <div class="a11y-test-limitations">
+                <h5>Limitações:</h5>
+                <ul>
+                  <li>Analisa apenas o HTML estático carregado</li>
+                  <li>Pode não detectar problemas de conteúdo dinâmico</li>
+                  <li>Requer interpretação humana dos resultados</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="a11y-test-card">
+              <h4>WAVE (Web Accessibility Evaluation Tool)</h4>
+              <p><strong>Ferramenta:</strong> Extensão de navegador ou ferramenta online para avaliação visual de acessibilidade.</p>
+              <div class="a11y-test-steps">
+                <h5>Como usar:</h5>
+                <ol>
+                  <li>Instale a extensão <a href="https://wave.webaim.org/extension/" target="_blank" rel="noopener">WAVE</a> ou use <a href="https://wave.webaim.org/" target="_blank" rel="noopener">WAVE Online</a></li>
+                  <li>Abra a página no navegador</li>
+                  <li>Clique no ícone WAVE na barra de extensões</li>
+                  <li>Visualize os ícones de erro/aviso sobrepostos na página</li>
+                  <li>Clique nos ícones para ver detalhes e correções</li>
+                </ol>
+              </div>
+              <div class="a11y-test-info">
+                <h5>O que avalia:</h5>
+                <ul>
+                  <li>Estrutura semântica (cabeçalhos, listas, landmarks)</li>
+                  <li>Textos alternativos</li>
+                  <li>Contraste de cores</li>
+                  <li>Formulários e labels</li>
+                  <li>ARIA e roles</li>
+                </ul>
+              </div>
+              <div class="a11y-test-limitations">
+                <h5>Limitações:</h5>
+                <ul>
+                  <li>Pode mostrar falsos positivos em componentes JavaScript complexos</li>
+                  <li>Visual pode ser poluído em páginas complexas</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="a11y-test-card">
+              <h4>Pa11y</h4>
+              <p><strong>Ferramenta:</strong> Ferramenta de linha de comando para testes automatizados em CI/CD.</p>
+              <div class="a11y-test-steps">
+                <h5>Como usar:</h5>
+                <ol>
+                  <li>Instale via npm: <code>npm install -g pa11y</code></li>
+                  <li>Execute: <code>pa11y https://example.com</code></li>
+                  <li>Para relatório HTML: <code>pa11y --reporter html https://example.com > report.html</code></li>
+                  <li>Integre em CI/CD para validação contínua</li>
+                </ol>
+              </div>
+              <div class="a11y-test-info">
+                <h5>O que avalia:</h5>
+                <ul>
+                  <li>Usa axe-core ou HTML CodeSniffer como engine</li>
+                  <li>Conformidade WCAG</li>
+                  <li>Ideal para automação e integração contínua</li>
+                </ul>
+              </div>
+              <div class="a11y-test-limitations">
+                <h5>Limitações:</h5>
+                <ul>
+                  <li>Requer conhecimento de linha de comando</li>
+                  <li>Configuração mais complexa</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-main">QA Playground — Projeto educacional • Português</div>
+        <div class="footer-secondary">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../../LICENSE">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../../js/index.js"></script>
+  </body>
+</html>

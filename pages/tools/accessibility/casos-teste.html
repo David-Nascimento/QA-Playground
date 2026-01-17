@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>6. Casos de Teste Práticos — Acessibilidade Web — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link rel="stylesheet" href="../../../css/accessibility-playground.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="main-nav">
+          <span class="nav-toggle-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+        <nav id="main-nav" class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="../mobile-playground.html">Mobile Playground</a></li>
+            <li><a href="../bdd-playground.html">BDD Playground</a></li>
+            <li><a href="../nft-playground.html">NFT Playground</a></li>
+            <li><a href="index.html">Acessibilidade</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema" class="theme-toggle-btn"></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="a11y-container">
+        <!-- Breadcrumb -->
+        <nav class="a11y-breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Acessibilidade Web</a> / Casos de Teste Práticos
+        </nav>
+
+        <!-- Header -->
+        <div class="a11y-header">
+          <h1>6. Casos de Teste Práticos</h1>
+          <p class="a11y-subtitle">
+            Casos de teste reais e acionáveis para validar acessibilidade em diferentes cenários de uso.
+          </p>
+        </div>
+
+        <!-- Content -->
+        <section class="a11y-section" id="casos-teste">
+          
+          <p class="a11y-section-intro">
+            Casos de teste reais e acionáveis para validar acessibilidade em diferentes cenários de uso.
+          </p>
+
+          <div class="a11y-test-case-grid">
+            <!-- Caso de Teste 1 -->
+            <div class="a11y-test-case">
+              <h3>Caso de Teste 1: Navegação por Teclado em Formulário</h3>
+              <div class="test-case-details">
+                <p><strong>Cenário:</strong> Usuário navega no formulário de contato apenas com teclado.</p>
+                <div class="test-case-steps">
+                  <h4>Passos:</h4>
+                  <ol>
+                    <li>Usuário acessa a página do formulário</li>
+                    <li>Pressiona <kbd>Tab</kbd> para navegar pelos campos</li>
+                    <li>Preenche cada campo usando apenas o teclado</li>
+                    <li>Navega até o botão "Enviar"</li>
+                    <li>Pressiona <kbd>Enter</kbd> para submeter</li>
+                  </ol>
+                </div>
+                <div class="test-case-result">
+                  <h4>Resultado Esperado:</h4>
+                  <ul>
+                    <li>Foco visível em todos os campos</li>
+                    <li>Ordem de tabulação segue: Nome → Email → Mensagem → Enviar</li>
+                    <li>Labels são anunciados ao focar cada campo</li>
+                    <li>Mensagens de erro aparecem e são associadas aos campos</li>
+                    <li>Formulário pode ser submetido completamente via teclado</li>
+                  </ul>
+                </div>
+                <div class="test-case-wcag">
+                  <h4>Critério WCAG Relacionado:</h4>
+                  <ul>
+                    <li><strong>2.1.1 Teclado:</strong> Todo funcionalidade é acessível via teclado (Nível A)</li>
+                    <li><strong>2.4.3 Ordem de Foco:</strong> Ordem de foco preserva significado (Nível A)</li>
+                    <li><strong>4.1.2 Nome, Função, Valor:</strong> Nomes acessíveis para componentes (Nível A)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Caso de Teste 2 -->
+            <div class="a11y-test-case">
+              <h3>Caso de Teste 2: Leitor de Tela em Formulário Obrigatório</h3>
+              <div class="test-case-details">
+                <p><strong>Cenário:</strong> Usuário com leitor de tela preenche um campo obrigatório e recebe feedback de erro.</p>
+                <div class="test-case-steps">
+                  <h4>Passos:</h4>
+                  <ol>
+                    <li>Usuário inicia leitor de tela (NVDA/JAWS/VoiceOver)</li>
+                    <li>Navega até o campo "Email" (obrigatório)</li>
+                    <li>Deixa o campo vazio e tenta submeter</li>
+                    <li>Leitor de tela anuncia mensagem de erro</li>
+                    <li>Navega de volta ao campo para corrigir</li>
+                  </ol>
+                </div>
+                <div class="test-case-result">
+                  <h4>Resultado Esperado:</h4>
+                  <ul>
+                    <li>Campo obrigatório é identificado (<code>aria-required="true"</code> ou indicação visual)</li>
+                    <li>Mensagem de erro é anunciada ao tentar submeter</li>
+                    <li>Erro é associado ao campo via <code>aria-describedby</code></li>
+                    <li>Foco retorna ao campo com erro para correção</li>
+                    <li>Mensagem de erro desaparece quando campo é corrigido</li>
+                  </ul>
+                </div>
+                <div class="test-case-wcag">
+                  <h4>Critério WCAG Relacionado:</h4>
+                  <ul>
+                    <li><strong>3.3.1 Identificação de Erro:</strong> Erros são identificados e descritos (Nível A)</li>
+                    <li><strong>3.3.2 Rótulos ou Instruções:</strong> Rótulos ou instruções são fornecidos (Nível A)</li>
+                    <li><strong>4.1.3 Mensagens de Status:</strong> Status é programaticamente determinado (Nível AA)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Caso de Teste 3 -->
+            <div class="a11y-test-case">
+              <h3>Caso de Teste 3: Zoom 200% em Página Mobile</h3>
+              <div class="test-case-details">
+                <p><strong>Cenário:</strong> Usuário com baixa visão aumenta zoom para 200% em dispositivo móvel.</p>
+                <div class="test-case-steps">
+                  <h4>Passos:</h4>
+                  <ol>
+                    <li>Usuário acessa a página no dispositivo móvel</li>
+                    <li>Aumenta zoom para 200% (Configurações → Tela → Tamanho da fonte ou gestos de pinça)</li>
+                    <li>Tenta navegar pela página</li>
+                    <li>Tenta preencher formulários</li>
+                    <li>Tenta clicar em botões e links</li>
+                  </ol>
+                </div>
+                <div class="test-case-result">
+                  <h4>Resultado Esperado:</h4>
+                  <ul>
+                    <li>Todo conteúdo permanece legível sem rolagem horizontal</li>
+                    <li>Layout não quebra ou sobrepõe elementos</li>
+                    <li>Elementos interativos têm tamanho mínimo de 44x44px</li>
+                    <li>Navegação continua funcional</li>
+                    <li>Texto pode ser redimensionado sem perda de funcionalidade</li>
+                  </ul>
+                </div>
+                <div class="test-case-wcag">
+                  <h4>Critério WCAG Relacionado:</h4>
+                  <ul>
+                    <li><strong>1.4.4 Redimensionamento de Texto:</strong> Texto pode ser redimensionado até 200% (Nível AA)</li>
+                    <li><strong>1.4.10 Refluxo:</strong> Conteúdo pode ser apresentado sem perda de informação (Nível AA)</li>
+                    <li><strong>2.5.5 Tamanho de Alvo:</strong> Tamanho mínimo de alvo para ponteiro (Nível AAA)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Caso de Teste 4 -->
+            <div class="a11y-test-case">
+              <h3>Caso de Teste 4: Imagens Sem Texto Alternativo</h3>
+              <div class="test-case-details">
+                <p><strong>Cenário:</strong> Usuário com leitor de tela navega por página com imagens informativas.</p>
+                <div class="test-case-steps">
+                  <h4>Passos:</h4>
+                  <ol>
+                    <li>Usuário inicia leitor de tela</li>
+                    <li>Navega pela página encontrando várias imagens</li>
+                    <li>Leitor de tela anuncia cada imagem</li>
+                    <li>Verifica se texto alternativo está presente</li>
+                  </ol>
+                </div>
+                <div class="test-case-result">
+                  <h4>Resultado Esperado:</h4>
+                  <ul>
+                    <li>Imagens informativas têm <code>alt</code> descritivo</li>
+                    <li>Imagens decorativas têm <code>alt=""</code> ou <code>aria-hidden="true"</code></li>
+                    <li>Textos alternativos são concisos e descritivos</li>
+                    <li>Imagens funcionais (links/botões) têm <code>alt</code> que descreve a ação</li>
+                  </ul>
+                </div>
+                <div class="test-case-wcag">
+                  <h4>Critério WCAG Relacionado:</h4>
+                  <ul>
+                    <li><strong>1.1.1 Conteúdo Não-textual:</strong> Alternativas textuais para conteúdo não-textual (Nível A)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Caso de Teste 5 -->
+            <div class="a11y-test-case">
+              <h3>Caso de Teste 5: Modal com Foco Gerenciado</h3>
+              <div class="test-case-details">
+                <p><strong>Cenário:</strong> Usuário abre modal e navega apenas com teclado, depois fecha.</p>
+                <div class="test-case-steps">
+                  <h4>Passos:</h4>
+                  <ol>
+                    <li>Usuário pressiona <kbd>Tab</kbd> até o botão "Abrir Modal"</li>
+                    <li>Pressiona <kbd>Enter</kbd> para abrir modal</li>
+                    <li>Verifica se foco vai para dentro do modal</li>
+                    <li>Navega pelo conteúdo do modal com <kbd>Tab</kbd></li>
+                    <li>Tenta pressionar <kbd>Tab</kbd> para sair do modal (deve ficar preso)</li>
+                    <li>Pressiona <kbd>Esc</kbd> para fechar modal</li>
+                    <li>Verifica se foco retorna ao botão que abriu o modal</li>
+                  </ol>
+                </div>
+                <div class="test-case-result">
+                  <h4>Resultado Esperado:</h4>
+                  <ul>
+                    <li>Foco move para dentro do modal ao abrir</li>
+                    <li>Foco fica "preso" no modal (não escapa para conteúdo de fundo)</li>
+                    <li><kbd>Esc</kbd> fecha o modal</li>
+                    <li>Foco retorna ao elemento que abriu o modal</li>
+                    <li>Conteúdo de fundo é inacessível (aria-hidden) quando modal está aberto</li>
+                  </ul>
+                </div>
+                <div class="test-case-wcag">
+                  <h4>Critério WCAG Relacionado:</h4>
+                  <ul>
+                    <li><strong>2.1.2 Sem Armadilha de Teclado:</strong> Foco não fica preso (Nível A)</li>
+                    <li><strong>2.4.3 Ordem de Foco:</strong> Ordem de foco preserva significado (Nível A)</li>
+                    <li><strong>4.1.3 Mensagens de Status:</strong> Status é programaticamente determinado (Nível AA)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-main">QA Playground — Projeto educacional • Português</div>
+        <div class="footer-secondary">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../../LICENSE">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../../js/index.js"></script>
+  </body>
+</html>

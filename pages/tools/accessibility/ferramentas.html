@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>7. Ferramentas Úteis — Acessibilidade Web — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link rel="stylesheet" href="../../../css/accessibility-playground.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="main-nav">
+          <span class="nav-toggle-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+        <nav id="main-nav" class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="../mobile-playground.html">Mobile Playground</a></li>
+            <li><a href="../bdd-playground.html">BDD Playground</a></li>
+            <li><a href="../nft-playground.html">NFT Playground</a></li>
+            <li><a href="index.html">Acessibilidade</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema" class="theme-toggle-btn"></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="a11y-container">
+        <!-- Breadcrumb -->
+        <nav class="a11y-breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Acessibilidade Web</a> / Ferramentas Úteis
+        </nav>
+
+        <!-- Header -->
+        <div class="a11y-header">
+          <h1>7. Ferramentas Úteis</h1>
+          <p class="a11y-subtitle">
+            Extensões de navegador, simuladores e leitores de tela para desenvolvimento, teste e validação de acessibilidade web.
+          </p>
+        </div>
+
+        <!-- Content -->
+        <section class="a11y-section" id="ferramentas">
+          
+          <p class="a11y-section-intro">
+            Extensões de navegador, simuladores e leitores de tela para desenvolvimento, teste e validação de acessibilidade web.
+          </p>
+
+          <div class="a11y-tools-grid">
+            <!-- Extensões de Navegador -->
+            <div class="a11y-tool-category">
+              <h3>Extensões de Navegador</h3>
+              
+              <div class="a11y-tool-item">
+                <h4>axe DevTools</h4>
+                <p><strong>Descrição:</strong> Extensão oficial baseada em axe-core para testes de acessibilidade.</p>
+                <ul>
+                  <li><a href="https://www.deque.com/axe/devtools/" target="_blank" rel="noopener">Chrome / Edge</a></li>
+                  <li><a href="https://addons.mozilla.org/firefox/addon/axe-devtools/" target="_blank" rel="noopener">Firefox</a></li>
+                </ul>
+              </div>
+
+              <div class="a11y-tool-item">
+                <h4>WAVE</h4>
+                <p><strong>Descrição:</strong> Avaliação visual de acessibilidade com ícones sobrepostos na página.</p>
+                <ul>
+                  <li><a href="https://wave.webaim.org/extension/" target="_blank" rel="noopener">Chrome / Firefox / Edge</a></li>
+                  <li><a href="https://wave.webaim.org/" target="_blank" rel="noopener">Versão Online</a></li>
+                </ul>
+              </div>
+
+              <div class="a11y-tool-item">
+                <h4>Lighthouse</h4>
+                <p><strong>Descrição:</strong> Ferramenta integrada ao Chrome DevTools para auditoria completa.</p>
+                <p><strong>Uso:</strong> F12 → Aba "Lighthouse" → Gerar relatório</p>
+              </div>
+
+              <div class="a11y-tool-item">
+                <h4>Color Contrast Analyzer</h4>
+                <p><strong>Descrição:</strong> Extensão para verificar rácios de contraste de cores rapidamente.</p>
+                <ul>
+                  <li><a href="https://chrome.google.com/webstore/search/color%20contrast" target="_blank" rel="noopener">Chrome</a></li>
+                  <li><a href="https://addons.mozilla.org/firefox/addon/color-contrast-checker/" target="_blank" rel="noopener">Firefox</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Simuladores de Deficiência -->
+            <div class="a11y-tool-category">
+              <h3>Simuladores de Deficiência</h3>
+              
+              <div class="a11y-tool-item">
+                <h4>NoCoffee Vision Simulator</h4>
+                <p><strong>Descrição:</strong> Simula diferentes tipos de deficiência visual (daltonismo, catarata, etc.).</p>
+                <ul>
+                  <li><a href="https://chrome.google.com/webstore/detail/nocoffee/jjeeggmbnhckmgdhmgdckeigabjfbddl" target="_blank" rel="noopener">Chrome</a></li>
+                </ul>
+              </div>
+
+              <div class="a11y-tool-item">
+                <h4>High Contrast</h4>
+                <p><strong>Descrição:</strong> Ferramenta nativa do Windows para simular alto contraste.</p>
+                <p><strong>Uso:</strong> Windows → Configurações → Facilidade de Acesso → Alto Contraste</p>
+              </div>
+            </div>
+
+            <!-- Leitores de Tela -->
+            <div class="a11y-tool-category">
+              <h3>Leitores de Tela (Para Testes)</h3>
+              
+              <div class="a11y-tool-item">
+                <h4>NVDA (Windows)</h4>
+                <p><strong>Descrição:</strong> Leitor de tela gratuito e open-source para Windows.</p>
+                <ul>
+                  <li><a href="https://www.nvaccess.org/" target="_blank" rel="noopener">Download NVDA</a></li>
+                  <li><strong>Atalho:</strong> Ctrl+Alt+N (iniciar/parar)</li>
+                </ul>
+              </div>
+
+              <div class="a11y-tool-item">
+                <h4>VoiceOver (Mac/iOS)</h4>
+                <p><strong>Descrição:</strong> Leitor de tela integrado do macOS e iOS.</p>
+                <p><strong>Ativar:</strong> Cmd+F5 (Mac) ou Configurações → Acessibilidade → VoiceOver (iOS)</p>
+              </div>
+
+              <div class="a11y-tool-item">
+                <h4>Narrator (Windows)</h4>
+                <p><strong>Descrição:</strong> Leitor de tela integrado do Windows.</p>
+                <p><strong>Ativar:</strong> Win+Ctrl+Enter</p>
+              </div>
+            </div>
+          </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-main">QA Playground — Projeto educacional • Português</div>
+        <div class="footer-secondary">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../../LICENSE">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../../js/index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>5. Checklist de Acessibilidade — Acessibilidade Web — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link rel="stylesheet" href="../../../css/accessibility-playground.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="main-nav">
+          <span class="nav-toggle-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+        <nav id="main-nav" class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="../mobile-playground.html">Mobile Playground</a></li>
+            <li><a href="../bdd-playground.html">BDD Playground</a></li>
+            <li><a href="../nft-playground.html">NFT Playground</a></li>
+            <li><a href="index.html">Acessibilidade</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema" class="theme-toggle-btn"></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="a11y-container">
+        <!-- Breadcrumb -->
+        <nav class="a11y-breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Acessibilidade Web</a> / Checklist de Acessibilidade
+        </nav>
+
+        <!-- Header -->
+        <div class="a11y-header">
+          <h1>5. Checklist de Acessibilidade</h1>
+          <p class="a11y-subtitle">
+            Use este checklist para garantir que sua aplicação web atenda aos requisitos básicos de acessibilidade WCAG 2.2 AA.
+          </p>
+        </div>
+
+        <!-- Content -->
+        <section class="a11y-section" id="checklist">
+          
+          <p class="a11y-section-intro">
+            Use este checklist para garantir que sua aplicação web atenda aos requisitos básicos de acessibilidade WCAG 2.2 AA.
+          </p>
+
+          <div class="a11y-checklist-container">
+            <div class="a11y-checklist-category">
+              <h3>Imagens e Mídia</h3>
+              <ul class="a11y-checklist">
+                <li>
+                  <input type="checkbox" id="img-1" />
+                  <label for="img-1">Todas as imagens informativas têm atributo <code>alt</code> descritivo</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="img-2" />
+                  <label for="img-2">Imagens decorativas têm <code>alt=""</code> ou <code>aria-hidden="true"</code></label>
+                </li>
+                <li>
+                  <input type="checkbox" id="img-3" />
+                  <label for="img-3">Vídeos têm legendas (closed captions)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="img-4" />
+                  <label for="img-4">Áudios têm transcrições textuais</label>
+                </li>
+              </ul>
+            </div>
+
+            <div class="a11y-checklist-category">
+              <h3>Formulários</h3>
+              <ul class="a11y-checklist">
+                <li>
+                  <input type="checkbox" id="form-1" />
+                  <label for="form-1">Todos os inputs têm <code>&lt;label&gt;</code> associado (via <code>for</code> + <code>id</code> ou envolvendo o input)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="form-2" />
+                  <label for="form-2">Campos obrigatórios são marcados claramente (visualmente e via <code>aria-required</code>)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="form-3" />
+                  <label for="form-3">Mensagens de erro são associadas aos campos via <code>aria-describedby</code></label>
+                </li>
+                <li>
+                  <input type="checkbox" id="form-4" />
+                  <label for="form-4">Grupos de campos relacionados usam <code>&lt;fieldset&gt;</code> e <code>&lt;legend&gt;</code></label>
+                </li>
+              </ul>
+            </div>
+
+            <div class="a11y-checklist-category">
+              <h3>Contraste e Cor</h3>
+              <ul class="a11y-checklist">
+                <li>
+                  <input type="checkbox" id="contrast-1" />
+                  <label for="contrast-1">Texto normal tem contraste mínimo de 4.5:1 (WCAG AA)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="contrast-2" />
+                  <label for="contrast-2">Texto grande (≥18pt ou ≥14pt bold) tem contraste mínimo de 3:1</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="contrast-3" />
+                  <label for="contrast-3">Informações importantes não dependem apenas de cor para serem transmitidas</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="contrast-4" />
+                  <label for="contrast-4">Elementos interativos têm contraste suficiente com o fundo</label>
+                </li>
+              </ul>
+            </div>
+
+            <div class="a11y-checklist-category">
+              <h3>Navegação e Foco</h3>
+              <ul class="a11y-checklist">
+                <li>
+                  <input type="checkbox" id="nav-1" />
+                  <label for="nav-1">Todos os elementos interativos são acessíveis via teclado (Tab, Enter, Esc)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="nav-2" />
+                  <label for="nav-2">Ordem de tabulação segue a lógica visual (sem <code>tabindex</code> positivo desnecessário)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="nav-3" />
+                  <label for="nav-3">Foco visível em todos os elementos (outline ou indicador alternativo)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="nav-4" />
+                  <label for="nav-4">Não há "armadilhas de foco" (foco preso em modais ou componentes)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="nav-5" />
+                  <label for="nav-5">Atalhos de teclado não conflitam com leitores de tela</label>
+                </li>
+              </ul>
+            </div>
+
+            <div class="a11y-checklist-category">
+              <h3>Estrutura e Semântica</h3>
+              <ul class="a11y-checklist">
+                <li>
+                  <input type="checkbox" id="struct-1" />
+                  <label for="struct-1">Cabeçalhos (<code>&lt;h1&gt;</code> a <code>&lt;h6&gt;</code>) são usados em ordem hierárquica</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="struct-2" />
+                  <label for="struct-2">Landmarks ARIA são usados (<code>nav</code>, <code>main</code>, <code>banner</code>, <code>contentinfo</code>)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="struct-3" />
+                  <label for="struct-3">Listas são marcadas com <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code> ou <code>&lt;dl&gt;</code></label>
+                </li>
+                <li>
+                  <input type="checkbox" id="struct-4" />
+                  <label for="struct-4">Elementos semânticos HTML são usados (<code>&lt;button&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;article&gt;</code>, etc.)</label>
+                </li>
+              </ul>
+            </div>
+
+            <div class="a11y-checklist-category">
+              <h3>ARIA e Componentes</h3>
+              <ul class="a11y-checklist">
+                <li>
+                  <input type="checkbox" id="aria-1" />
+                  <label for="aria-1">Elementos interativos têm nomes acessíveis (<code>aria-label</code>, <code>aria-labelledby</code> ou texto visível)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="aria-2" />
+                  <label for="aria-2">Estados dinâmicos são comunicados via ARIA (<code>aria-expanded</code>, <code>aria-selected</code>, <code>aria-live</code>)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="aria-3" />
+                  <label for="aria-3">ARIA não é usado quando HTML semântico funciona</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="aria-4" />
+                  <label for="aria-4">Atributos ARIA não são duplicados ou conflitantes</label>
+                </li>
+              </ul>
+            </div>
+
+            <div class="a11y-checklist-category">
+              <h3>Responsividade e Zoom</h3>
+              <ul class="a11y-checklist">
+                <li>
+                  <input type="checkbox" id="zoom-1" />
+                  <label for="zoom-1">Layout permanece funcional com zoom até 200%</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="zoom-2" />
+                  <label for="zoom-2">Não há rolagem horizontal em zoom 200%</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="zoom-3" />
+                  <label for="zoom-3">Elementos interativos têm tamanho mínimo de 44x44px (touch targets)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="zoom-4" />
+                  <label for="zoom-4">Texto é redimensionável sem quebrar layout</label>
+                </li>
+              </ul>
+            </div>
+
+            <div class="a11y-checklist-category">
+              <h3>Feedback e Estados</h3>
+              <ul class="a11y-checklist">
+                <li>
+                  <input type="checkbox" id="feedback-1" />
+                  <label for="feedback-1">Mensagens de erro são claras e acionáveis</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="feedback-2" />
+                  <label for="feedback-2">Feedback visual é complementado com feedback para leitores de tela (<code>aria-live</code>)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="feedback-3" />
+                  <label for="feedback-3">Estados de loading são comunicados (<code>aria-busy</code>, <code>aria-live="polite"</code>)</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="feedback-4" />
+                  <label for="feedback-4">Alterações de contexto são anunciadas (navegação, mudanças de página)</label>
+                </li>
+              </ul>
+            </div>
+          </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-main">QA Playground — Projeto educacional • Português</div>
+        <div class="footer-secondary">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../../LICENSE">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../../js/index.js"></script>
+  </body>
+</html>

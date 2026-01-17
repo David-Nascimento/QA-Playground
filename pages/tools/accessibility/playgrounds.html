@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>3. Playgrounds Interativos — Acessibilidade Web — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link rel="stylesheet" href="../../../css/accessibility-playground.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="main-nav">
+          <span class="nav-toggle-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+        <nav id="main-nav" class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="../mobile-playground.html">Mobile Playground</a></li>
+            <li><a href="../bdd-playground.html">BDD Playground</a></li>
+            <li><a href="../nft-playground.html">NFT Playground</a></li>
+            <li><a href="index.html">Acessibilidade</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema" class="theme-toggle-btn"></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="a11y-container">
+        <!-- Breadcrumb -->
+        <nav class="a11y-breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Acessibilidade Web</a> / Playgrounds Interativos
+        </nav>
+
+        <!-- Header -->
+        <div class="a11y-header">
+          <h1>3. Playgrounds Interativos</h1>
+          <p class="a11y-subtitle">
+            Explore problemas comuns de acessibilidade e suas soluções de forma prática.
+          </p>
+        </div>
+
+        <!-- Content -->
+        <section class="a11y-section" id="playgrounds">
+          
+          <p class="a11y-section-intro">
+            Explore problemas comuns de acessibilidade ativando/desativando erros. Compare a versão com problema 
+            com a versão corrigida e aprenda na prática.
+          </p>
+
+          <!-- Playground 1: Botão sem aria-label -->
+          <div class="a11y-playground" id="playground-button-label">
+            <div class="a11y-playground-header">
+              <h3>Playground 1: Botão sem aria-label</h3>
+              <button class="a11y-toggle-btn" data-playground="button-label" aria-label="Alternar entre versão com erro e corrigida">
+                <span class="toggle-label">Mostrar versão com erro</span>
+                <span class="toggle-icon" aria-hidden="true">▼</span>
+              </button>
+            </div>
+            
+            <div class="a11y-playground-content">
+              <div class="a11y-version-bad" data-version="bad">
+                <h4>Versão com Problema</h4>
+                <p><strong>Problema:</strong> Botão apenas com ícone, sem texto ou aria-label. Usuários de leitores de tela não conseguem entender a função.</p>
+                <div class="playground-demo">
+                  <button class="demo-button-icon" aria-hidden="true">[Ícone]</button>
+                  <p class="demo-note">Leitores de tela anunciarão: "botão" (sem contexto)</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>&lt;button&gt;[Ícone]&lt;/button&gt;
+&lt;!-- Sem aria-label ou texto --&gt;</code></pre>
+                </div>
+              </div>
+
+              <div class="a11y-version-good" data-version="good" style="display: none;">
+                <h4>Versão Corrigida</h4>
+                <p><strong>Solução:</strong> Adicionar aria-label descritivo ou texto acessível.</p>
+                <div class="playground-demo">
+                  <button class="demo-button-icon" aria-label="Ver notificações" aria-hidden="true">[Ícone]</button>
+                  <p class="demo-note">Leitores de tela anunciarão: "Ver notificações, botão"</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>&lt;button aria-label="Ver notificações"&gt;[Ícone]&lt;/button&gt;
+
+&lt;!-- Ou com texto visível: --&gt;
+&lt;button&gt;[Ícone] &lt;span class="sr-only"&gt;Ver notificações&lt;/span&gt;&lt;/button&gt;</code></pre>
+                </div>
+                <div class="a11y-explanation">
+                  <p><strong>Por que funciona:</strong> O atributo <code>aria-label</strong> fornece um nome acessível para tecnologias assistivas, 
+                  mesmo quando o botão contém apenas um ícone visual.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Playground 2: Contraste Insuficiente -->
+          <div class="a11y-playground" id="playground-contrast">
+            <div class="a11y-playground-header">
+              <h3>Playground 2: Contraste Insuficiente</h3>
+              <button class="a11y-toggle-btn" data-playground="contrast" aria-label="Alternar entre versão com erro e corrigida">
+                <span class="toggle-label">Mostrar versão com erro</span>
+                <span class="toggle-icon" aria-hidden="true">▼</span>
+              </button>
+            </div>
+            
+            <div class="a11y-playground-content">
+              <div class="a11y-version-bad" data-version="bad">
+                <h4>Versão com Problema</h4>
+                <p><strong>Problema:</strong> Contraste de cores abaixo do mínimo WCAG AA (4.5:1 para texto normal, 3:1 para texto grande).</p>
+                <div class="playground-demo">
+                  <div class="demo-contrast-bad">
+                    <p>Este texto tem contraste insuficiente (cinza claro sobre cinza)</p>
+                    <button class="demo-button-low-contrast">Clique aqui</button>
+                  </div>
+                  <p class="demo-note">Rácio de contraste: ~2.1:1 (abaixo do mínimo de 4.5:1)</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>.texto {
+  color: #999999; /* Cinza claro - baixo contraste */
+  background: #f0f0f0;
+}</code></pre>
+                </div>
+              </div>
+
+              <div class="a11y-version-good" data-version="good" style="display: none;">
+                <h4>Versão Corrigida</h4>
+                <p><strong>Solução:</strong> Garantir contraste mínimo de 4.5:1 (texto normal) ou 3:1 (texto ≥18pt ou ≥14pt bold).</p>
+                <div class="playground-demo">
+                  <div class="demo-contrast-good">
+                    <p>Este texto tem contraste adequado (preto sobre branco)</p>
+                    <button class="demo-button-good-contrast">Clique aqui</button>
+                  </div>
+                  <p class="demo-note">Rácio de contraste: ~12.6:1 (acima do mínimo de 4.5:1)</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>.texto {
+  color: #000000; /* Preto - alto contraste */
+  background: #ffffff;
+  /* Contraste: 21:1 (muito acima do mínimo) */
+}</code></pre>
+                </div>
+                <div class="a11y-explanation">
+                  <p><strong>Ferramentas para verificar:</strong> Use o <a href="https://webaim.org/resources/contrastchecker/" target="_blank" rel="noopener">WebAIM Contrast Checker</a> 
+                  ou o DevTools do navegador para verificar rácios de contraste.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Playground 3: Falta de Foco Visível -->
+          <div class="a11y-playground" id="playground-focus">
+            <div class="a11y-playground-header">
+              <h3>Playground 3: Falta de Foco Visível</h3>
+              <button class="a11y-toggle-btn" data-playground="focus" aria-label="Alternar entre versão com erro e corrigida">
+                <span class="toggle-label">Mostrar versão com erro</span>
+                <span class="toggle-icon" aria-hidden="true">▼</span>
+              </button>
+            </div>
+            
+            <div class="a11y-playground-content">
+              <div class="a11y-version-bad" data-version="bad">
+                <h4>Versão com Problema</h4>
+                <p><strong>Problema:</strong> Foco removido com <code>outline: none</code> sem alternativa visual. Usuários de teclado não sabem onde estão.</p>
+                <div class="playground-demo">
+                  <button class="demo-button-no-focus">Pressione Tab para navegar</button>
+                  <button class="demo-button-no-focus">Botão 2</button>
+                  <button class="demo-button-no-focus">Botão 3</button>
+                  <p class="demo-note">Pressione Tab - nenhum indicador de foco visível</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>button:focus {
+  outline: none; /* Remove foco sem alternativa - PROBLEMA */
+}</code></pre>
+                </div>
+              </div>
+
+              <div class="a11y-version-good" data-version="good" style="display: none;">
+                <h4>Versão Corrigida</h4>
+                <p><strong>Solução:</strong> Manter outline padrão ou criar indicador de foco visível alternativo.</p>
+                <div class="playground-demo">
+                  <button class="demo-button-focus-visible">Pressione Tab para navegar</button>
+                  <button class="demo-button-focus-visible">Botão 2</button>
+                  <button class="demo-button-focus-visible">Botão 3</button>
+                  <p class="demo-note">Pressione Tab - indicador de foco visível (outline + box-shadow)</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px rgba(122, 168, 116, 0.2);
+}
+
+button:focus:not(:focus-visible) {
+  outline: none; /* Remove foco apenas para mouse */
+}</code></pre>
+                </div>
+                <div class="a11y-explanation">
+                  <p><strong>Por que funciona:</strong> O <code>:focus-visible</code> mostra foco apenas para navegação por teclado, 
+                  mantendo a experiência visual limpa para usuários de mouse, mas acessível para usuários de teclado.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Playground 4: Ordem de Tabulação Incorreta -->
+          <div class="a11y-playground" id="playground-tab-order">
+            <div class="a11y-playground-header">
+              <h3>Playground 4: Ordem de Tabulação Incorreta</h3>
+              <button class="a11y-toggle-btn" data-playground="tab-order" aria-label="Alternar entre versão com erro e corrigida">
+                <span class="toggle-label">Mostrar versão com erro</span>
+                <span class="toggle-icon" aria-hidden="true">▼</span>
+              </button>
+            </div>
+            
+            <div class="a11y-playground-content">
+              <div class="a11y-version-bad" data-version="bad">
+                <h4>Versão com Problema</h4>
+                <p><strong>Problema:</strong> Ordem de tabulação não segue a ordem visual/lógica usando <code>tabindex</code> incorretamente.</p>
+                <div class="playground-demo">
+                  <form class="demo-form">
+                    <label>Nome: <input type="text" tabindex="3" /></label>
+                    <label>Email: <input type="email" tabindex="1" /></label>
+                    <label>Telefone: <input type="tel" tabindex="2" /></label>
+                    <button type="submit" tabindex="4">Enviar</button>
+                  </form>
+                  <p class="demo-note">Pressione Tab - ordem: Email → Telefone → Nome → Enviar (confuso!)</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>&lt;input type="text" tabindex="3" /&gt; &lt;!-- Nome --&gt;
+&lt;input type="email" tabindex="1" /&gt; &lt;!-- Email --&gt;
+&lt;input type="tel" tabindex="2" /&gt; &lt;!-- Telefone --&gt;
+&lt;!-- PROBLEMA: Ordem não segue a lógica visual --&gt;</code></pre>
+                </div>
+              </div>
+
+              <div class="a11y-version-good" data-version="good" style="display: none;">
+                <h4>Versão Corrigida</h4>
+                <p><strong>Solução:</strong> Deixar ordem natural do DOM ou usar <code>tabindex</code> sequencial respeitando ordem visual.</p>
+                <div class="playground-demo">
+                  <form class="demo-form">
+                    <label>Nome: <input type="text" /></label>
+                    <label>Email: <input type="email" /></label>
+                    <label>Telefone: <input type="tel" /></label>
+                    <button type="submit">Enviar</button>
+                  </form>
+                  <p class="demo-note">Pressione Tab - ordem: Nome → Email → Telefone → Enviar (lógica!)</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>&lt;input type="text" /&gt; &lt;!-- Nome - sem tabindex --&gt;
+&lt;input type="email" /&gt; &lt;!-- Email - ordem natural --&gt;
+&lt;input type="tel" /&gt; &lt;!-- Telefone - segue DOM --&gt;
+&lt;!-- CORRETO: Ordem segue a estrutura HTML --&gt;</code></pre>
+                </div>
+                <div class="a11y-explanation">
+                  <p><strong>Regra de ouro:</strong> Evite <code>tabindex</code> positivo. Deixe a ordem natural do DOM. 
+                  Use <code>tabindex="0"</code> para tornar elementos não-focáveis focáveis (como divs interativas). 
+                  Use <code>tabindex="-1"</code> para remover da ordem (geralmente para programação de foco via JavaScript).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Playground 5: Inputs sem Label -->
+          <div class="a11y-playground" id="playground-inputs-labels">
+            <div class="a11y-playground-header">
+              <h3>Playground 5: Inputs sem Label</h3>
+              <button class="a11y-toggle-btn" data-playground="inputs-labels" aria-label="Alternar entre versão com erro e corrigida">
+                <span class="toggle-label">Mostrar versão com erro</span>
+                <span class="toggle-icon" aria-hidden="true">▼</span>
+              </button>
+            </div>
+            
+            <div class="a11y-playground-content">
+              <div class="a11y-version-bad" data-version="bad">
+                <h4>Versão com Problema</h4>
+                <p><strong>Problema:</strong> Input sem label associado. Leitores de tela não sabem o que preencher. Placeholder não é suficiente.</p>
+                <div class="playground-demo">
+                  <form class="demo-form">
+                    <input type="text" placeholder="Digite seu nome" />
+                    <input type="email" placeholder="Digite seu email" />
+                    <button type="submit">Enviar</button>
+                  </form>
+                  <p class="demo-note">Leitores de tela: "campo de texto, campo de texto" (sem contexto)</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>&lt;input type="text" placeholder="Digite seu nome" /&gt;
+&lt;!-- PROBLEMA: Sem label associado --&gt;
+&lt;!-- Placeholder some ao focar e não é lido como label --&gt;</code></pre>
+                </div>
+              </div>
+
+              <div class="a11y-version-good" data-version="good" style="display: none;">
+                <h4>Versão Corrigida</h4>
+                <p><strong>Solução:</strong> Associar label ao input usando <code>for</code> + <code>id</code> ou input dentro do label.</p>
+                <div class="playground-demo">
+                  <form class="demo-form">
+                    <label for="nome-demo">Nome:</label>
+                    <input type="text" id="nome-demo" name="nome" />
+                    <label for="email-demo">Email:</label>
+                    <input type="email" id="email-demo" name="email" />
+                    <button type="submit">Enviar</button>
+                  </form>
+                  <p class="demo-note">Leitores de tela: "Nome, campo de texto", "Email, campo de texto"</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>&lt;!-- Opção 1: Label com for + input com id --&gt;
+&lt;label for="nome"&gt;Nome:&lt;/label&gt;
+&lt;input type="text" id="nome" name="nome" /&gt;
+
+&lt;!-- Opção 2: Input dentro do label --&gt;
+&lt;label&gt;
+  Nome:
+  &lt;input type="text" name="nome" /&gt;
+&lt;/label&gt;
+
+&lt;!-- Opção 3: aria-label (use apenas se label visual não for viável) --&gt;
+&lt;input type="text" aria-label="Nome" name="nome" /&gt;</code></pre>
+                </div>
+                <div class="a11y-explanation">
+                  <p><strong>Por que funciona:</strong> Labels criam associação semântica. Quando um input recebe foco, 
+                  leitores de tela anunciam o texto do label associado. Isso é essencial para formulários acessíveis.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Playground 6: Uso Incorreto de role e aria-* -->
+          <div class="a11y-playground" id="playground-aria">
+            <div class="a11y-playground-header">
+              <h3>Playground 6: Uso Incorreto de role e aria-*</h3>
+              <button class="a11y-toggle-btn" data-playground="aria" aria-label="Alternar entre versão com erro e corrigida">
+                <span class="toggle-label">Mostrar versão com erro</span>
+                <span class="toggle-icon" aria-hidden="true">▼</span>
+              </button>
+            </div>
+            
+            <div class="a11y-playground-content">
+              <div class="a11y-version-bad" data-version="bad">
+                <h4>Versão com Problema</h4>
+                <p><strong>Problema:</strong> Uso incorreto de ARIA (aria-hidden em elemento interativo, role redundante, aria-label inconsistente).</p>
+                <div class="playground-demo">
+                  <button aria-hidden="true">Botão oculto de leitores</button>
+                  <div role="button" onclick="alert('Clicou')">Div como botão</div>
+                  <button aria-label="Enviar" aria-label="Submit">Duplo aria-label</button>
+                </div>
+                <p class="demo-note">Problemas: botão invisível para leitores, div interativa sem teclado, atributos duplicados</p>
+                <div class="a11y-code-example">
+                  <pre><code>&lt;!-- PROBLEMA: Botão oculto de leitores de tela --&gt;
+&lt;button aria-hidden="true"&gt;Ação importante&lt;/button&gt;
+
+&lt;!-- PROBLEMA: Role redundante (button já é button) --&gt;
+&lt;button role="button"&gt;Clique&lt;/button&gt;
+
+&lt;!-- PROBLEMA: Duplo aria-label --&gt;
+&lt;button aria-label="Enviar" aria-label="Submit"&gt;...&lt;/button&gt;</code></pre>
+                </div>
+              </div>
+
+              <div class="a11y-version-good" data-version="good" style="display: none;">
+                <h4>Versão Corrigida</h4>
+                <p><strong>Solução:</strong> Usar ARIA apenas quando necessário, com semântica HTML adequada e atributos consistentes.</p>
+                <div class="playground-demo">
+                  <button>Botão acessível</button>
+                  <button class="demo-button-interactive" onclick="alert('Clicou')" onkeydown="if(event.key==='Enter'||event.key===' ') {this.click(); event.preventDefault();}">
+                    Botão com suporte a teclado
+                  </button>
+                  <button aria-label="Enviar formulário">Enviar</button>
+                </div>
+                <p class="demo-note">Todos acessíveis: sem aria-hidden em interativos, sem roles redundantes, aria-label único</p>
+                <div class="a11y-code-example">
+                  <pre><code>&lt;!-- CORRETO: Use elementos semânticos HTML --&gt;
+&lt;button&gt;Ação importante&lt;/button&gt;
+
+&lt;!-- CORRETO: Se precisar de elemento customizado, use ARIA corretamente --&gt;
+&lt;div role="button" 
+     tabindex="0"
+     aria-label="Clique para enviar"
+     onclick="handleClick()"
+     onkeydown="handleKeydown(event)"&gt;
+  Enviar
+&lt;/div&gt;
+
+&lt;!-- CORRETO: aria-label único e descritivo --&gt;
+&lt;button aria-label="Enviar formulário de contato"&gt;Enviar&lt;/button&gt;</code></pre>
+                </div>
+                <div class="a11y-explanation">
+                  <p><strong>Regra de ouro ARIA:</strong> "Não use ARIA quando HTML semântico funciona". 
+                  Use <code>&lt;button&gt;</code> em vez de <code>&lt;div role="button"&gt;</code>. 
+                  Não use <code>aria-hidden="true"</code> em elementos interativos. Não duplique atributos.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-main">QA Playground — Projeto educacional • Português</div>
+        <div class="footer-secondary">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../../LICENSE">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../../js/index.js"></script>
+    <script src="../../../js/accessibility-playground.js"></script>
+  </body>
+</html>

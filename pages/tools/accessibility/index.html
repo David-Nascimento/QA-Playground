@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Acessibilidade Web — Playground Interativo — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link rel="stylesheet" href="../../../css/accessibility-playground.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="main-nav">
+          <span class="nav-toggle-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+        <nav id="main-nav" class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="../mobile-playground.html">Mobile Playground</a></li>
+            <li><a href="../bdd-playground.html">BDD Playground</a></li>
+            <li><a href="../nft-playground.html">NFT Playground</a></li>
+            <li><a href="index.html">Acessibilidade</a></li>
+            <li class="nav-dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">Desafio</button>
+              <ul class="dropdown-menu">
+                <li><a href="../../desafio/junior.html">Desafios Júnior</a></li>
+                <li><a href="../../desafio/pleno.html">Desafios Pleno</a></li>
+                <li><a href="../../desafio/senior.html">Desafios Sênior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema" class="theme-toggle-btn"></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="a11y-container">
+        <!-- Header -->
+        <div class="a11y-header">
+          <h1>Playground de Acessibilidade Web</h1>
+          <p class="a11y-subtitle">
+            Aprenda, teste e valide acessibilidade web na prática. Explore problemas comuns e suas soluções seguindo WCAG 2.2.
+          </p>
+        </div>
+
+        <!-- Introdução Livre -->
+        <section class="a11y-section" id="introducao">
+          <div class="a11y-intro">
+            <h3>O que é Acessibilidade Digital?</h3>
+            <p>
+              Acessibilidade digital é o design e desenvolvimento de produtos, serviços e ambientes digitais que podem ser utilizados 
+              por todas as pessoas, incluindo aquelas com deficiências. Uma aplicação web acessível permite que pessoas com diferentes 
+              habilidades possam perceber, entender, navegar e interagir efetivamente com o conteúdo.
+            </p>
+
+            <h3>Quem são os Usuários Beneficiados?</h3>
+            <div class="a11y-user-groups">
+              <div class="a11y-user-card">
+                <h4>Deficiência Visual</h4>
+                <ul>
+                  <li>Cegueira total (leitores de tela como NVDA, JAWS, VoiceOver)</li>
+                  <li>Baixa visão (zoom de tela, alto contraste)</li>
+                  <li>Daltonismo (contraste de cores, não depender apenas de cor)</li>
+                </ul>
+              </div>
+              <div class="a11y-user-card">
+                <h4>Deficiência Motora</h4>
+                <ul>
+                  <li>Limitações de movimento (navegação por teclado)</li>
+                  <li>Precisão reduzida (áreas de toque grandes, 44x44px mínimo)</li>
+                  <li>Uso de tecnologias assistivas (varredura, comandos de voz)</li>
+                </ul>
+              </div>
+              <div class="a11y-user-card">
+                <h4>Deficiência Auditiva</h4>
+                <ul>
+                  <li>Surdez total ou parcial (legendas, transcrições)</li>
+                  <li>Dependência de alternativas textuais para conteúdo de áudio</li>
+                  <li>Alertas visuais além de sonoros</li>
+                </ul>
+              </div>
+              <div class="a11y-user-card">
+                <h4>Deficiência Cognitiva</h4>
+                <ul>
+                  <li>Dificuldades de leitura (linguagem simples, texto claro)</li>
+                  <li>Problemas de memória (instruções claras, feedback consistente)</li>
+                  <li>TDAH (layout organizado, sem distrações)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Navegação das Seções -->
+        <nav class="a11y-nav-sections" aria-label="Navegação das seções de acessibilidade">
+          <h2 class="a11y-section-title" style="margin-bottom: var(--spacing-lg);">Explore as Seções</h2>
+          <div class="a11y-nav-grid">
+            <a href="importancia-legal-etica.html" class="a11y-nav-card">
+              <h3>2. Importância Legal e Ética</h3>
+              <p>WCAG 2.2, aspectos legais e éticos da acessibilidade web.</p>
+            </a>
+            <a href="playgrounds.html" class="a11y-nav-card">
+              <h3>3. Playgrounds Interativos</h3>
+              <p>Explore problemas comuns e suas soluções de forma prática.</p>
+            </a>
+            <a href="testes.html" class="a11y-nav-card">
+              <h3>4. Testes de Acessibilidade</h3>
+              <p>Aprenda a testar acessibilidade manualmente e com ferramentas.</p>
+            </a>
+            <a href="checklist.html" class="a11y-nav-card">
+              <h3>5. Checklist de Acessibilidade</h3>
+              <p>Use este checklist para validar requisitos WCAG 2.2 AA.</p>
+            </a>
+            <a href="casos-teste.html" class="a11y-nav-card">
+              <h3>6. Casos de Teste Práticos</h3>
+              <p>Casos de teste reais e acionáveis para validação.</p>
+            </a>
+            <a href="ferramentas.html" class="a11y-nav-card">
+              <h3>7. Ferramentas Úteis</h3>
+              <p>Extensões, simuladores e leitores de tela para testes.</p>
+            </a>
+            <a href="documentacao.html" class="a11y-nav-card">
+              <h3>8. Documentação</h3>
+              <p>Documentação oficial e recursos educacionais.</p>
+            </a>
+          </div>
+        </nav>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-main">QA Playground — Projeto educacional • Português</div>
+        <div class="footer-secondary">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../../LICENSE">MIT License</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../../../js/index.js"></script>
+  </body>
+</html>
