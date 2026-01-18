@@ -164,6 +164,49 @@
           <p><strong>Resultado esperado:</strong> 405 Method Not Allowed com header Allow listando métodos válidos.</p>
         </div>
 
+        <!-- Exemplos Práticos de Testes Negativos -->
+        <div class="subsection" style="margin-top: var(--spacing-xl);">
+          <h3>Teste Prático de Cenários Negativos</h3>
+          <p class="muted" style="margin-bottom: var(--spacing-md);">Teste diferentes cenários negativos usando a API mockada.</p>
+          
+          <div class="form-group" style="margin-bottom: var(--spacing-md);">
+            <label for="negative-test-scenario">Cenário de Teste Negativo:</label>
+            <select id="negative-test-scenario" style="padding: var(--spacing-sm); border-radius: var(--border-radius-sm); border: 1px solid var(--border); background: var(--bg); color: var(--text); width: 100%; max-width: 500px;">
+              <option value="missing-fields">Campos Ausentes (POST sem email)</option>
+              <option value="invalid-email">Email Inválido (formato incorreto)</option>
+              <option value="duplicate-email">Email Duplicado (409 Conflict)</option>
+              <option value="invalid-types">Tipos Inválidos (string onde espera number)</option>
+              <option value="empty-payload">Payload Vazio</option>
+              <option value="malformed-json">JSON Malformado</option>
+              <option value="unauthorized">Não Autenticado (401)</option>
+              <option value="forbidden">Sem Permissão (403)</option>
+              <option value="not-found">Recurso Não Encontrado (404)</option>
+              <option value="validation-error">Erro de Validação (422)</option>
+            </select>
+          </div>
+
+          <div class="controls" style="margin-bottom: var(--spacing-md);">
+            <button id="btn-test-negative" class="btn">Testar Cenário Negativo</button>
+            <button id="btn-clear-negative" class="btn btn-secondary">Limpar</button>
+          </div>
+
+          <pre 
+            id="negative-test-result"
+            style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--danger); overflow-x: auto; font-size: var(--font-size-sm); min-height: 150px;"
+          ><span class="muted">Selecione um cenário negativo e clique em "Testar" para ver como a API responde.</span></pre>
+
+          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: rgba(220, 53, 69, 0.1); border-radius: var(--border-radius-sm);">
+            <p style="margin-bottom: var(--spacing-sm);"><strong>💡 O que validar:</strong></p>
+            <ul style="margin-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+              <li>Status code correto para o tipo de erro</li>
+              <li>Mensagem de erro clara e acionável</li>
+              <li>Estrutura de erro consistente</li>
+              <li>Campos problemáticos identificados</li>
+              <li>Não expõe informações sensíveis ou stack traces</li>
+            </ul>
+          </div>
+        </div>
+
         <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); justify-content: space-between; flex-wrap: wrap;">
           <a href="autenticacao.html" class="btn btn-secondary">← Anterior: Autenticação</a>
           <a href="performance.html" class="btn">Próximo: Performance</a>
@@ -175,6 +218,121 @@
       QA Playground — Projeto educacional • Português
     </footer>
 
+    <script src="../../../js/api-config.js"></script>
     <script type="module" src="../../../js/index.js"></script>
+    <script type="module">
+      const API_BASE_URL = window.getApiBaseUrl ? window.getApiBaseUrl() : (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3001/api' : '/api');
+
+      async function testNegativeScenario() {
+        const scenario = document.getElementById('negative-test-scenario').value;
+        const resultEl = document.getElementById('negative-test-result');
+        
+        resultEl.innerHTML = '<span class="muted">Testando...</span>';
+        resultEl.style.color = 'var(--muted)';
+
+        try {
+          let requestConfig = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+          };
+
+          // Preparar payloads baseados no cenário
+          switch (scenario) {
+            case 'missing-fields':
+              requestConfig.body = JSON.stringify({ name: 'Teste' }); // Sem email
+              break;
+            case 'invalid-email':
+              requestConfig.body = JSON.stringify({ name: 'Teste', email: 'email-invalido' });
+              break;
+            case 'duplicate-email':
+              requestConfig.body = JSON.stringify({ name: 'Teste', email: 'admin@example.com', role: 'user' });
+              break;
+            case 'invalid-types':
+              requestConfig.body = JSON.stringify({ name: 12345, email: 'teste@example.com' }); // name deveria ser string
+              break;
+            case 'empty-payload':
+              requestConfig.body = JSON.stringify({});
+              break;
+            case 'malformed-json':
+              // Simular JSON malformado
+              requestConfig.body = '{"name": "Teste",}'; // vírgula trailing
+              break;
+            case 'unauthorized':
+              requestConfig.method = 'GET';
+              requestConfig.body = undefined;
+              // Não adicionar token
+              break;
+            case 'forbidden':
+              requestConfig.method = 'GET';
+              requestConfig.body = undefined;
+              requestConfig.headers['Authorization'] = 'Bearer fake-token-viewer'; // Token de viewer tentando acessar admin
+              break;
+            case 'not-found':
+              requestConfig.method = 'GET';
+              requestConfig.body = undefined;
+              // Usar ID inexistente
+              break;
+            case 'validation-error':
+              requestConfig.body = JSON.stringify({ 
+                name: 'Teste', 
+                email: 'teste@example.com',
+                items: [] // Array vazio para orders
+              });
+              break;
+          }
+
+          let url = '/users';
+          if (scenario === 'not-found') {
+            url = '/users/99999'; // ID inexistente
+          } else if (scenario === 'validation-error') {
+            url = '/orders';
+          }
+
+          const response = await fetch(`${API_BASE_URL}${url}`, requestConfig);
+          let data;
+          
+          try {
+            data = await response.json();
+          } catch (e) {
+            data = { error: 'Resposta não é JSON válido', raw: await response.text() };
+          }
+
+          const result = {
+            scenario: scenario,
+            status: response.status,
+            statusText: response.statusText,
+            request: {
+              method: requestConfig.method,
+              url: url,
+              headers: Object.fromEntries(Object.entries(requestConfig.headers || {})),
+              body: requestConfig.body ? JSON.parse(requestConfig.body) : undefined,
+            },
+            response: data,
+            validation: {
+              statusCodeCorrect: response.status >= 400,
+              hasErrorMessage: !!data.error || !!data.message,
+              errorStructure: !!(data.error && data.message),
+            },
+            timestamp: new Date().toISOString(),
+          };
+
+          resultEl.textContent = JSON.stringify(result, null, 2);
+          resultEl.style.color = response.status >= 400 ? 'var(--danger)' : 'var(--warning)';
+
+        } catch (error) {
+          resultEl.textContent = JSON.stringify({
+            error: 'Erro de conexão',
+            message: error.message,
+            hint: 'Verifique se a API está rodando: npm run dev:api',
+          }, null, 2);
+          resultEl.style.color = 'var(--danger)';
+        }
+      }
+
+      document.getElementById('btn-test-negative').addEventListener('click', testNegativeScenario);
+      document.getElementById('btn-clear-negative').addEventListener('click', () => {
+        document.getElementById('negative-test-result').innerHTML = '<span class="muted">Selecione um cenário negativo e clique em "Testar" para ver como a API responde.</span>';
+      });
+    </script>
   </body>
 </html>

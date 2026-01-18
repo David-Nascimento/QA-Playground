@@ -139,6 +139,49 @@
           <p><strong>Vulnerabilidades comuns:</strong> Validação de algoritmo não restrita permite "none" (sem assinatura), ausência de validação de expiração (exp claim), secrets fracos (curtos ou previsíveis), chaves públicas expostas, falta de validação de audience (aud claim), claims críticos não validados.</p>
         </div>
 
+        <!-- Exemplos Práticos de Autenticação -->
+        <div class="subsection" style="margin-top: var(--spacing-xl);">
+          <h3>Teste Prático de Autenticação</h3>
+          <p class="muted" style="margin-bottom: var(--spacing-md);">Teste diferentes cenários de autenticação usando a API mockada.</p>
+          
+          <div class="form-grid" style="margin-bottom: var(--spacing-md);">
+            <div class="form-group">
+              <label for="auth-email">Email</label>
+              <input id="auth-email" type="email" placeholder="admin@example.com" value="admin@example.com" />
+            </div>
+            <div class="form-group">
+              <label for="auth-password">Senha</label>
+              <input id="auth-password" type="password" placeholder="admin123" value="admin123" />
+            </div>
+            <div class="form-full">
+              <button id="btn-test-login" class="btn">Testar Login</button>
+              <button id="btn-test-invalid-token" class="btn btn-secondary">Testar Token Inválido</button>
+              <button id="btn-test-no-token" class="btn btn-secondary">Testar Sem Token</button>
+            </div>
+          </div>
+
+          <div id="auth-token-display" style="margin-bottom: var(--spacing-md); padding: var(--spacing-sm); background: var(--surface); border-radius: var(--border-radius-sm); font-size: var(--font-size-sm); display: none;">
+            <strong>Token obtido:</strong> <code id="token-value" style="word-break: break-all;"></code>
+          </div>
+
+          <pre 
+            id="auth-result"
+            style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); overflow-x: auto; font-size: var(--font-size-sm); min-height: 100px;"
+          ><span class="muted">Teste diferentes cenários de autenticação acima.</span></pre>
+
+          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm);">
+            <p style="margin-bottom: var(--spacing-sm);"><strong>💡 Credenciais de teste:</strong></p>
+            <ul style="margin-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+              <li><strong>Admin:</strong> <code>admin@example.com</code> / <code>admin123</code></li>
+              <li><strong>User:</strong> <code>user@example.com</code> / <code>user123</code></li>
+              <li><strong>Viewer:</strong> <code>viewer@example.com</code> / <code>viewer123</code></li>
+            </ul>
+            <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm);">
+              <strong>Cenários testáveis:</strong> Login válido, credenciais inválidas, token expirado, token ausente, token inválido.
+            </p>
+          </div>
+        </div>
+
         <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); justify-content: space-between; flex-wrap: wrap;">
           <a href="validacoes.html" class="btn btn-secondary">← Anterior: Validações</a>
           <a href="testes-negativos.html" class="btn">Próximo: Testes Negativos</a>
@@ -150,6 +193,105 @@
       QA Playground — Projeto educacional • Português
     </footer>
 
+    <script src="../../../js/api-config.js"></script>
     <script type="module" src="../../../js/index.js"></script>
+    <script type="module">
+      const API_BASE_URL = window.getApiBaseUrl ? window.getApiBaseUrl() : (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3001/api' : '/api');
+      let currentToken = null;
+
+      function displayAuthResult(result, isError = false) {
+        const resultEl = document.getElementById('auth-result');
+        resultEl.textContent = JSON.stringify(result, null, 2);
+        resultEl.style.color = isError || result.status >= 400 ? 'var(--danger)' : 'var(--text)';
+      }
+
+      // Testar Login
+      document.getElementById('btn-test-login').addEventListener('click', async () => {
+        const email = document.getElementById('auth-email').value.trim();
+        const password = document.getElementById('auth-password').value.trim();
+
+        if (!email || !password) {
+          displayAuthResult({ error: 'Preencha email e senha' }, true);
+          return;
+        }
+
+        try {
+          const response = await fetch(`${API_BASE_URL}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+          });
+
+          const data = await response.json();
+          const result = {
+            status: response.status,
+            statusText: response.statusText,
+            request: { method: 'POST', endpoint: '/api/auth/login', body: { email } },
+            response: data,
+            timestamp: new Date().toISOString(),
+          };
+
+          if (response.status === 200 && data.data?.token) {
+            currentToken = data.data.token;
+            document.getElementById('auth-token-display').style.display = 'block';
+            document.getElementById('token-value').textContent = currentToken;
+          }
+
+          displayAuthResult(result, response.status >= 400);
+
+        } catch (error) {
+          displayAuthResult({
+            error: 'Erro de conexão',
+            message: error.message,
+            hint: 'Verifique se a API está rodando: npm run dev:api',
+          }, true);
+        }
+      });
+
+      // Testar Token Inválido
+      document.getElementById('btn-test-invalid-token').addEventListener('click', async () => {
+        try {
+          const response = await fetch(`${API_BASE_URL}/users`, {
+            headers: {
+              'Authorization': 'Bearer token-invalido-12345',
+              'Content-Type': 'application/json',
+            },
+          });
+
+          const data = await response.json();
+          displayAuthResult({
+            status: response.status,
+            statusText: response.statusText,
+            request: { method: 'GET', endpoint: '/api/users', headers: { Authorization: 'Bearer token-invalido-12345' } },
+            response: data,
+            timestamp: new Date().toISOString(),
+          }, true);
+
+        } catch (error) {
+          displayAuthResult({ error: 'Erro de conexão', message: error.message }, true);
+        }
+      });
+
+      // Testar Sem Token
+      document.getElementById('btn-test-no-token').addEventListener('click', async () => {
+        try {
+          const response = await fetch(`${API_BASE_URL}/users`, {
+            headers: { 'Content-Type': 'application/json' },
+          });
+
+          const data = await response.json();
+          displayAuthResult({
+            status: response.status,
+            statusText: response.statusText,
+            request: { method: 'GET', endpoint: '/api/users', headers: {} },
+            response: data,
+            timestamp: new Date().toISOString(),
+          }, true);
+
+        } catch (error) {
+          displayAuthResult({ error: 'Erro de conexão', message: error.message }, true);
+        }
+      });
+    </script>
   </body>
 </html>

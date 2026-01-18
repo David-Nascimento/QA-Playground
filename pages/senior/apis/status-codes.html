@@ -194,6 +194,52 @@
           </div>
         </div>
 
+        <!-- Exemplos Práticos -->
+        <div class="subsection" style="margin-top: var(--spacing-xl);">
+          <h3>Teste Prático de Status Codes</h3>
+          <p class="muted" style="margin-bottom: var(--spacing-md);">Teste diferentes status codes usando a API mockada. Selecione um cenário e veja a resposta real.</p>
+          
+          <div class="form-group" style="margin-bottom: var(--spacing-md);">
+            <label for="status-code-scenario">Cenário de Status Code:</label>
+            <select id="status-code-scenario" style="padding: var(--spacing-sm); border-radius: var(--border-radius-sm); border: 1px solid var(--border); background: var(--bg); color: var(--text); width: 100%; max-width: 400px;">
+              <option value="success">✅ 200 OK - Sucesso</option>
+              <option value="error-400">❌ 400 Bad Request</option>
+              <option value="error-401">🔒 401 Unauthorized</option>
+              <option value="error-403">🚫 403 Forbidden</option>
+              <option value="error-404">🔍 404 Not Found</option>
+              <option value="error-409">⚠️ 409 Conflict</option>
+              <option value="error-422">📋 422 Unprocessable Entity</option>
+              <option value="error-429">⏱️ 429 Too Many Requests</option>
+              <option value="error-500">💥 500 Internal Server Error</option>
+              <option value="error-503">🔧 503 Service Unavailable</option>
+              <option value="timeout">⏳ 504 Gateway Timeout</option>
+            </select>
+          </div>
+
+          <div class="controls" style="margin-bottom: var(--spacing-md);">
+            <button id="btn-test-status-code" class="btn">Testar Status Code</button>
+            <button id="btn-clear-status-code" class="btn btn-secondary">Limpar</button>
+          </div>
+
+          <pre 
+            id="status-code-result"
+            style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); overflow-x: auto; font-size: var(--font-size-sm); min-height: 100px;"
+          ><span class="muted">Selecione um cenário e clique em "Testar Status Code" para ver a resposta.</span></pre>
+
+          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm);">
+            <p style="margin-bottom: var(--spacing-sm);"><strong>💡 Como usar:</strong></p>
+            <ul style="margin-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+              <li>Selecione um cenário de status code acima</li>
+              <li>Clique em "Testar Status Code" para fazer uma requisição GET /api/users</li>
+              <li>A API retornará o status code selecionado com uma resposta de erro apropriada</li>
+              <li>Use isso para validar como sua aplicação trata diferentes códigos HTTP</li>
+            </ul>
+            <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm);">
+              <strong>Nota:</strong> Em desenvolvimento, a API deve estar rodando em <code>http://localhost:3001</code>. Execute <code>npm run dev:api</code> se necessário. Em produção, a API está disponível automaticamente.
+            </p>
+          </div>
+        </div>
+
         <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); justify-content: space-between; flex-wrap: wrap;">
           <a href="metodos-http.html" class="btn btn-secondary">← Anterior: Métodos HTTP</a>
           <a href="validacoes.html" class="btn">Próximo: Validações</a>
@@ -205,6 +251,61 @@
       QA Playground — Projeto educacional • Português
     </footer>
 
+    <script src="../../../js/api-config.js"></script>
     <script type="module" src="../../../js/index.js"></script>
+    <script type="module">
+      const API_BASE_URL = window.getApiBaseUrl ? window.getApiBaseUrl() : (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3001/api' : '/api');
+
+      async function testStatusCode() {
+        const scenario = document.getElementById('status-code-scenario').value;
+        const resultEl = document.getElementById('status-code-result');
+        
+        resultEl.innerHTML = '<span class="muted">Testando...</span>';
+        resultEl.style.color = 'var(--muted)';
+
+        try {
+          const url = `${API_BASE_URL}/users?scenario=${scenario}`;
+          const response = await fetch(url, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+          const data = await response.json();
+          const result = {
+            status: response.status,
+            statusText: response.statusText,
+            headers: {
+              'Content-Type': response.headers.get('Content-Type'),
+            },
+            body: data,
+            scenario: scenario,
+            timestamp: new Date().toISOString(),
+          };
+
+          resultEl.textContent = JSON.stringify(result, null, 2);
+          resultEl.style.color = response.status >= 400 ? 'var(--danger)' : 'var(--text)';
+
+          // Destacar o status code
+          const statusColor = response.status >= 500 ? 'var(--danger)' : 
+                             response.status >= 400 ? 'var(--warning)' : 
+                             'var(--success)';
+          resultEl.style.borderLeftColor = statusColor;
+
+        } catch (error) {
+          resultEl.textContent = JSON.stringify({
+            error: 'Erro de conexão',
+            message: error.message,
+            hint: 'Verifique se a API está rodando: npm run dev:api',
+          }, null, 2);
+          resultEl.style.color = 'var(--danger)';
+        }
+      }
+
+      document.getElementById('btn-test-status-code').addEventListener('click', testStatusCode);
+      document.getElementById('btn-clear-status-code').addEventListener('click', () => {
+        document.getElementById('status-code-result').innerHTML = '<span class="muted">Selecione um cenário e clique em "Testar Status Code" para ver a resposta.</span>';
+      });
+    </script>
   </body>
 </html>

@@ -26,19 +26,52 @@ npm install
 ### Desenvolvimento
 
 ```bash
-# Compila e inicia servidor (abre navegador automaticamente)
+# Compila e inicia servidor + API (abre navegador automaticamente)
 npm start
 
-# OU: Watch mode em um terminal + servidor em outro
-npm run dev    # Terminal 1: Watch mode
-npm run serve  # Terminal 2: Servidor HTTP
+# OU: Watch mode com API e servidor HTTP (recomendado para desenvolvimento)
+npm run dev    # Inicia tudo: watch mode, API e servidor HTTP
 ```
+
+**Nota:** O comando `npm start` e `npm run dev` agora iniciam automaticamente:
+- ✅ Frontend na porta **8000** (http://localhost:8000)
+- ✅ API na porta **3001** (http://localhost:3001/api)
 
 ### Build de Produção
 
 ```bash
 npm run build
 ```
+
+### 🚀 API Mockada (Novo!)
+
+O projeto agora inclui uma **API mockada completa** para prática de testes de API:
+
+```bash
+# Compilar e iniciar apenas a API
+npm run build:ts:api
+npm run dev:api
+
+# OU iniciar API + Frontend juntos
+npm run dev:all
+```
+
+A API estará disponível em **http://localhost:3001**
+
+**Health Check:**
+```bash
+GET http://localhost:3001/api/health
+```
+
+**Documentação completa:**
+- **[api/README.md](api/README.md)** - Guia rápido da API
+- **[api/GUIA_TESTES.md](api/GUIA_TESTES.md)** - Guia completo para Postman/Insomnia
+- **Coleção Postman pronta**: `api/QA-Playground-API.postman_collection.json`
+
+**Credenciais de teste:**
+- Admin: `admin@example.com` / `admin123`
+- User: `user@example.com` / `user123`
+- Viewer: `viewer@example.com` / `viewer123`
 
 ---
 
@@ -119,6 +152,9 @@ Veja **[STRUCTURE.md](STRUCTURE.md)** e **[PROJECT-STRUCTURE.md](PROJECT-STRUCTU
 | `npm run serve` | Inicia servidor HTTP local |
 | `npm run build:css` | Compila apenas SCSS |
 | `npm run build:ts` | Compila apenas TypeScript |
+| `npm run build:ts:api` | Compila apenas a API (TypeScript) |
+| `npm run dev:api` | Inicia apenas a API mockada |
+| `npm run dev:all` | Inicia API + Frontend juntos |
 
 ---
 

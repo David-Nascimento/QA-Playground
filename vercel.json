@@ -27,6 +27,11 @@
       "destination": "/index.html"
     }
   ],
+  "functions": {
+    "api/**/*.ts": {
+      "runtime": "nodejs18.x"
+    }
+  },
   "cleanUrls": false,
   "trailingSlash": false
 }

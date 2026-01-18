@@ -14,6 +14,13 @@ js/index.js.map
 js/index.d.ts
 js/index.d.ts.map
 
+# API compilada
+api/js/
+api/**/*.js
+api/**/*.js.map
+api/**/*.d.ts
+api/**/*.d.ts.map
+
 # CSS compilado
 # Nota: Para deploy na Vercel, o arquivo é gerado durante o build
 # Mantenha comentado se quiser rastrear no Git, ou descomente para ignorar

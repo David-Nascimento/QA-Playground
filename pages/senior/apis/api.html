@@ -21,7 +21,7 @@
           </ul>
         </nav>
         <div class="et-header-actions">
-          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+          <button id="theme-toggle" aria-label="Alternar tema">☀</button>
         </div>
       </div>
     </header>
@@ -30,194 +30,392 @@
       <section class="section">
         <div class="section-header">
           <h2>API Playground (Mock)</h2>
-          <div class="section-desc">Simule chamadas de API REST para testar integração e validação de respostas. Endpoints mockados para prática de testes de API.</div>
+          <div class="section-desc">Instruções para criação de casos de teste de API REST. Endpoints mockados para prática de testes de API.</div>
         </div>
 
+        <!-- Instruções para Criação de Casos de Teste -->
+        <div class="info-box" style="margin-bottom: var(--spacing-xl);">
+          <h3>Como Criar Casos de Teste para esta API</h3>
+          <p style="margin-bottom: var(--spacing-md);">
+            Use as instruções abaixo para criar casos de teste estruturados. Cada endpoint possui exemplos de requisições, 
+            validações esperadas e cenários de teste recomendados.
+          </p>
+          
+          <div style="margin-top: var(--spacing-md);">
+            <h4 style="margin-bottom: var(--spacing-sm);">Estrutura de um Caso de Teste</h4>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><strong>ID e Título:</strong> Identificador único e descrição clara do cenário</li>
+              <li><strong>Pré-condições:</strong> Autenticação necessária, dados no sistema, estado inicial</li>
+              <li><strong>Dados de Entrada:</strong> Endpoint, método HTTP, headers, body, query params</li>
+              <li><strong>Ação:</strong> Executar requisição HTTP</li>
+              <li><strong>Resultado Esperado:</strong> Status code, estrutura JSON, valores específicos, headers</li>
+              <li><strong>Validações:</strong> Schema, tipos, regras de negócio, performance</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4 style="margin-bottom: var(--spacing-sm);">Controle de Cenários</h4>
+            <p style="margin-bottom: var(--spacing-sm);">
+              A API suporta controle de cenários via query parameter ou header para testar diferentes comportamentos:
+            </p>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><strong>Query Parameter:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">?scenario=&lt;tipo&gt;</code></li>
+              <li><strong>Header:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">x-mock-scenario: &lt;tipo&gt;</code></li>
+            </ul>
+            <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm);">
+              <strong>Cenários disponíveis:</strong> success, error-400, error-401, error-403, error-404, error-409, error-422, error-429, error-500, error-503, timeout
+            </p>
+          </div>
+        </div>
+
+        <!-- Instruções por Endpoint -->
         <div class="subsections subsections-vertical">
           <div class="subsection">
-            <h3>GET /users</h3>
-            <p class="muted" style="margin-bottom: var(--spacing-md);">Buscar lista de usuários (simulado).</p>
-            <div class="controls">
-              <button id="btn-fetch-users" class="btn" data-testid="btn-get-users">Buscar Usuários</button>
-              <button id="btn-clear-users" class="btn btn-secondary" data-testid="btn-clear-users">Limpar</button>
+            <h3>POST /api/auth/login</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Autenticação de usuário e obtenção de token.</p>
+            
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Exemplo de Requisição</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>POST https://qa-playground-azure.vercel.app/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "admin123"
+}</code></pre>
             </div>
-            <pre 
-              id="api-result-users" 
-              data-testid="resultado-api-users"
-              style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); overflow-x: auto; font-size: var(--font-size-sm); min-height: 60px;"
-            ><span class="muted">Nenhuma requisição realizada ainda.</span></pre>
+
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Resposta Esperada (200)</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>{
+  "status": 200,
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "user": {
+      "id": 1,
+      "name": "Admin User",
+      "email": "admin@example.com",
+      "role": "admin"
+    }
+  },
+  "timestamp": "2024-01-20T10:00:00.000Z"
+}</code></pre>
+            </div>
+
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md);">
+              <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Casos de Teste Recomendados</h4>
+              <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+                <li><strong>Happy Path:</strong> Login com credenciais válidas (admin@example.com / admin123)</li>
+                <li><strong>Validação:</strong> Email inválido, senha incorreta, campos ausentes</li>
+                <li><strong>Erros:</strong> 400 (dados inválidos), 401 (credenciais incorretas)</li>
+                <li><strong>Validações:</strong> Token presente, estrutura do user, role correto</li>
+              </ul>
+            </div>
           </div>
 
           <div class="subsection">
-            <h3>POST /users</h3>
-            <p class="muted" style="margin-bottom: var(--spacing-md);">Criar um novo usuário (simulado).</p>
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="user-name">Nome</label>
-                <input id="user-name" type="text" placeholder="Digite o nome" data-testid="input-nome-usuario" />
-              </div>
-              <div class="form-group">
-                <label for="user-email">Email</label>
-                <input id="user-email" type="email" placeholder="email@exemplo.com" data-testid="input-email-usuario" />
-              </div>
-              <div class="form-full">
-                <button id="btn-create-user" class="btn" data-testid="btn-post-user">Criar Usuário</button>
-              </div>
+            <h3>GET /api/users</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Listar todos os usuários (requer autenticação admin).</p>
+            
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Exemplo de Requisição</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>GET https://qa-playground-azure.vercel.app/api/users
+Authorization: Bearer {token}
+Content-Type: application/json</code></pre>
             </div>
-            <pre 
-              id="api-result-post" 
-              data-testid="resultado-api-post"
-              style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent-2); overflow-x: auto; font-size: var(--font-size-sm); min-height: 60px;"
-            ><span class="muted">Nenhuma requisição realizada ainda.</span></pre>
+
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Resposta Esperada (200)</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>{
+  "status": 200,
+  "data": [
+    {
+      "id": 1,
+      "name": "Admin User",
+      "email": "admin@example.com",
+      "role": "admin",
+      "active": true
+    }
+  ],
+  "timestamp": "2024-01-20T10:00:00.000Z"
+}</code></pre>
+            </div>
+
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md);">
+              <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Casos de Teste Recomendados</h4>
+              <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+                <li><strong>Happy Path:</strong> Listar usuários com token admin válido</li>
+                <li><strong>Autenticação:</strong> Sem token (401), token inválido (401), token expirado</li>
+                <li><strong>Autorização:</strong> Token de user/viewer (403 - apenas admin)</li>
+                <li><strong>Validações:</strong> Array não vazio, estrutura de cada usuário, tipos corretos</li>
+                <li><strong>Cenários:</strong> Usar ?scenario=error-500 para testar erro de servidor</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>POST /api/users</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Criar novo usuário (requer autenticação admin).</p>
+            
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Exemplo de Requisição</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>POST https://qa-playground-azure.vercel.app/api/users
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+  "name": "João Silva",
+  "email": "joao@exemplo.com",
+  "role": "user",
+  "active": true
+}</code></pre>
+            </div>
+
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Resposta Esperada (201)</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>{
+  "status": 201,
+  "data": {
+    "id": 4,
+    "name": "João Silva",
+    "email": "joao@exemplo.com",
+    "role": "user",
+    "active": true
+  },
+  "timestamp": "2024-01-20T10:00:00.000Z"
+}</code></pre>
+            </div>
+
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md);">
+              <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Casos de Teste Recomendados</h4>
+              <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+                <li><strong>Happy Path:</strong> Criar usuário com dados válidos</li>
+                <li><strong>Validações:</strong> Email ausente (400), email inválido (400), nome ausente (400)</li>
+                <li><strong>Conflitos:</strong> Email duplicado (409) - usar ?scenario=error-409</li>
+                <li><strong>Validações:</strong> ID gerado, dados retornados corretos, timestamp presente</li>
+                <li><strong>Edge Cases:</strong> Email muito longo, caracteres especiais, campos opcionais</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>GET /api/orders</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Listar pedidos (requer autenticação).</p>
+            
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Exemplo de Requisição</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>GET https://qa-playground-azure.vercel.app/api/orders
+Authorization: Bearer {token}
+Content-Type: application/json</code></pre>
+            </div>
+
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Resposta Esperada (200)</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>{
+  "status": 200,
+  "data": [
+    {
+      "id": 1,
+      "userId": 1,
+      "items": [
+        {
+          "productId": 101,
+          "productName": "Notebook",
+          "quantity": 1,
+          "price": 2500.0
+        }
+      ],
+      "total": 2500.0,
+      "status": "pending"
+    }
+  ],
+  "timestamp": "2024-01-20T10:00:00.000Z"
+}</code></pre>
+            </div>
+
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md);">
+              <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Casos de Teste Recomendados</h4>
+              <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+                <li><strong>Happy Path:</strong> Listar pedidos com token válido</li>
+                <li><strong>Autenticação:</strong> Sem token (401), token inválido</li>
+                <li><strong>Validações:</strong> Estrutura de pedidos, cálculo de total, status válido</li>
+                <li><strong>Performance:</strong> Tempo de resposta, quantidade de pedidos retornados</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>POST /api/orders</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Criar novo pedido (requer autenticação).</p>
+            
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Exemplo de Requisição</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>POST https://qa-playground-azure.vercel.app/api/orders
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "productId": 101,
+      "productName": "Notebook",
+      "quantity": 1,
+      "price": 2500.0
+    }
+  ]
+}</code></pre>
+            </div>
+
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Resposta Esperada (201)</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>{
+  "status": 201,
+  "data": {
+    "id": 3,
+    "userId": 1,
+    "items": [
+      {
+        "productId": 101,
+        "productName": "Notebook",
+        "quantity": 1,
+        "price": 2500.0
+      }
+    ],
+    "total": 2500.0,
+    "status": "pending"
+  },
+  "timestamp": "2024-01-20T10:00:00.000Z"
+}</code></pre>
+            </div>
+
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md);">
+              <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Casos de Teste Recomendados</h4>
+              <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+                <li><strong>Happy Path:</strong> Criar pedido com items válidos</li>
+                <li><strong>Validações:</strong> Items ausente (400), items vazio (400), JSON inválido (400)</li>
+                <li><strong>Validações:</strong> Total calculado corretamente, status inicial "pending"</li>
+                <li><strong>Edge Cases:</strong> Múltiplos items, quantidade zero, preço negativo</li>
+                <li><strong>Regras de Negócio:</strong> Total = soma de (quantity * price) para cada item</li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div class="subsection" style="margin-top: var(--spacing-lg);">
-          <h3>Informações para Testes</h3>
+        <!-- Informações e Documentação -->
+        <div class="subsection" style="margin-top: var(--spacing-xl);">
+          <h3>Documentação e Informações</h3>
+          
+          <!-- Tabs para navegação -->
+          <div style="margin-bottom: var(--spacing-md);">
+            <div class="tabs" style="display: flex; gap: var(--spacing-xs); border-bottom: 2px solid var(--border); margin-bottom: var(--spacing-md);">
+              <button class="tab-btn active" data-tab="endpoints" style="padding: var(--spacing-sm) var(--spacing-md); background: transparent; border: none; border-bottom: 2px solid var(--accent); color: var(--text); cursor: pointer; font-size: var(--font-size-sm); transition: all 0.2s;">Endpoints</button>
+              <button class="tab-btn" data-tab="karate" style="padding: var(--spacing-sm) var(--spacing-md); background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--muted); cursor: pointer; font-size: var(--font-size-sm); transition: all 0.2s;">Karate DSL</button>
+              <button class="tab-btn" data-tab="postman" style="padding: var(--spacing-sm) var(--spacing-md); background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--muted); cursor: pointer; font-size: var(--font-size-sm); transition: all 0.2s;">Postman (Newman)</button>
+              <button class="tab-btn" data-tab="restassured" style="padding: var(--spacing-sm) var(--spacing-md); background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--muted); cursor: pointer; font-size: var(--font-size-sm); transition: all 0.2s;">REST Assured</button>
+              <button class="tab-btn" data-tab="robot" style="padding: var(--spacing-sm) var(--spacing-md); background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--muted); cursor: pointer; font-size: var(--font-size-sm); transition: all 0.2s;">Robot Framework</button>
+              <button class="tab-btn" data-tab="cypress" style="padding: var(--spacing-sm) var(--spacing-md); background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--muted); cursor: pointer; font-size: var(--font-size-sm); transition: all 0.2s;">Cypress</button>
+            </div>
+          </div>
+
+          <!-- Conteúdo das Tabs -->
           <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
-            <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
-            <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
-              <li>Testar requisições GET e POST</li>
-              <li>Validar status codes de resposta</li>
-              <li>Verificar estrutura JSON das respostas</li>
-              <li>Testar criação de recursos</li>
-              <li>Validar tratamento de erros</li>
-              <li>Testar timeouts e delays de resposta</li>
-            </ul>
             
-            <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Endpoints Mockados:</strong></p>
-            <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
-              <li><code>GET /users</code> - Retorna lista de usuários</li>
-              <li><code>POST /users</code> - Cria um novo usuário</li>
-            </ul>
+            <!-- Tab: Endpoints -->
+            <div class="tab-content active" data-tab-content="endpoints">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--text); font-size: var(--font-size-sm); margin-bottom: var(--spacing-md);">
+                <li>Testar requisições GET e POST</li>
+                <li>Validar status codes de resposta</li>
+                <li>Verificar estrutura JSON das respostas</li>
+                <li>Testar criação de recursos</li>
+                <li>Validar tratamento de erros</li>
+                <li>Testar timeouts e delays de resposta</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Endpoints Disponíveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--text); font-size: var(--font-size-sm); margin-bottom: var(--spacing-md);">
+                <li><strong>Autenticação:</strong></li>
+                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">POST /api/auth/login</code> - Faz login</li>
+                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">POST /api/auth/logout</code> - Faz logout</li>
+                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">GET /api/auth/me</code> - Informações do usuário</li>
+                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">POST /api/auth/validate</code> - Valida token</li>
+                <li><strong>Usuários:</strong></li>
+                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">GET /api/users</code> - Lista usuários (admin)</li>
+                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">GET /api/users/:id</code> - Busca usuário</li>
+                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">POST /api/users</code> - Cria usuário (admin)</li>
+                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">PUT /api/users/:id</code> - Atualiza usuário</li>
+                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">DELETE /api/users/:id</code> - Deleta usuário (admin)</li>
+                <li><strong>Pedidos:</strong></li>
+                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">GET /api/orders</code> - Lista pedidos</li>
+                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">GET /api/orders/:id</code> - Busca pedido</li>
+                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">POST /api/orders</code> - Cria pedido</li>
+                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">PUT /api/orders/:id</code> - Atualiza pedido</li>
+                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">DELETE /api/orders/:id</code> - Deleta pedido (admin)</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Credenciais de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--text); font-size: var(--font-size-sm); margin-bottom: var(--spacing-md);">
+                <li><strong>Admin:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">admin@example.com</code> / <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">admin123</code></li>
+                <li><strong>User:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">user@example.com</code> / <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">user123</code></li>
+                <li><strong>Viewer:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">viewer@example.com</code> / <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">viewer123</code></li>
+              </ul>
 
-            <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado de API:</strong></p>
-            
-            <div style="margin-bottom: var(--spacing-md);">
-              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">JavaScript/Node.js (Jest + Axios)</h4>
-              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>const axios = require('axios');
-const baseURL = 'https://api.example.com';
-
-describe('API Users Tests', () => {
-  // GET /users
-  test('GET /users deve retornar status 200 e lista de usuários', async () => {
-    const response = await axios.get(`${baseURL}/users`);
-    
-    expect(response.status).toBe(200);
-    expect(response.data).toHaveProperty('data');
-    expect(Array.isArray(response.data.data)).toBe(true);
-    expect(response.data.data.length).toBeGreaterThan(0);
-    
-    // Validar estrutura de cada usuário
-    response.data.data.forEach(user => {
-      expect(user).toHaveProperty('id');
-      expect(user).toHaveProperty('name');
-      expect(user).toHaveProperty('email');
-      expect(typeof user.id).toBe('number');
-      expect(typeof user.name).toBe('string');
-      expect(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)).toBe(true);
-    });
-  });
-
-  // POST /users
-  test('POST /users deve criar usuário com status 201', async () => {
-    const newUser = {
-      name: 'João Silva',
-      email: 'joao@exemplo.com'
-    };
-    
-    const response = await axios.post(`${baseURL}/users`, newUser);
-    
-    expect(response.status).toBe(201);
-    expect(response.data).toHaveProperty('data');
-    expect(response.data.data).toHaveProperty('id');
-    expect(response.data.data.name).toBe(newUser.name);
-    expect(response.data.data.email).toBe(newUser.email);
-    expect(response.data).toHaveProperty('timestamp');
-  });
-
-  // Validação de erro
-  test('POST /users sem email deve retornar 400', async () => {
-    try {
-      await axios.post(`${baseURL}/users`, { name: 'João' });
-    } catch (error) {
-      expect(error.response.status).toBe(400);
-      expect(error.response.data).toHaveProperty('error');
-    }
-  });
-});</code></pre>
             </div>
 
-            <div style="margin-bottom: var(--spacing-md);">
-              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Python (pytest + requests)</h4>
-              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>import pytest
-import requests
-from jsonschema import validate
+            <!-- Tab: Karate DSL -->
+            <div class="tab-content" data-tab-content="karate" style="display: none;">
+              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Karate DSL</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>Feature: API Users Tests
 
-BASE_URL = 'https://api.example.com'
+Background:
+  * url 'https://qa-playground-azure.vercel.app/api'
 
-def test_get_users_status_200():
-    """GET /users deve retornar status 200"""
-    response = requests.get(f'{BASE_URL}/users')
-    
-    assert response.status_code == 200
-    assert response.headers['Content-Type'] == 'application/json'
-    
-    data = response.json()
-    assert 'data' in data
-    assert isinstance(data['data'], list)
-    assert len(data['data']) > 0
+Scenario: GET /users deve retornar status 200 e lista de usuários
+  Given path 'users'
+  When method GET
+  Then status 200
+  And match response.status == 200
+  And match response.data != null
+  And match response.data == '#[]'
+  And match response.data[0] contains { id: '#number', name: '#string', email: '#string' }
+  And match each response.data[*].email == '#regex ^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$'
 
-def test_get_users_schema():
-    """Validar schema JSON da resposta"""
-    response = requests.get(f'{BASE_URL}/users')
-    data = response.json()
-    
-    user_schema = {
-        'type': 'object',
-        'properties': {
-            'id': {'type': 'number'},
-            'name': {'type': 'string'},
-            'email': {'type': 'string', 'format': 'email'}
-        },
-        'required': ['id', 'name', 'email']
-    }
-    
-    for user in data['data']:
-        validate(instance=user, schema=user_schema)
+Scenario: POST /users deve criar usuário com status 201
+  Given path 'users'
+  And request { name: 'João Silva', email: 'joao@exemplo.com', role: 'user', active: true }
+  When method POST
+  Then status 201
+  And match response.status == 201
+  And match response.data.id == '#number'
+  And match response.data.name == 'João Silva'
+  And match response.data.email == 'joao@exemplo.com'
+  And match response.timestamp != null
 
-def test_post_users_create():
-    """POST /users deve criar usuário com status 201"""
-    payload = {
-        'name': 'Maria Santos',
-        'email': 'maria@exemplo.com'
-    }
-    
-    response = requests.post(f'{BASE_URL}/users', json=payload)
-    
-    assert response.status_code == 201
-    assert response.headers['Content-Type'] == 'application/json'
-    
-    data = response.json()
-    assert data['data']['name'] == payload['name']
-    assert data['data']['email'] == payload['email']
-    assert 'id' in data['data']
+Scenario: POST /users sem email deve retornar 400
+  Given path 'users'
+  And request { name: 'João' }
+  When method POST
+  Then status 400
+  And match response.error != null
 
-def test_post_users_validation_error():
-    """POST /users sem campos obrigatórios deve retornar 400"""
-    response = requests.post(f'{BASE_URL}/users', json={'name': 'Teste'})
-    
-    assert response.status_code == 400
-    assert 'error' in response.json()</code></pre>
+Scenario: GET /users com autenticação
+  Given path 'users'
+  And header Authorization = 'Bearer #(token)'
+  When method GET
+  Then status 200
+  And match response.data == '#[]'</code></pre>
+              <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--text);">
+                <strong>Executar testes:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">mvn test -Dtest=UsersApiTest</code> ou <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">gradle test</code>
+              </p>
             </div>
 
-            <div style="margin-bottom: var(--spacing-md);">
-              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Postman (Test Scripts)</h4>
-              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>// Pre-request Script (para variáveis dinâmicas)
-pm.environment.set('timestamp', new Date().toISOString());
-pm.environment.set('randomEmail', `test${Date.now()}@exemplo.com`);
-
-// Test Script - GET /users
+            <!-- Tab: Postman (Newman) -->
+            <div class="tab-content" data-tab-content="postman" style="display: none;">
+              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Postman (Newman - CLI)</h4>
+              <p style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--text);">
+                Execute coleções Postman via linha de comando usando Newman.
+              </p>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>// Test Script - GET /users
 pm.test('Status code is 200', function () {
     pm.response.to.have.status(200);
 });
@@ -226,14 +424,11 @@ pm.test('Response time is less than 500ms', function () {
     pm.expect(pm.response.responseTime).to.be.below(500);
 });
 
-pm.test('Response has JSON body', function () {
-    pm.response.to.be.json;
-});
-
 pm.test('Response contains data array', function () {
     const jsonData = pm.response.json();
     pm.expect(jsonData).to.have.property('data');
     pm.expect(jsonData.data).to.be.an('array');
+    pm.expect(jsonData.data.length).to.be.greaterThan(0);
 });
 
 pm.test('Each user has required fields', function () {
@@ -243,6 +438,7 @@ pm.test('Each user has required fields', function () {
         pm.expect(user).to.have.property('name');
         pm.expect(user).to.have.property('email');
         pm.expect(user.id).to.be.a('number');
+        pm.expect(user.email).to.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
     });
 });
 
@@ -251,12 +447,9 @@ pm.test('Status code is 201', function () {
     pm.response.to.have.status(201);
 });
 
-pm.test('Location header is present', function () {
-    pm.expect(pm.response.headers.get('Location')).to.exist;
-});
-
 pm.test('Created user has correct data', function () {
     const jsonData = pm.response.json();
+    pm.expect(jsonData.data).to.have.property('id');
     pm.expect(jsonData.data.name).to.eql(pm.environment.get('testName'));
     pm.expect(jsonData.data.email).to.eql(pm.environment.get('testEmail'));
 });
@@ -264,10 +457,17 @@ pm.test('Created user has correct data', function () {
 // Salvar ID para próximas requisições
 const userId = pm.response.json().data.id;
 pm.environment.set('createdUserId', userId);</code></pre>
+              <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--text);">
+                <strong>Executar com Newman:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">newman run QA-Playground-API.postman_collection.json -e environment.json</code>
+              </p>
+              <p style="margin-top: var(--spacing-xs); font-size: var(--font-size-sm); color: var(--text);">
+                <strong>Com relatório HTML:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">newman run collection.json -r html --reporter-html-export report.html</code>
+              </p>
             </div>
 
-            <div style="margin-bottom: var(--spacing-md);">
-              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Java (REST Assured)</h4>
+            <!-- Tab: REST Assured -->
+            <div class="tab-content" data-tab-content="restassured" style="display: none;">
+              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">REST Assured (Java)</h4>
               <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
@@ -275,7 +475,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 public class UsersApiTest {
-    private static final String BASE_URL = "https://api.example.com";
+    private static final String BASE_URL = "https://qa-playground-azure.vercel.app/api";
 
     @Test
     public void testGetUsers_ShouldReturn200() {
@@ -339,10 +539,73 @@ public class UsersApiTest {
 }</code></pre>
             </div>
 
-            <div style="margin-bottom: var(--spacing-md);">
-              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Cypress (Testes de API Diretos)</h4>
+            </div>
+
+            <!-- Tab: Robot Framework -->
+            <div class="tab-content" data-tab-content="robot" style="display: none;">
+              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Robot Framework</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>*** Settings ***
+Library    RequestsLibrary
+Library    Collections
+Library    JSON
+
+*** Variables ***
+${BASE_URL}    https://qa-playground-azure.vercel.app/api
+
+*** Test Cases ***
+GET Users Should Return 200 And List
+    [Documentation]    GET /users deve retornar status 200 e lista de usuários
+    Create Session    api    ${BASE_URL}
+    ${response}=    GET On Session    api    /users
+    Should Be Equal As Strings    ${response.status_code}    200
+    ${json}=    Set Variable    ${response.json()}
+    Dictionary Should Contain Key    ${json}    data
+    ${data}=    Get From Dictionary    ${json}    data
+    Should Be True    ${data}    # Verifica que não está vazio
+    ${first_user}=    Get From List    ${data}    0
+    Dictionary Should Contain Key    ${first_user}    id
+    Dictionary Should Contain Key    ${first_user}    name
+    Dictionary Should Contain Key    ${first_user}    email
+
+POST Users Should Create User With 201
+    [Documentation]    POST /users deve criar usuário com status 201
+    Create Session    api    ${BASE_URL}
+    ${headers}=    Create Dictionary    Content-Type=application/json
+    ${body}=    Create Dictionary    name=Ana Costa    email=ana@exemplo.com    role=user    active=${True}
+    ${response}=    POST On Session    api    /users    json=${body}    headers=${headers}
+    Should Be Equal As Strings    ${response.status_code}    201
+    ${json}=    Set Variable    ${response.json()}
+    Dictionary Should Contain Key    ${json}    data
+    ${data}=    Get From Dictionary    ${json}    data
+    Should Be Equal As Strings    ${data}[name]    Ana Costa
+    Should Be Equal As Strings    ${data}[email]    ana@exemplo.com
+    Dictionary Should Contain Key    ${data}    id
+
+POST Users Without Email Should Return 400
+    [Documentation]    POST /users sem email deve retornar 400
+    Create Session    api    ${BASE_URL}
+    ${headers}=    Create Dictionary    Content-Type=application/json
+    ${body}=    Create Dictionary    name=Teste
+    ${response}=    POST On Session    api    /users    json=${body}    headers=${headers}    expected_status=400
+    Should Be Equal As Strings    ${response.status_code}    400
+    ${json}=    Set Variable    ${response.json()}
+    Dictionary Should Contain Key    ${json}    error</code></pre>
+              <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--text);">
+                <strong>Executar testes:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">robot users_api_tests.robot</code>
+              </p>
+              <p style="margin-top: var(--spacing-xs); font-size: var(--font-size-sm); color: var(--text);">
+                <strong>Com relatório:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">robot --outputdir results users_api_tests.robot</code>
+              </p>
+            </div>
+
+            <!-- Tab: Cypress -->
+            <div class="tab-content" data-tab-content="cypress" style="display: none;">
+              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Cypress (Testes de API)</h4>
+              <p style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--text);">
+                Testes de API usando <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">cy.request()</code> para requisições HTTP diretas, sem interação com interface.
+              </p>
               <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>describe('API Users - Direct API Tests', () => {
-  const baseURL = 'https://api.example.com';
+  const baseURL = 'https://qa-playground-azure.vercel.app/api';
 
   it('GET /users deve retornar 200 e lista válida', () => {
     cy.request({
@@ -369,7 +632,9 @@ public class UsersApiTest {
   it('POST /users deve criar usuário com 201', () => {
     const newUser = {
       name: 'Ana Costa',
-      email: 'ana@exemplo.com'
+      email: 'ana@exemplo.com',
+      role: 'user',
+      active: true
     };
 
     cy.request({
@@ -384,6 +649,7 @@ public class UsersApiTest {
       expect(response.body.data.name).to.eq(newUser.name);
       expect(response.body.data.email).to.eq(newUser.email);
       expect(response.body.data).to.have.property('id');
+      expect(response.body.data.id).to.be.a('number');
     });
   });
 
@@ -398,16 +664,54 @@ public class UsersApiTest {
       expect(response.body).to.have.property('error');
     });
   });
-});</code></pre>
-            </div>
 
-            <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
-            <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
-              <li><code>data-testid="btn-get-users"</code></li>
-              <li><code>data-testid="btn-post-user"</code></li>
-              <li><code>data-testid="resultado-api-users"</code></li>
-              <li><code>data-testid="resultado-api-post"</code></li>
-            </ul>
+  it('GET /users com autenticação', () => {
+    // Primeiro fazer login para obter token
+    cy.request({
+      method: 'POST',
+      url: `${baseURL}/auth/login`,
+      body: {
+        email: 'admin@example.com',
+        password: 'admin123'
+      }
+    }).then((loginResponse) => {
+      const token = loginResponse.body.data.token;
+      
+      // Usar token para acessar endpoint protegido
+      cy.request({
+        method: 'GET',
+        url: `${baseURL}/users`,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.data).to.be.an('array');
+      });
+    });
+  });
+
+  it('Validar tempo de resposta', () => {
+    cy.request({
+      method: 'GET',
+      url: `${baseURL}/users`
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.duration).to.be.lessThan(1000); // Menos de 1 segundo
+    });
+  });
+});</code></pre>
+              <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--text);">
+                <strong>Executar testes:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">npx cypress run --spec "cypress/e2e/api/users.cy.js"</code>
+              </p>
+              <p style="margin-top: var(--spacing-xs); font-size: var(--font-size-sm); color: var(--text);">
+                <strong>Modo interativo:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">npx cypress open</code>
+              </p>
+              <p style="margin-top: var(--spacing-xs); font-size: var(--font-size-sm); color: var(--muted);">
+                <strong>Nota:</strong> Estes exemplos usam apenas <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">cy.request()</code> para testes de API. Não há interação com interface gráfica.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -422,91 +726,35 @@ public class UsersApiTest {
     </footer>
 
     <script type="module" src="../../../js/index.js"></script>
-    <script>
-      let userCounter = 3;
-      
-      // GET /users
-      document.getElementById('btn-fetch-users').addEventListener('click', () => {
-        const resultEl = document.getElementById('api-result-users');
-        resultEl.innerHTML = '<span class="muted">Carregando...</span>';
-        resultEl.style.color = 'var(--muted)';
-        
-        setTimeout(() => {
-          const users = [
-            { id: 1, name: 'Ana Silva', email: 'ana@exemplo.com' },
-            { id: 2, name: 'Bruno Costa', email: 'bruno@exemplo.com' }
-          ];
+    <script type="module">
+      // Sistema de Tabs
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tabName = btn.getAttribute('data-tab');
           
-          const response = {
-            status: 200,
-            statusText: 'OK',
-            data: users,
-            timestamp: new Date().toISOString()
-          };
+          // Remove active de todos os botões
+          document.querySelectorAll('.tab-btn').forEach(b => {
+            b.classList.remove('active');
+            b.style.color = 'var(--muted)';
+            b.style.borderBottomColor = 'transparent';
+          });
           
-          resultEl.textContent = JSON.stringify(response, null, 2);
-          resultEl.style.color = 'var(--text)';
-          window.showToast(`GET /users retornou ${users.length} usuários`);
-        }, 800);
-      });
-
-      document.getElementById('btn-clear-users').addEventListener('click', () => {
-        document.getElementById('api-result-users').innerHTML = '<span class="muted">Nenhuma requisição realizada ainda.</span>';
-      });
-
-      // POST /users
-      document.getElementById('btn-create-user').addEventListener('click', () => {
-        const name = document.getElementById('user-name').value.trim();
-        const email = document.getElementById('user-email').value.trim();
-        const resultEl = document.getElementById('api-result-post');
-        
-        if (!name || !email) {
-          resultEl.innerHTML = JSON.stringify({
-            status: 400,
-            statusText: 'Bad Request',
-            error: 'Nome e email são obrigatórios'
-          }, null, 2);
-          resultEl.style.color = 'var(--danger)';
-          window.showToast('Erro: Preencha todos os campos');
-          return;
-        }
-        
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          resultEl.innerHTML = JSON.stringify({
-            status: 400,
-            statusText: 'Bad Request',
-            error: 'Email inválido'
-          }, null, 2);
-          resultEl.style.color = 'var(--danger)';
-          window.showToast('Erro: Email inválido');
-          return;
-        }
-        
-        resultEl.innerHTML = '<span class="muted">Criando usuário...</span>';
-        resultEl.style.color = 'var(--muted)';
-        
-        setTimeout(() => {
-          const newUser = {
-            id: userCounter++,
-            name: name,
-            email: email,
-            createdAt: new Date().toISOString()
-          };
+          // Adiciona active ao botão clicado
+          btn.classList.add('active');
+          btn.style.color = 'var(--text)';
+          btn.style.borderBottomColor = 'var(--accent)';
           
-          const response = {
-            status: 201,
-            statusText: 'Created',
-            data: newUser,
-            message: 'Usuário criado com sucesso',
-            timestamp: new Date().toISOString()
-          };
+          // Esconde todos os conteúdos
+          document.querySelectorAll('.tab-content').forEach(content => {
+            content.style.display = 'none';
+          });
           
-          resultEl.textContent = JSON.stringify(response, null, 2);
-          resultEl.style.color = 'var(--text)';
-          document.getElementById('user-name').value = '';
-          document.getElementById('user-email').value = '';
-          window.showToast(`Usuário "${name}" criado com sucesso!`);
-        }, 1000);
+          // Mostra o conteúdo correspondente
+          const content = document.querySelector(`[data-tab-content="${tabName}"]`);
+          if (content) {
+            content.style.display = 'block';
+          }
+        });
       });
     </script>
   </body>
