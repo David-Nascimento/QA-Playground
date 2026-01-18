@@ -6,151 +6,127 @@
  * A Vercel compila automaticamente arquivos TypeScript na pasta api/
  */
 
-// @ts-ignore - @vercel/node types are available at runtime in Vercel
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-
-// Reutiliza o app Express do index.ts
-// Em produção, a Vercel compilará este arquivo e as dependências
+import * as authRoutes from './routes/auth';
+import * as usersRoutes from './routes/users';
+import * as ordersRoutes from './routes/orders';
+import { API_DOCUMENTATION } from './config/documentation';
+import * as postmanCollection from './QA-Playground-API.postman_collection.json';
+  
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Importa dinamicamente para evitar problemas de compilação
-  const express = require('express');
-  const cors = require('cors');
-  
-  // Importa rotas (a Vercel compilará os arquivos TypeScript automaticamente)
-  // Usa caminhos relativos aos arquivos TypeScript, não aos compilados
-  const authRoutes = require('./routes/auth');
-  const usersRoutes = require('./routes/users');
-  const ordersRoutes = require('./routes/orders');
-  
-  const app = express();
-  
-  // Middlewares
-  app.use(cors());
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
-  
-  // Extrai o path da URL
-  // A Vercel passa o path completo em req.url, incluindo /api
-  // Precisamos remover o prefixo /api para rotear corretamente
-  let path = req.url || '/';
-  
-  // Remove /api do início se presente
-  if (path.startsWith('/api')) {
-    path = path.substring(4) || '/';
-  }
-  
-  // Garante que começa com /
-  if (!path.startsWith('/')) {
-    path = '/' + path;
-  }
-  
-  // Remove query string do path para roteamento
-  const pathWithoutQuery = path.split('?')[0];
-  
-  // Health check
-  if (pathWithoutQuery === '/health' || pathWithoutQuery === 'health') {
-    return res.status(200).json({
-      status: 'ok',
-      timestamp: new Date().toISOString(),
-      service: 'QA Playground API Mock',
-    });
-  }
-  
-  // Rota de documentação
-  if (pathWithoutQuery === '/' || pathWithoutQuery === '') {
-    return res.json({
-      name: 'QA Playground API Mock',
-      version: '1.0.0',
-      description: 'API mockada para prática de testes QA',
-      endpoints: {
-        auth: {
-          'POST /api/auth/login': 'Faz login e retorna token',
-          'POST /api/auth/logout': 'Faz logout',
-          'GET /api/auth/me': 'Retorna informações do usuário autenticado',
-          'POST /api/auth/validate': 'Valida um token',
-        },
-        users: {
-          'GET /api/users': 'Lista todos os usuários (admin)',
-          'GET /api/users/:id': 'Retorna um usuário específico',
-          'POST /api/users': 'Cria um novo usuário (admin)',
-          'PUT /api/users/:id': 'Atualiza um usuário',
-          'DELETE /api/users/:id': 'Deleta um usuário (admin)',
-        },
-        orders: {
-          'GET /api/orders': 'Lista pedidos',
-          'GET /api/orders/:id': 'Retorna um pedido específico',
-          'POST /api/orders': 'Cria um novo pedido',
-          'PUT /api/orders/:id': 'Atualiza um pedido',
-          'DELETE /api/orders/:id': 'Deleta um pedido (admin)',
-        },
-      },
-      scenarios: {
-        description: 'Use ?scenario=<tipo> ou header x-mock-scenario para controlar comportamentos',
-        types: [
-          'success',
-          'error-400',
-          'error-401',
-          'error-403',
-          'error-404',
-          'error-409',
-          'error-422',
-          'error-429',
-          'error-500',
-          'error-503',
-          'timeout',
-        ],
-        example: 'GET /api/users?scenario=error-401',
-      },
-      credentials: {
-        admin: { email: 'admin@example.com', password: 'admin123' },
-        user: { email: 'user@example.com', password: 'user123' },
-        viewer: { email: 'viewer@example.com', password: 'viewer123' },
-      },
-    });
-  }
-  
-  // Cria objetos compatíveis com Express Request/Response
-  const expressReq = {
-    ...req,
-    path: pathWithoutQuery,
-    url: path,
-    originalUrl: req.url,
-    method: req.method,
-    headers: req.headers,
-    query: req.query,
-    body: req.body,
-    params: extractParams(pathWithoutQuery, req.url || ''),
-  } as any;
-  
-  const expressRes = {
-    ...res,
-    status: (code: number) => {
-      res.status(code);
-      return expressRes;
-    },
-    json: (body: any) => {
-      res.json(body);
-      return expressRes;
-    },
-    send: (body: any) => {
-      res.send(body);
-      return expressRes;
-    },
-    setHeader: (name: string, value: string) => {
-      res.setHeader(name, value);
-      return expressRes;
-    },
-  } as any;
-  
-  // Roteia baseado no método e path
   try {
+    // Configura CORS
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-mock-scenario');
+    
+    // Handle preflight
+    if (req.method === 'OPTIONS') {
+      return res.status(200).end();
+    }
+    
+    // Parse body se necessário (Vercel já faz isso automaticamente, mas garantimos)
+    let body = req.body;
+    if (req.headers['content-type']?.includes('application/json') && typeof req.body === 'string') {
+      try {
+        body = JSON.parse(req.body);
+      } catch (e) {
+        // Body já está parseado ou é inválido
+      }
+    }
+    
+    // Extrai o path da URL
+    // No Vercel, o path pode vir de diferentes formas:
+    // 1. req.url - URL completa
+    // 2. req.query.path - Array de segmentos do path (quando usa [...path])
+    let path = '/';
+    
+    // Tenta obter o path do query (formato do Vercel para catch-all routes)
+    if (req.query && typeof req.query.path === 'string') {
+      path = '/' + req.query.path;
+    } else if (req.query && Array.isArray(req.query.path)) {
+      path = '/' + (req.query.path as string[]).join('/');
+    } else if (req.url) {
+      // Fallback para req.url
+      path = req.url;
+      // Remove /api do início se presente
+      if (path.startsWith('/api')) {
+        path = path.substring(4) || '/';
+      }
+    }
+    
+    // Garante que começa com /
+    if (!path.startsWith('/')) {
+      path = '/' + path;
+    }
+    
+    // Remove query string do path para roteamento
+    const pathWithoutQuery = path.split('?')[0];
+    
+    // Health check
+    if (pathWithoutQuery === '/health' || pathWithoutQuery === 'health') {
+      return res.status(200).json({
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        service: 'QA Playground API Mock',
+      });
+    }
+    
+    // Rota de documentação
+    if (pathWithoutQuery === '/' || pathWithoutQuery === '' || pathWithoutQuery === '/docs') {
+      return res.json(API_DOCUMENTATION);
+    }
+    
+    // Rota para download da coleção Postman
+    if (pathWithoutQuery === '/postman-collection') {
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Content-Disposition', 'attachment; filename="QA-Playground-API.postman_collection.json"');
+      return res.json(postmanCollection);
+    }
+    
+    // Cria objetos compatíveis com Express Request/Response
+    const expressReq = {
+      ...req,
+      path: pathWithoutQuery,
+      url: path,
+      originalUrl: req.url,
+      method: req.method,
+      headers: req.headers,
+      query: req.query,
+      body: body,
+      params: extractParams(pathWithoutQuery, req.url || ''),
+    } as any;
+    
+    const expressRes = {
+      ...res,
+      status: (code: number) => {
+        res.status(code);
+        return expressRes;
+      },
+      json: (body: any) => {
+        res.json(body);
+        return expressRes;
+      },
+      send: (body: any) => {
+        res.send(body);
+        return expressRes;
+      },
+      setHeader: (name: string, value: string) => {
+        res.setHeader(name, value);
+        return expressRes;
+      },
+    } as any;
+    
+    // Roteia baseado no método e path
     await routeRequest(expressReq, expressRes, authRoutes, usersRoutes, ordersRoutes);
     return;
   } catch (error: any) {
     console.error('Erro ao processar requisição:', error);
+    console.error('Stack:', error.stack);
     return res.status(500).json({
       error: 'Internal Server Error',
       message: 'Erro inesperado no servidor',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined,
     });
   }
 }

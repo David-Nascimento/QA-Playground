@@ -5,11 +5,14 @@
 
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
+import * as fs from 'fs';
+import * as path from 'path';
 
 // Rotas
 import * as authRoutes from './routes/auth';
 import * as usersRoutes from './routes/users';
 import * as ordersRoutes from './routes/orders';
+import { API_DOCUMENTATION } from './config/documentation';
 
 const app: Express = express();
 const PORT = process.env.API_PORT || 3001;
@@ -54,57 +57,33 @@ app.post('/api/orders', ordersRoutes.createOrder);
 app.put('/api/orders/:id', ordersRoutes.updateOrder);
 app.delete('/api/orders/:id', ordersRoutes.deleteOrder);
 
-// Rota de documentação rápida
+// Rota de documentação completa
 app.get('/api', (_req: Request, res: Response) => {
-  res.json({
-    name: 'QA Playground API Mock',
-    version: '1.0.0',
-    description: 'API mockada para prática de testes QA',
-    endpoints: {
-      auth: {
-        'POST /api/auth/login': 'Faz login e retorna token',
-        'POST /api/auth/logout': 'Faz logout',
-        'GET /api/auth/me': 'Retorna informações do usuário autenticado',
-        'POST /api/auth/validate': 'Valida um token',
-      },
-      users: {
-        'GET /api/users': 'Lista todos os usuários (admin)',
-        'GET /api/users/:id': 'Retorna um usuário específico',
-        'POST /api/users': 'Cria um novo usuário (admin)',
-        'PUT /api/users/:id': 'Atualiza um usuário',
-        'DELETE /api/users/:id': 'Deleta um usuário (admin)',
-      },
-      orders: {
-        'GET /api/orders': 'Lista pedidos',
-        'GET /api/orders/:id': 'Retorna um pedido específico',
-        'POST /api/orders': 'Cria um novo pedido',
-        'PUT /api/orders/:id': 'Atualiza um pedido',
-        'DELETE /api/orders/:id': 'Deleta um pedido (admin)',
-      },
-    },
-    scenarios: {
-      description: 'Use ?scenario=<tipo> ou header x-mock-scenario para controlar comportamentos',
-      types: [
-        'success',
-        'error-400',
-        'error-401',
-        'error-403',
-        'error-404',
-        'error-409',
-        'error-422',
-        'error-429',
-        'error-500',
-        'error-503',
-        'timeout',
-      ],
-      example: 'GET /api/users?scenario=error-401',
-    },
-    credentials: {
-      admin: { email: 'admin@example.com', password: 'admin123' },
-      user: { email: 'user@example.com', password: 'user123' },
-      viewer: { email: 'viewer@example.com', password: 'viewer123' },
-    },
-  });
+  res.json(API_DOCUMENTATION);
+});
+
+// Rota alternativa de documentação
+app.get('/api/docs', (_req: Request, res: Response) => {
+  res.json(API_DOCUMENTATION);
+});
+
+// Rota para download da coleção Postman
+app.get('/api/postman-collection', (_req: Request, res: Response) => {
+  try {
+    const collectionPath = path.join(__dirname, 'QA-Playground-API.postman_collection.json');
+    const collectionData = fs.readFileSync(collectionPath, 'utf8');
+    const collection = JSON.parse(collectionData);
+    
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Content-Disposition', 'attachment; filename="QA-Playground-API.postman_collection.json"');
+    res.json(collection);
+  } catch (error) {
+    console.error('Erro ao ler coleção Postman:', error);
+    res.status(500).json({
+      error: 'Internal Server Error',
+      message: 'Erro ao carregar coleção Postman',
+    });
+  }
 });
 
 // Tratamento de erros
