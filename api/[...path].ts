@@ -6,6 +6,7 @@
  * A Vercel compila automaticamente arquivos TypeScript na pasta api/
  */
 
+// @ts-ignore - @vercel/node types are available at runtime in Vercel
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 // Reutiliza o app Express do index.ts
@@ -144,20 +145,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Roteia baseado no método e path
   try {
     await routeRequest(expressReq, expressRes, authRoutes, usersRoutes, ordersRoutes);
+    return;
   } catch (error: any) {
     console.error('Erro ao processar requisição:', error);
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Internal Server Error',
       message: 'Erro inesperado no servidor',
     });
   }
 }
 
-function extractParams(path: string, url: string): Record<string, string> {
+function extractParams(_path: string, _url: string): Record<string, string> {
   const params: Record<string, string> = {};
   // Extrai parâmetros de rotas como /users/:id
-  const pathParts = path.split('/');
   // Implementação simples - pode ser melhorada
+  // Os parâmetros são extraídos diretamente nas rotas usando regex
   return params;
 }
 
@@ -216,7 +218,7 @@ async function routeRequest(
   }
   
   // Rota não encontrada
-  res.status(404).json({
+  return res.status(404).json({
     error: 'Not Found',
     message: 'Rota não encontrada',
   });
