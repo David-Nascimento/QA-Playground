@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Performance e Confiabilidade — APIs e Autenticação — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">APIs</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Performance e Confiabilidade</h2>
+          <div class="section-desc">Testes não funcionais: tempo de resposta, carga, timeout, retry e resiliência em APIs.</div>
+        </div>
+
+        <div class="info-box">
+          <h3>Tempo de Resposta (Latência)</h3>
+          <p>Métrica fundamental para experiência do usuário e eficiência do sistema. Valide latência aceitável conforme tipo de operação e identifique endpoints com degradação de performance.</p>
+          <p><strong>Benchmarks recomendados:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li><strong>GET simples (cache hit):</strong> < 50ms</li>
+            <li><strong>GET simples (cache miss):</strong> < 200ms</li>
+            <li><strong>POST/PUT (criação/atualização):</strong> < 500ms</li>
+            <li><strong>Operações complexas (cálculos, múltiplas queries):</strong> < 1s</li>
+            <li><strong>Relatórios/Queries pesadas (agregações, joins complexos):</strong> < 5s</li>
+            <li><strong>Operações assíncronas (202 Accepted):</strong> Aceitação < 100ms, processamento conforme SLA</li>
+          </ul>
+          <p><strong>Métricas a monitorar:</strong> p50 (mediana), p95, p99, p99.9. Identifique outliers, endpoints problemáticos, degradação ao longo do tempo. Compare latência entre ambientes (dev, staging, prod).</p>
+          <p><strong>Ferramentas:</strong> Postman (Response Time), Apache Bench (ab), JMeter, k6, Artillery, curl com time measurement, ferramentas de APM (Application Performance Monitoring).</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Testes de Carga</h3>
+          <p>Valide comportamento da API sob carga através de múltiplas requisições simultâneas. Identifique pontos de falha, degradação de performance e race conditions.</p>
+          <p><strong>Cenários de teste:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li><strong>Carga baixa:</strong> 10-50 usuários simultâneos, validar que performance mantém-se estável</li>
+            <li><strong>Carga média:</strong> 50-100 usuários simultâneos, identificar início de degradação</li>
+            <li><strong>Carga alta:</strong> 100+ usuários simultâneos, validar que API não quebra completamente</li>
+            <li><strong>Throughput:</strong> 100-1000 requisições/segundo, validar taxa de sucesso mantém-se alta</li>
+            <li><strong>Pico de tráfego:</strong> Aumento súbito de carga, validar recuperação após pico</li>
+          </ul>
+          <p><strong>Validações obrigatórias:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Taxa de sucesso mantém-se acima de 95% sob carga</li>
+            <li>Race conditions não causam corrupção de dados (criação duplicada, atualização concorrente)</li>
+            <li>Rate limiting funciona corretamente sob carga</li>
+            <li>Degradação graceful: API reduz funcionalidades opcionais mas mantém core funcionando</li>
+            <li>Sem memory leaks ou consumo crescente de recursos</li>
+            <li>Connection pooling adequado (não exaure conexões)</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Timeout</h3>
+          <p>Valide timeout configurado e comportamento quando timeout ocorre.</p>
+          <p><strong>O que validar:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Timeout configurado (ex: 30s para operações longas)</li>
+            <li>Comportamento quando timeout ocorre (504 Gateway Timeout)</li>
+            <li>Se retry é necessário após timeout</li>
+            <li>Timeout muito curto (operações legítimas falhando)</li>
+            <li>Timeout muito longo (recursos presos)</li>
+          </ul>
+          <p><strong>Testes:</strong> Simular operação lenta, validar resposta 504, verificar se operação continua em background.</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Retry e Resiliência</h3>
+          <p>Implementação de retry automático em falhas temporárias aumenta confiabilidade. Valide estratégia de retry, backoff e idempotência para evitar efeitos colaterais.</p>
+          <p><strong>Validações obrigatórias:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Retry apenas em falhas temporárias: 503 Service Unavailable, 502 Bad Gateway, 504 Gateway Timeout, 429 Too Many Requests (com Retry-After)</li>
+            <li>Não fazer retry em 4xx (erro do cliente): 400, 401, 403, 404, 422 (não são temporários)</li>
+            <li>Exponential backoff: tempo de espera aumenta exponencialmente (1s, 2s, 4s, 8s, 16s)</li>
+            <li>Jitter: variação aleatória no backoff previne thundering herd problem</li>
+            <li>Máximo de tentativas: limite definido (ex: 3-5 tentativas) antes de falhar definitivamente</li>
+            <li>Idempotência: retry não causa efeitos colaterais (uso de idempotency keys, métodos idempotentes)</li>
+            <li>Timeout por tentativa: evitar que retry trave indefinidamente</li>
+          </ul>
+          <p><strong>Estratégias avançadas:</strong> Exponential backoff com jitter, circuit breaker (abre após muitas falhas), retry com idempotency key, retry apenas em métodos seguros (GET, HEAD) ou idempotentes (PUT, DELETE).</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Resiliência e Tolerância a Falhas</h3>
+          <p>Sistemas resilientes continuam funcionando mesmo quando dependências falham. Valide estratégias de fallback, circuit breaker e degradação graceful.</p>
+          <p><strong>Validações obrigatórias:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li><strong>Comportamento quando upstream está down:</strong> API retorna resposta apropriada (503, fallback, ou erro claro) sem travar</li>
+            <li><strong>Circuit Breaker:</strong> Abre após threshold de falhas, fecha após período de recuperação, half-open state para testar recuperação</li>
+            <li><strong>Fallback:</strong> Resposta alternativa quando serviço crítico falha (cache, dados default, resposta simplificada)</li>
+            <li><strong>Degradação graceful:</strong> Funcionalidades opcionais desabilitadas, core continua funcionando</li>
+            <li><strong>Health checks:</strong> Endpoint /health retorna status de dependências, permite detecção proativa de problemas</li>
+            <li><strong>Auto-recuperação:</strong> Sistema detecta e recupera automaticamente quando dependência volta</li>
+            <li><strong>Bulkhead:</strong> Isolamento de recursos previne que falha em uma área afete outras</li>
+          </ul>
+          <p><strong>Padrões de resiliência:</strong> Circuit Breaker (prevenção de cascata de falhas), Bulkhead (isolamento), Timeout (evitar espera indefinida), Retry (tentativas automáticas), Fallback (resposta alternativa), Health Check (monitoramento de dependências).</p>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); justify-content: space-between; flex-wrap: wrap;">
+          <a href="testes-negativos.html" class="btn btn-secondary">← Anterior: Testes Negativos</a>
+          <a href="boas-praticas.html" class="btn">Próximo: Boas Práticas</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script type="module" src="../../../js/index.js"></script>
+  </body>
+</html>

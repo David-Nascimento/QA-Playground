@@ -6,175 +6,6 @@
     <title>NFT Playground — Testes Não Funcionais — QA Playground</title>
     <link rel="stylesheet" href="../../css/main.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-      /* NFT Playground Styles */
-      .test-type-btn {
-        padding: var(--spacing-md);
-        border: 2px solid rgba(122, 168, 116, 0.3);
-        border-radius: var(--border-radius-md);
-        background: var(--surface);
-        color: var(--text);
-        cursor: pointer;
-        transition: all var(--transition);
-        text-align: left;
-      }
-      .test-type-btn:hover:not(:disabled) {
-        border-color: var(--accent);
-        background: rgba(122, 168, 116, 0.1);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-sm);
-      }
-      .test-type-btn:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-      .test-type-btn.active {
-        border-color: var(--accent);
-        background: rgba(122, 168, 116, 0.15);
-      }
-      .config-input-group {
-        margin-bottom: var(--spacing-md);
-      }
-      .config-input-group label {
-        display: block;
-        margin-bottom: var(--spacing-xs);
-        font-weight: 600;
-        color: var(--text);
-      }
-      .config-input-group input[type="number"],
-      .config-input-group input[type="range"],
-      .config-input-group select {
-        width: 100%;
-        padding: var(--spacing-sm);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: var(--border-radius-sm);
-        font-size: var(--font-size-base);
-      }
-      .config-input-group input[type="range"] {
-        padding: 0;
-      }
-      .config-input-group .input-value {
-        display: inline-block;
-        margin-left: var(--spacing-sm);
-        font-weight: 600;
-        color: var(--accent);
-      }
-      #test-log {
-        scrollbar-width: thin;
-        scrollbar-color: var(--accent) rgba(0, 0, 0, 0.1);
-      }
-      #test-log::-webkit-scrollbar {
-        width: 8px;
-      }
-      #test-log::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.05);
-        border-radius: var(--border-radius-sm);
-      }
-      #test-log::-webkit-scrollbar-thumb {
-        background: var(--accent);
-        border-radius: var(--border-radius-sm);
-      }
-      .log-entry {
-        margin-bottom: var(--spacing-xs);
-        padding: var(--spacing-xs);
-        border-radius: var(--border-radius-sm);
-      }
-      .log-entry.info {
-        background: rgba(122, 168, 116, 0.1);
-        color: var(--accent);
-      }
-      .log-entry.warning {
-        background: rgba(255, 193, 7, 0.2);
-        color: #856404;
-      }
-      .log-entry.error {
-        background: rgba(220, 53, 69, 0.1);
-        color: #721c24;
-      }
-      .log-entry.success {
-        background: rgba(40, 167, 69, 0.1);
-        color: #155724;
-      }
-      .log-timestamp {
-        color: var(--muted);
-        font-size: 0.9em;
-        margin-right: var(--spacing-sm);
-      }
-      .metric-card {
-        background: rgba(0, 0, 0, 0.03);
-        padding: var(--spacing-md);
-        border-radius: var(--border-radius-md);
-        text-align: center;
-        border-left: 3px solid var(--accent);
-      }
-      .metric-card .metric-value {
-        font-size: 1.5em;
-        font-weight: 700;
-        color: var(--accent);
-        margin: var(--spacing-xs) 0;
-      }
-      .metric-card .metric-label {
-        font-size: var(--font-size-sm);
-        color: var(--muted);
-      }
-      .test-element {
-        display: inline-block;
-        padding: var(--spacing-xs) var(--spacing-sm);
-        margin: var(--spacing-xs);
-        background: var(--accent);
-        color: white;
-        border-radius: var(--border-radius-sm);
-        font-size: var(--font-size-sm);
-        animation: fadeIn 0.3s ease;
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: scale(0.9); }
-        to { opacity: 1; transform: scale(1); }
-      }
-      .cooldown-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-      }
-      .cooldown-overlay.show {
-        display: flex;
-      }
-      .cooldown-message {
-        background: var(--surface);
-        padding: var(--spacing-xl);
-        border-radius: var(--border-radius-lg);
-        text-align: center;
-        box-shadow: var(--shadow-lg);
-      }
-      .cooldown-timer {
-        font-size: 2em;
-        font-weight: 700;
-        color: var(--accent);
-        margin: var(--spacing-md) 0;
-      }
-      .playground-container {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      .info-banner {
-        background: rgba(255, 248, 200, 0.3);
-        border-left: 4px solid var(--accent);
-        padding: var(--spacing-md);
-        border-radius: var(--border-radius-md);
-        margin-bottom: var(--spacing-lg);
-      }
-      .info-banner h4 {
-        margin-top: 0;
-        color: var(--accent);
-      }
-    </style>
   </head>
   <body>
     <header class="et-header">
@@ -226,45 +57,45 @@
           </div>
 
           <!-- Controles de Sessão -->
-          <div class="content-card" style="background: rgba(122, 168, 116, 0.1); border-left-color: var(--accent); margin-bottom: var(--spacing-lg);">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--spacing-md);">
+          <div class="session-card">
+            <div class="session-header">
               <div>
-                <h5 style="margin: 0;">Sessão NFT Ativa</h5>
-                <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
-                  Testes executados nesta sessão: <strong id="session-count">0</strong> / <strong id="session-limit">10</strong>
+                <h5>Sessão NFT Ativa</h5>
+                <p>
+                  Testes executados nesta sessão: <strong id="session-count" class="session-count">0</strong> / <strong id="session-limit">10</strong>
                 </p>
               </div>
-              <button id="reset-session-btn" class="btn btn-secondary" style="white-space: nowrap;">
+              <button id="reset-session-btn" class="btn btn-secondary">
                 Encerrar Sessão NFT
               </button>
             </div>
           </div>
 
           <!-- Seleção de Tipo de Teste -->
-          <div class="content-card" style="margin-bottom: var(--spacing-lg);">
-            <h5>Selecione o Tipo de Teste NFT</h5>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-md); margin-top: var(--spacing-md);">
+          <div class="content-card nft-card-enhanced">
+            <h5 class="nft-panel-header">Selecione o Tipo de Teste NFT</h5>
+            <div class="test-type-grid">
               <button class="test-type-btn" data-test="performance">
                 <strong>Performance Percebida</strong>
-                <span style="display: block; font-size: var(--font-size-sm); margin-top: var(--spacing-xs); color: var(--muted);">
+                <span class="test-type-description">
                   Simula tempo de renderização e resposta
                 </span>
               </button>
               <button class="test-type-btn" data-test="load">
                 <strong>Carga de UI</strong>
-                <span style="display: block; font-size: var(--font-size-sm); margin-top: var(--spacing-xs); color: var(--muted);">
+                <span class="test-type-description">
                   Testa quantidade de elementos renderizados
                 </span>
               </button>
               <button class="test-type-btn" data-test="stress">
                 <strong>Stress de Interface</strong>
-                <span style="display: block; font-size: var(--font-size-sm); margin-top: var(--spacing-xs); color: var(--muted);">
+                <span class="test-type-description">
                   Simula ações repetidas do usuário
                 </span>
               </button>
               <button class="test-type-btn" data-test="resilience">
                 <strong>Resiliência Front-end</strong>
-                <span style="display: block; font-size: var(--font-size-sm); margin-top: var(--spacing-xs); color: var(--muted);">
+                <span class="test-type-description">
                   Testa latência e falha simuladas
                 </span>
               </button>
@@ -272,11 +103,11 @@
           </div>
 
           <!-- Painel de Configuração -->
-          <div id="test-config-panel" class="content-card" style="margin-bottom: var(--spacing-lg); display: none;">
-            <h5 id="test-config-title">Configuração do Teste</h5>
+          <div id="test-config-panel" class="content-card nft-card-enhanced hidden">
+            <h5 id="test-config-title" class="nft-panel-header">Configuração do Teste</h5>
             <div id="test-config-content"></div>
-            <div style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-md); flex-wrap: wrap;">
-              <button id="start-test-btn" class="btn btn-primary">
+            <div class="nft-panel-actions">
+              <button id="start-test-btn" class="btn btn-primary btn-large">
                 Iniciar Teste
               </button>
               <button id="cancel-test-btn" class="btn btn-secondary">
@@ -286,56 +117,66 @@
           </div>
 
           <!-- Área de Resultados -->
-          <div id="test-results-area" class="content-card" style="margin-bottom: var(--spacing-lg); display: none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
-              <h5 style="margin: 0;">Resultados do Teste</h5>
-              <button id="clear-results-btn" class="btn btn-secondary" style="font-size: var(--font-size-sm);">
+          <div id="test-results-area" class="content-card nft-card-enhanced hidden">
+            <div class="results-header">
+              <h5>Resultados do Teste</h5>
+              <button id="clear-results-btn" class="btn btn-secondary btn-small">
                 Limpar
               </button>
             </div>
-            <div id="test-visual-area" style="min-height: 200px; border: 2px dashed rgba(0, 0, 0, 0.1); border-radius: var(--border-radius-md); padding: var(--spacing-md); margin-bottom: var(--spacing-md); background: rgba(0, 0, 0, 0.02);">
+            <div id="test-visual-area">
               <!-- Área onde os elementos de teste serão renderizados -->
             </div>
-            <div id="test-metrics" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--spacing-md); margin-bottom: var(--spacing-md);">
+            <div id="test-metrics" class="metrics-grid">
               <!-- Métricas serão inseridas aqui -->
             </div>
           </div>
 
           <!-- Log de Execução -->
-          <div class="content-card" style="margin-bottom: var(--spacing-lg);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
-              <h5 style="margin: 0;">Log de Execução</h5>
-              <button id="clear-log-btn" class="btn btn-secondary" style="font-size: var(--font-size-sm);">
+          <div class="content-card nft-card-enhanced">
+            <div class="results-header">
+              <h5>Log de Execução</h5>
+              <button id="clear-log-btn" class="btn btn-secondary btn-small">
                 Limpar Log
               </button>
             </div>
-            <div id="test-log" style="background: rgba(0, 0, 0, 0.05); border-radius: var(--border-radius-md); padding: var(--spacing-md); max-height: 400px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: var(--font-size-sm); line-height: 1.6;">
-              <div style="color: var(--muted); font-style: italic;">Aguardando execução de testes...</div>
+            <div id="test-log" class="log-container">
+              <div class="log-empty-state">Aguardando execução de testes...</div>
             </div>
           </div>
 
           <!-- Informações e Limites -->
-          <div class="content-card" style="background: rgba(255, 248, 200, 0.3);">
+          <div class="content-card limits-card">
             <h5>Informações sobre Limites e Proteções</h5>
-            <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg);">
-              <li><strong>Limite de testes por sessão:</strong> 10 execuções</li>
-              <li><strong>Cooldown entre testes:</strong> 3 segundos</li>
-              <li><strong>Limite máximo de elementos:</strong> 1000 itens</li>
-              <li><strong>Limite máximo de latência simulada:</strong> 5 segundos</li>
-              <li><strong>Limite de ações simultâneas:</strong> 1 teste por vez</li>
+            <ul class="limits-list">
+              <li>
+                <strong>Limite de testes por sessão:</strong> <span>10 execuções</span>
+              </li>
+              <li>
+                <strong>Cooldown entre testes:</strong> <span>3 segundos</span>
+              </li>
+              <li>
+                <strong>Limite máximo de elementos:</strong> <span>1000 itens</span>
+              </li>
+              <li>
+                <strong>Limite máximo de latência simulada:</strong> <span>5 segundos</span>
+              </li>
+              <li>
+                <strong>Limite de ações simultâneas:</strong> <span>1 teste por vez</span>
+              </li>
             </ul>
-            <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm);">
+            <p class="limits-footer">
               Estes limites existem para proteger infraestrutura e garantir uso responsável deste ambiente educacional.
             </p>
           </div>
         </div>
 
-        <div style="margin-top: var(--spacing-xl); text-align: center;">
+        <div class="nav-links">
           <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
-          <a href="../fundamentos.html#testes-nao-funcionais" class="btn btn-secondary" style="margin-left: var(--spacing-md);">
+          <a href="../fundamentos/testes-nao-funcionais.html" class="btn btn-secondary">
             Ver Documentação NFT
           </a>
-          <a href="nft/index.html" class="btn btn-primary" style="margin-left: var(--spacing-md);">
+          <a href="nft/index.html" class="btn btn-primary">
             Cenários de Teste NFT
           </a>
         </div>
@@ -343,681 +184,15 @@
     </main>
 
     <footer class="site-footer">
-      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); align-items: center; text-align: center;">
+      <div class="footer-wrapper">
         <div>QA Playground — Projeto educacional • Português</div>
-        <div style="font-size: var(--font-size-sm); color: var(--muted);">
-          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../LICENSE" style="color: var(--accent);">MIT License</a>
+        <div class="footer-secondary">
+          Desenvolvido por <strong>David Nascimento</strong> • Licenciado sob <a href="../../LICENSE">MIT License</a>
         </div>
       </div>
     </footer>
 
     <script type="module" src="../../js/index.js"></script>
-    <script>
-      // NFT Playground - Sistema de Testes Não Funcionais
-      (function() {
-        'use strict';
-
-        // Limites e Configurações
-        const LIMITS = {
-          SESSION_MAX_TESTS: 10,
-          COOLDOWN_SECONDS: 3,
-          MAX_ELEMENTS: 1000,
-          MAX_LATENCY_MS: 5000,
-          MAX_ACTIONS: 100
-        };
-
-        // Estado da Aplicação
-        let state = {
-          sessionCount: 0,
-          lastTestTime: 0,
-          currentTest: null,
-          isRunning: false,
-          cooldownEndTime: 0
-        };
-
-        // Elementos DOM
-        const elements = {
-          sessionCount: document.getElementById('session-count'),
-          sessionLimit: document.getElementById('session-limit'),
-          resetSessionBtn: document.getElementById('reset-session-btn'),
-          testTypeBtns: document.querySelectorAll('.test-type-btn'),
-          configPanel: document.getElementById('test-config-panel'),
-          configTitle: document.getElementById('test-config-title'),
-          configContent: document.getElementById('test-config-content'),
-          startTestBtn: document.getElementById('start-test-btn'),
-          cancelTestBtn: document.getElementById('cancel-test-btn'),
-          resultsArea: document.getElementById('test-results-area'),
-          visualArea: document.getElementById('test-visual-area'),
-          metricsArea: document.getElementById('test-metrics'),
-          logArea: document.getElementById('test-log'),
-          clearLogBtn: document.getElementById('clear-log-btn'),
-          clearResultsBtn: document.getElementById('clear-results-btn'),
-          cooldownOverlay: null
-        };
-
-        // Inicialização
-        function init() {
-          loadSessionState();
-          updateSessionDisplay();
-          setupEventListeners();
-          createCooldownOverlay();
-          log('info', 'NFT Playground inicializado. Sessão ativa.');
-        }
-
-        // Gerenciamento de Sessão
-        function loadSessionState() {
-          const saved = sessionStorage.getItem('nft-playground-session');
-          if (saved) {
-            const data = JSON.parse(saved);
-            state.sessionCount = data.sessionCount || 0;
-            state.lastTestTime = data.lastTestTime || 0;
-            state.cooldownEndTime = data.cooldownEndTime || 0;
-          }
-        }
-
-        function saveSessionState() {
-          sessionStorage.setItem('nft-playground-session', JSON.stringify({
-            sessionCount: state.sessionCount,
-            lastTestTime: state.lastTestTime,
-            cooldownEndTime: state.cooldownEndTime
-          }));
-        }
-
-        function resetSession() {
-          state.sessionCount = 0;
-          state.lastTestTime = 0;
-          state.cooldownEndTime = 0;
-          state.currentTest = null;
-          state.isRunning = false;
-          sessionStorage.removeItem('nft-playground-session');
-          updateSessionDisplay();
-          clearLog();
-          clearResults();
-          log('info', 'Sessão NFT encerrada. Contadores reiniciados.');
-        }
-
-        function updateSessionDisplay() {
-          if (elements.sessionCount) {
-            elements.sessionCount.textContent = state.sessionCount;
-          }
-          if (elements.sessionLimit) {
-            elements.sessionLimit.textContent = LIMITS.SESSION_MAX_TESTS;
-          }
-        }
-
-        // Sistema de Logs
-        function log(type, message) {
-          if (!elements.logArea) return;
-
-          const timestamp = new Date().toLocaleTimeString('pt-BR');
-          const entry = document.createElement('div');
-          entry.className = `log-entry ${type}`;
-          entry.innerHTML = `<span class="log-timestamp">[${timestamp}]</span>${message}`;
-          
-          elements.logArea.appendChild(entry);
-          elements.logArea.scrollTop = elements.logArea.scrollHeight;
-
-          // Remove mensagem inicial se existir
-          const initialMsg = elements.logArea.querySelector('div[style*="color: var(--muted)"]');
-          if (initialMsg) {
-            initialMsg.remove();
-          }
-        }
-
-        function clearLog() {
-          if (elements.logArea) {
-            elements.logArea.innerHTML = '<div style="color: var(--muted); font-style: italic;">Aguardando execução de testes...</div>';
-          }
-        }
-
-        // Sistema de Cooldown
-        function createCooldownOverlay() {
-          const overlay = document.createElement('div');
-          overlay.className = 'cooldown-overlay';
-          overlay.id = 'cooldown-overlay';
-          overlay.innerHTML = `
-            <div class="cooldown-message">
-              <h4>Cooldown Ativo</h4>
-              <div class="cooldown-timer" id="cooldown-timer">3</div>
-              <p>Aguarde alguns segundos antes de iniciar um novo teste.</p>
-            </div>
-          `;
-          document.body.appendChild(overlay);
-          elements.cooldownOverlay = overlay;
-        }
-
-        function checkCooldown() {
-          const now = Date.now();
-          if (state.cooldownEndTime > now) {
-            const remaining = Math.ceil((state.cooldownEndTime - now) / 1000);
-            showCooldown(remaining);
-            return false;
-          }
-          hideCooldown();
-          return true;
-        }
-
-        function showCooldown(seconds) {
-          if (!elements.cooldownOverlay) return;
-          elements.cooldownOverlay.classList.add('show');
-          const timer = document.getElementById('cooldown-timer');
-          if (timer) timer.textContent = seconds;
-          
-          if (seconds > 0) {
-            setTimeout(() => {
-              const remaining = Math.ceil((state.cooldownEndTime - Date.now()) / 1000);
-              if (remaining > 0) {
-                showCooldown(remaining);
-              } else {
-                hideCooldown();
-              }
-            }, 1000);
-          }
-        }
-
-        function hideCooldown() {
-          if (elements.cooldownOverlay) {
-            elements.cooldownOverlay.classList.remove('show');
-          }
-        }
-
-        function startCooldown() {
-          state.cooldownEndTime = Date.now() + (LIMITS.COOLDOWN_SECONDS * 1000);
-          saveSessionState();
-        }
-
-        // Validação de Parâmetros
-        function validateParams(testType, params) {
-          switch(testType) {
-            case 'performance':
-              if (params.elements > LIMITS.MAX_ELEMENTS) {
-                return { valid: false, message: `Parâmetro excede o limite permitido. Máximo de elementos: ${LIMITS.MAX_ELEMENTS}.` };
-              }
-              if (params.latency > LIMITS.MAX_LATENCY_MS) {
-                return { valid: false, message: `Parâmetro excede o limite permitido. Máxima latência: ${LIMITS.MAX_LATENCY_MS}ms.` };
-              }
-              break;
-            case 'load':
-              if (params.count > LIMITS.MAX_ELEMENTS) {
-                return { valid: false, message: `Parâmetro excede o limite permitido. Máximo de elementos: ${LIMITS.MAX_ELEMENTS}.` };
-              }
-              break;
-            case 'stress':
-              if (params.iterations > LIMITS.MAX_ACTIONS) {
-                return { valid: false, message: `Parâmetro excede o limite permitido. Máximo de ações: ${LIMITS.MAX_ACTIONS}.` };
-              }
-              break;
-            case 'resilience':
-              if (params.failures > LIMITS.MAX_ACTIONS) {
-                return { valid: false, message: `Parâmetro excede o limite permitido. Máximo de falhas simuladas: ${LIMITS.MAX_ACTIONS}.` };
-              }
-              if (params.latency > LIMITS.MAX_LATENCY_MS) {
-                return { valid: false, message: `Parâmetro excede o limite permitido. Máxima latência: ${LIMITS.MAX_LATENCY_MS}ms.` };
-              }
-              break;
-          }
-          return { valid: true };
-        }
-
-        // Verificação de Limites
-        function canRunTest() {
-          // Verifica limite de sessão
-          if (state.sessionCount >= LIMITS.SESSION_MAX_TESTS) {
-            log('warning', 'Limite de testes por sessão atingido. Reinicie a sessão para continuar.');
-            return { allowed: false, message: 'Limite de testes por sessão atingido. Reinicie a sessão para continuar.' };
-          }
-
-          // Verifica se há teste em execução
-          if (state.isRunning) {
-            log('warning', 'Já existe um teste em execução. Aguarde a conclusão.');
-            return { allowed: false, message: 'Já existe um teste em execução. Aguarde a conclusão.' };
-          }
-
-          // Verifica cooldown
-          if (!checkCooldown()) {
-            const remaining = Math.ceil((state.cooldownEndTime - Date.now()) / 1000);
-            log('warning', `Cooldown ativo. Aguarde ${remaining} segundo(s) antes de iniciar um novo teste.`);
-            return { allowed: false, message: `Cooldown ativo. Aguarde alguns segundos antes de iniciar um novo teste.` };
-          }
-
-          return { allowed: true };
-        }
-
-        // Configuração de Testes
-        function showTestConfig(testType) {
-          elements.configPanel.style.display = 'block';
-          elements.configContent.innerHTML = '';
-
-          let configHTML = '';
-
-          switch(testType) {
-            case 'performance':
-              elements.configTitle.textContent = 'Teste de Performance Percebida';
-              configHTML = `
-                <div class="config-input-group">
-                  <label>
-                    Número de Elementos:
-                    <input type="number" id="perf-elements" min="1" max="${LIMITS.MAX_ELEMENTS}" value="100">
-                    <span class="input-value" id="perf-elements-value">100</span>
-                  </label>
-                </div>
-                <div class="config-input-group">
-                  <label>
-                    Latência Simulada (ms):
-                    <input type="range" id="perf-latency" min="0" max="${LIMITS.MAX_LATENCY_MS}" step="100" value="500">
-                    <span class="input-value" id="perf-latency-value">500ms</span>
-                  </label>
-                </div>
-              `;
-              break;
-            case 'load':
-              elements.configTitle.textContent = 'Teste de Carga de UI';
-              configHTML = `
-                <div class="config-input-group">
-                  <label>
-                    Quantidade de Elementos:
-                    <input type="number" id="load-count" min="1" max="${LIMITS.MAX_ELEMENTS}" value="50">
-                    <span class="input-value" id="load-count-value">50</span>
-                  </label>
-                </div>
-                <div class="config-input-group">
-                  <label>
-                    Tamanho dos Elementos:
-                    <select id="load-size">
-                      <option value="small">Pequeno</option>
-                      <option value="medium" selected>Médio</option>
-                      <option value="large">Grande</option>
-                    </select>
-                  </label>
-                </div>
-              `;
-              break;
-            case 'stress':
-              elements.configTitle.textContent = 'Teste de Stress de Interface';
-              configHTML = `
-                <div class="config-input-group">
-                  <label>
-                    Iterações:
-                    <input type="number" id="stress-iterations" min="1" max="${LIMITS.MAX_ACTIONS}" value="10">
-                    <span class="input-value" id="stress-iterations-value">10</span>
-                  </label>
-                </div>
-                <div class="config-input-group">
-                  <label>
-                    Ações por Iteração:
-                    <input type="number" id="stress-actions" min="1" max="20" value="5">
-                    <span class="input-value" id="stress-actions-value">5</span>
-                  </label>
-                </div>
-              `;
-              break;
-            case 'resilience':
-              elements.configTitle.textContent = 'Teste de Resiliência Front-end';
-              configHTML = `
-                <div class="config-input-group">
-                  <label>
-                    Latência Simulada (ms):
-                    <input type="range" id="res-latency" min="0" max="${LIMITS.MAX_LATENCY_MS}" step="100" value="1000">
-                    <span class="input-value" id="res-latency-value">1000ms</span>
-                  </label>
-                </div>
-                <div class="config-input-group">
-                  <label>
-                    Taxa de Falha Simulada (%):
-                    <input type="range" id="res-failures" min="0" max="50" step="5" value="10">
-                    <span class="input-value" id="res-failures-value">10%</span>
-                  </label>
-                </div>
-                <div class="config-input-group">
-                  <label>
-                    Tentativas:
-                    <input type="number" id="res-attempts" min="1" max="20" value="5">
-                    <span class="input-value" id="res-attempts-value">5</span>
-                  </label>
-                </div>
-              `;
-              break;
-          }
-
-          elements.configContent.innerHTML = configHTML;
-          
-          // Adiciona listeners para atualizar valores em tempo real
-          elements.configContent.querySelectorAll('input[type="range"]').forEach(input => {
-            const valueSpan = document.getElementById(input.id + '-value');
-            input.addEventListener('input', () => {
-              if (input.id.includes('latency') || input.id.includes('res-latency')) {
-                valueSpan.textContent = input.value + 'ms';
-              } else if (input.id.includes('failures')) {
-                valueSpan.textContent = input.value + '%';
-              } else {
-                valueSpan.textContent = input.value;
-              }
-            });
-          });
-
-          elements.configContent.querySelectorAll('input[type="number"]').forEach(input => {
-            const valueSpan = document.getElementById(input.id + '-value');
-            if (valueSpan) {
-              input.addEventListener('input', () => {
-                valueSpan.textContent = input.value;
-              });
-            }
-          });
-
-          state.currentTest = testType;
-        }
-
-        // Execução de Testes
-        async function runTest() {
-          const check = canRunTest();
-          if (!check.allowed) {
-            alert(check.message);
-            return;
-          }
-
-          const params = getTestParams(state.currentTest);
-          const validation = validateParams(state.currentTest, params);
-          
-          if (!validation.valid) {
-            log('error', validation.message);
-            alert(validation.message);
-            return;
-          }
-
-          state.isRunning = true;
-          state.sessionCount++;
-          saveSessionState();
-          updateSessionDisplay();
-          startCooldown();
-
-          elements.startTestBtn.disabled = true;
-          elements.testTypeBtns.forEach(btn => btn.disabled = true);
-          elements.resultsArea.style.display = 'block';
-          elements.visualArea.innerHTML = '';
-          elements.metricsArea.innerHTML = '';
-
-          const startTime = performance.now();
-          log('info', `Iniciando teste: ${state.currentTest}`);
-          log('info', `Parâmetros: ${JSON.stringify(params)}`);
-
-          try {
-            switch(state.currentTest) {
-              case 'performance':
-                await runPerformanceTest(params);
-                break;
-              case 'load':
-                await runLoadTest(params);
-                break;
-              case 'stress':
-                await runStressTest(params);
-                break;
-              case 'resilience':
-                await runResilienceTest(params);
-                break;
-            }
-
-            const endTime = performance.now();
-            const duration = ((endTime - startTime) / 1000).toFixed(2);
-            log('success', `Teste concluído com sucesso em ${duration}s`);
-            state.lastTestTime = Date.now();
-            saveSessionState();
-
-          } catch (error) {
-            log('error', `Falha durante execução: ${error.message}`);
-          } finally {
-            state.isRunning = false;
-            elements.startTestBtn.disabled = false;
-            elements.testTypeBtns.forEach(btn => btn.disabled = false);
-          }
-        }
-
-        function getTestParams(testType) {
-          switch(testType) {
-            case 'performance':
-              return {
-                elements: Number.parseInt(document.getElementById('perf-elements').value, 10) || 100,
-                latency: Number.parseInt(document.getElementById('perf-latency').value, 10) || 500
-              };
-            case 'load':
-              return {
-                count: Number.parseInt(document.getElementById('load-count').value, 10) || 50,
-                size: document.getElementById('load-size').value || 'medium'
-              };
-            case 'stress':
-              return {
-                iterations: Number.parseInt(document.getElementById('stress-iterations').value, 10) || 10,
-                actions: Number.parseInt(document.getElementById('stress-actions').value, 10) || 5
-              };
-            case 'resilience':
-              return {
-                latency: Number.parseInt(document.getElementById('res-latency').value, 10) || 1000,
-                failures: Number.parseInt(document.getElementById('res-failures').value, 10) || 10,
-                attempts: Number.parseInt(document.getElementById('res-attempts').value, 10) || 5
-              };
-            default:
-              return {};
-          }
-        }
-
-        // Implementação dos Testes
-        async function runPerformanceTest(params) {
-          const { elements: count, latency } = params;
-          
-          log('info', `Renderizando ${count} elementos com latência de ${latency}ms...`);
-          
-          const renderStartTime = performance.now();
-          await simulateLatency(latency);
-          
-          for (let i = 0; i < count; i++) {
-            const el = document.createElement('div');
-            el.className = 'test-element';
-            el.textContent = `Elemento ${i + 1}`;
-            elements.visualArea.appendChild(el);
-            
-            if (i % 10 === 0) {
-              await new Promise(resolve => setTimeout(resolve, 10));
-            }
-          }
-
-          const renderEndTime = performance.now();
-          const renderDuration = ((renderEndTime - renderStartTime) / 1000).toFixed(2);
-          displayMetrics([
-            { label: 'Elementos Renderizados', value: count },
-            { label: 'Latência Simulada', value: latency + 'ms' },
-            { label: 'Tempo de Renderização', value: renderDuration + 's' }
-          ]);
-        }
-
-        async function runLoadTest(params) {
-          const { count, size } = params;
-          const sizeMap = { small: '8px', medium: '12px', large: '16px' };
-          
-          log('info', `Carregando ${count} elementos de tamanho ${size}...`);
-          
-          elements.visualArea.style.fontSize = sizeMap[size];
-          
-          for (let i = 0; i < count; i++) {
-            const el = document.createElement('div');
-            el.className = 'test-element';
-            el.textContent = `#${i + 1}`;
-            elements.visualArea.appendChild(el);
-            
-            if (i % 20 === 0) {
-              await new Promise(resolve => setTimeout(resolve, 5));
-            }
-          }
-
-          displayMetrics([
-            { label: 'Total de Elementos', value: count },
-            { label: 'Tamanho', value: size },
-            { label: 'Memória Aproximada', value: (count * 0.5).toFixed(0) + ' KB' }
-          ]);
-        }
-
-        async function runStressTest(params) {
-          const { iterations, actions } = params;
-          
-          log('info', `Executando ${iterations} iterações com ${actions} ações cada...`);
-          
-          let totalActions = 0;
-          
-          for (let i = 0; i < iterations; i++) {
-            log('info', `Iteração ${i + 1}/${iterations}`);
-            
-            for (let j = 0; j < actions; j++) {
-              const el = document.createElement('div');
-              el.className = 'test-element';
-              el.textContent = `Ação ${totalActions + 1}`;
-              elements.visualArea.appendChild(el);
-              totalActions++;
-              
-              await new Promise(resolve => setTimeout(resolve, 50));
-            }
-            
-            // Limpa parcialmente a cada 5 iterações
-            if ((i + 1) % 5 === 0) {
-              const children = elements.visualArea.children;
-              const toRemove = Math.floor(children.length / 2);
-              for (let k = 0; k < toRemove; k++) {
-                if (children[0]) children[0].remove();
-              }
-            }
-          }
-
-          displayMetrics([
-            { label: 'Iterações', value: iterations },
-            { label: 'Ações Totais', value: totalActions },
-            { label: 'Ações por Iteração', value: actions }
-          ]);
-        }
-
-        async function runResilienceTest(params) {
-          const { latency, failures, attempts } = params;
-          
-          log('info', `Testando resiliência com ${latency}ms de latência e ${failures}% de falhas...`);
-          
-          let successCount = 0;
-          let failureCount = 0;
-          
-          for (let i = 0; i < attempts; i++) {
-            log('info', `Tentativa ${i + 1}/${attempts}...`);
-            
-            await simulateLatency(latency);
-            
-            const shouldFail = Math.random() * 100 < failures;
-            
-            if (shouldFail) {
-              failureCount++;
-              log('warning', `Falha simulada na tentativa ${i + 1}`);
-              
-              const el = document.createElement('div');
-              el.className = 'test-element';
-              el.style.background = '#dc3545';
-              el.textContent = `Falha ${failureCount}`;
-              elements.visualArea.appendChild(el);
-            } else {
-              successCount++;
-              
-              const el = document.createElement('div');
-              el.className = 'test-element';
-              el.style.background = '#28a745';
-              el.textContent = `Sucesso ${successCount}`;
-              elements.visualArea.appendChild(el);
-            }
-            
-            await new Promise(resolve => setTimeout(resolve, 200));
-          }
-
-          const successRate = ((successCount / attempts) * 100).toFixed(1);
-          
-          displayMetrics([
-            { label: 'Tentativas', value: attempts },
-            { label: 'Sucessos', value: successCount },
-            { label: 'Falhas', value: failureCount },
-            { label: 'Taxa de Sucesso', value: successRate + '%' }
-          ]);
-        }
-
-        function simulateLatency(ms) {
-          return new Promise(resolve => setTimeout(resolve, ms));
-        }
-
-        function displayMetrics(metrics) {
-          elements.metricsArea.innerHTML = metrics.map(m => `
-            <div class="metric-card">
-              <div class="metric-label">${m.label}</div>
-              <div class="metric-value">${m.value}</div>
-            </div>
-          `).join('');
-        }
-
-        function clearResults() {
-          elements.visualArea.innerHTML = '';
-          elements.metricsArea.innerHTML = '';
-          elements.resultsArea.style.display = 'none';
-        }
-
-        // Event Listeners
-        function setupEventListeners() {
-          // Reset de sessão
-          if (elements.resetSessionBtn) {
-            elements.resetSessionBtn.addEventListener('click', () => {
-              if (confirm('Deseja realmente encerrar a sessão NFT? Todos os contadores serão reiniciados.')) {
-                resetSession();
-              }
-            });
-          }
-
-          // Seleção de tipo de teste
-          elements.testTypeBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-              if (state.isRunning) return;
-              
-              elements.testTypeBtns.forEach(b => b.classList.remove('active'));
-              btn.classList.add('active');
-              showTestConfig(btn.dataset.test);
-            });
-          });
-
-          // Iniciar teste
-          if (elements.startTestBtn) {
-            elements.startTestBtn.addEventListener('click', runTest);
-          }
-
-          // Cancelar teste
-          if (elements.cancelTestBtn) {
-            elements.cancelTestBtn.addEventListener('click', () => {
-              elements.configPanel.style.display = 'none';
-              elements.testTypeBtns.forEach(btn => btn.classList.remove('active'));
-              state.currentTest = null;
-            });
-          }
-
-          // Limpar log
-          if (elements.clearLogBtn) {
-            elements.clearLogBtn.addEventListener('click', clearLog);
-          }
-
-          // Limpar resultados
-          if (elements.clearResultsBtn) {
-            elements.clearResultsBtn.addEventListener('click', clearResults);
-          }
-        }
-
-        // Inicializar quando DOM estiver pronto
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', init);
-        } else {
-          init();
-        }
-
-        // Verificar cooldown periodicamente
-        setInterval(() => {
-          if (state.cooldownEndTime > 0 && state.cooldownEndTime <= Date.now()) {
-            hideCooldown();
-          }
-        }, 1000);
-      })();
-    </script>
+    <script type="module" src="../../js/modules/nft/nft.playground.js"></script>
   </body>
 </html>

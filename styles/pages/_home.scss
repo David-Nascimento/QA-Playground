@@ -355,8 +355,9 @@
     text-decoration: underline;
   }
   
+  // A seta é adicionada pela regra global em main.scss
+  // Apenas adicionamos a transição de hover aqui
   &::after {
-    content: "→";
     transition: transform 0.2s ease;
   }
   

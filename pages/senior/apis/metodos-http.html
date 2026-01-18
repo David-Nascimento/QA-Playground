@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Métodos HTTP — APIs e Autenticação — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">APIs</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Métodos HTTP — Visão de Testes</h2>
+          <div class="section-desc">Guia completo sobre métodos HTTP: quando usar, o que validar e riscos comuns para QA Engineers.</div>
+        </div>
+
+        <div class="info-box">
+          <h3>GET</h3>
+          <p><strong>Semântica:</strong> Recuperar representação de um recurso. Método idempotente e seguro (não altera estado do servidor).</p>
+          <p><strong>Uso:</strong> Buscar recurso específico, listar coleções, consultas com filtros, operações de leitura.</p>
+          <p><strong>Validações obrigatórias:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Status code 200 OK para sucesso</li>
+            <li>Estrutura do payload conforme schema (JSON Schema, OpenAPI)</li>
+            <li>Headers de cache quando aplicável (Cache-Control, ETag, Last-Modified)</li>
+            <li>Paginação implementada para coleções grandes (page, limit, total)</li>
+            <li>Query parameters funcionando corretamente (filtros, ordenação, inclusão)</li>
+            <li>Idempotência: múltiplas requisições idênticas retornam mesmo resultado</li>
+          </ul>
+          <p><strong>Riscos e vulnerabilidades:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Exposição de dados sensíveis em query params (aparecem em logs, histórico do navegador)</li>
+            <li>Ausência de paginação causa timeouts e sobrecarga (retornar milhares de registros)</li>
+            <li>Cache mal configurado retorna dados desatualizados ou privados</li>
+            <li>SQL/NoSQL injection através de filtros não sanitizados</li>
+            <li>Information disclosure através de mensagens de erro detalhadas</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>POST</h3>
+          <p><strong>Semântica:</strong> Criar novo recurso ou executar ação não idempotente. Não é seguro (pode alterar estado) nem idempotente (múltiplas chamadas criam recursos diferentes).</p>
+          <p><strong>Uso:</strong> Criar recursos, ações com efeitos colaterais (enviar email, processar pagamento, disparar notificação), submissão de formulários.</p>
+          <p><strong>Validações obrigatórias:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Status 201 Created quando recurso é criado (com Location header) ou 200 OK para ações</li>
+            <li>Payload retorna recurso criado completo, incluindo ID gerado</li>
+            <li>Location header presente com URI do novo recurso (RFC 7231)</li>
+            <li>Validação completa de campos obrigatórios e tipos</li>
+            <li>Regras de negócio aplicadas (unicidade, constraints, validações customizadas)</li>
+            <li>Headers apropriados (Content-Type validado, CORS se aplicável)</li>
+          </ul>
+          <p><strong>Riscos e vulnerabilidades:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Criação duplicada por requisições repetidas (ausência de idempotência)</li>
+            <li>Validação insuficiente permite dados inválidos ou maliciosos</li>
+            <li>Falta de sanitização resulta em XSS, injection (SQL, NoSQL, Command)</li>
+            <li>Exposição de informações sensíveis no response (senhas, tokens internos, stack traces)</li>
+            <li>Mass assignment: aceitar campos não permitidos que modificam estado crítico</li>
+            <li>CSRF quando não há proteção adequada</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>PUT</h3>
+          <p><strong>Semântica:</strong> Substituir recurso completo. Método idempotente: múltiplas requisições idênticas têm mesmo efeito. Pode criar recurso se não existir (upsert).</p>
+          <p><strong>Uso:</strong> Atualização completa de recurso existente, criação/atualização quando ID é conhecido, sincronização de estado.</p>
+          <p><strong>Validações obrigatórias:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Status 200 OK (recurso atualizado) ou 201 Created (recurso criado) ou 204 No Content</li>
+            <li>Recurso substituído completamente: todos os campos atualizados conforme payload</li>
+            <li>Idempotência garantida: requisições idênticas produzem mesmo estado final</li>
+            <li>Campos não enviados são removidos ou definidos como default (comportamento documentado)</li>
+            <li>Validação de todos os campos obrigatórios (mesmo nível de POST)</li>
+            <li>Versionamento (ETag, If-Match) quando aplicável para prevenir race conditions</li>
+          </ul>
+          <p><strong>Riscos e vulnerabilidades:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Sobrescrita acidental por falta de validação de versão (lost update problem)</li>
+            <li>Perda de dados quando campos não enviados são removidos (comportamento não documentado)</li>
+            <li>Validação inconsistente entre PUT e POST causa comportamentos inesperados</li>
+            <li>Ausência de autorização permite sobrescrever recursos de outros usuários</li>
+            <li>Race conditions em atualizações concorrentes sem controle de versão</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>PATCH</h3>
+          <p><strong>Semântica:</strong> Aplicar modificações parciais em um recurso. Método idempotente: múltiplas requisições idênticas têm mesmo efeito. Apenas campos presentes no payload são modificados.</p>
+          <p><strong>Uso:</strong> Atualização parcial de recursos, modificações incrementais, evitar retransmissão de dados completos.</p>
+          <p><strong>Validações obrigatórias:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Status 200 OK com recurso atualizado ou 204 No Content</li>
+            <li>Apenas campos enviados são modificados, demais permanecem inalterados</li>
+            <li>Validação dos campos enviados (tipos, formatos, regras de negócio)</li>
+            <li>Idempotência: requisições idênticas produzem mesmo estado</li>
+            <li>Merge correto de estruturas complexas (arrays, objetos aninhados) conforme estratégia definida</li>
+            <li>Suporte a JSON Patch (RFC 6902) ou formato customizado documentado</li>
+          </ul>
+          <p><strong>Riscos e vulnerabilidades:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Validação inconsistente permite valores inválidos em atualização parcial</li>
+            <li>Merge incorreto de arrays/objetos causa perda de dados ou estado inconsistente</li>
+            <li>Confusão entre PUT (substituição completa) e PATCH (atualização parcial)</li>
+            <li>Ausência de validação de campos críticos em atualizações parciais</li>
+            <li>Estratégia de merge não documentada causa comportamentos inesperados</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>DELETE</h3>
+          <p><strong>Semântica:</strong> Remover recurso identificado pela URI. Método idempotente: deletar recurso já deletado retorna sucesso (204). Não é seguro (altera estado).</p>
+          <p><strong>Uso:</strong> Remoção de recursos, exclusão lógica ou física, limpeza de dados.</p>
+          <p><strong>Validações obrigatórias:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Status 204 No Content (sucesso sem body) ou 200 OK com confirmação</li>
+            <li>Recurso removido: GET subsequente retorna 404 Not Found</li>
+            <li>Soft delete vs hard delete claramente documentado e testado</li>
+            <li>Remoção em cascata de recursos dependentes (se aplicável) testada</li>
+            <li>Idempotência: deletar recurso inexistente retorna 204 (não 404)</li>
+            <li>Autorização verificada: apenas usuários com permissão podem deletar</li>
+          </ul>
+          <p><strong>Riscos e vulnerabilidades:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Remoção em cascata não testada causa orfãos ou violação de integridade referencial</li>
+            <li>Ausência de autorização permite deleção não autorizada (IDOR)</li>
+            <li>Soft delete não documentado causa confusão sobre estado real do recurso</li>
+            <li>Recursos relacionados não tratados (ex: deletar usuário sem tratar pedidos)</li>
+            <li>Ausência de confirmação para operações críticas (deleção em massa)</li>
+            <li>Falta de auditoria/logging de operações de deleção</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>OPTIONS</h3>
+          <p><strong>Semântica:</strong> Obter métodos HTTP permitidos para um recurso. Usado principalmente para CORS preflight requests. Método seguro e idempotente.</p>
+          <p><strong>Uso:</strong> Verificar métodos permitidos antes de requisição real, CORS preflight, descoberta de capacidades da API.</p>
+          <p><strong>Validações obrigatórias:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Header Allow listando métodos permitidos (GET, POST, PUT, etc.)</li>
+            <li>CORS headers corretos quando aplicável (Access-Control-Allow-Methods, Access-Control-Allow-Headers, Access-Control-Allow-Origin)</li>
+            <li>Status 200 OK ou 204 No Content</li>
+            <li>Body vazio ou contendo apenas informações sobre capacidades</li>
+          </ul>
+          <p><strong>Riscos e vulnerabilidades:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>CORS mal configurado bloqueia requisições legítimas de origens autorizadas</li>
+            <li>Métodos perigosos expostos incorretamente (DELETE, PUT em endpoints públicos)</li>
+            <li>Falta de implementação retorna 405, quebrando CORS preflight</li>
+            <li>Headers CORS muito permissivos (Access-Control-Allow-Origin: *) em produção</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>HEAD</h3>
+          <p><strong>Semântica:</strong> Obter headers de resposta sem body. Comportamento idêntico ao GET, exceto pela ausência de payload. Método seguro e idempotente.</p>
+          <p><strong>Uso:</strong> Verificar existência de recurso, validar cache (ETag, Last-Modified), obter metadados sem transferir dados, verificar tamanho do recurso.</p>
+          <p><strong>Validações obrigatórias:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Status code idêntico ao GET equivalente (200, 404, etc.)</li>
+            <li>Headers idênticos ao GET, especialmente ETag, Last-Modified, Content-Type, Content-Length</li>
+            <li>Body obrigatoriamente vazio (não deve conter payload)</li>
+            <li>Content-Length presente e correto (tamanho do recurso se fosse retornado)</li>
+          </ul>
+          <p><strong>Riscos e vulnerabilidades:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Headers inconsistentes com GET causam problemas de cache</li>
+            <li>ETag diferente do GET quebra validação de cache</li>
+            <li>Falta de implementação retorna 405 ou comportamento inesperado</li>
+            <li>Content-Length incorreto afeta download progress e validações</li>
+          </ul>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); justify-content: space-between; flex-wrap: wrap;">
+          <a href="fundamentos.html" class="btn btn-secondary">← Anterior: Fundamentos</a>
+          <a href="status-codes.html" class="btn">Próximo: Status Codes</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script type="module" src="../../../js/index.js"></script>
+  </body>
+</html>

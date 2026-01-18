@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>QA Playground — Plataforma Educacional de Testes</title>
+    <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg" />
     <link rel="stylesheet" href="css/main.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   </head>
@@ -43,12 +44,16 @@
       <section class="hero">
         <h1>QA Playground</h1>
         <p class="hero-subtitle">
-          Plataforma prática para aprender e evoluir em testes de software, do nível júnior ao sênior.
+          Aprenda testes de software na prática, do júnior ao sênior
         </p>
-        <p class="hero-description">
-          Ambiente educacional focado em prática real de testes funcionais, automação, APIs, BDD, mobile e testes não funcionais. 
-          Organizado por temas e níveis de senioridade, com cenários controlados e próximos da realidade.
-        </p>
+        <div class="hero-cta">
+          <a href="#areas" class="btn btn-primary">Explorar Conteúdo</a>
+        </div>
+        <div class="hero-badges">
+          <span class="hero-badge">6 Áreas de Prática</span>
+          <span class="hero-badge">3 Níveis</span>
+          <span class="hero-badge">10+ Ferramentas</span>
+        </div>
       </section>
 
       <!-- Como o QA Playground funciona -->
@@ -57,56 +62,62 @@
         <div class="info-blocks">
           <div class="info-block">
             <h3>Aprendizado prático</h3>
-            <p>Cenários executáveis que permitem aplicar técnicas de teste de forma imediata, com feedback direto sobre sua abordagem.</p>
+            <p>Cenários executáveis com feedback imediato. Aplique técnicas de teste na prática.</p>
           </div>
           <div class="info-block">
             <h3>Cenários realistas</h3>
-            <p>Simulações próximas de aplicações reais, com regras de negócio, validações e comportamentos dinâmicos encontrados em projetos corporativos.</p>
+            <p>Simulações próximas de aplicações reais, com regras de negócio e comportamentos dinâmicos encontrados em projetos corporativos.</p>
           </div>
           <div class="info-block">
-            <h3>Organização por nível e competência</h3>
-            <p>Conteúdo estruturado progressivamente, do básico ao avançado, facilitando a evolução contínua em diferentes áreas de QA.</p>
+            <h3>Organização progressiva</h3>
+            <p>Conteúdo estruturado do básico ao avançado, facilitando evolução contínua em diferentes áreas de QA.</p>
           </div>
           <div class="info-block">
-            <h3>Ambiente controlado para testes</h3>
-            <p>Elementos identificáveis, comportamentos estáveis e previsíveis, ideal para validação de estratégias e automação confiável.</p>
+            <h3>Ambiente controlado</h3>
+            <p>Elementos identificáveis e comportamentos estáveis, ideal para validação de estratégias e automação confiável.</p>
           </div>
         </div>
       </section>
 
       <!-- Áreas de prática -->
-      <section class="section">
+      <section class="section" id="areas">
         <h2 class="section-title">Áreas de prática</h2>
         <div class="areas-list">
           <div class="area-item">
+            <span class="badge badge-area">ÁREA</span>
             <h3>Testes Funcionais</h3>
-            <p>Validação de regras de negócio, fluxos de usuário e comportamentos esperados da aplicação.</p>
-            <a href="pages/junior/formularios/index.html" class="area-link">Ver formulários e validações →</a>
+            <p>Validação de regras de negócio, fluxos de usuário e comportamentos esperados.</p>
+            <a href="pages/junior/formularios/index.html" class="area-link">Explorar</a>
           </div>
           <div class="area-item">
+            <span class="badge badge-area">ÁREA</span>
             <h3>Automação de Testes</h3>
-            <p>Elementos identificáveis e estruturas estáveis para prática com Selenium, Playwright, Cypress e outras ferramentas.</p>
-            <a href="pages/junior/interacoes/index.html" class="area-link">Ver interações e elementos →</a>
+            <p>Elementos identificáveis e estruturas estáveis para prática com Selenium, Playwright e Cypress.</p>
+            <a href="pages/junior/interacoes/index.html" class="area-link">Explorar</a>
           </div>
           <div class="area-item">
+            <span class="badge badge-area">ÁREA</span>
             <h3>APIs e Autenticação</h3>
-            <p>Simulações de APIs REST, OAuth 2.0, autenticação HTTP Basic e Digest, códigos de status e manipulação de headers.</p>
-            <a href="pages/senior/apis/index.html" class="area-link">Ver APIs e autenticação →</a>
+            <p>Simulações de APIs REST, OAuth 2.0, autenticação HTTP e manipulação de headers.</p>
+            <a href="pages/senior/apis/index.html" class="area-link">Explorar</a>
           </div>
           <div class="area-item">
+            <span class="badge badge-area">ÁREA</span>
             <h3>Testes Mobile</h3>
-            <p>Responsividade, touch events, viewport, orientação e interações específicas de dispositivos móveis.</p>
-            <a href="pages/mobile/index.html" class="area-link">Ver testes mobile →</a>
+            <p>Responsividade, touch events, viewport e interações específicas de dispositivos móveis.</p>
+            <a href="pages/mobile/index.html" class="area-link">Explorar</a>
           </div>
           <div class="area-item">
+            <span class="badge badge-area">ÁREA</span>
             <h3>Testes Não Funcionais</h3>
-            <p>Performance, carga, stress e resiliência do front-end, com métricas e cenários controlados para análise.</p>
-            <a href="pages/tools/nft-playground.html" class="area-link">Ver NFT Playground →</a>
+            <p>Performance, carga, stress e resiliência com métricas e cenários controlados.</p>
+            <a href="pages/tools/nft-playground.html" class="area-link">Explorar</a>
           </div>
           <div class="area-item">
+            <span class="badge badge-area">ÁREA</span>
             <h3>BDD</h3>
-            <p>Criação, validação e avaliação de cenários em Gherkin, com feedback automático e aprendizado prático de BDD.</p>
-            <a href="pages/tools/bdd-playground.html" class="area-link">Ver BDD Playground →</a>
+            <p>Criação e validação de cenários em Gherkin com feedback automático e aprendizado prático.</p>
+            <a href="pages/tools/bdd-playground.html" class="area-link">Explorar</a>
           </div>
         </div>
       </section>
@@ -115,12 +126,13 @@
       <section class="section">
         <h2 class="section-title">Progressão por senioridade</h2>
         <p style="text-align: center; color: var(--muted); margin-bottom: var(--spacing-xl); max-width: 800px; margin-left: auto; margin-right: auto;">
-          Roadmaps de orientação que indicam o caminho correto para desenvolver habilidades em cada nível
+          Roadmaps estruturados que guiam o desenvolvimento de habilidades em cada nível de senioridade
         </p>
         <div class="progression-blocks">
-          <div class="progression-block">
+          <div class="progression-block progression-junior">
+            <span class="badge badge-junior">JÚNIOR</span>
             <h3>Nível Júnior</h3>
-            <p>Fundamentos e primeiros cenários</p>
+            <p>Comece aqui: fundamentos e primeiros cenários</p>
             <ul>
               <li>Formulários simples e validações básicas</li>
               <li>Tabelas com conteúdo dinâmico</li>
@@ -128,13 +140,14 @@
               <li>Regras de negócio diretas</li>
             </ul>
             <div class="progression-links">
-              <a href="pages/junior/index.html" class="progression-link progression-link-primary">Ver Roadmap Júnior →</a>
-              <a href="pages/junior/formularios/index.html" class="progression-link">Explorar práticas →</a>
+              <a href="pages/junior/index.html" class="progression-link progression-link-primary">Ver Roadmap</a>
+              <a href="pages/junior/formularios/index.html" class="progression-link">Ver Práticas</a>
             </div>
           </div>
-          <div class="progression-block">
+          <div class="progression-block progression-pleno">
+            <span class="badge badge-pleno">PLENO</span>
             <h3>Nível Pleno</h3>
-            <p>Manipulação dinâmica e interações avançadas</p>
+            <p>Evolua suas habilidades: manipulação dinâmica e interações avançadas</p>
             <ul>
               <li>Tabelas com paginação e ordenação</li>
               <li>Upload e download de arquivos</li>
@@ -142,13 +155,14 @@
               <li>Cenários intermediários de automação</li>
             </ul>
             <div class="progression-links">
-              <a href="pages/pleno/index.html" class="progression-link progression-link-primary">Ver Roadmap Pleno →</a>
-              <a href="pages/pleno/tabelas/index.html" class="progression-link">Explorar práticas →</a>
+              <a href="pages/pleno/index.html" class="progression-link progression-link-primary">Ver Roadmap</a>
+              <a href="pages/pleno/tabelas/index.html" class="progression-link">Ver Práticas</a>
             </div>
           </div>
-          <div class="progression-block">
+          <div class="progression-block progression-senior">
+            <span class="badge badge-senior">SÊNIOR</span>
             <h3>Nível Sênior</h3>
-            <p>Cenários complexos, APIs e desafios reais</p>
+            <p>Domine cenários complexos: APIs, arquitetura e desafios reais</p>
             <ul>
               <li>Shadow DOM, iframes e múltiplas janelas</li>
               <li>Autenticação OAuth e HTTP</li>
@@ -156,8 +170,8 @@
               <li>Comportamentos dinâmicos complexos</li>
             </ul>
             <div class="progression-links">
-              <a href="pages/senior/index.html" class="progression-link progression-link-primary">Ver Roadmap Sênior →</a>
-              <a href="pages/senior/dinamicos/index.html" class="progression-link">Explorar práticas →</a>
+              <a href="pages/senior/index.html" class="progression-link progression-link-primary">Ver Roadmap</a>
+              <a href="pages/senior/dinamicos/index.html" class="progression-link">Ver Práticas</a>
             </div>
           </div>
         </div>
@@ -167,7 +181,7 @@
       <section class="section">
         <h2 class="section-title">Playgrounds e ferramentas</h2>
         <p style="text-align: center; color: var(--muted); margin-bottom: var(--spacing-xl); max-width: 800px; margin-left: auto; margin-right: auto;">
-          Ferramentas interativas e playgrounds para prática, aprendizado e desenvolvimento de habilidades em diferentes áreas de QA
+          Ferramentas interativas e playgrounds para prática e desenvolvimento de habilidades em diferentes áreas de QA
         </p>
         
         <div class="tools-grid">
@@ -177,14 +191,14 @@
               <h3><a href="pages/tools/xpath-css-tester.html">XPath & CSS Tester</a></h3>
               <span class="tool-category">Ferramenta</span>
             </div>
-            <p class="tool-description">Teste e valide seletores XPath e CSS com exemplos práticos utilizados em automação de testes.</p>
+            <p class="tool-description">Teste e valide seletores XPath e CSS em tempo real com exemplos práticos para automação.</p>
             <ul class="tool-features">
               <li>Validação de seletores em tempo real</li>
               <li>Exemplos práticos de elementos comuns</li>
               <li>Feedback visual sobre correspondências</li>
               <li>Útil para Selenium, Playwright e Cypress</li>
             </ul>
-            <a href="pages/tools/xpath-css-tester.html" class="tool-link">Acessar ferramenta</a>
+            <a href="pages/tools/xpath-css-tester.html" class="tool-link">Usar Ferramenta</a>
           </div>
 
           <!-- BDD Playground -->
@@ -193,7 +207,7 @@
               <h3><a href="pages/tools/bdd-playground.html">BDD Playground</a></h3>
               <span class="tool-category">Playground</span>
             </div>
-            <p class="tool-description">Crie, valide e avalie cenários BDD em Gherkin. Aprenda na prática com validação automática e feedback educacional.</p>
+            <p class="tool-description">Crie e valide cenários BDD em Gherkin com feedback automático e sistema de pontuação educacional.</p>
             <ul class="tool-features">
               <li>Editor interativo para cenários Gherkin</li>
               <li>Validação automática de sintaxe</li>
@@ -201,7 +215,7 @@
               <li>Sistema de pontuação e avaliação</li>
               <li>Histórico de sessões e progresso</li>
             </ul>
-            <a href="pages/tools/bdd-playground.html" class="tool-link">Acessar playground</a>
+            <a href="pages/tools/bdd-playground.html" class="tool-link">Abrir Playground</a>
           </div>
 
           <!-- NFT Playground -->
@@ -210,7 +224,7 @@
               <h3><a href="pages/tools/nft-playground.html">NFT Playground</a></h3>
               <span class="tool-category">Playground</span>
             </div>
-            <p class="tool-description">Simulador de Testes Não Funcionais: performance, carga, stress e resiliência do front-end em ambiente educacional.</p>
+            <p class="tool-description">Simulador de testes não funcionais: performance, carga, stress e resiliência com métricas em tempo real.</p>
             <ul class="tool-features">
               <li>Testes de performance e latência</li>
               <li>Simulação de carga e stress</li>
@@ -218,7 +232,7 @@
               <li>Métricas e análises em tempo real</li>
               <li>Cenários controlados para aprendizado</li>
             </ul>
-            <a href="pages/tools/nft-playground.html" class="tool-link">Acessar playground</a>
+            <a href="pages/tools/nft-playground.html" class="tool-link">Abrir Playground</a>
           </div>
 
           <!-- Mobile Playground -->
@@ -227,7 +241,7 @@
               <h3><a href="pages/tools/mobile-playground.html">Mobile Playground</a></h3>
               <span class="tool-category">Documentação</span>
             </div>
-            <p class="tool-description">Documentação completa para automação mobile com simuladores Android e iOS, guias de configuração e exemplos práticos.</p>
+            <p class="tool-description">Documentação completa para automação mobile: simuladores Android/iOS, guias de configuração e exemplos práticos.</p>
             <ul class="tool-features">
               <li>Guias de configuração de ambientes</li>
               <li>Exemplos práticos Android e iOS</li>
@@ -235,7 +249,7 @@
               <li>Responsividade e viewport</li>
               <li>Touch events e interações mobile</li>
             </ul>
-            <a href="pages/tools/mobile-playground.html" class="tool-link">Acessar documentação</a>
+            <a href="pages/tools/mobile-playground.html" class="tool-link">Ler Documentação</a>
           </div>
 
           <!-- Utilitários -->
@@ -244,7 +258,7 @@
               <h3><a href="pages/senior/utilitarios/index.html">Utilitários para QA e SDET</a></h3>
               <span class="tool-category">Utilitários</span>
             </div>
-            <p class="tool-description">Ferramentas auxiliares e utilitários para QA e SDET: informações do navegador, console logs, testes flaky e aplicações React para prática.</p>
+            <p class="tool-description">Utilitários para QA e SDET: informações do navegador, console logs, testes flaky e aplicações React para prática.</p>
             <ul class="tool-features">
               <li>Informações do navegador e ambiente</li>
               <li>Console logs e debugging</li>
@@ -252,7 +266,7 @@
               <li>Aplicações React para prática</li>
               <li>Ferramentas de desenvolvimento e análise</li>
             </ul>
-            <a href="pages/senior/utilitarios/index.html" class="tool-link">Explorar utilitários</a>
+            <a href="pages/senior/utilitarios/index.html" class="tool-link">Usar Ferramenta</a>
           </div>
 
           <!-- Accessibility Playground -->
@@ -261,7 +275,7 @@
               <h3><a href="pages/tools/accessibility/index.html">Acessibilidade Web</a></h3>
               <span class="tool-category">Playground</span>
             </div>
-            <p class="tool-description">Playground interativo para aprender, testar e validar acessibilidade web na prática. Explore problemas comuns e suas soluções seguindo WCAG 2.2.</p>
+            <p class="tool-description">Playground interativo para aprender e validar acessibilidade web. Explore problemas comuns e soluções seguindo WCAG 2.2.</p>
             <ul class="tool-features">
               <li>Introdução à acessibilidade web</li>
               <li>Playgrounds interativos com exemplos práticos</li>
@@ -269,7 +283,7 @@
               <li>Checklist completo de acessibilidade</li>
               <li>Casos de teste práticos e ferramentas úteis</li>
             </ul>
-            <a href="pages/tools/accessibility/index.html" class="tool-link">Acessar playground</a>
+            <a href="pages/tools/accessibility/index.html" class="tool-link">Abrir Playground</a>
           </div>
         </div>
       </section>
@@ -280,8 +294,8 @@
         <div class="audience-content">
           <p>O QA Playground foi desenvolvido para profissionais que buscam prática real e evolução contínua em testes de software:</p>
           <ul class="audience-list">
-            <li><strong>QAs em formação:</strong> Ambiente controlado para aplicar conceitos e técnicas aprendidas.</li>
-            <li><strong>Profissionais em evolução:</strong> Cenários progressivos que permitem avançar de forma estruturada.</li>
+            <li><strong>QAs em formação:</strong> Ambiente controlado para aplicar conceitos e técnicas na prática.</li>
+            <li><strong>Profissionais em evolução:</strong> Cenários progressivos para avançar de forma estruturada.</li>
             <li><strong>SDETs:</strong> Ferramentas e utilitários para automação avançada e engenharia de qualidade.</li>
             <li><strong>Tech Leads e Educadores:</strong> Material educacional estruturado para treinamento e avaliação técnica.</li>
           </ul>
@@ -294,15 +308,15 @@
         <div class="about-content">
           <p>
             O QA Playground é um projeto educacional focado em prática e qualidade de software. 
-            Não é uma ferramenta comercial, mas sim um ambiente técnico e educacional criado para a comunidade de QA.
+            Ambiente técnico criado para a comunidade de QA, não uma ferramenta comercial.
           </p>
           <p>
-            Desenvolvido por <strong>David Nascimento</strong>, o projeto oferece cenários controlados, 
-            elementos identificáveis e estruturas estáveis para facilitar tanto testes manuais quanto automação.
+            Desenvolvido por <strong>David Nascimento</strong>, oferece cenários controlados, 
+            elementos identificáveis e estruturas estáveis para facilitar testes manuais e automação.
           </p>
           <p>
-            Todo o conteúdo é fornecido gratuitamente para uso educacional e profissional. 
-            O projeto está disponível sob licença MIT e pode ser utilizado como parte de portfólio profissional.
+            Todo o conteúdo é gratuito para uso educacional e profissional. 
+            Disponível sob licença MIT e pode ser utilizado como parte de portfólio profissional.
           </p>
         </div>
       </section>

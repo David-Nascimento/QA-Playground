@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Boas Práticas para QA — APIs e Autenticação — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">APIs</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Boas Práticas para QA</h2>
+          <div class="section-desc">Como escrever casos de teste, estruturar coleções Postman, organizar ambientes e reportar bugs de API corretamente.</div>
+        </div>
+
+        <div class="info-box">
+          <h3>Como escrever casos de teste de API</h3>
+          
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Estrutura do caso de teste</h4>
+            <p>Documente caso de teste de forma clara e reproduzível:</p>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><strong>ID e título:</strong> Identificador único e descrição clara do cenário</li>
+              <li><strong>Pré-condições:</strong> Dados necessários no sistema, autenticação requerida, estado inicial do sistema</li>
+              <li><strong>Dados de entrada:</strong> Endpoint completo, método HTTP, headers (Authorization, Content-Type, etc.), request body (JSON completo), query parameters</li>
+              <li><strong>Ação:</strong> Executar requisição HTTP com dados especificados</li>
+              <li><strong>Resultado esperado:</strong> Status code HTTP, estrutura do response body (schema), valores específicos esperados, headers de resposta relevantes</li>
+              <li><strong>Validações:</strong> Conformidade com schema (JSON Schema), tipos de dados corretos, regras de negócio aplicadas, headers obrigatórios presentes</li>
+              <li><strong>Pós-condições:</strong> Estado do sistema após execução, dados criados/modificados</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Validações essenciais em cada teste</h4>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><strong>Status code:</strong> Código HTTP correto conforme especificação (200, 201, 400, 401, etc.)</li>
+              <li><strong>Schema validation:</strong> Estrutura JSON conforme contrato (OpenAPI, JSON Schema), tipos de dados corretos</li>
+              <li><strong>Valores específicos:</strong> IDs retornados, timestamps, valores calculados, campos gerados pelo servidor</li>
+              <li><strong>Headers:</strong> Content-Type correto, Location (quando aplicável), Cache-Control, ETag, X-RateLimit-*</li>
+              <li><strong>Performance:</strong> Tempo de resposta dentro dos limites aceitáveis</li>
+              <li><strong>Idempotência:</strong> Quando aplicável, validar que requisições idênticas produzem mesmo resultado</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Cenários obrigatórios a cobrir</h4>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><strong>Happy path:</strong> Fluxo principal com dados válidos, todas as condições ideais</li>
+              <li><strong>Validações de entrada:</strong> Campos obrigatórios ausentes, tipos incorretos, formatos inválidos, valores fora de range</li>
+              <li><strong>Erros esperados:</strong> 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 409 (conflict), 422 (validation failed), 429 (rate limit)</li>
+              <li><strong>Edge cases:</strong> Valores limites (min, max), strings vazias, null, arrays vazios, objetos vazios</li>
+              <li><strong>Testes negativos:</strong> Payload malformado, autenticação inválida, permissões insuficientes, injeção de código</li>
+              <li><strong>Concorrência:</strong> Requisições simultâneas, race conditions, atualizações concorrentes</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Como estruturar coleções (Postman / Insomnia)</h3>
+          
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Organização</h4>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><strong>Por funcionalidade:</strong> Users, Products, Orders (agrupa endpoints relacionados)</li>
+              <li><strong>Por endpoint:</strong> GET /users, POST /users, PUT /users/:id</li>
+              <li><strong>Por fluxo de negócio:</strong> Criar usuário → Atualizar → Deletar</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Variáveis</h4>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><strong>Base URL:</strong> <code>{{baseUrl}}</code> (ex: https://api.example.com)</li>
+              <li><strong>Tokens:</strong> <code>{{accessToken}}</code> (atualizado automaticamente)</li>
+              <li><strong>IDs dinâmicos:</strong> <code>{{userId}}</code> (salvo de resposta anterior)</li>
+              <li><strong>Dados de teste:</strong> <code>{{testEmail}}</code>, <code>{{testPassword}}</code></li>
+            </ul>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Ambientes</h4>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><strong>Dev:</strong> Desenvolvimento (dados de teste, menos restritivo)</li>
+              <li><strong>QA:</strong> Testes (dados isolados, limpos periodicamente)</li>
+              <li><strong>Staging:</strong> Pré-produção (dados mais próximos de prod)</li>
+              <li><strong>Production:</strong> Apenas leitura (GET apenas, sem modificações)</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Testes automatizados</h4>
+            <p>Implemente validações automáticas em cada requisição para garantir qualidade e reduzir trabalho manual:</p>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><strong>Assertions:</strong> Validar status code, schema JSON, tipos de dados, valores específicos, headers obrigatórios, tempo de resposta</li>
+              <li><strong>Scripts (Pre-request):</strong> Gerar dados dinâmicos, calcular timestamps, criar tokens temporários, preparar payloads</li>
+              <li><strong>Scripts (Tests):</strong> Extrair valores da resposta (tokens, IDs), salvar em variáveis de ambiente, executar lógica condicional, validar regras de negócio</li>
+              <li><strong>Chain de requests:</strong> Usar resposta de uma requisição na próxima (ex: criar usuário → usar ID para atualizar → deletar)</li>
+              <li><strong>Validação de schema:</strong> Validar estrutura JSON contra JSON Schema ou OpenAPI contract</li>
+              <li><strong>Validação de performance:</strong> Verificar tempo de resposta dentro de limites aceitáveis</li>
+            </ul>
+            
+            <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: rgba(0,0,0,0.05); border-radius: var(--border-radius-sm);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Exemplo: Postman Test Script Completo</strong></p>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>// Validações básicas
+pm.test('Status code is 201', () => {
+    pm.response.to.have.status(201);
+});
+
+pm.test('Response time < 500ms', () => {
+    pm.expect(pm.response.responseTime).to.be.below(500);
+});
+
+// Validação de schema
+pm.test('Response has correct structure', () => {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property('data');
+    pm.expect(jsonData.data).to.have.property('id');
+    pm.expect(jsonData.data).to.have.property('name');
+    pm.expect(jsonData.data).to.have.property('email');
+});
+
+// Extrair e salvar valores
+const userId = pm.response.json().data.id;
+pm.environment.set('createdUserId', userId);
+
+// Validação de regra de negócio
+pm.test('Email format is valid', () => {
+    const email = pm.response.json().data.email;
+    pm.expect(email).to.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+});
+
+// Validação de headers
+pm.test('Location header present', () => {
+    pm.expect(pm.response.headers.get('Location')).to.exist;
+});</code></pre>
+            </div>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Documentação</h4>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li>Descrição do endpoint e propósito</li>
+              <li>Exemplos de requisição e resposta</li>
+              <li>Pré-requisitos (autenticação, dados necessários)</li>
+              <li>Possíveis erros e como resolver</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Como organizar ambientes</h3>
+          
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Separação de ambientes</h4>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><strong>Dev:</strong> Desenvolvimento ativo, dados podem ser resetados</li>
+              <li><strong>QA:</strong> Testes manuais e automatizados, dados isolados</li>
+              <li><strong>Staging:</strong> Pré-produção, validação final antes de deploy</li>
+              <li><strong>Production:</strong> Ambiente real, apenas leitura para testes</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Dados de teste</h4>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li>Dados isolados por ambiente (não compartilhar entre Dev e QA)</li>
+              <li>Limpeza periódica (evitar acúmulo de dados de teste)</li>
+              <li>Seed scripts para popular dados iniciais</li>
+              <li>Dados conhecidos e documentados (ex: usuário admin padrão)</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Configuração</h4>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li>Variáveis de ambiente (URLs, credenciais)</li>
+              <li>Secrets gerenciados (não commitar no código)</li>
+              <li>Documentação de acesso (como obter credenciais)</li>
+              <li>Versionamento de APIs (v1, v2, etc.)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Como reportar bugs de API corretamente</h3>
+          
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Informações obrigatórias no bug report</h4>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><strong>Endpoint completo:</strong> <code>POST /api/v1/users</code> (incluir versão da API se aplicável)</li>
+              <li><strong>Método HTTP:</strong> GET, POST, PUT, PATCH, DELETE, etc.</li>
+              <li><strong>Headers enviados:</strong> Content-Type, Authorization, Accept, X-API-Key, etc. (valores mascarados se sensíveis)</li>
+              <li><strong>Request body:</strong> JSON completo formatado, sem dados sensíveis (senhas, tokens completos)</li>
+              <li><strong>Query parameters:</strong> Todos os parâmetros enviados na URL</li>
+              <li><strong>Base URL:</strong> Ambiente e domínio completo</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Resposta recebida (completa)</h4>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><strong>Status code:</strong> Código HTTP recebido (400, 500, etc.)</li>
+              <li><strong>Response headers:</strong> Content-Type, Location, X-RateLimit-*, Retry-After, etc.</li>
+              <li><strong>Response body:</strong> JSON completo de erro ou resposta inesperada (formatado para legibilidade)</li>
+              <li><strong>Response time:</strong> Tempo de resposta em milissegundos (especialmente se muito lento ou timeout)</li>
+              <li><strong>Timestamp:</strong> Data e hora exata da requisição (UTC)</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Comportamento esperado vs atual</h4>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><strong>Comportamento esperado:</strong> O que deveria acontecer conforme documentação (OpenAPI/Swagger), contrato ou especificação</li>
+              <li><strong>Comportamento atual:</strong> O que realmente aconteceu, descrito de forma objetiva</li>
+              <li><strong>Evidências:</strong> Screenshots de ferramentas (Postman, Insomnia), logs do servidor (se disponível), curl command completo, response salvo em arquivo</li>
+              <li><strong>Impacto:</strong> Como o bug afeta usuários, integrações ou processos de negócio</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Contexto e reprodutibilidade</h4>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><strong>Ambiente:</strong> Dev, QA, Staging, Production (especificar versão se aplicável)</li>
+              <li><strong>Dados de teste:</strong> IDs, emails, tokens (mascarados) usados na reprodução</li>
+              <li><strong>Passos para reproduzir:</strong> Sequência numerada, clara e completa (incluir pré-condições)</li>
+              <li><strong>Frequência:</strong> Sempre (100%), às vezes (intermitente), primeira vez, após ação específica</li>
+              <li><strong>Workaround:</strong> Se existe forma de contornar o problema temporariamente</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>Classificação de severidade</h4>
+            <p>Baseie severidade no impacto no negócio e usuários, não apenas no tipo técnico do erro:</p>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><strong>Bloqueante (P0):</strong> Impede uso completo da funcionalidade, sem workaround viável</li>
+              <li><strong>Alta (P1):</strong> Impacto significativo na funcionalidade, mas há workaround ou funcionalidade parcial funciona</li>
+              <li><strong>Média (P2):</strong> Impacto moderado, funcionalidade parcial ou degradada, workaround disponível</li>
+              <li><strong>Baixa (P3):</strong> Impacto mínimo, questão cosmética, erro em caso edge, não afeta fluxo principal</li>
+            </ul>
+            <p style="margin-top: var(--spacing-sm);"><strong>Exemplo:</strong> Erro 500 em endpoint crítico de pagamento = Bloqueante. Erro 500 em endpoint de relatório opcional = Alta ou Média dependendo do uso.</p>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); justify-content: space-between; flex-wrap: wrap;">
+          <a href="performance.html" class="btn btn-secondary">← Anterior: Performance</a>
+          <a href="index.html" class="btn">Voltar ao Índice</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script type="module" src="../../../js/index.js"></script>
+  </body>
+</html>

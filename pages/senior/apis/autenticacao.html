@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Autenticação e Autorização — APIs e Autenticação — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">APIs</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Autenticação e Autorização</h2>
+          <div class="section-desc">Guia completo sobre métodos de autenticação: API Key, Basic Auth, Bearer Token, OAuth 2.0 e JWT. Como testar cada método.</div>
+        </div>
+
+        <div class="info-box">
+          <h3>API Key</h3>
+          <p><strong>Mecanismo:</strong> Chave alfanumérica única identificando cliente ou aplicação. Enviada via header customizado (X-API-Key) ou query parameter (menos seguro).</p>
+          <p><strong>Formato:</strong> <code>X-API-Key: abc123def456ghi789</code> ou <code>?api_key=abc123def456ghi789</code></p>
+          <p><strong>Cenários de teste:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Chave válida e ativa → 200 OK</li>
+            <li>Chave inválida (formato incorreto) → 401 Unauthorized</li>
+            <li>Chave ausente → 401 com mensagem clara</li>
+            <li>Chave expirada → 401 com indicação de expiração</li>
+            <li>Chave revogada → 401 com indicação de revogação</li>
+            <li>Chave de ambiente diferente (dev key em prod) → 401</li>
+            <li>Chave com permissões insuficientes → 403 Forbidden</li>
+          </ul>
+          <p><strong>Pontos de falha:</strong> Chave expirada sem renovação, chave revogada mas ainda em uso, rate limit específico por chave não respeitado, permissões granulares por chave não validadas.</p>
+          <p><strong>Vulnerabilidades comuns:</strong> Chave em query parameter (exposta em logs, histórico, referrers), ausência de rotação periódica, chaves sem expiração, chaves com permissões muito amplas.</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>HTTP Basic Authentication</h3>
+          <p><strong>Mecanismo:</strong> Credenciais (username:password) codificadas em Base64 e enviadas no header Authorization. Esquema definido em RFC 7617.</p>
+          <p><strong>Formato:</strong> <code>Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=</code> (onde a string é base64(username:password))</p>
+          <p><strong>Cenários de teste:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Credenciais válidas → 200 OK</li>
+            <li>Username incorreto → 401 Unauthorized</li>
+            <li>Password incorreto → 401 Unauthorized</li>
+            <li>Header Authorization ausente → 401 com WWW-Authenticate: Basic</li>
+            <li>Base64 malformado → 401</li>
+            <li>Caracteres especiais na senha (:, @, etc.) → Validar encoding correto</li>
+            <li>Usuário desativado → 401 ou 403 dependendo da implementação</li>
+          </ul>
+          <p><strong>Pontos de falha:</strong> Senha alterada sem invalidar sessões, usuário desativado mas autenticação ainda funciona, encoding UTF-8 vs ASCII, timeout de sessão não implementado.</p>
+          <p><strong>Vulnerabilidades comuns:</strong> Uso em HTTP sem criptografia (credenciais em texto claro), ausência de rotação de senha, falta de rate limiting permite brute force, ausência de account lockout após tentativas falhas.</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Bearer Token (JWT ou Opaque)</h3>
+          <p><strong>Mecanismo:</strong> Token de acesso (JWT auto-contido ou token opaco) enviado no header Authorization usando esquema Bearer. Definido em RFC 6750.</p>
+          <p><strong>Formato:</strong> <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</code></p>
+          <p><strong>Cenários de teste:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Token válido e não expirado → 200 OK</li>
+            <li>Token expirado (claim exp no passado) → 401 Unauthorized</li>
+            <li>Token inválido (assinatura incorreta) → 401</li>
+            <li>Token ausente → 401 com WWW-Authenticate: Bearer</li>
+            <li>Token malformado (estrutura incorreta) → 401</li>
+            <li>Token de outro usuário acessando recurso privado → 403 Forbidden</li>
+            <li>Token revogado (em blacklist) → 401</li>
+            <li>Algoritmo alterado (alg: none ou alg diferente) → 401</li>
+          </ul>
+          <p><strong>Pontos de falha:</strong> Token expirado sem mecanismo de refresh, token revogado mas ainda aceito, assinatura não validada corretamente, claims modificados após emissão, algoritmo de assinatura fraco ou não validado.</p>
+          <p><strong>Vulnerabilidades comuns:</strong> Token em query parameter (exposto em logs), ausência de refresh token mechanism, validação de assinatura permite algoritmo "none", secrets fracos ou expostos, falta de validação de expiração (exp claim).</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>OAuth 2.0</h3>
+          <p><strong>Mecanismo:</strong> Framework de autorização que permite aplicações obter acesso limitado a recursos. Define fluxos de autorização, tokens de acesso e refresh tokens. Especificado em RFC 6749.</p>
+          <p><strong>Fluxos (Grant Types):</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li><strong>Authorization Code:</strong> Para aplicações web server-side. Mais seguro, código trocado por token no backend.</li>
+            <li><strong>Implicit:</strong> Para SPAs (deprecado em favor de Authorization Code com PKCE). Token retornado diretamente.</li>
+            <li><strong>Client Credentials:</strong> Para comunicação machine-to-machine. Sem envolvimento do usuário.</li>
+            <li><strong>Resource Owner Password:</strong> Para aplicações altamente confiáveis. Credenciais do usuário trocadas por token.</li>
+            <li><strong>PKCE:</strong> Extensão para Authorization Code, adiciona segurança para clientes públicos.</li>
+          </ul>
+          <p><strong>Cenários de teste (Authorization Code):</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Fluxo completo: obter authorization code → trocar por access token → usar token</li>
+            <li>Refresh token: usar refresh token para obter novo access token</li>
+            <li>Escopos: validar que apenas recursos com escopo adequado são acessíveis</li>
+            <li>Expiração: access token e refresh token expiram corretamente</li>
+            <li>Redirect URI: URI não registrada → rejeição</li>
+            <li>State parameter: ausente ou inválido → rejeição (proteção CSRF)</li>
+            <li>Client credentials: client_id/secret incorretos → 401</li>
+            <li>Code reuse: código usado duas vezes → rejeição</li>
+          </ul>
+          <p><strong>Pontos de falha:</strong> Token expirado sem refresh mechanism, escopo insuficiente para operação, redirect_uri não validado permite token theft, client_id/secret comprometidos, state parameter não validado permite CSRF.</p>
+          <p><strong>Vulnerabilidades comuns:</strong> State parameter não validado (CSRF), redirect_uri não validado permite authorization code interception, escopos muito amplos (excesso de permissões), PKCE não implementado em clientes públicos, tokens não revogados após logout.</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>JWT (JSON Web Token)</h3>
+          <p><strong>Mecanismo:</strong> Token auto-contido composto por três partes (header.payload.signature) codificadas em Base64URL. Claims no payload definem identidade, permissões e metadados. Especificado em RFC 7519.</p>
+          <p><strong>Estrutura:</strong> <code>base64url(header).base64url(payload).base64url(signature)</code></p>
+          <p><strong>Componentes:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li><strong>Header:</strong> Algoritmo de assinatura (alg) e tipo de token (typ: JWT)</li>
+            <li><strong>Payload:</strong> Claims (sub, exp, iat, roles, custom claims)</li>
+            <li><strong>Signature:</strong> Assinatura criptográfica validando integridade</li>
+          </ul>
+          <p><strong>Cenários de teste:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Estrutura válida com três partes separadas por ponto</li>
+            <li>Claims padrão: exp (expiração), iat (emitido em), sub (subject), aud (audience)</li>
+            <li>Claims customizados: roles, permissions, scopes</li>
+            <li>Assinatura válida com secret/chave correta</li>
+            <li>Expiração: token com exp no passado → 401</li>
+            <li>Algoritmo: validar apenas algoritmos permitidos (HS256, RS256)</li>
+            <li>Token modificado: alterar payload e reenviar → 401 (assinatura inválida)</li>
+            <li>Algoritmo alterado: mudar alg no header → 401</li>
+            <li>Secret/key incorreta → 401</li>
+          </ul>
+          <p><strong>Pontos de falha:</strong> Token expirado sem refresh, assinatura não validada permite tokens modificados, algoritmo "none" aceito, claims modificados após emissão, secret/chave fraca ou exposta.</p>
+          <p><strong>Vulnerabilidades comuns:</strong> Validação de algoritmo não restrita permite "none" (sem assinatura), ausência de validação de expiração (exp claim), secrets fracos (curtos ou previsíveis), chaves públicas expostas, falta de validação de audience (aud claim), claims críticos não validados.</p>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); justify-content: space-between; flex-wrap: wrap;">
+          <a href="validacoes.html" class="btn btn-secondary">← Anterior: Validações</a>
+          <a href="testes-negativos.html" class="btn">Próximo: Testes Negativos</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script type="module" src="../../../js/index.js"></script>
+  </body>
+</html>

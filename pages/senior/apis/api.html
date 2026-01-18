@@ -91,40 +91,315 @@
               <li><code>POST /users</code> - Cria um novo usuário</li>
             </ul>
 
-            <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
-            <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm);"><code>// Cypress - Testar API GET
-cy.intercept('GET', '**/users', { fixture: 'users.json' }).as('getUsers');
-cy.get('[data-testid="btn-get-users"]').click();
-cy.wait('@getUsers');
-cy.get('[data-testid="resultado-api-users"]').should('contain', 'users');
+            <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado de API:</strong></p>
+            
+            <div style="margin-bottom: var(--spacing-md);">
+              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">JavaScript/Node.js (Jest + Axios)</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>const axios = require('axios');
+const baseURL = 'https://api.example.com';
 
-// Testar API POST
-cy.get('[data-testid="input-nome-usuario"]').type('João');
-cy.get('[data-testid="input-email-usuario"]').type('joao@exemplo.com');
-cy.get('[data-testid="btn-post-user"]').click();
-cy.get('[data-testid="resultado-api-post"]').should('contain', 'Created');
+describe('API Users Tests', () => {
+  // GET /users
+  test('GET /users deve retornar status 200 e lista de usuários', async () => {
+    const response = await axios.get(`${baseURL}/users`);
+    
+    expect(response.status).toBe(200);
+    expect(response.data).toHaveProperty('data');
+    expect(Array.isArray(response.data.data)).toBe(true);
+    expect(response.data.data.length).toBeGreaterThan(0);
+    
+    // Validar estrutura de cada usuário
+    response.data.data.forEach(user => {
+      expect(user).toHaveProperty('id');
+      expect(user).toHaveProperty('name');
+      expect(user).toHaveProperty('email');
+      expect(typeof user.id).toBe('number');
+      expect(typeof user.name).toBe('string');
+      expect(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)).toBe(true);
+    });
+  });
 
-// Playwright - Testar API
-await page.getByTestId('btn-get-users').click();
-await page.waitForTimeout(1000);
-const result = await page.getByTestId('resultado-api-users').textContent();
-expect(result).toContain('users');
+  // POST /users
+  test('POST /users deve criar usuário com status 201', async () => {
+    const newUser = {
+      name: 'João Silva',
+      email: 'joao@exemplo.com'
+    };
+    
+    const response = await axios.post(`${baseURL}/users`, newUser);
+    
+    expect(response.status).toBe(201);
+    expect(response.data).toHaveProperty('data');
+    expect(response.data.data).toHaveProperty('id');
+    expect(response.data.data.name).toBe(newUser.name);
+    expect(response.data.data.email).toBe(newUser.email);
+    expect(response.data).toHaveProperty('timestamp');
+  });
 
-// Selenium (Java) - Validar resposta da API
-driver.findElement(By.cssSelector("[data-testid='btn-get-users']")).click();
-Thread.sleep(1000);
-WebElement result = driver.findElement(By.cssSelector("[data-testid='resultado-api-users']"));
-assert result.getText().contains("users");
+  // Validação de erro
+  test('POST /users sem email deve retornar 400', async () => {
+    try {
+      await axios.post(`${baseURL}/users`, { name: 'João' });
+    } catch (error) {
+      expect(error.response.status).toBe(400);
+      expect(error.response.data).toHaveProperty('error');
+    }
+  });
+});</code></pre>
+            </div>
 
-// Capybara (Ruby) - Testar API
-click_button '[data-testid="btn-get-users"]'
-sleep 1
-expect(page).to have_content('users', within: '[data-testid="resultado-api-users"]')
+            <div style="margin-bottom: var(--spacing-md);">
+              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Python (pytest + requests)</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>import pytest
+import requests
+from jsonschema import validate
 
-// Robot Framework - Testar API
-Click Button    [data-testid="btn-get-users"]
-Sleep    1s
-Element Should Contain    [data-testid="resultado-api-users"]    users</code></pre>
+BASE_URL = 'https://api.example.com'
+
+def test_get_users_status_200():
+    """GET /users deve retornar status 200"""
+    response = requests.get(f'{BASE_URL}/users')
+    
+    assert response.status_code == 200
+    assert response.headers['Content-Type'] == 'application/json'
+    
+    data = response.json()
+    assert 'data' in data
+    assert isinstance(data['data'], list)
+    assert len(data['data']) > 0
+
+def test_get_users_schema():
+    """Validar schema JSON da resposta"""
+    response = requests.get(f'{BASE_URL}/users')
+    data = response.json()
+    
+    user_schema = {
+        'type': 'object',
+        'properties': {
+            'id': {'type': 'number'},
+            'name': {'type': 'string'},
+            'email': {'type': 'string', 'format': 'email'}
+        },
+        'required': ['id', 'name', 'email']
+    }
+    
+    for user in data['data']:
+        validate(instance=user, schema=user_schema)
+
+def test_post_users_create():
+    """POST /users deve criar usuário com status 201"""
+    payload = {
+        'name': 'Maria Santos',
+        'email': 'maria@exemplo.com'
+    }
+    
+    response = requests.post(f'{BASE_URL}/users', json=payload)
+    
+    assert response.status_code == 201
+    assert response.headers['Content-Type'] == 'application/json'
+    
+    data = response.json()
+    assert data['data']['name'] == payload['name']
+    assert data['data']['email'] == payload['email']
+    assert 'id' in data['data']
+
+def test_post_users_validation_error():
+    """POST /users sem campos obrigatórios deve retornar 400"""
+    response = requests.post(f'{BASE_URL}/users', json={'name': 'Teste'})
+    
+    assert response.status_code == 400
+    assert 'error' in response.json()</code></pre>
+            </div>
+
+            <div style="margin-bottom: var(--spacing-md);">
+              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Postman (Test Scripts)</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>// Pre-request Script (para variáveis dinâmicas)
+pm.environment.set('timestamp', new Date().toISOString());
+pm.environment.set('randomEmail', `test${Date.now()}@exemplo.com`);
+
+// Test Script - GET /users
+pm.test('Status code is 200', function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test('Response time is less than 500ms', function () {
+    pm.expect(pm.response.responseTime).to.be.below(500);
+});
+
+pm.test('Response has JSON body', function () {
+    pm.response.to.be.json;
+});
+
+pm.test('Response contains data array', function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property('data');
+    pm.expect(jsonData.data).to.be.an('array');
+});
+
+pm.test('Each user has required fields', function () {
+    const jsonData = pm.response.json();
+    jsonData.data.forEach(user => {
+        pm.expect(user).to.have.property('id');
+        pm.expect(user).to.have.property('name');
+        pm.expect(user).to.have.property('email');
+        pm.expect(user.id).to.be.a('number');
+    });
+});
+
+// Test Script - POST /users
+pm.test('Status code is 201', function () {
+    pm.response.to.have.status(201);
+});
+
+pm.test('Location header is present', function () {
+    pm.expect(pm.response.headers.get('Location')).to.exist;
+});
+
+pm.test('Created user has correct data', function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData.data.name).to.eql(pm.environment.get('testName'));
+    pm.expect(jsonData.data.email).to.eql(pm.environment.get('testEmail'));
+});
+
+// Salvar ID para próximas requisições
+const userId = pm.response.json().data.id;
+pm.environment.set('createdUserId', userId);</code></pre>
+            </div>
+
+            <div style="margin-bottom: var(--spacing-md);">
+              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Java (REST Assured)</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import org.junit.jupiter.api.Test;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.*;
+
+public class UsersApiTest {
+    private static final String BASE_URL = "https://api.example.com";
+
+    @Test
+    public void testGetUsers_ShouldReturn200() {
+        given()
+            .baseUri(BASE_URL)
+        .when()
+            .get("/users")
+        .then()
+            .statusCode(200)
+            .contentType(ContentType.JSON)
+            .body("status", equalTo(200))
+            .body("data", is(not(empty())))
+            .body("data.size()", greaterThan(0))
+            .body("data[0].id", notNullValue())
+            .body("data[0].name", notNullValue())
+            .body("data[0].email", matchesPattern("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"));
+    }
+
+    @Test
+    public void testPostUsers_ShouldCreateUser() {
+        String requestBody = """
+            {
+                "name": "Carlos Oliveira",
+                "email": "carlos@exemplo.com"
+            }
+            """;
+
+        given()
+            .baseUri(BASE_URL)
+            .contentType(ContentType.JSON)
+            .body(requestBody)
+        .when()
+            .post("/users")
+        .then()
+            .statusCode(201)
+            .body("status", equalTo(201))
+            .body("data.id", notNullValue())
+            .body("data.name", equalTo("Carlos Oliveira"))
+            .body("data.email", equalTo("carlos@exemplo.com"))
+            .header("Content-Type", containsString("application/json"));
+    }
+
+    @Test
+    public void testPostUsers_WithoutEmail_ShouldReturn400() {
+        String requestBody = """
+            {
+                "name": "Teste"
+            }
+            """;
+
+        given()
+            .baseUri(BASE_URL)
+            .contentType(ContentType.JSON)
+            .body(requestBody)
+        .when()
+            .post("/users")
+        .then()
+            .statusCode(400)
+            .body("error", notNullValue());
+    }
+}</code></pre>
+            </div>
+
+            <div style="margin-bottom: var(--spacing-md);">
+              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Cypress (Testes de API Diretos)</h4>
+              <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>describe('API Users - Direct API Tests', () => {
+  const baseURL = 'https://api.example.com';
+
+  it('GET /users deve retornar 200 e lista válida', () => {
+    cy.request({
+      method: 'GET',
+      url: `${baseURL}/users`,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).to.have.property('data');
+      expect(response.body.data).to.be.an('array');
+      expect(response.body.data.length).to.be.greaterThan(0);
+      
+      // Validar estrutura do primeiro usuário
+      const user = response.body.data[0];
+      expect(user).to.have.property('id');
+      expect(user).to.have.property('name');
+      expect(user).to.have.property('email');
+      expect(user.email).to.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+    });
+  });
+
+  it('POST /users deve criar usuário com 201', () => {
+    const newUser = {
+      name: 'Ana Costa',
+      email: 'ana@exemplo.com'
+    };
+
+    cy.request({
+      method: 'POST',
+      url: `${baseURL}/users`,
+      body: newUser,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      expect(response.status).to.eq(201);
+      expect(response.body.data.name).to.eq(newUser.name);
+      expect(response.body.data.email).to.eq(newUser.email);
+      expect(response.body.data).to.have.property('id');
+    });
+  });
+
+  it('POST /users sem email deve retornar 400', () => {
+    cy.request({
+      method: 'POST',
+      url: `${baseURL}/users`,
+      body: { name: 'Teste' },
+      failOnStatusCode: false
+    }).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body).to.have.property('error');
+    });
+  });
+});</code></pre>
+            </div>
 
             <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
             <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">

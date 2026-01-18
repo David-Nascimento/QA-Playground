@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Validações Essenciais — APIs e Autenticação — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="et-header">
+      <div class="et-header-inner">
+        <a href="../../../index.html" class="et-logo" aria-label="Início">
+          <img src="../../../assets/icons/logo.svg" alt="Logo QA Playground" height="40" />
+        </a>
+        <nav class="et-nav" aria-label="Navegação principal">
+          <ul class="et-nav-list">
+            <li><a href="../../../index.html">Início</a></li>
+            <li><a href="index.html">APIs</a></li>
+          </ul>
+        </nav>
+        <div class="et-header-actions">
+          <button id="theme-toggle" aria-label="Alternar tema">🌞</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Validações Essenciais em Testes de API</h2>
+          <div class="section-desc">Checklist prático para garantir cobertura completa em testes de API: schema, tipos, campos, regras de negócio e mais.</div>
+        </div>
+
+        <div class="info-box">
+          <h3>Validação de Contrato (Schema)</h3>
+          <p>Validação contra contrato formal define estrutura esperada, tipos de dados e regras. Utilize JSON Schema, OpenAPI/Swagger, ou contrato definido pela equipe.</p>
+          <p><strong>Validações obrigatórias:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Estrutura do JSON conforme schema (propriedades, objetos aninhados, arrays)</li>
+            <li>Tipos de dados corretos (string, number, integer, boolean, array, object, null)</li>
+            <li>Campos obrigatórios presentes (required array validado)</li>
+            <li>Campos opcionais tratados corretamente (ausentes vs null vs valores default)</li>
+            <li>Formatos validados (date, email, uri, uuid, regex patterns)</li>
+            <li>Constraints aplicadas (min/max length, min/max value, enum values)</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Tipos de Dados e Conversões</h3>
+          <p>Valide tratamento correto de tipos primitivos e conversões implícitas. APIs devem rejeitar tipos incompatíveis ou converter explicitamente quando aplicável.</p>
+          <p><strong>Cenários de teste:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>String em campo numérico: <code>{"age": "30"}</code> → 400 Bad Request ou conversão explícita</li>
+            <li>Número em campo string: <code>{"id": 123}</code> → Aceitar com conversão ou rejeitar</li>
+            <li>Array vazio em campo que requer elementos: <code>{"tags": []}</code> → 422 se minItems > 0</li>
+            <li>Objeto aninhado com estrutura incorreta: <code>{"address": "string"}</code> → 400 se espera objeto</li>
+            <li>Null em campo não-nullable: <code>{"name": null}</code> → 400 Bad Request</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Campos Obrigatórios e Opcionais</h3>
+          <p>Valide comportamento quando campos obrigatórios estão ausentes e tratamento de campos opcionais. Distinga entre campo ausente, null e string vazia.</p>
+          <p><strong>Cenários de teste:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Campo obrigatório ausente: <code>{}</code> sem "email" → 422 Unprocessable Entity</li>
+            <li>Campo obrigatório null: <code>{"email": null}</code> → 400 Bad Request</li>
+            <li>Campo opcional ausente: <code>{"email": "test@example.com"}</code> sem "phone" → 200 OK</li>
+            <li>Campo opcional null: <code>{"phone": null}</code> → 200 OK ou 400 dependendo da política</li>
+            <li>String vazia vs ausente: <code>{"name": ""}</code> vs <code>{}</code> → Comportamento documentado</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Regras de Negócio</h3>
+          <p>Validações customizadas que implementam lógica de domínio além de validação estrutural. Teste constraints de unicidade, ranges, formatos específicos e relacionamentos.</p>
+          <p><strong>Cenários de teste:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Email duplicado: <code>{"email": "existente@example.com"}</code> → 409 Conflict</li>
+            <li>Data futura inválida: <code>{"birthDate": "2050-01-01"}</code> → 422 Unprocessable Entity</li>
+            <li>Valor fora de range: <code>{"age": -5}</code> ou <code>{"age": 150}</code> → 422</li>
+            <li>Formato inválido: <code>{"cpf": "123"}</code> → 422 com mensagem específica</li>
+            <li>Relacionamento inválido: <code>{"categoryId": 999}</code> → 422 ou 404 dependendo da implementação</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Mensagens de Erro</h3>
+          <p>Mensagens devem ser claras, acionáveis e não expor detalhes técnicos ou estrutura interna. Formato consistente facilita tratamento pelo cliente.</p>
+          <p><strong>Boas práticas:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li><strong>Boa:</strong> <code>{"error": "Email já está em uso", "field": "email"}</code></li>
+            <li><strong>Ruim:</strong> <code>{"error": "UNIQUE constraint failed: users.email"}</code></li>
+            <li><strong>Boa:</strong> <code>{"errors": [{"field": "age", "message": "Idade deve estar entre 0 e 120"}]}</code></li>
+            <li><strong>Ruim:</strong> <code>{"error": "ValidationError: age must be >= 0"}</code></li>
+          </ul>
+          <p><strong>Estrutura recomendada:</strong> Objeto com array de erros, cada erro contendo campo, código, mensagem e valor recebido quando aplicável.</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Headers Obrigatórios</h3>
+          <p>Valide presença e formato de headers críticos: Content-Type (formato do body), Authorization (credenciais), Accept (formato esperado na resposta).</p>
+          <p><strong>Cenários de teste:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>POST sem Content-Type → 400 Bad Request ou 415 Unsupported Media Type</li>
+            <li>Content-Type incorreto: <code>text/plain</code> em endpoint JSON → 400 ou 415</li>
+            <li>Requisição sem Authorization → 401 Unauthorized</li>
+            <li>Accept: <code>application/xml</code> em endpoint JSON → 406 Not Acceptable ou 200 com formato diferente</li>
+            <li>Authorization malformado → 401 com WWW-Authenticate header</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Paginação</h3>
+          <p>Implementação de paginação previne sobrecarga e timeouts. Valide parâmetros (page, limit, offset), metadata retornada e comportamento com valores inválidos.</p>
+          <p><strong>Validações obrigatórias:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Total de registros retornado (total, count) para cálculo de páginas</li>
+            <li>Metadata de paginação (current_page, per_page, total_pages)</li>
+            <li>Links de navegação (first, last, next, prev) quando aplicável</li>
+            <li>Valores inválidos tratados: page=0 ou negativo → 400, limit muito alto → limitado ao máximo</li>
+            <li>Comportamento consistente: última página vazia retorna array vazio, não erro</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Ordenação</h3>
+          <p>Valide capacidade de ordenar resultados por um ou múltiplos campos, direção (ascendente/descendente) e tratamento de campos inválidos.</p>
+          <p><strong>Cenários de teste:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Ordenação simples: <code>?sort=name&order=asc</code> → Resultados ordenados</li>
+            <li>Múltiplos campos: <code>?sort=name,age&order=asc,desc</code> → Ordenação composta</li>
+            <li>Campo inexistente: <code>?sort=invalidField</code> → 400 Bad Request</li>
+            <li>Direção inválida: <code>?order=invalid</code> → 400 ou default para asc</li>
+            <li>Campos não ordenáveis: <code>?sort=password</code> → 400 (segurança)</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Filtros e Query Parameters</h3>
+          <p>Valide capacidade de filtrar resultados usando query parameters, operadores suportados, combinações e proteção contra injection.</p>
+          <p><strong>Validações obrigatórias:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Filtro simples: <code>?status=active</code> → Apenas recursos com status active</li>
+            <li>Múltiplos filtros: <code>?status=active&category=tech</code> → AND lógico</li>
+            <li>Operadores: <code>?age=gt:18</code>, <code>?price=lt:100</code> → Maior que, menor que</li>
+            <li>SQL injection: <code>?filter=1' OR '1'='1</code> → Rejeitado ou sanitizado</li>
+            <li>NoSQL injection: <code>?filter[$where]=...</code> → Rejeitado</li>
+            <li>Campos não filtráveis: <code>?password=test</code> → Ignorado ou 400 (segurança)</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Rate Limiting</h3>
+          <p>Controle de taxa previne abuso e garante disponibilidade. Valide headers informativos, comportamento quando limite é excedido e estratégia de retry.</p>
+          <p><strong>Validações obrigatórias:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Headers informativos: X-RateLimit-Limit (limite total), X-RateLimit-Remaining (requisições restantes), X-RateLimit-Reset (timestamp de reset)</li>
+            <li>Status 429 Too Many Requests quando limite excedido</li>
+            <li>Header Retry-After indicando segundos até próximo reset</li>
+            <li>Comportamento após limite: bloqueio temporário, throttling, ou rejeição</li>
+            <li>Limites diferentes por tipo de endpoint (GET vs POST) ou por usuário/API key</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Idempotência</h3>
+          <p>Métodos PUT, DELETE e PATCH devem ser idempotentes: múltiplas requisições idênticas produzem mesmo resultado. Crítico para retry automático e resiliência.</p>
+          <p><strong>Validações obrigatórias:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>PUT idempotente: duas requisições idênticas resultam em mesmo estado do recurso</li>
+            <li>DELETE idempotente: deletar recurso já deletado retorna 204, não 404</li>
+            <li>PATCH idempotente: aplicar mesmo patch múltiplas vezes = mesmo resultado</li>
+            <li>Idempotency key: header X-Idempotency-Key permite identificar requisições duplicadas</li>
+            <li>POST não é idempotente por padrão, mas pode usar idempotency key para garantir</li>
+          </ul>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); justify-content: space-between; flex-wrap: wrap;">
+          <a href="status-codes.html" class="btn btn-secondary">← Anterior: Status Codes</a>
+          <a href="autenticacao.html" class="btn">Próximo: Autenticação</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      QA Playground — Projeto educacional • Português
+    </footer>
+
+    <script type="module" src="../../../js/index.js"></script>
+  </body>
+</html>

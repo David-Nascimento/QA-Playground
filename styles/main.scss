@@ -31,6 +31,7 @@
 @import 'pages/challenge';
 @import 'pages/fundamentos';
 @import 'pages/xpath';
+@import 'pages/nft-playground';
 
 // === Componentes Adicionais (Forms, Tables, etc) ===
 
@@ -399,4 +400,185 @@ textarea {
 // === Center Utility ===
 .center {
   text-align: center;
+}
+
+// === Melhorias Visuais Modernas ===
+
+// Hero com estilo moderno (sem animações)
+.hero {
+  position: relative;
+  padding: calc(var(--spacing-xl) * 1.5) 0 calc(var(--spacing-xl) * 2);
+  
+  h1 {
+    background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+// Hero badges com estilo especial
+.hero-badges {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--spacing-xl);
+  
+  .hero-badge {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: rgba(122, 168, 116, 0.08);
+    color: var(--accent);
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    border: 1px solid rgba(122, 168, 116, 0.15);
+  }
+}
+
+// Hero CTA container
+.hero-cta {
+  margin: var(--spacing-xl) 0;
+}
+
+// Botão primário melhorado (sem animações)
+.btn-primary {
+  position: relative;
+  background: linear-gradient(135deg, var(--accent) 0%, #6fb56f 100%);
+  box-shadow: 0 4px 12px rgba(122, 168, 116, 0.3);
+}
+
+// Badges com estilo moderno (sem hover)
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(122, 168, 116, 0.1);
+  color: var(--accent);
+  border: 1px solid rgba(122, 168, 116, 0.2);
+}
+
+// Links de área (sem animação)
+.area-link,
+.progression-link,
+.tool-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  
+  &::after {
+    content: "→";
+    display: inline-block;
+  }
+}
+
+// Tool link com estilo específico (já tem border-top)
+.tool-link {
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+// Section titles com decoração (sem animação)
+.section-title {
+  position: relative;
+  padding-bottom: var(--spacing-md);
+  
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-radius: 2px;
+  }
+}
+
+// Badges por tipo de conteúdo
+.badge-area {
+  background: rgba(122, 168, 116, 0.12);
+  color: var(--accent);
+  border-color: rgba(122, 168, 116, 0.25);
+}
+
+.badge-playground {
+  background: rgba(122, 168, 116, 0.15);
+  color: var(--accent);
+  border-color: rgba(122, 168, 116, 0.3);
+}
+
+.badge-tool {
+  background: rgba(122, 168, 116, 0.2);
+  color: var(--accent);
+  border-color: rgba(122, 168, 116, 0.35);
+}
+
+// Badges por nível de senioridade
+.badge-junior {
+  background: rgba(122, 168, 116, 0.12);
+  color: var(--accent);
+  border-color: rgba(122, 168, 116, 0.25);
+}
+
+.badge-pleno {
+  background: rgba(214, 163, 95, 0.15);
+  color: var(--accent-2);
+  border-color: rgba(214, 163, 95, 0.3);
+}
+
+.badge-senior {
+  background: rgba(122, 168, 116, 0.2);
+  color: var(--accent);
+  border-color: rgba(122, 168, 116, 0.4);
+}
+
+// Áreas list com hover melhorado
+.area-item {
+  position: relative;
+  
+  .badge {
+    position: absolute;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    margin: 0;
+  }
+  
+  h3 {
+    margin-right: 80px;
+  }
+}
+
+// Progression blocks com destaque sutil
+.progression-block {
+  position: relative;
+  
+  .badge {
+    position: absolute;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    margin: 0;
+  }
+  
+  h3 {
+    margin-right: 100px;
+  }
+  
+  &.progression-junior {
+    border-left: 4px solid rgba(122, 168, 116, 0.3);
+  }
+  
+  &.progression-pleno {
+    border-left: 4px solid rgba(214, 163, 95, 0.3);
+  }
+  
+  &.progression-senior {
+    border-left: 4px solid rgba(122, 168, 116, 0.5);
+  }
 }

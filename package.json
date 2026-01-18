@@ -11,6 +11,7 @@
     "build": "npm run build:css && npm run build:ts",
     "watch": "npm run watch:css & npm run watch:ts",
     "serve": "npx http-server -p 8000 -o",
+    "serve:dev": "npm run build && npx http-server -p 8000 -o",
     "dev": "npm run watch",
     "start": "npm run build && npm run serve",
     "vercel-build": "npm run build"
