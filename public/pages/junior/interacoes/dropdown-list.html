@@ -1,0 +1,174 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Dropdown List — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Dropdown List</h2>
+          <div class="section-desc">Pratique testes com listas suspensas (select/dropdown). Esta página é ideal para testar seleção de opções, validação de valores selecionados e automação de interações com elementos select HTML.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar seleção de opções em listas suspensas (dropdown/select)</li>
+                <li>Validar valores selecionados e textos exibidos</li>
+                <li>Praticar automação de seleção de opções por valor, texto ou índice</li>
+                <li>Testar comportamento com opção padrão (placeholder)</li>
+                <li>Validar estado inicial (nenhuma opção selecionada)</li>
+                <li>Testar mudança de seleção e eventos de mudança</li>
+                <li>Validar feedback visual após seleção</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Como Utilizar:</strong></p>
+              <ol style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Clique no dropdown para abrir a lista de opções</li>
+                <li>Selecione uma opção da lista</li>
+                <li>Valide que o valor selecionado é exibido corretamente</li>
+                <li>Teste selecionar diferentes opções e verificar o feedback</li>
+                <li>Valide o estado quando nenhuma opção está selecionada</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Lista Suspensa (Dropdown)</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Selecione uma opção do dropdown abaixo.</p>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="dropdown">Selecione uma Opção</label>
+                <select id="dropdown" name="dropdown" data-testid="dropdown" aria-describedby="dropdown-hint dropdown-result">
+                  <option value="">Selecione uma opção</option>
+                  <option value="opcao1" data-testid="option-opcao1">Opção 1</option>
+                  <option value="opcao2" data-testid="option-opcao2">Opção 2</option>
+                  <option value="opcao3" data-testid="option-opcao3">Opção 3</option>
+                </select>
+                <div class="hint" id="dropdown-hint">Escolha uma opção da lista suspensa</div>
+                <div id="dropdown-result" style="margin-top: var(--spacing-sm); padding: var(--spacing-sm); background: var(--surface); border-radius: var(--border-radius-sm); color: var(--level); font-weight: 600;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Selecionar cada opção disponível</li>
+                <li>Validar que o valor selecionado é exibido corretamente</li>
+                <li>Testar estado inicial (nenhuma opção selecionada)</li>
+                <li>Validar texto exibido vs valor da opção</li>
+                <li>Testar mudança rápida entre diferentes opções</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="dropdown"</code> - Elemento select principal</li>
+                <li><code>data-testid="option-opcao1"</code> - Opção 1</li>
+                <li><code>data-testid="option-opcao2"</code> - Opção 2</li>
+                <li><code>data-testid="option-opcao3"</code> - Opção 3</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress
+cy.get('[data-testid="dropdown"]').select('opcao1')
+cy.get('[data-testid="dropdown"]').should('have.value', 'opcao1')
+cy.get('#dropdown-result').should('contain', 'Opção 1')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright
+await page.getByTestId('dropdown').selectOption('opcao1')
+await expect(page.getByTestId('dropdown')).toHaveValue('opcao1')
+await expect(page.locator('#dropdown-result')).toContainText('Opção 1')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium Java
+Select dropdown = new Select(driver.findElement(By.cssSelector("[data-testid='dropdown']")));
+dropdown.selectByValue("opcao1");
+String selectedValue = dropdown.getFirstSelectedOption().getAttribute("value");
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby)
+select 'Opção 1', from: 'dropdown'
+expect(find('[data-testid="dropdown"]').value).to eq('opcao1')
+expect(page).to have_content('Opção 1')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Selecionar opcao do dropdown
+    Select From List By Value    css:[data-testid="dropdown"]    opcao1
+    Element Should Contain    css:#dropdown-result    Opção 1
+                </code></pre>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../../js/index.js"></script>
+    <script>
+      const dropdown = document.getElementById('dropdown');
+      const resultDiv = document.getElementById('dropdown-result');
+      
+      dropdown.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        if (this.value) {
+          resultDiv.textContent = `Selecionado: ${selectedOption.text} (valor: ${this.value})`;
+          resultDiv.style.color = 'var(--accent)';
+        } else {
+          resultDiv.textContent = '';
+        }
+      });
+
+      const tabs = document.querySelectorAll('.test-tab');
+      const contents = document.querySelectorAll('.test-code');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          contents.forEach(c => c.classList.remove('active'));
+
+          tab.classList.add('active');
+          document.getElementById(tab.dataset.target).classList.add('active');
+        });
+      });
+    </script>
+  </body>
+</html>

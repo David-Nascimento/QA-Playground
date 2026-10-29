@@ -6,7 +6,7 @@ O **QA Playground** é um projeto educacional criado para **simular cenários re
 
 O objetivo não é ensinar uma ferramenta específica, mas fornecer um **ambiente estável, previsível e bem estruturado**, onde profissionais de QA possam **praticar técnicas, estratégias e raciocínio de teste** próximos do que é encontrado em projetos reais.
 
-Todo o projeto é desenvolvido em **HTML, CSS e JavaScript puro**, sem backend ou dependências externas, justamente para manter o foco no comportamento da aplicação e nas regras de negócio.
+O site é **HTML, SCSS e TypeScript**, sem frameworks, para manter o foco no comportamento da aplicação e nas regras de negócio. Uma **API mock** (Express) acompanha o projeto para a prática de testes de API.
 
 ---
 
@@ -14,7 +14,7 @@ Todo o projeto é desenvolvido em **HTML, CSS e JavaScript puro**, sem backend o
 
 ### Pré-requisitos
 
-- Node.js (versão 16 ou superior)
+- Node.js 20 ou superior
 - npm ou yarn
 
 ### Instalação
@@ -53,7 +53,7 @@ npm run build:ts:api
 npm run dev:api
 
 # OU iniciar API + Frontend juntos
-npm run dev:all
+npm run dev
 ```
 
 A API estará disponível em **http://localhost:3001**
@@ -77,25 +77,31 @@ GET http://localhost:3001/api/health
 
 ## 📁 Estrutura do Projeto
 
-O projeto utiliza uma arquitetura modular com TypeScript e SCSS:
+```
+public/            # site estático: index.html, pages/, assets/ (URLs públicas)
+src/
+├── client/        # TypeScript do site (core, ui, features)
+│   └── legacy/    # JS ainda não migrado para TS (copiado sem alteração)
+└── styles/        # SCSS (design system) + legacy/ (CSS ainda não migrado)
+server/            # API mock em camadas (ver server/README.md)
+api/[...path].ts   # entrada serverless da Vercel (reusa server/app.ts)
+tools/
+├── build/         # montagem do site em dist/public
+├── dev/           # utilitários de desenvolvimento
+└── qa/            # verificações de contrato (DOM, links, API) e baselines
+dist/              # SAÍDA do build (não versionada)
+├── public/        # site publicado
+└── server/        # API compilada para uso local
+```
 
-- **`src/`** - Código fonte TypeScript (core, UI, features)
-- **`styles/`** - Código fonte SCSS (Design System modular)
-- **`js/`** - JavaScript compilado (gerado automaticamente)
-- **`css/`** - CSS compilado (gerado automaticamente)
-- **`pages/`** - Páginas HTML organizadas por nível e categoria
-
-Veja **[STRUCTURE.md](STRUCTURE.md)** e **[PROJECT-STRUCTURE.md](PROJECT-STRUCTURE.md)** para detalhes completos.
+**Regra de ouro:** tudo em `public/`, `src/` e `server/` é fonte; tudo em `dist/` é gerado. Nunca edite `dist/`.
 
 ---
 
 ## 📚 Documentação
 
-- **[STRUCTURE.md](STRUCTURE.md)** - Estrutura de pastas e organização
-- **[PROJECT-STRUCTURE.md](PROJECT-STRUCTURE.md)** - Estrutura detalhada e guia de desenvolvimento
-- **[docs/BUILD.md](docs/BUILD.md)** - Guia de build e desenvolvimento
-- **[docs/README-REFACTORING.md](docs/README-REFACTORING.md)** - Detalhes técnicos da refatoração
-- **[docs/PROBLEMA-SERVIDOR.md](docs/PROBLEMA-SERVIDOR.md)** - Solução de problemas com servidor
+- **[doc/ARQUITETURA.md](doc/ARQUITETURA.md)** - Arquitetura, responsabilidades e plano de migração
+- **[server/README.md](server/README.md)** - API mock: rotas, cenários e camadas
 
 ---
 
@@ -146,28 +152,26 @@ Veja **[STRUCTURE.md](STRUCTURE.md)** e **[PROJECT-STRUCTURE.md](PROJECT-STRUCTU
 
 | Script | Descrição |
 |--------|-----------|
-| `npm start` | Compila e inicia servidor HTTP |
-| `npm run build` | Compila SCSS e TypeScript |
-| `npm run dev` | Watch mode (recompila automaticamente) |
-| `npm run serve` | Inicia servidor HTTP local |
-| `npm run build:css` | Compila apenas SCSS |
-| `npm run build:ts` | Compila apenas TypeScript |
-| `npm run build:ts:api` | Compila apenas a API (TypeScript) |
-| `npm run dev:api` | Inicia apenas a API mockada |
-| `npm run dev:all` | Inicia API + Frontend juntos |
+| `npm run dev` | Build + watch (site, SCSS, TS, API) + servidores web (8000) e API (3001) |
+| `npm start` | Build e sobe os servidores web e API |
+| `npm run build` | Gera `dist/public` (site) e `dist/server` (API) do zero |
+| `npm run dev:api` | Sobe apenas a API mock |
+| `npm run test:api` | Teste de contrato da API (local e Vercel) contra o baseline |
+| `npm run qa` | Build + todas as verificações de contrato (DOM, links, API) |
 
 ---
 
 ## ⚠️ Importante
 
-1. **Sempre edite arquivos fonte** em `src/` e `styles/`
-2. **Nunca edite arquivos compilados** em `js/core/`, `js/ui/`, `css/main.css`
-3. **Execute `npm run build`** antes de commitar mudanças ou fazer deploy
-4. **Use servidor HTTP**: Módulos ES não funcionam com `file://`
+1. **Edite apenas fontes**: `public/`, `src/`, `server/`.
+2. **Não quebre o contrato público**: URLs, ids, classes e textos das páginas são usados por suítes de automação de terceiros. Rode `npm run qa` antes de commitar.
+3. **Use servidor HTTP**: módulos ES não funcionam com `file://`.
+
+---
 
 ## 🚀 Deploy na Vercel
 
-O projeto está configurado para deploy na Vercel. Veja **[VERCEL-DEPLOY.md](VERCEL-DEPLOY.md)** para instruções completas.
+O build da Vercel roda `npm run build` e publica `dist/public`. As rotas `/api/*` são servidas pela função `api/[...path].ts`, que reutiliza o app de `server/`.
 
 **Deploy rápido:**
 ```bash

@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Status Codes HTTP — APIs e Autenticação — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Status Codes HTTP — Visão Completa para QA</h2>
+          <div class="section-desc">Guia completo de códigos de status HTTP: o que validar, cenários de teste e como reportar corretamente.</div>
+        </div>
+
+        <div class="info-box">
+          <h3 style="color: var(--success);">2xx — Sucesso</h3>
+          
+          <div style="margin-top: var(--spacing-md);">
+            <h4>200 OK</h4>
+            <p>Requisição processada com sucesso. Status padrão para GET, PUT, PATCH quando operação completa com sucesso.</p>
+            <p><strong>Validações:</strong> Payload conforme schema, estrutura JSON válida, tipos de dados corretos, campos obrigatórios presentes, regras de negócio aplicadas, headers apropriados (Content-Type, Cache-Control).</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>201 Created</h4>
+            <p>Recurso criado com sucesso. Deve ser usado em POST quando novo recurso é criado no servidor.</p>
+            <p><strong>Validações:</strong> Location header presente com URI absoluta do recurso criado, ID do recurso retornado no payload, dados completos do recurso criado (incluindo campos gerados pelo servidor), Content-Location header quando aplicável.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>202 Accepted</h4>
+            <p>Requisição aceita para processamento assíncrono. Operação será executada posteriormente. Cliente deve verificar status através de endpoint fornecido.</p>
+            <p><strong>Validações:</strong> Endpoint de status retornado (Location ou Link header), ID de processamento/job para rastreamento, documentação de como verificar status (polling, webhook, etc.), tempo estimado de processamento se disponível.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>204 No Content</h4>
+            <p>Requisição bem-sucedida sem corpo de resposta. Comum em DELETE e PUT quando não há necessidade de retornar dados.</p>
+            <p><strong>Validações:</strong> Body obrigatoriamente vazio, headers relevantes presentes (ETag, Last-Modified se aplicável), operação realmente executada (verificar estado do recurso), Content-Length: 0 ou header ausente.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-sm);">
+            <p><strong>O que validar além do status:</strong></p>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li>Estrutura do JSON conforme schema</li>
+              <li>Tipos de dados corretos (string, number, boolean, etc.)</li>
+              <li>Campos obrigatórios presentes</li>
+              <li>Regras de negócio aplicadas</li>
+              <li>Valores dentro dos ranges esperados</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3 style="color: var(--warning);">3xx — Redirecionamento</h3>
+          
+          <div style="margin-top: var(--spacing-md);">
+            <h4>301 Moved Permanently</h4>
+            <p>Recurso movido permanentemente para nova URL.</p>
+            <p><strong>O que validar:</strong> Location header com nova URL, cliente segue redirecionamento automaticamente, cache atualizado.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>302 Found</h4>
+            <p>Redirecionamento temporário. URL antiga ainda pode ser usada.</p>
+            <p><strong>O que validar:</strong> Location header, comportamento do cliente, se redirecionamento é seguido.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>304 Not Modified</h4>
+            <p>Recurso não modificado desde última requisição (cache).</p>
+            <p><strong>O que validar:</strong> ETag ou If-None-Match funcionando, body vazio, headers de cache corretos.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: color-mix(in srgb, var(--warning) 10%, transparent); border-radius: var(--border-radius-sm);">
+            <p><strong>Quando testar:</strong> Migrações de endpoints, mudanças de domínio, otimizações de cache.</p>
+            <p><strong>Riscos:</strong> Loops de redirecionamento, perda de dados em redirects, cache incorreto.</p>
+          </div>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3 style="color: var(--danger);">4xx — Erros do Cliente (QA ESSENCIAL)</h3>
+          
+          <div style="margin-top: var(--spacing-md);">
+            <h4>400 Bad Request</h4>
+            <p>Requisição malformada ou sintaticamente incorreta. Erro do cliente que impede processamento.</p>
+            <p><strong>Validações:</strong> Mensagem de erro descritiva, campos problemáticos identificados no payload de erro, orientação sobre como corrigir, estrutura de erro consistente (ex: JSON com "errors" array).</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>401 Unauthorized</h4>
+            <p>Requisição requer autenticação. Credenciais ausentes, inválidas ou expiradas. Diferente de 403 (autenticado mas sem permissão).</p>
+            <p><strong>Validações:</strong> Header WWW-Authenticate presente indicando esquema de autenticação, mensagem clara sobre necessidade de autenticação, não expõe detalhes sobre credenciais inválidas (evita user enumeration).</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>403 Forbidden</h4>
+            <p>Cliente autenticado mas sem permissão para acessar o recurso. Servidor entendeu a requisição mas recusa autorizar.</p>
+            <p><strong>Validações:</strong> Diferença clara entre 401 (não autenticado) e 403 (sem permissão), mensagem explicando falta de autorização sem expor estrutura de permissões, não retorna detalhes sobre recursos existentes que o usuário não pode acessar.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>404 Not Found</h4>
+            <p>Recurso não encontrado no servidor. Endpoint pode existir mas recurso específico (ID) não foi encontrado, ou endpoint não existe.</p>
+            <p><strong>Validações:</strong> Mensagem genérica que não expõe estrutura interna (ex: "Resource not found" vs "Table users doesn't exist"), comportamento consistente para recursos inexistentes e endpoints inexistentes (ambos 404), não revela se recurso existe mas usuário não tem acesso (deve ser 403).</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>405 Method Not Allowed</h4>
+            <p>Método HTTP usado não é permitido para este endpoint. Endpoint existe mas método não é suportado.</p>
+            <p><strong>Validações:</strong> Header Allow obrigatório listando métodos permitidos (GET, POST, etc.), mensagem clara indicando método não permitido, status correto mesmo quando método não implementado.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>409 Conflict</h4>
+            <p>Conflito com estado atual do recurso. Requisição não pode ser completada devido a conflito (ex: email duplicado, versão desatualizada, recurso bloqueado).</p>
+            <p><strong>Validações:</strong> Mensagem específica explicando natureza do conflito, orientação sobre como resolver (ex: obter versão atual e retentar, usar condicional headers), payload de erro com detalhes do conflito quando aplicável.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>422 Unprocessable Entity</h4>
+            <p>Requisição bem formada sintaticamente mas semanticamente incorreta. Validações de negócio falharam.</p>
+            <p><strong>Validações:</strong> Lista estruturada de erros por campo (array de objetos com campo, código, mensagem), mensagens claras e acionáveis, formato consistente (ex: JSON com "errors" contendo array de erros), códigos de erro padronizados quando aplicável.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>429 Too Many Requests</h4>
+            <p>Cliente excedeu limite de taxa de requisições (rate limiting). Muitas requisições em período de tempo definido.</p>
+            <p><strong>Validações:</strong> Headers X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset presentes, header Retry-After indicando quando retentar, mensagem clara sobre limite excedido, comportamento após limite (bloqueio temporário, throttling, etc.).</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: color-mix(in srgb, var(--danger) 10%, transparent); border-radius: var(--border-radius-sm);">
+            <p><strong>Cenários reais de teste:</strong></p>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li>Payload inválido (JSON malformado, tipos errados)</li>
+              <li>Campos ausentes (obrigatórios não enviados)</li>
+              <li>Valores fora de range (idade negativa, string muito longa)</li>
+              <li>Validações de negócio (email duplicado, data futura inválida)</li>
+              <li>Autenticação/autorização (token inválido, sem permissão)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3 style="color: var(--danger);">5xx — Erros do Servidor</h3>
+          
+          <div style="margin-top: var(--spacing-md);">
+            <h4>500 Internal Server Error</h4>
+            <p>Erro genérico do servidor indicando falha inesperada no processamento. Não deve ser usado para erros de validação ou de negócio.</p>
+            <p><strong>Validações:</strong> Mensagem genérica que não expõe detalhes técnicos (stack traces, caminhos de arquivo, queries SQL), logs detalhados no servidor para debugging, identificador único do erro (error ID) para rastreamento, não expõe informações sensíveis sobre infraestrutura.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>502 Bad Gateway</h4>
+            <p>Gateway ou proxy recebeu resposta inválida de servidor upstream. Indica problema de comunicação entre serviços.</p>
+            <p><strong>Validações:</strong> Distinguir entre problema de infraestrutura (upstream down) e aplicação (upstream retornando erro), timeout de upstream documentado, mensagem indica problema temporário quando aplicável, logs no gateway para diagnóstico.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>503 Service Unavailable</h4>
+            <p>Serviço temporariamente indisponível devido a manutenção, sobrecarga ou indisponibilidade de dependências. Indica que serviço pode estar disponível novamente após período.</p>
+            <p><strong>Validações:</strong> Header Retry-After presente indicando quando retentar, mensagem clara diferenciando manutenção programada de sobrecarga, status apropriado para circuit breaker aberto, indicação se problema é temporário ou requer ação.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4>504 Gateway Timeout</h4>
+            <p>Gateway não recebeu resposta de servidor upstream dentro do tempo limite configurado. Timeout ocorreu antes da resposta chegar.</p>
+            <p><strong>Validações:</strong> Timeout configurado e documentado, distinção entre upstream lento vs inacessível, Retry-After quando aplicável, logs indicando qual upstream falhou, mensagem indica que requisição pode ser retentada.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: color-mix(in srgb, var(--danger) 10%, transparent); border-radius: var(--border-radius-sm);">
+            <p><strong>Como simular:</strong> Forçar erros no servidor, desconectar serviços upstream, simular timeouts, sobrecarga.</p>
+            <p><strong>Como reportar:</strong> Incluir timestamp, request completo (method, endpoint, headers, body), resposta recebida, logs do servidor (se disponível), frequência do erro.</p>
+          </div>
+        </div>
+
+        <!-- Exemplos Práticos -->
+        <div class="subsection" style="margin-top: var(--spacing-xl);">
+          <h3>Teste Prático de Status Codes</h3>
+          <p class="muted" style="margin-bottom: var(--spacing-md);">Teste diferentes status codes usando a API mockada. Selecione um cenário e veja a resposta real.</p>
+          
+          <div class="form-group" style="margin-bottom: var(--spacing-md);">
+            <label for="status-code-scenario">Cenário de Status Code:</label>
+            <select id="status-code-scenario" style="padding: var(--spacing-sm); border-radius: var(--border-radius-sm); border: 1px solid var(--border); background: var(--bg); color: var(--text); width: 100%; max-width: 400px;">
+              <option value="success">✅ 200 OK - Sucesso</option>
+              <option value="error-400">❌ 400 Bad Request</option>
+              <option value="error-401">🔒 401 Unauthorized</option>
+              <option value="error-403">🚫 403 Forbidden</option>
+              <option value="error-404">🔍 404 Not Found</option>
+              <option value="error-409">⚠️ 409 Conflict</option>
+              <option value="error-422">📋 422 Unprocessable Entity</option>
+              <option value="error-429">⏱️ 429 Too Many Requests</option>
+              <option value="error-500">💥 500 Internal Server Error</option>
+              <option value="error-503">🔧 503 Service Unavailable</option>
+              <option value="timeout">⏳ 504 Gateway Timeout</option>
+            </select>
+          </div>
+
+          <div class="controls" style="margin-bottom: var(--spacing-md);">
+            <button id="btn-test-status-code" class="btn">Testar Status Code</button>
+            <button id="btn-clear-status-code" class="btn btn-secondary">Limpar</button>
+          </div>
+
+          <pre 
+            id="status-code-result"
+            style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); overflow-x: auto; font-size: var(--font-size-sm); min-height: 100px;"
+          ><span class="muted">Selecione um cenário e clique em "Testar Status Code" para ver a resposta.</span></pre>
+
+          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-sm);">
+            <p style="margin-bottom: var(--spacing-sm);"><strong>💡 Como usar:</strong></p>
+            <ul style="margin-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+              <li>Selecione um cenário de status code acima</li>
+              <li>Clique em "Testar Status Code" para fazer uma requisição GET /api/users</li>
+              <li>A API retornará o status code selecionado com uma resposta de erro apropriada</li>
+              <li>Use isso para validar como sua aplicação trata diferentes códigos HTTP</li>
+            </ul>
+            <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm);">
+              <strong>Nota:</strong> Em desenvolvimento, a API deve estar rodando em <code>http://localhost:3001</code>. Execute <code>npm run dev:api</code> se necessário. Em produção, a API está disponível automaticamente.
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); justify-content: space-between; flex-wrap: wrap;">
+          <a href="metodos-http.html" class="btn btn-secondary">← Anterior: Métodos HTTP</a>
+          <a href="validacoes.html" class="btn">Próximo: Validações</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script src="../../../js/api-config.js"></script>
+    <script type="module" src="../../../js/index.js"></script>
+    <script type="module">
+      const API_BASE_URL = window.getApiBaseUrl ? window.getApiBaseUrl() : (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3001/api' : '/api');
+
+      async function testStatusCode() {
+        const scenario = document.getElementById('status-code-scenario').value;
+        const resultEl = document.getElementById('status-code-result');
+        
+        resultEl.innerHTML = '<span class="muted">Testando...</span>';
+        resultEl.style.color = 'var(--muted)';
+
+        try {
+          const url = `${API_BASE_URL}/users?scenario=${scenario}`;
+          const response = await fetch(url, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+          const data = await response.json();
+          const result = {
+            status: response.status,
+            statusText: response.statusText,
+            headers: {
+              'Content-Type': response.headers.get('Content-Type'),
+            },
+            body: data,
+            scenario: scenario,
+            timestamp: new Date().toISOString(),
+          };
+
+          resultEl.textContent = JSON.stringify(result, null, 2);
+          resultEl.style.color = response.status >= 400 ? 'var(--danger)' : 'var(--text)';
+
+          // Destacar o status code
+          const statusColor = response.status >= 500 ? 'var(--danger)' : 
+                             response.status >= 400 ? 'var(--warning)' : 
+                             'var(--success)';
+          resultEl.style.borderLeftColor = statusColor;
+
+        } catch (error) {
+          resultEl.textContent = JSON.stringify({
+            error: 'Erro de conexão',
+            message: error.message,
+            hint: 'Verifique se a API está rodando: npm run dev:api',
+          }, null, 2);
+          resultEl.style.color = 'var(--danger)';
+        }
+      }
+
+      document.getElementById('btn-test-status-code').addEventListener('click', testStatusCode);
+      document.getElementById('btn-clear-status-code').addEventListener('click', () => {
+        document.getElementById('status-code-result').innerHTML = '<span class="muted">Selecione um cenário e clique em "Testar Status Code" para ver a resposta.</span>';
+      });
+    </script>
+  </body>
+</html>

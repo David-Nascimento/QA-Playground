@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Stress - Ações Repetidas — Cenários NFT — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+      .stress-controls {
+        background: var(--surface);
+        padding: var(--spacing-lg);
+        border-radius: var(--border-radius-lg);
+        margin-bottom: var(--spacing-lg);
+        box-shadow: var(--shadow-sm);
+      }
+      .stress-controls h3 {
+        margin-top: 0;
+        color: var(--level);
+      }
+      .control-group {
+        display: flex;
+        gap: var(--spacing-md);
+        align-items: center;
+        margin-bottom: var(--spacing-md);
+        flex-wrap: wrap;
+      }
+      .control-group label {
+        font-weight: 600;
+        min-width: 150px;
+      }
+      .control-group input[type="number"] {
+        padding: var(--spacing-sm);
+        border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+        border-radius: var(--border-radius-sm);
+        width: 100px;
+      }
+      .action-area {
+        background: var(--surface);
+        border: 2px solid color-mix(in srgb, var(--text) 10%, transparent);
+        border-radius: var(--border-radius-lg);
+        padding: var(--spacing-lg);
+        margin-bottom: var(--spacing-lg);
+        min-height: 300px;
+      }
+      .action-button {
+        padding: var(--spacing-md) var(--spacing-lg);
+        margin: var(--spacing-sm);
+        background: var(--level);
+        color: var(--on-accent);
+        border: none;
+        border-radius: var(--border-radius-md);
+        cursor: pointer;
+        font-weight: 600;
+        font-size: var(--font-size-base);
+      }
+      .action-button:hover {
+        background: var(--accent-2);
+      }
+      .action-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .action-log {
+        background: color-mix(in srgb, var(--text) 5%, transparent);
+        border-radius: var(--border-radius-md);
+        padding: var(--spacing-md);
+        margin-top: var(--spacing-md);
+        max-height: 200px;
+        overflow-y: auto;
+        font-family: 'Courier New', monospace;
+        font-size: var(--font-size-sm);
+      }
+      .log-entry {
+        padding: var(--spacing-xs);
+        margin-bottom: var(--spacing-xs);
+        border-left: 3px solid var(--level);
+        padding-left: var(--spacing-sm);
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-lg);
+      }
+      .metric-card {
+        background: color-mix(in srgb, var(--text) 3%, transparent);
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-md);
+        border-left: 3px solid var(--level);
+      }
+      .metric-value {
+        font-size: 1.5em;
+        font-weight: 700;
+        color: var(--level);
+        margin: var(--spacing-xs) 0;
+      }
+      .metric-label {
+        font-size: var(--font-size-sm);
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Cenário: Stress - Ações Repetidas</h2>
+          <div class="section-desc">
+            Este cenário permite executar ações repetidas rapidamente para testar comportamento sob stress. 
+            Use este cenário para verificar como a interface responde a múltiplas interações rápidas.
+          </div>
+        </div>
+
+        <div class="stress-controls">
+          <h3>Controles de Teste</h3>
+          <div class="control-group">
+            <label for="action-count">Número de Ações:</label>
+            <input type="number" id="action-count" min="10" max="1000" value="100" step="10">
+            <span id="action-count-display">100</span>
+          </div>
+          <div class="control-group">
+            <label for="action-delay">Delay entre Ações (ms):</label>
+            <input type="number" id="action-delay" min="0" max="1000" value="10" step="10">
+            <span id="action-delay-display">10ms</span>
+          </div>
+          <div class="control-group">
+            <button id="start-stress" class="btn btn-primary">Iniciar Stress Test</button>
+            <button id="stop-stress" class="btn btn-secondary" style="display: none;">Parar</button>
+            <button id="clear-stress" class="btn btn-secondary">Limpar</button>
+          </div>
+        </div>
+
+        <div class="action-area">
+          <h4 style="margin-top: 0;">Área de Ações</h4>
+          <button class="action-button" id="test-button">Clique Aqui</button>
+          <button class="action-button" id="test-button-2">Botão 2</button>
+          <button class="action-button" id="test-button-3">Botão 3</button>
+          <div class="action-log" id="action-log">
+            <div style="color: var(--muted); font-style: italic;">Aguardando ações...</div>
+          </div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric-card">
+            <div class="metric-label">Ações Executadas</div>
+            <div class="metric-value" id="metric-actions">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Tempo Total</div>
+            <div class="metric-value" id="metric-time">0ms</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Taxa de Ações</div>
+            <div class="metric-value" id="metric-rate">0 ações/s</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Status</div>
+            <div class="metric-value" id="metric-status" style="font-size: 1em;">Aguardando</div>
+          </div>
+        </div>
+
+        <!-- Guia do especialista: o que este cenário ensina, como medir e como automatizar -->
+        <div class="content-card nft-card-enhanced nft-expert" id="nft-guia">
+          <h4>Guia do especialista</h4>
+          <p class="nft-lead">Pergunta que este cenário responde: <strong>o que acontece quando o usuário (ou um robô) clica muito rápido, muitas vezes?</strong> Cliques duplicados geram pedidos em dobro, contadores errados e vazamentos de memória.</p>
+          <div class="guide-grid">
+            <div class="guide-item">
+              <h4>Hipótese de teste</h4>
+              <p>Com 100 ações a cada 10 ms, todas são registradas e o contador chega a exatamente 100. Se o contador ficar abaixo, ações se perderam; acima, houve duplicação.</p>
+            </div>
+            <div class="guide-item">
+              <h4>O que medir</h4>
+              <table class="nft-metric-table"><tbody><tr><th scope="row">Ações registradas</th><td>Devem ser exatamente as disparadas.</td></tr><tr><th scope="row">Ações por segundo</th><td>Vazão real comparada com a configurada.</td></tr><tr><th scope="row">Tamanho do log</th><td>Crescer sem limite indica vazamento: o DOM só aumenta.</td></tr><tr><th scope="row">Memória (heap)</th><td>DevTools > Memory: tire um snapshot antes e depois de várias rodadas.</td></tr></tbody></table>
+            </div>
+            <div class="guide-item is-criteria">
+              <h4>Critério de aceite (exemplo)</h4>
+              <p>Após 3 rodadas de 100 ações, o contador mostra o total esperado e o uso de memória volta ao patamar inicial depois de "Limpar".</p>
+            </div>
+            <div class="guide-item is-pitfall">
+              <h4>Armadilhas comuns</h4>
+              <ul><li>Assumir que um botão desabilitado impede duplo envio. Teclado (Enter repetido) e requisições já em voo também contam.</li><li>Não testar o "Parar": interromper no meio deve deixar o sistema consistente.</li><li>Log que cresce para sempre em sessões longas (teste de resistência).</li></ul>
+            </div>
+            <div class="guide-item is-wide">
+              <h4>Automatize com Playwright</h4>
+              <p class="hint">Dispara a rodada e confere que nenhuma ação se perdeu nem duplicou.</p>
+              <pre class="test-code active"><code>import { test, expect } from '@playwright/test';
+
+test('100 ações rápidas são contadas exatamente uma vez', async ({ page }) =&gt; {
+  await page.goto('/pages/tools/nft/stress-repeated-actions.html');
+  await page.fill('#action-count', '100');
+  await page.fill('#action-delay', '10');
+
+  await page.click('#start-stress');
+  await expect(page.locator('#metric-actions')).toHaveText('100', { timeout: 20_000 });
+
+  // espera um pouco mais: o número não pode continuar subindo
+  await page.waitForTimeout(500);
+  await expect(page.locator('#metric-actions')).toHaveText('100');
+});</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-card" style="margin-top: var(--spacing-lg);">
+          <h4>Como Testar Este Cenário</h4>
+          <ul>
+            <li><strong>Performance:</strong> Observe se a interface fica lenta ou trava com muitas ações</li>
+            <li><strong>Responsividade:</strong> Verifique se os botões continuam responsivos</li>
+            <li><strong>Memória:</strong> Monitore vazamentos de memória com muitas ações</li>
+            <li><strong>Debounce/Throttle:</strong> Teste se há mecanismos de proteção implementados</li>
+            <li><strong>Limites:</strong> Identifique o ponto onde a interface começa a degradar</li>
+          </ul>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="index.html" class="btn btn-secondary">← Voltar para Cenários</a>
+          <a href="../nft-playground.html" class="btn btn-secondary" style="margin-left: var(--spacing-md);">
+            NFT Playground
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../../js/index.js"></script>
+    <script>
+      let actionCount = 0;
+      let isRunning = false;
+      let startTime = null;
+
+      const actionCountInput = document.getElementById('action-count');
+      const actionCountDisplay = document.getElementById('action-count-display');
+      const actionDelayInput = document.getElementById('action-delay');
+      const actionDelayDisplay = document.getElementById('action-delay-display');
+      const startBtn = document.getElementById('start-stress');
+      const stopBtn = document.getElementById('stop-stress');
+      const clearBtn = document.getElementById('clear-stress');
+      const testButton = document.getElementById('test-button');
+      const testButton2 = document.getElementById('test-button-2');
+      const testButton3 = document.getElementById('test-button-3');
+      const actionLog = document.getElementById('action-log');
+      const metricActions = document.getElementById('metric-actions');
+      const metricTime = document.getElementById('metric-time');
+      const metricRate = document.getElementById('metric-rate');
+      const metricStatus = document.getElementById('metric-status');
+
+      actionCountInput.addEventListener('input', () => {
+        actionCountDisplay.textContent = actionCountInput.value;
+      });
+
+      actionDelayInput.addEventListener('input', () => {
+        actionDelayDisplay.textContent = actionDelayInput.value + 'ms';
+      });
+
+      function logAction(buttonId, actionNumber) {
+        const logEntry = document.createElement('div');
+        logEntry.className = 'log-entry';
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        logEntry.textContent = `[${timestamp}] Ação #${actionNumber}: ${buttonId} clicado`;
+        actionLog.appendChild(logEntry);
+        actionLog.scrollTop = actionLog.scrollHeight;
+
+        if (actionLog.children.length > 50) {
+          actionLog.removeChild(actionLog.firstChild);
+        }
+      }
+
+      function triggerAction(button, buttonId) {
+        button.click();
+        actionCount++;
+        logAction(buttonId, actionCount);
+        
+        const elapsed = performance.now() - startTime;
+        metricActions.textContent = actionCount;
+        metricTime.textContent = elapsed.toFixed(0) + 'ms';
+        metricRate.textContent = (actionCount / (elapsed / 1000)).toFixed(1) + ' ações/s';
+      }
+
+      testButton.addEventListener('click', () => {
+        if (!isRunning) {
+          const logEntry = document.createElement('div');
+          logEntry.className = 'log-entry';
+          logEntry.textContent = 'Botão clicado manualmente';
+          actionLog.appendChild(logEntry);
+        }
+      });
+
+      startBtn.addEventListener('click', async () => {
+        if (isRunning) return;
+
+        const count = Number.parseInt(actionCountInput.value, 10);
+        const delay = Number.parseInt(actionDelayInput.value, 10);
+        const buttons = [testButton, testButton2, testButton3];
+        
+        actionCount = 0;
+        startTime = performance.now();
+        isRunning = true;
+        
+        startBtn.disabled = true;
+        stopBtn.style.display = 'inline-block';
+        metricStatus.textContent = 'Executando...';
+        metricStatus.style.color = 'var(--accent)';
+
+        if (actionLog.children.length === 1 && actionLog.children[0].textContent.includes('Aguardando')) {
+          actionLog.innerHTML = '';
+        }
+
+        for (let i = 0; i < count && isRunning; i++) {
+          const button = buttons[i % buttons.length];
+          const buttonId = button.id;
+          triggerAction(button, buttonId);
+
+          if (delay > 0) {
+            await new Promise(resolve => setTimeout(resolve, delay));
+          }
+        }
+
+        const endTime = performance.now();
+        const totalTime = endTime - startTime;
+        metricTime.textContent = totalTime.toFixed(0) + 'ms';
+        metricRate.textContent = (actionCount / (totalTime / 1000)).toFixed(1) + ' ações/s';
+        metricStatus.textContent = 'Concluído';
+        metricStatus.style.color = 'var(--success)';
+        
+        startBtn.disabled = false;
+        stopBtn.style.display = 'none';
+        isRunning = false;
+      });
+
+      stopBtn.addEventListener('click', () => {
+        isRunning = false;
+        stopBtn.style.display = 'none';
+        startBtn.disabled = false;
+        metricStatus.textContent = 'Interrompido';
+        metricStatus.style.color = 'var(--warning)';
+      });
+
+      clearBtn.addEventListener('click', () => {
+        actionLog.innerHTML = '<div style="color: var(--muted); font-style: italic;">Aguardando ações...</div>';
+        metricActions.textContent = '0';
+        metricTime.textContent = '0ms';
+        metricRate.textContent = '0 ações/s';
+        metricStatus.textContent = 'Aguardando';
+        metricStatus.style.color = 'var(--text)';
+        actionCount = 0;
+      });
+    </script>
+  </body>
+</html>

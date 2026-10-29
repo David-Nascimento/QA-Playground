@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212 40" aria-hidden="true" focusable="false">
+  <!-- Selo "QA" com marca de verificação: legível nos temas claro e escuro -->
+  <rect x="1" y="3" width="50" height="34" rx="9" fill="#2f55e4"/>
+  <text x="23" y="28" text-anchor="middle" fill="#ffffff" font-family="Manrope,Inter,Arial,sans-serif" font-size="21" font-weight="800" letter-spacing="-0.5">QA</text>
+  <circle cx="44" cy="10" r="7" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+  <path d="M40.6 10.2l2.3 2.3 4-4.4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="60" y="27.5" fill="#4f6dff" font-family="Manrope,Inter,Arial,sans-serif" font-size="21" font-weight="800" letter-spacing="-0.4">Playground</text>
+</svg>

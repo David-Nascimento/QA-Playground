@@ -1,0 +1,49 @@
+// ========================================
+// QA Playground - Folha de estilos principal
+// ----------------------------------------
+// Apenas importa módulos. Nenhuma regra deve ser escrita aqui.
+//   abstracts/  variáveis, tokens (CSS custom properties), mixins
+//   base/       reset, tipografia, globais
+//   layout/     header, footer, seções
+//   components/ peças reutilizadas em várias páginas
+//   pages/      estilos exclusivos de uma página ou ferramenta
+// ========================================
+
+// === Abstracts ===
+@import 'abstracts/variables';
+@import 'abstracts/tokens';
+@import 'abstracts/mixins';
+@import 'abstracts/functions';
+
+// === Base ===
+@import 'base/reset';
+@import 'base/typography';
+@import 'base/globals';
+
+// === Layout ===
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/sections';
+
+// === Components ===
+@import 'components/button';
+@import 'components/card';
+@import 'components/forms';
+@import 'components/table';
+@import 'components/code';
+@import 'components/feedback';
+@import 'components/navigation';
+@import 'components/search';
+@import 'components/guide';
+
+// === Pages ===
+@import 'pages/home';
+@import 'pages/playgrounds';
+@import 'pages/bdd';
+@import 'pages/challenge';
+@import 'pages/fundamentos';
+@import 'pages/xpath';
+@import 'pages/nft-playground';
+@import 'pages/nft-labs';
+@import 'pages/accessibility';
+@import 'pages/mobile';

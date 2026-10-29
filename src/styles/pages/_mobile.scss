@@ -1,0 +1,448 @@
+// ========================================
+// Mobile - laboratórios das páginas pages/mobile/
+// ----------------------------------------
+// Prefixo .mob-. Gestos (#gesture-lab), raio-x do ambiente (#mobile-env)
+// e auditor de alvos de toque (#target-audit).
+// ========================================
+
+// === Leituras (pares rótulo/valor) ===
+.mob-readout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-sm);
+  margin: 0;
+
+  > div {
+    padding: 10px 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius-md);
+    min-width: 0;
+  }
+
+  dt {
+    font-size: var(--font-size-xs);
+    font-weight: $font-weight-bold;
+    color: var(--muted);
+  }
+
+  dd {
+    margin: 2px 0 0;
+    font-family: var(--font-display);
+    font-weight: $font-weight-bold;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+
+  .is-main {
+    grid-column: 1 / -1;
+    background: var(--level-soft, var(--accent-soft));
+
+    dd {
+      font-size: var(--font-size-2xl);
+      font-weight: $font-weight-heavy;
+      color: var(--accent);
+    }
+  }
+}
+
+.mob-readout-wide {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.mob-log-title {
+  margin: var(--spacing-lg) 0 var(--spacing-sm);
+  font-size: var(--font-size-base);
+}
+
+// === Laboratório de gestos ===
+.mob-gesture {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: var(--spacing-lg);
+  align-items: start;
+
+  @include respond-to(lg) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.mob-pad {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 320px;
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  border: 2px dashed color-mix(in srgb, var(--accent) 45%, var(--border));
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--text) 14%, transparent) 1px, transparent 0) 0 0 / 22px 22px,
+    var(--surface);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none; // sem menu de contexto do iOS no toque longo
+  cursor: grab;
+  @include transition(border-color, background-color);
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &[data-holding='true'] {
+    border-color: var(--pleno-fill);
+    border-style: solid;
+  }
+
+  &[data-gesture] {
+    border-style: solid;
+  }
+
+  @include respond-to(sm) {
+    min-height: 260px;
+  }
+}
+
+.mob-pad-indicator {
+  max-width: 22ch;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1rem + 1.5vw, 2rem);
+  font-weight: $font-weight-heavy;
+  color: var(--text);
+  pointer-events: none;
+
+  &.is-pop {
+    animation: mob-pop 0.35s ease;
+    color: var(--accent);
+  }
+}
+
+.mob-pad-hint {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+@keyframes mob-pop {
+  0% { transform: scale(0.85); opacity: 0.4; }
+  60% { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.mob-gesture-side {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+.mob-thresholds {
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-md);
+  padding: 0 var(--spacing-md);
+  background: var(--surface);
+
+  summary {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+  }
+
+  &[open] {
+    padding-bottom: var(--spacing-md);
+  }
+
+  label {
+    display: block;
+    margin: var(--spacing-sm) 0 4px;
+  }
+}
+
+.mob-log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+  font-size: var(--font-size-sm);
+
+  li {
+    padding: 8px 12px;
+    border-left: 3px solid var(--accent);
+    background: var(--surface-2);
+    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+  }
+
+  li:first-child {
+    border-left-color: var(--accent-2);
+  }
+
+  strong {
+    margin-right: 6px;
+  }
+
+  span {
+    color: var(--muted);
+  }
+
+  &:empty::before {
+    content: 'Nenhum gesto ainda.';
+    color: var(--muted);
+  }
+}
+
+// === Raio-x do ambiente ===
+.mob-env {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--spacing-lg);
+}
+
+// Tabela curta com descrições: quebra linha em vez de rolar
+.mob-units .table {
+  display: table;
+  white-space: normal;
+
+  th,
+  td {
+    padding: 10px 12px;
+  }
+}
+
+.mob-units {
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.mob-units h4 {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--spacing-sm);
+}
+
+.mob-units td[data-out] {
+  font-family: var(--font-display);
+  font-weight: $font-weight-bold;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+// Sondas invisíveis usadas para medir vh/svh/lvh/dvh e safe-area
+.mob-probes {
+  position: fixed;
+  top: 0;
+  left: -10px;
+  width: 1px;
+  visibility: hidden;
+  pointer-events: none;
+
+  > div {
+    position: absolute;
+    top: 0;
+    width: 1px;
+  }
+}
+
+.mob-media {
+  max-width: none !important; // .subsection > ul limita listas de texto à medida de leitura
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-sm);
+
+  @include respond-to(md) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.mob-mq {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    'state query'
+    'state meaning';
+  gap: 2px 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-md);
+  background: var(--surface);
+
+  code {
+    grid-area: query;
+    justify-self: start;
+    font-size: var(--font-size-xs);
+  }
+}
+
+.mob-mq-state {
+  grid-area: state;
+  min-width: 44px;
+  padding: 4px 8px;
+  border-radius: var(--border-radius-pill);
+  text-align: center;
+  font-size: var(--font-size-xs);
+  font-weight: $font-weight-bold;
+
+  .is-on & {
+    background: color-mix(in srgb, var(--success) 10%, transparent);
+    color: color-mix(in srgb, var(--success) 80%, var(--text));
+  }
+
+  .is-off & {
+    background: var(--surface-2);
+    color: var(--muted);
+  }
+}
+
+.mob-mq-meaning {
+  grid-area: meaning;
+  font-size: var(--font-size-sm);
+  color: var(--muted);
+}
+
+// === Auditor de alvos de toque ===
+.mob-target-demo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-md);
+}
+
+.mob-size {
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  border-radius: 6px;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: $font-weight-bold;
+  line-height: 1;
+}
+
+.mob-target-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-sm) var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+
+  select {
+    width: auto;
+  }
+}
+
+.mob-target-summary {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-bottom: var(--spacing-sm);
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .is-fail { border-top: 3px solid var(--danger); }
+  .is-warn { border-top: 3px solid var(--warning); }
+  .is-pass { border-top: 3px solid var(--success); }
+
+  dd {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.mob-target-list {
+  margin: 0;
+  padding-left: 1.4em;
+  font-size: var(--font-size-sm);
+
+  li {
+    margin-bottom: 6px;
+  }
+
+  code {
+    overflow-wrap: anywhere;
+  }
+}
+
+.mob-target-size {
+  display: inline-block;
+  min-width: 72px;
+  font-weight: $font-weight-bold;
+  font-variant-numeric: tabular-nums;
+}
+
+.mob-target-falha .mob-target-size { color: var(--danger); }
+.mob-target-aa .mob-target-size { color: var(--warning); }
+
+// Camada de destaque (fora do fluxo, não altera os elementos da página)
+.mob-target-overlay {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 0;
+  height: 0;
+  z-index: z-index('tooltip');
+  pointer-events: none;
+}
+
+.mob-target-box {
+  position: absolute;
+  border-radius: 3px;
+  outline: 2px solid;
+  outline-offset: 0;
+
+  &.is-falha { outline-color: var(--danger); background: color-mix(in srgb, var(--danger) 18%, transparent); }
+  &.is-aa { outline-color: var(--warning); background: color-mix(in srgb, var(--warning) 12%, transparent); }
+  &.is-plataforma { outline-color: color-mix(in srgb, var(--success) 70%, transparent); }
+  &.is-excecao { outline-color: color-mix(in srgb, var(--muted) 60%, transparent); outline-style: dashed; }
+}
+
+// === Hub: tabela emulação x aparelho real ===
+.mob-compare {
+  margin-bottom: var(--spacing-lg);
+
+  td {
+    font-weight: $font-weight-semibold;
+  }
+
+  .is-yes { color: var(--success); }
+  .is-partial { color: var(--warning); }
+  .is-no { color: var(--danger); }
+
+  .is-yes::before,
+  .is-partial::before,
+  .is-no::before {
+    display: inline-block;
+    width: 1.2em;
+    font-weight: $font-weight-heavy;
+  }
+
+  .is-yes::before { content: '✓'; }
+  .is-partial::before { content: '~'; }
+  .is-no::before { content: '✕'; }
+}
+
+// Pergunta respondida em cada cartão dos hubs
+.card-question {
+  font-size: var(--font-size-sm);
+  color: var(--text) !important;
+
+  .guide-tag {
+    margin-right: 4px;
+  }
+}

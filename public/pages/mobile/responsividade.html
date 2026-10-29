@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Responsividade — Mobile — QA Playground</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Responsividade</h2>
+          <div class="section-desc">Teste adaptação de layouts em diferentes tamanhos de tela e breakpoints responsivos. Esta página é ideal para validar comportamento responsivo, media queries e adaptação de elementos em diferentes dispositivos.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div class="info-box">
+              <p><strong>Atividades do Dia a Dia:</strong></p>
+              <ul>
+                <li>Testar layout em diferentes tamanhos de viewport</li>
+                <li>Validar breakpoints responsivos (mobile, tablet, desktop)</li>
+                <li>Verificar adaptação de elementos em telas pequenas</li>
+                <li>Testar menu hambúrguer e navegação mobile</li>
+                <li>Validar imagens responsivas e adaptação de conteúdo</li>
+                <li>Testar grid e flexbox em diferentes resoluções</li>
+                <li>Validar legibilidade e usabilidade em mobile</li>
+              </ul>
+              
+              <p><strong>Como Utilizar:</strong></p>
+              <ol>
+                <li>Redimensione a janela do navegador para testar diferentes tamanhos</li>
+                <li>Use as ferramentas de desenvolvedor para simular dispositivos</li>
+                <li>Observe como os elementos se adaptam em diferentes breakpoints</li>
+                <li>Teste a navegação e menus em telas pequenas</li>
+                <li>Valide que o conteúdo permanece legível e funcional</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Layout Responsivo</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Redimensione a janela para ver a adaptação do layout.</p>
+            
+            <div id="viewport-info" data-testid="viewport-info" style="background: color-mix(in srgb, var(--text) 3%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <strong>Viewport Atual:</strong>
+              <div id="viewport-size" data-testid="viewport-size" style="margin-top: var(--spacing-xs); font-family: monospace;"></div>
+              <div id="breakpoint" data-testid="breakpoint" style="margin-top: var(--spacing-xs); color: var(--level); font-weight: 600;"></div>
+            </div>
+
+            <div class="responsive-grid" data-testid="responsive-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-md);">
+              <div class="responsive-card" data-testid="card-1" style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); box-shadow: var(--shadow-sm);">
+                <h4>Card 1</h4>
+                <p>Este card se adapta ao tamanho da tela usando CSS Grid.</p>
+              </div>
+              <div class="responsive-card" data-testid="card-2" style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); box-shadow: var(--shadow-sm);">
+                <h4>Card 2</h4>
+                <p>Em telas pequenas, os cards ficam empilhados verticalmente.</p>
+              </div>
+              <div class="responsive-card" data-testid="card-3" style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); box-shadow: var(--shadow-sm);">
+                <h4>Card 3</h4>
+                <p>Em telas grandes, os cards ficam lado a lado.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Menu Responsivo</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Menu que se adapta ao tamanho da tela.</p>
+            
+            <div id="mobile-menu" data-testid="mobile-menu" style="background: var(--surface); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent); border-radius: var(--border-radius-md); padding: var(--spacing-md);">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4 style="margin: 0;">Menu Principal</h4>
+                <button id="menu-toggle" data-testid="menu-toggle" class="btn btn-secondary" style="display: none;">☰</button>
+              </div>
+              <nav id="menu-items" data-testid="menu-items" style="margin-top: var(--spacing-md);">
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; gap: var(--spacing-md); flex-wrap: wrap;">
+                  <li><a href="#" data-testid="menu-item-1">Início</a></li>
+                  <li><a href="#" data-testid="menu-item-2">Sobre</a></li>
+                  <li><a href="#" data-testid="menu-item-3">Serviços</a></li>
+                  <li><a href="#" data-testid="menu-item-4">Contato</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Imagem Responsiva</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Imagem que se adapta ao tamanho do container.</p>
+            
+            <div style="max-width: 100%; margin-bottom: var(--spacing-md);">
+              <img 
+                src="../../assets/img/image-bug.png" 
+                alt="Imagem responsiva de exemplo" 
+                data-testid="responsive-image"
+                style="width: 100%; height: auto; border-radius: var(--border-radius-md); box-shadow: var(--shadow-sm);"
+              />
+            </div>
+            <div class="hint">Esta imagem se adapta automaticamente ao tamanho do container.</div>
+          </div>
+
+          <!-- Auditoria de alvos de toque (src/client/features/mobile/target-size.ts) -->
+          <div class="subsection" id="target-audit" data-testid="target-audit">
+            <h3>Auditor de alvos de toque</h3>
+            <p class="section-lead">Mede todos os botões, links e campos visíveis e compara com o WCAG 2.2 (24 px, critério 2.5.8) e com as diretrizes de Apple e Google (44 a 48 px). Rode em larguras diferentes: um botão que passa no desktop pode encolher no celular.</p>
+            <div class="mob-target-demo" data-target-demo data-testid="target-demo">
+              <span class="hint">Exemplos:</span>
+              <button type="button" class="mob-size" style="width: 16px; height: 16px" aria-label="Alvo de 16 pixels">16</button>
+              <button type="button" class="mob-size" style="width: 24px; height: 24px" aria-label="Alvo de 24 pixels">24</button>
+              <button type="button" class="mob-size" style="width: 32px; height: 32px" aria-label="Alvo de 32 pixels">32</button>
+              <button type="button" class="mob-size" style="width: 44px; height: 44px" aria-label="Alvo de 44 pixels">44</button>
+              <button type="button" class="mob-size" style="width: 48px; height: 48px" aria-label="Alvo de 48 pixels">48</button>
+            </div>
+            <div class="mob-target-controls" data-target-controls>
+              <label for="ta-scope">Analisar</label>
+              <select id="ta-scope" data-lab="scope" data-testid="target-scope">
+                <option value="page" selected>O conteúdo desta página</option>
+                <option value="demo">Só os exemplos</option>
+              </select>
+              <label class="checkbox-group" for="ta-highlight"><input id="ta-highlight" type="checkbox" data-lab="highlight" data-testid="target-highlight" /> Destacar na tela</label>
+              <button type="button" class="btn" data-lab="run" data-testid="target-run">Analisar alvos</button>
+            </div>
+            <dl class="mob-readout mob-target-summary">
+              <div><dt>Alvos medidos</dt><dd data-out="total" data-testid="target-total">—</dd></div>
+              <div class="is-fail"><dt>Abaixo de 24 px</dt><dd data-out="falha" data-testid="target-fail">—</dd></div>
+              <div class="is-warn"><dt>24 a 43 px</dt><dd data-out="aa" data-testid="target-aa">—</dd></div>
+              <div class="is-pass"><dt>44 px ou mais</dt><dd data-out="plataforma" data-testid="target-platform">—</dd></div>
+              <div><dt>Links em texto</dt><dd data-out="excecao" data-testid="target-inline">—</dd></div>
+            </dl>
+            <p class="hint" data-out="status" role="status"></p>
+            <h4 class="mob-log-title">Menores alvos encontrados</h4>
+            <ol class="mob-target-list" data-out="worst" data-testid="target-worst"></ol>
+          </div>
+
+          <!-- Guia do especialista -->
+          <div class="subsection mob-expert" id="mobile-guia">
+            <h3>Guia do especialista</h3>
+            <p class="section-lead">Responsividade não é "caber na tela do iPhone". É o conteúdo continuar legível e operável em qualquer largura, com zoom e com texto maior. Estes critérios têm número no WCAG e viram casos de teste objetivos.</p>
+            <div class="guide-grid">
+              <div class="guide-item">
+                <h4>Breakpoints pelo conteúdo</h4>
+                <ul><li>Não existe "largura do celular": aparelhos vão de 320 px a mais de 430 px, e tablets passam de 1024 px.</li><li>Teste nas bordas de cada breakpoint (767 e 768, 1023 e 1024), não só no meio.</li><li>Componentes que mudam pelo espaço do contêiner usam <em>container queries</em>; teste-os em colunas estreitas também.</li></ul>
+              </div>
+              <div class="guide-item is-criteria">
+                <h4>Critérios do WCAG</h4>
+                <ul><li><strong>1.4.10 Reflow:</strong> em 320 px de largura, nada de rolagem horizontal (exceto tabelas, mapas e código).</li><li><strong>1.4.4 Redimensionar texto:</strong> com zoom de 200%, tudo continua legível e funcional.</li><li><strong>1.4.12 Espaçamento de texto:</strong> aumentar entrelinha e espaços não pode cortar texto.</li><li><strong>2.5.8 Tamanho do alvo:</strong> veja o auditor acima.</li></ul>
+              </div>
+              <div class="guide-item">
+                <h4>Imagens e mídia</h4>
+                <ul><li><code>max-width: 100%</code> evita estouro, mas não economiza dados: use <code>srcset</code> e <code>sizes</code>.</li><li>Reserve espaço com <code>width</code>/<code>height</code> ou <code>aspect-ratio</code> para não causar CLS.</li><li>Verifique a aba Network em uma largura de celular: o navegador baixou a versão pequena?</li></ul>
+              </div>
+              <div class="guide-item is-pitfall">
+                <h4>Armadilhas comuns</h4>
+                <ul><li>Testar só redimensionando a janela do desktop: o celular tem toque, DPR alto e barras do navegador.</li><li>Conteúdo escondido no celular com <code>display: none</code> que o usuário precisa (por exemplo, o preço).</li><li>Tabelas largas espremidas até ficarem ilegíveis em vez de rolar no próprio bloco.</li><li>Esquecer o modo paisagem do celular, que costuma cair no breakpoint de tablet.</li></ul>
+              </div>
+              <div class="guide-item is-wide">
+                <h4>Automatize</h4>
+                <div class="a11y-tabs" data-tabs>
+              <div role="tablist" aria-label="Exemplos de automação">
+                <button type="button" role="tab" id="resp-tab-pw" aria-controls="resp-panel-pw" aria-selected="true">Playwright</button><button type="button" role="tab" id="resp-tab-targets" aria-controls="resp-panel-targets" aria-selected="false" tabindex="-1">Alvos de toque</button>
+              </div>
+              <div role="tabpanel" id="resp-panel-pw" aria-labelledby="resp-tab-pw" tabindex="0">
+                <p class="hint">Percorre as larguras críticas, verifica rolagem horizontal (WCAG 1.4.10) e guarda uma captura de tela para comparação visual.</p>
+                <pre class="test-code active"><code>import { test, expect } from '@playwright/test';
+
+const larguras = [320, 375, 767, 768, 1023, 1024, 1440];
+
+for (const largura of larguras) {
+  test(`sem rolagem horizontal em ${largura} px`, async ({ page }) =&gt; {
+    await page.setViewportSize({ width: largura, height: 800 });
+    await page.goto('/pages/mobile/responsividade.html');
+
+    const sobra = await page.evaluate(
+      () =&gt; document.documentElement.scrollWidth - document.documentElement.clientWidth
+    );
+    expect(sobra).toBe(0);
+
+    // regressão visual: a primeira execução cria a imagem de referência
+    await expect(page).toHaveScreenshot(`responsividade-${largura}.png`, { fullPage: true });
+  });
+}
+
+test('breakpoint muda exatamente em 768 px', async ({ page }) =&gt; {
+  await page.setViewportSize({ width: 767, height: 800 });
+  await page.goto('/pages/mobile/responsividade.html');
+  await expect(page.getByTestId('breakpoint')).toContainText('Mobile');
+
+  await page.setViewportSize({ width: 768, height: 800 });
+  await expect(page.getByTestId('breakpoint')).toContainText('Tablet');
+});</code></pre>
+              </div><div role="tabpanel" id="resp-panel-targets" aria-labelledby="resp-tab-targets" tabindex="0" hidden>
+                <p class="hint">O mesmo critério do auditor, como teste automatizado.</p>
+                <pre class="test-code active"><code>import { test, expect, devices } from '@playwright/test';
+
+test.use({ ...devices['iPhone 13'] });
+
+test('nenhum botão menor que 24 x 24 px (WCAG 2.5.8)', async ({ page }) =&gt; {
+  await page.goto('/pages/mobile/responsividade.html');
+  const pequenos = await page.$$eval('main button, main [role=button]', (els) =&gt;
+    els
+      .map((el) =&gt; ({ el, r: el.getBoundingClientRect() }))
+      .filter(({ r }) =&gt; r.width &gt; 0 &amp;&amp; (r.width &lt; 24 || r.height &lt; 24))
+      .map(({ el, r }) =&gt; `${el.textContent?.trim()} (${Math.round(r.width)}x${Math.round(r.height)})`)
+  );
+  // os exemplos de 16 px do auditor são propositais
+  expect(pequenos.filter((p) =&gt; !p.startsWith('16'))).toEqual([]);
+});</code></pre>
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div class="info-box">
+              <p><strong>Cenários de Teste:</strong></p>
+              <ul>
+                <li>Testar layout em viewport mobile (320px - 768px)</li>
+                <li>Testar layout em viewport tablet (768px - 1024px)</li>
+                <li>Testar layout em viewport desktop (1024px+)</li>
+                <li>Validar que elementos não quebram em telas pequenas</li>
+                <li>Testar menu hambúrguer em mobile</li>
+                <li>Validar imagens responsivas</li>
+                <li>Testar grid e flexbox em diferentes resoluções</li>
+              </ul>
+              
+              <p><strong>Elementos identificáveis:</strong></p>
+              <ul>
+                <li><code>data-testid="viewport-info"</code> - Informações do viewport</li>
+                <li><code>data-testid="viewport-size"</code> - Tamanho atual do viewport</li>
+                <li><code>data-testid="breakpoint"</code> - Breakpoint ativo</li>
+                <li><code>data-testid="responsive-grid"</code> - Grid responsivo</li>
+                <li><code>data-testid="mobile-menu"</code> - Menu responsivo</li>
+                <li><code>data-testid="menu-toggle"</code> - Botão toggle do menu</li>
+                <li><code>data-testid="responsive-image"</code> - Imagem responsiva</li>
+              </ul>
+
+              <p><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-appium-ruby">Appium + Ruby</button>
+                <button class="test-tab" data-target="tab-appium-java">Appium + Java</button>
+                <button class="test-tab" data-target="tab-appium-robot">Appium + Robot</button>
+              </div>
+              
+              <div class="test-tab-content">
+                <pre id="tab-appium-ruby" class="test-code active"><code>
+# Appium + Ruby - Testar responsividade
+# Configurar capabilities para mobile web
+caps = {
+  platformName: 'iOS',
+  deviceName: 'iPhone SE',
+  browserName: 'Safari',
+  automationName: 'XCUITest'
+}
+driver = Appium::Driver.new({ caps: caps }).start_driver
+
+# Testar viewport mobile
+driver.get('http://localhost:8080/pages/mobile/responsividade.html')
+breakpoint = driver.find_element(:css, '[data-testid="breakpoint"]')
+expect(breakpoint.text).to include('Mobile')
+
+menu_toggle = driver.find_element(:css, '[data-testid="menu-toggle"]')
+expect(menu_toggle.displayed?).to be true
+
+# Testar em tablet
+driver.manage.window.resize_to(1024, 768)
+expect(breakpoint.text).to include('Tablet')
+                </code></pre>
+              
+                <pre id="tab-appium-java" class="test-code"><code>
+// Appium + Java - Testar responsividade
+DesiredCapabilities caps = new DesiredCapabilities();
+caps.setCapability("platformName", "iOS");
+caps.setCapability("deviceName", "iPhone SE");
+caps.setCapability("browserName", "Safari");
+caps.setCapability("automationName", "XCUITest");
+
+AppiumDriver driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), caps);
+
+// Testar viewport mobile
+driver.get("http://localhost:8080/pages/mobile/responsividade.html");
+WebElement breakpoint = driver.findElement(By.cssSelector("[data-testid='breakpoint']"));
+assert breakpoint.getText().contains("Mobile");
+
+WebElement menuToggle = driver.findElement(By.cssSelector("[data-testid='menu-toggle']"));
+assert menuToggle.isDisplayed();
+
+// Testar em tablet
+driver.manage().window().setSize(new Dimension(1024, 768));
+assert breakpoint.getText().contains("Tablet");
+                </code></pre>
+              
+                <pre id="tab-appium-robot" class="test-code"><code>
+*** Settings ***
+Library    AppiumLibrary
+
+*** Test Cases ***
+Testar Responsividade Mobile
+    Open Application    http://localhost:4723/wd/hub
+    ...    platformName=iOS
+    ...    deviceName=iPhone SE
+    ...    browserName=Safari
+    ...    automationName=XCUITest
+    
+    Go To Url    http://localhost:8080/pages/mobile/responsividade.html
+    
+    Element Should Contain    css:[data-testid="breakpoint"]    Mobile
+    Element Should Be Visible    css:[data-testid="menu-toggle"]
+    
+    Set Window Size    1024    768
+    Element Should Contain    css:[data-testid="breakpoint"]    Tablet
+                </code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../js/index.js"></script>
+    <script>
+      function updateViewportInfo() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const sizeEl = document.getElementById('viewport-size');
+        const breakpointEl = document.getElementById('breakpoint');
+        
+        if (sizeEl) {
+          sizeEl.textContent = `${width}px × ${height}px`;
+        }
+        
+        if (breakpointEl) {
+          let breakpoint = 'Desktop';
+          if (width < 768) {
+            breakpoint = 'Mobile';
+          } else if (width < 1024) {
+            breakpoint = 'Tablet';
+          }
+          breakpointEl.textContent = `Breakpoint: ${breakpoint}`;
+        }
+
+        // Menu toggle visibility
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuItems = document.getElementById('menu-items');
+        if (menuToggle && menuItems) {
+          if (width < 768) {
+            menuToggle.style.display = 'block';
+            menuItems.style.display = 'none';
+          } else {
+            menuToggle.style.display = 'none';
+            menuItems.style.display = 'block';
+          }
+        }
+      }
+
+      window.addEventListener('resize', updateViewportInfo);
+      updateViewportInfo();
+
+      // Menu toggle
+      const menuToggle = document.getElementById('menu-toggle');
+      const menuItems = document.getElementById('menu-items');
+      if (menuToggle && menuItems) {
+        menuToggle.addEventListener('click', () => {
+          const isVisible = menuItems.style.display !== 'none';
+          menuItems.style.display = isVisible ? 'none' : 'block';
+        });
+      }
+
+      // Inicializar abas de teste
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Módulo 8: Encontrar e Reportar Bugs — Fundamentos de Testes</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Módulo 8: Encontrar e Reportar Bugs</h1>
+          <div class="section-desc">
+            Desenvolva habilidades para encontrar bugs de forma eficiente e reportá-los de maneira clara e profissional, seguindo boas práticas da indústria para comunicação efetiva de problemas encontrados.
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Como Encontrar Bugs</h2>
+          <p>Encontrar bugs requer uma combinação de método, criatividade e atenção aos detalhes. A seguir estão técnicas e abordagens que ajudam a descobrir problemas no software.</p>
+        </div>
+
+        <div class="content-section">
+          <h2>Técnicas para Encontrar Bugs</h2>
+
+          <div class="content-card">
+            <h3>1. Pense Como um Usuário</h3>
+            <p>Use o sistema como um usuário real faria. Não siga apenas o caminho feliz - explore diferentes formas de usar a aplicação.</p>
+            <p><strong>Como fazer:</strong></p>
+            <ul>
+              <li>Use o sistema sem seguir documentação ou scripts</li>
+              <li>Tente fazer tarefas como um usuário novato faria</li>
+              <li>Pense em diferentes tipos de usuários e como cada um usaria o sistema</li>
+              <li>Observe se há formas não intuitivas de fazer algo</li>
+              <li>Teste fluxos que usuários reais seguiriam</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Teste Validações</h3>
+            <p>Tente inserir dados inválidos para verificar se o sistema valida adequadamente:</p>
+            <ul>
+              <li><strong>Campos vazios:</strong> Deixe campos obrigatórios em branco</li>
+              <li><strong>Valores muito grandes:</strong> Teste limites de tamanho de campos</li>
+              <li><strong>Caracteres especiais:</strong> Use símbolos, emojis, caracteres unicode</li>
+              <li><strong>SQL injection:</strong> Teste proteção contra injeção SQL</li>
+              <li><strong>XSS (Cross-Site Scripting):</strong> Teste proteção contra scripts maliciosos</li>
+              <li><strong>Tipos incorretos:</strong> Insira texto onde se espera número, e vice-versa</li>
+              <li><strong>Valores negativos:</strong> Onde não deveriam ser aceitos</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Teste Casos de Borda</h3>
+            <p>Teste valores nos limites onde bugs são mais prováveis de ocorrer:</p>
+            <ul>
+              <li><strong>Valores mínimo e máximo:</strong> Teste os limites exatos</li>
+              <li><strong>Zero e valores negativos:</strong> Onde aplicável</li>
+              <li><strong>Strings muito longas:</strong> Teste limite de caracteres</li>
+              <li><strong>Caracteres especiais e unicode:</strong> Diferentes encodings</li>
+              <li><strong>Espaços em branco:</strong> Início, meio e fim de strings</li>
+              <li><strong>Números decimais:</strong> Precisão e arredondamento</li>
+              <li><strong>Datas extremas:</strong> Datas passadas muito antigas, futuras muito distantes</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Teste Integrações</h3>
+            <p>Verifique como o sistema se comporta quando há problemas com componentes externos:</p>
+            <ul>
+              <li><strong>APIs externas falhando:</strong> Simule falhas de APIs</li>
+              <li><strong>Timeouts:</strong> Quando requisições demoram muito</li>
+              <li><strong>Dados corrompidos:</strong> Quando APIs retornam dados inesperados</li>
+              <li><strong>Rede instável:</strong> Simule perda de conexão</li>
+              <li><strong>Serviços indisponíveis:</strong> Quando serviços externos estão fora do ar</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>5. Teste em Diferentes Ambientes</h3>
+            <p>Bugs podem aparecer apenas em configurações específicas:</p>
+            <ul>
+              <li><strong>Navegadores diferentes:</strong> Chrome, Firefox, Safari, Edge</li>
+              <li><strong>Dispositivos diferentes:</strong> Desktop, tablet, mobile</li>
+              <li><strong>Sistemas operacionais:</strong> Windows, macOS, Linux, iOS, Android</li>
+              <li><strong>Resoluções de tela:</strong> Diferentes tamanhos e orientações</li>
+              <li><strong>Versões diferentes:</strong> Versões antigas e novas de navegadores</li>
+              <li><strong>Configurações diferentes:</strong> Diferentes configurações de acessibilidade, idioma, etc.</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>6. Use Testes Exploratórios</h3>
+            <p>Explore o sistema livremente, sem seguir scripts. Muitos bugs são encontrados quando você "brinca" com a aplicação:</p>
+            <ul>
+              <li>Navegue sem objetivo específico</li>
+              <li>Tente ações inesperadas</li>
+              <li>Use o sistema de forma não convencional</li>
+              <li>Observe comportamentos inesperados</li>
+              <li>Teste rapidamente várias funcionalidades</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>7. Revise Logs e Console</h3>
+            <p>Muitos bugs não são visíveis na interface, mas aparecem em logs:</p>
+            <ul>
+              <li><strong>Console do navegador:</strong> Verifique erros JavaScript</li>
+              <li><strong>Network tab:</strong> Verifique requisições falhando ou retornando erros</li>
+              <li><strong>Logs do servidor:</strong> Erros no backend</li>
+              <li><strong>Ferramentas de debug:</strong> Use DevTools para inspecionar problemas</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>8. Teste Regressão</h3>
+            <p>Execute testes que já passaram anteriormente. Novas funcionalidades podem quebrar funcionalidades existentes:</p>
+            <ul>
+              <li>Mantenha uma suíte de testes de regressão</li>
+              <li>Execute após cada release ou mudança significativa</li>
+              <li>Foque em funcionalidades críticas que não devem quebrar</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Como Reportar Bugs</h2>
+          <p>Um bug bem reportado é muito mais fácil de ser corrigido. Um report claro e completo economiza tempo para desenvolvedores e acelera a resolução do problema.</p>
+        </div>
+
+        <div class="content-section">
+          <h2>Estrutura de um Bom Bug Report</h2>
+
+          <div class="content-card">
+            <h3>1. Título Claro e Descritivo</h3>
+            <p>O título deve resumir o problema de forma clara e objetiva. Deve ser específico o suficiente para entender o problema sem ler o corpo do report.</p>
+            <p><strong>Bom exemplo:</strong> "Botão de login não responde após 3 tentativas de login inválido"</p>
+            <p><strong>Mau exemplo:</strong> "Erro no sistema"</p>
+            <p><strong>Dicas para bons títulos:</strong></p>
+            <ul>
+              <li>Seja específico sobre o que está quebrado</li>
+              <li>Mencione onde o problema ocorre</li>
+              <li>Inclua condições específicas se relevante</li>
+              <li>Evite termos vagos como "erro" ou "problema"</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Descrição Detalhada</h3>
+            <p>Descreva claramente o que aconteceu, o que era esperado e o que foi observado:</p>
+            
+            <h4>Passos para Reproduzir</h4>
+            <p>Lista numerada e clara dos passos exatos para reproduzir o bug. Deve ser específica o suficiente para que qualquer pessoa possa seguir:</p>
+            <ol>
+              <li>Acesse a página de login</li>
+              <li>Insira um email válido</li>
+              <li>Insira uma senha incorreta</li>
+              <li>Clique no botão "Entrar"</li>
+              <li>Repita os passos 2-4 mais duas vezes (total de 3 tentativas)</li>
+              <li>Na terceira tentativa, tente clicar no botão novamente</li>
+            </ol>
+
+            <h4>Resultado Esperado</h4>
+            <p>O que deveria acontecer se o sistema estivesse funcionando corretamente.</p>
+            <p><strong>Exemplo:</strong> O botão deve continuar respondendo e exibir uma mensagem de erro após a terceira tentativa, bloqueando o acesso temporariamente.</p>
+
+            <h4>Resultado Atual</h4>
+            <p>O que realmente aconteceu. Seja específico e objetivo.</p>
+            <p><strong>Exemplo:</strong> Após a terceira tentativa, o botão não responde mais ao clique e não há nenhuma mensagem de erro ou feedback visual.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Ambiente e Configuração</h3>
+            <p>Inclua informações sobre o ambiente onde o bug foi encontrado. Isso é crucial porque alguns bugs só ocorrem em configurações específicas:</p>
+            <ul>
+              <li><strong>Sistema operacional e versão:</strong> Windows 11, macOS 14.0, Linux Ubuntu 22.04</li>
+              <li><strong>Navegador e versão:</strong> Chrome 120.0, Firefox 121.0, Safari 17.0</li>
+              <li><strong>Versão da aplicação:</strong> v2.1.3, build 1234</li>
+              <li><strong>Dispositivo:</strong> Desktop, iPhone 14, Samsung Galaxy S23</li>
+              <li><strong>Resolução de tela:</strong> 1920x1080, 1366x768</li>
+              <li><strong>Dados de teste utilizados:</strong> Email: teste@example.com, senha: senha123</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Evidências</h3>
+            <p>Anexe evidências visuais e dados que comprovem o problema:</p>
+            <ul>
+              <li><strong>Screenshots:</strong> Imagens mostrando o problema</li>
+              <li><strong>Vídeos:</strong> Gravação da tela mostrando o comportamento (útil para bugs intermitentes)</li>
+              <li><strong>Logs:</strong> Erros do console, logs do servidor</li>
+              <li><strong>Network requests:</strong> Capturas de requisições HTTP falhando</li>
+              <li><strong>Arquivos:</strong> Arquivos que causaram o problema, se aplicável</li>
+            </ul>
+            <p><strong>Ferramentas recomendadas:</strong></p>
+            <ul>
+              <li>Lightshot, ShareX, Snipping Tool para screenshots</li>
+              <li>OBS, ShareX, Loom para gravação de vídeo</li>
+              <li>DevTools do navegador para logs e network</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>5. Prioridade e Severidade</h3>
+            <p>Classifique o bug de acordo com o impacto no sistema e usuários:</p>
+            
+            <h4>Severidade</h4>
+            <p>Indica o impacto técnico do bug:</p>
+            <ul>
+              <li><strong>Crítica:</strong> Sistema inutilizável, crash, perda de dados</li>
+              <li><strong>Alta:</strong> Funcionalidade principal quebrada, mas sistema ainda usável</li>
+              <li><strong>Média:</strong> Funcionalidade secundária afetada, workaround disponível</li>
+              <li><strong>Baixa:</strong> Problema cosmético ou menor, não afeta funcionalidade</li>
+            </ul>
+
+            <h4>Prioridade</h4>
+            <p>Indica a urgência de correção baseado em impacto de negócio:</p>
+            <ul>
+              <li><strong>Urgente:</strong> Deve ser corrigido imediatamente</li>
+              <li><strong>Alta:</strong> Deve ser corrigido o mais rápido possível</li>
+              <li><strong>Média:</strong> Deve ser corrigido em um prazo razoável</li>
+              <li><strong>Baixa:</strong> Pode ser corrigido quando houver tempo</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Boas Práticas de Reporte</h2>
+
+          <div class="content-card">
+            <h3>Seja Específico</h3>
+            <p>Evite descrições vagas. Seja preciso sobre onde, quando e como o bug ocorre. Use termos técnicos quando apropriado, mas mantenha clareza.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Um Bug por Report</h3>
+            <p>Não misture múltiplos bugs em um único report. Cada problema deve ter seu próprio ticket para facilitar rastreamento e correção.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Verifique se Já Existe</h3>
+            <p>Antes de criar um novo report, verifique se o bug já foi reportado. Se sim, adicione informações adicionais ao report existente ao invés de criar um duplicado.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Use Templates</h3>
+            <p>Muitas ferramentas (Jira, Bugzilla, etc.) têm templates. Use-os para garantir consistência e que nenhuma informação importante seja esquecida.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Seja Objetivo e Profissional</h3>
+            <p>Mantenha um tom profissional. Foque nos fatos e evite julgamentos ou críticas. O objetivo é resolver o problema, não culpar alguém.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Inclua Informações de Rastreamento</h3>
+            <p>Se possível, inclua informações que ajudem desenvolvedores a encontrar o código relacionado:</p>
+            <ul>
+              <li>URL ou rota onde o problema ocorre</li>
+              <li>IDs de elementos relacionados</li>
+              <li>Mensagens de erro completas</li>
+              <li>Stack traces (se disponíveis)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Navegação entre módulos -->
+        <div class="module-navigation">
+          <a href="o-que-como-testar.html" class="module-nav-link module-nav-link--prev">← Anterior: O Que Testar e Como Testar</a>
+          <a href="bdd-cucumber.html" class="module-nav-link module-nav-link--next">Próximo: BDD e Cucumber →</a>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

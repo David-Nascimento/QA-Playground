@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Viewport e Orientação — Mobile — QA Playground</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Viewport e Orientação</h2>
+          <div class="section-desc">Teste comportamento em diferentes viewports, orientação portrait/landscape e media queries. Esta página é ideal para validar adaptação de layouts, orientação de tela e configurações de viewport.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div class="info-box">
+              <p><strong>Atividades do Dia a Dia:</strong></p>
+              <ul>
+                <li>Testar diferentes tamanhos de viewport</li>
+                <li>Validar orientação portrait e landscape</li>
+                <li>Testar media queries e breakpoints</li>
+                <li>Validar meta viewport e configurações</li>
+                <li>Testar adaptação de conteúdo em diferentes resoluções</li>
+                <li>Validar comportamento em dispositivos reais</li>
+                <li>Testar zoom e scale do viewport</li>
+              </ul>
+              
+              <p><strong>Como Utilizar:</strong></p>
+              <ol>
+                <li>Redimensione a janela do navegador</li>
+                <li>Use as ferramentas de desenvolvedor para simular dispositivos</li>
+                <li>Teste orientação portrait e landscape</li>
+                <li>Observe como os elementos se adaptam</li>
+                <li>Valide informações do viewport exibidas abaixo</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Informações do Viewport</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Informações em tempo real sobre o viewport atual.</p>
+            
+            <div id="viewport-details" data-testid="viewport-details" style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-md);">
+                <div>
+                  <strong>Largura:</strong>
+                  <div id="viewport-width" data-testid="viewport-width" style="font-family: monospace; color: var(--level); margin-top: var(--spacing-xs);">-</div>
+                </div>
+                <div>
+                  <strong>Altura:</strong>
+                  <div id="viewport-height" data-testid="viewport-height" style="font-family: monospace; color: var(--level); margin-top: var(--spacing-xs);">-</div>
+                </div>
+                <div>
+                  <strong>Orientação:</strong>
+                  <div id="viewport-orientation" data-testid="viewport-orientation" style="font-family: monospace; color: var(--level); margin-top: var(--spacing-xs);">-</div>
+                </div>
+                <div>
+                  <strong>Pixel Ratio:</strong>
+                  <div id="device-pixel-ratio" data-testid="device-pixel-ratio" style="font-family: monospace; color: var(--level); margin-top: var(--spacing-xs);">-</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Layout Adaptativo</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Layout que se adapta ao viewport e orientação.</p>
+            
+            <div id="adaptive-layout" data-testid="adaptive-layout" style="background: var(--surface); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent); border-radius: var(--border-radius-md); padding: var(--spacing-lg);">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--spacing-md);" id="layout-grid" data-testid="layout-grid">
+                <div style="background: color-mix(in srgb, var(--level) 10%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-sm); text-align: center;">
+                  <strong>Item 1</strong>
+                  <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">Adapta-se ao viewport</p>
+                </div>
+                <div style="background: color-mix(in srgb, var(--level) 10%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-sm); text-align: center;">
+                  <strong>Item 2</strong>
+                  <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">Grid responsivo</p>
+                </div>
+                <div style="background: color-mix(in srgb, var(--level) 10%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-sm); text-align: center;">
+                  <strong>Item 3</strong>
+                  <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">Auto-fit columns</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Media Queries</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Indicadores visuais de media queries ativas.</p>
+            
+            <div id="media-queries" data-testid="media-queries" style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md);">
+              <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
+                <span id="mq-mobile" data-testid="mq-mobile" class="badge" style="background: var(--level); color: var(--on-accent); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius-sm);">Mobile (&lt; 768px)</span>
+                <span id="mq-tablet" data-testid="mq-tablet" class="badge" style="background: var(--muted); color: var(--on-accent); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius-sm);">Tablet (768px - 1024px)</span>
+                <span id="mq-desktop" data-testid="mq-desktop" class="badge" style="background: var(--muted); color: var(--on-accent); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius-sm);">Desktop (&gt; 1024px)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Orientação</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Teste comportamento em portrait e landscape.</p>
+            
+            <div id="orientation-info" data-testid="orientation-info" style="background: var(--surface); padding: var(--spacing-lg); border-radius: var(--border-radius-md); text-align: center; border: 2px solid var(--level);">
+              <div id="orientation-display" data-testid="orientation-display" style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-sm);">📱</div>
+              <div id="orientation-text" data-testid="orientation-text" style="font-size: var(--font-size-lg); font-weight: 600; color: var(--level);">Portrait</div>
+              <p style="color: var(--muted); font-size: var(--font-size-sm); margin-top: var(--spacing-xs);">Gire o dispositivo ou redimensione a janela</p>
+            </div>
+          </div>
+
+          <!-- Painel do ambiente (src/client/features/mobile/env-panel.ts) -->
+          <div class="subsection" id="mobile-env" data-testid="mobile-env">
+            <h3>Raio-x do ambiente</h3>
+            <p class="section-lead">O que o navegador informa agora. Abra o teclado virtual, dê zoom ou gire o aparelho e compare: são exatamente as diferenças que quebram layouts no celular e que a emulação do DevTools nem sempre reproduz.</p>
+            <div class="mob-env">
+              <dl class="mob-readout mob-readout-wide">
+                <div><dt>Layout viewport</dt><dd data-out="layout" data-testid="env-layout">—</dd></div>
+                <div><dt>Visual viewport</dt><dd data-out="visual" data-testid="env-visual">—</dd></div>
+                <div><dt>Zoom (pinça)</dt><dd data-out="scale" data-testid="env-scale">—</dd></div>
+                <div><dt>Tela física</dt><dd data-out="screen" data-testid="env-screen">—</dd></div>
+                <div><dt>Device pixel ratio</dt><dd data-out="dpr" data-testid="env-dpr">—</dd></div>
+                <div><dt>Teclado / zoom</dt><dd data-out="keyboard" data-testid="env-keyboard">—</dd></div>
+              </dl>
+              <div class="mob-units">
+                <h4>Quanto vale "100% da altura"?</h4>
+                <table class="table">
+                  <thead><tr><th scope="col">Unidade</th><th scope="col">Altura agora</th><th scope="col">O que é</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row"><code>100vh</code></th><td data-out="vh" data-testid="env-vh">—</td><td>Altura com as barras do navegador recolhidas. No celular, pode ficar maior que a tela visível.</td></tr>
+                    <tr><th scope="row"><code>100svh</code></th><td data-out="svh" data-testid="env-svh">—</td><td>Menor altura possível (barras visíveis).</td></tr>
+                    <tr><th scope="row"><code>100lvh</code></th><td data-out="lvh" data-testid="env-lvh">—</td><td>Maior altura possível (barras recolhidas).</td></tr>
+                    <tr><th scope="row"><code>100dvh</code></th><td data-out="dvh" data-testid="env-dvh">—</td><td>Altura dinâmica: acompanha as barras aparecendo e sumindo.</td></tr>
+                    <tr><th scope="row">Área segura</th><td colspan="2" data-out="safe" data-testid="env-safe">—</td></tr>
+                  </tbody>
+                </table>
+                <div class="mob-probes" aria-hidden="true">
+                  <div data-probe="vh" style="height: 100vh"></div>
+                  <div data-probe="svh" style="height: 100svh"></div>
+                  <div data-probe="lvh" style="height: 100lvh"></div>
+                  <div data-probe="dvh" style="height: 100dvh"></div>
+                  <div data-probe="safe" style="padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)"></div>
+                </div>
+              </div>
+            </div>
+            <h4 class="mob-log-title">Media features deste dispositivo</h4>
+            <ul class="mob-media" data-out="media" data-testid="env-media"></ul>
+          </div>
+
+          <!-- Guia do especialista -->
+          <div class="subsection mob-expert" id="mobile-guia">
+            <h3>Guia do especialista</h3>
+            <p class="section-lead">No desktop, "tamanho da tela" é um número. No celular são vários: a área do layout, a área visível (que encolhe com o teclado e o zoom), a tela física e a densidade de pixels. Testar viewport é testar a relação entre eles.</p>
+            <div class="guide-grid">
+              <div class="guide-item">
+                <h4>A meta viewport</h4>
+                <ul><li>Sem <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code>, o celular renderiza como se tivesse ~980 px e encolhe tudo.</li><li><code>user-scalable=no</code> e <code>maximum-scale=1</code> impedem o zoom: falha no WCAG 1.4.4 (redimensionar texto).</li><li>Teste: a página abre legível sem zoom e permite ampliar até 200%.</li></ul>
+              </div>
+              <div class="guide-item">
+                <h4>100vh no celular</h4>
+                <ul><li>Uma tela "100vh" fica mais alta que a área visível quando as barras do navegador aparecem: o botão do rodapé some atrás delas.</li><li>Use <code>100dvh</code> (ou <code>100svh</code>) e compare na tabela acima.</li><li>Teste: role a página no Chrome Android e no Safari iOS e observe elementos fixos no rodapé.</li></ul>
+              </div>
+              <div class="guide-item is-criteria">
+                <h4>Teclado virtual e notch</h4>
+                <ul><li>O teclado reduz o <strong>visual viewport</strong>, não o layout viewport. Campos no fim da página e barras fixas ficam escondidos.</li><li>Critério: com o teclado aberto, o campo em foco e o botão de enviar continuam visíveis.</li><li>Em aparelhos com notch, conteúdo encostado na borda precisa de <code>env(safe-area-inset-*)</code>.</li></ul>
+              </div>
+              <div class="guide-item is-pitfall">
+                <h4>Armadilhas comuns</h4>
+                <ul><li>Confiar só no "modo dispositivo" do DevTools: ele não simula barras do navegador, teclado virtual nem o motor do Safari.</li><li>Testar só retrato. Muitos usuários usam paisagem para vídeo, formulários longos e tablets.</li><li>Imagens nítidas no desktop e borradas no celular: DPR 3 pede imagens 3× maiores (<code>srcset</code>).</li><li>Detectar "celular" pela largura. Use <code>(pointer: coarse)</code> e <code>(hover: none)</code> para decidir interações.</li></ul>
+              </div>
+              <div class="guide-item is-wide">
+                <h4>Automatize</h4>
+                <div class="a11y-tabs" data-tabs>
+              <div role="tablist" aria-label="Exemplos de automação">
+                <button type="button" role="tab" id="vp-tab-pw" aria-controls="vp-panel-pw" aria-selected="true">Playwright</button><button type="button" role="tab" id="vp-tab-appium" aria-controls="vp-panel-appium" aria-selected="false" tabindex="-1">Appium 2 (Java)</button>
+              </div>
+              <div role="tabpanel" id="vp-panel-pw" aria-labelledby="vp-tab-pw" tabindex="0">
+                <p class="hint">Os <em>device descriptors</em> definem largura, DPR, user agent e toque de uma vez. "Girar" o aparelho é trocar largura e altura.</p>
+                <pre class="test-code active"><code>import { test, expect, devices } from '@playwright/test';
+
+test.use({ ...devices['Pixel 7'] }); // 412 x 915, DPR 2.625, touch
+
+test('retrato e paisagem', async ({ page }) =&gt; {
+  await page.goto('/pages/mobile/viewport.html');
+  await expect(page.getByTestId('viewport-orientation')).toContainText('Portrait');
+  await expect(page.getByTestId('viewport-width')).toContainText('412');
+
+  await page.setViewportSize({ width: 915, height: 412 }); // paisagem
+  await expect(page.getByTestId('viewport-orientation')).toContainText('Landscape');
+});
+
+test('o dispositivo é de toque', async ({ page }) =&gt; {
+  await page.goto('/pages/mobile/viewport.html');
+  const toque = await page.evaluate(() =&gt; matchMedia('(pointer: coarse)').matches);
+  expect(toque).toBe(true);
+});</code></pre>
+              </div><div role="tabpanel" id="vp-panel-appium" aria-labelledby="vp-tab-appium" tabindex="0" hidden>
+                <p class="hint">Em aparelho ou emulador real, a orientação é do sistema operacional. No navegador do celular, use o contexto web (<code>CHROMIUM</code> ou <code>WEBVIEW_*</code>).</p>
+                <pre class="test-code active"><code>import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.By;
+
+driver.get("http://10.0.2.2:8000/pages/mobile/viewport.html"); // 10.0.2.2 = localhost do PC no emulador Android
+WebElement orientacao = driver.findElement(By.cssSelector("[data-testid=viewport-orientation]"));
+assertTrue(orientacao.getText().contains("Portrait"));
+
+driver.rotate(ScreenOrientation.LANDSCAPE);
+new WebDriverWait(driver, Duration.ofSeconds(5))
+    .until(d -&gt; orientacao.getText().contains("Landscape"));
+
+driver.rotate(ScreenOrientation.PORTRAIT); // sempre devolva o aparelho ao estado inicial</code></pre>
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div class="info-box">
+              <p><strong>Cenários de Teste:</strong></p>
+              <ul>
+                <li>Testar viewport em diferentes dispositivos (iPhone, Android, Tablet)</li>
+                <li>Validar orientação portrait e landscape</li>
+                <li>Testar media queries e breakpoints</li>
+                <li>Validar meta viewport tag</li>
+                <li>Testar zoom e scale do viewport</li>
+                <li>Validar adaptação de layout em diferentes resoluções</li>
+                <li>Testar device pixel ratio</li>
+              </ul>
+              
+              <p><strong>Elementos identificáveis:</strong></p>
+              <ul>
+                <li><code>data-testid="viewport-details"</code> - Detalhes do viewport</li>
+                <li><code>data-testid="viewport-width"</code> - Largura do viewport</li>
+                <li><code>data-testid="viewport-height"</code> - Altura do viewport</li>
+                <li><code>data-testid="viewport-orientation"</code> - Orientação atual</li>
+                <li><code>data-testid="adaptive-layout"</code> - Layout adaptativo</li>
+                <li><code>data-testid="media-queries"</code> - Media queries ativas</li>
+                <li><code>data-testid="orientation-info"</code> - Informações de orientação</li>
+              </ul>
+
+              <p><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-appium-ruby">Appium + Ruby</button>
+                <button class="test-tab" data-target="tab-appium-java">Appium + Java</button>
+                <button class="test-tab" data-target="tab-appium-robot">Appium + Robot</button>
+              </div>
+              
+              <div class="test-tab-content">
+                <pre id="tab-appium-ruby" class="test-code active"><code>
+# Appium + Ruby - Testar viewport e orientação
+caps = {
+  platformName: 'iOS',
+  deviceName: 'iPhone SE',
+  browserName: 'Safari',
+  automationName: 'XCUITest'
+}
+driver = Appium::Driver.new({ caps: caps }).start_driver
+
+driver.get('http://localhost:8080/pages/mobile/viewport.html')
+
+# Verificar viewport portrait
+viewport_width = driver.find_element(:css, '[data-testid="viewport-width"]')
+expect(viewport_width.text).to include('375')
+
+orientation = driver.find_element(:css, '[data-testid="viewport-orientation"]')
+expect(orientation.text).to include('Portrait')
+
+# Testar orientação landscape
+driver.rotate(:landscape)
+expect(orientation.text).to include('Landscape')
+
+# Verificar media queries
+mq_mobile = driver.find_element(:css, '[data-testid="mq-mobile"]')
+expect(mq_mobile.css_value('background-color')).to be_truthy
+                </code></pre>
+              
+                <pre id="tab-appium-java" class="test-code"><code>
+// Appium + Java - Testar viewport e orientação
+DesiredCapabilities caps = new DesiredCapabilities();
+caps.setCapability("platformName", "iOS");
+caps.setCapability("deviceName", "iPhone SE");
+caps.setCapability("browserName", "Safari");
+caps.setCapability("automationName", "XCUITest");
+
+AppiumDriver driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), caps);
+
+driver.get("http://localhost:8080/pages/mobile/viewport.html");
+
+// Verificar viewport portrait
+WebElement viewportWidth = driver.findElement(By.cssSelector("[data-testid='viewport-width']"));
+assert viewportWidth.getText().contains("375");
+
+WebElement orientation = driver.findElement(By.cssSelector("[data-testid='viewport-orientation']"));
+assert orientation.getText().contains("Portrait");
+
+// Testar orientação landscape
+driver.rotate(ScreenOrientation.LANDSCAPE);
+assert orientation.getText().contains("Landscape");
+
+// Verificar media queries
+WebElement mqMobile = driver.findElement(By.cssSelector("[data-testid='mq-mobile']"));
+String bgColor = mqMobile.getCssValue("background-color");
+assert bgColor != null;
+                </code></pre>
+              
+                <pre id="tab-appium-robot" class="test-code"><code>
+*** Settings ***
+Library    AppiumLibrary
+
+*** Test Cases ***
+Testar Viewport e Orientação
+    Open Application    http://localhost:4723/wd/hub
+    ...    platformName=iOS
+    ...    deviceName=iPhone SE
+    ...    browserName=Safari
+    ...    automationName=XCUITest
+    
+    Go To Url    http://localhost:8080/pages/mobile/viewport.html
+    
+    Element Should Contain    css:[data-testid="viewport-width"]    375
+    Element Should Contain    css:[data-testid="viewport-orientation"]    Portrait
+    
+    # Testar orientação landscape
+    Set Orientation    LANDSCAPE
+    Element Should Contain    css:[data-testid="viewport-orientation"]    Landscape
+    
+    # Verificar pixel ratio
+    Element Should Be Visible    css:[data-testid="device-pixel-ratio"]
+    
+    # Verificar media queries
+    Element Should Be Visible    css:[data-testid="mq-mobile"]
+                </code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../js/index.js"></script>
+    <script>
+      function updateViewportInfo() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const orientation = width > height ? 'Landscape' : 'Portrait';
+        const pixelRatio = window.devicePixelRatio || 1;
+
+        // Atualizar informações
+        const widthEl = document.getElementById('viewport-width');
+        const heightEl = document.getElementById('viewport-height');
+        const orientationEl = document.getElementById('viewport-orientation');
+        const pixelRatioEl = document.getElementById('device-pixel-ratio');
+
+        if (widthEl) widthEl.textContent = `${width}px`;
+        if (heightEl) heightEl.textContent = `${height}px`;
+        if (orientationEl) orientationEl.textContent = orientation;
+        if (pixelRatioEl) pixelRatioEl.textContent = pixelRatio;
+
+        // Atualizar media queries
+        const mqMobile = document.getElementById('mq-mobile');
+        const mqTablet = document.getElementById('mq-tablet');
+        const mqDesktop = document.getElementById('mq-desktop');
+
+        if (mqMobile && mqTablet && mqDesktop) {
+          mqMobile.style.background = 'var(--muted)';
+          mqTablet.style.background = 'var(--muted)';
+          mqDesktop.style.background = 'var(--muted)';
+
+          if (width < 768) {
+            mqMobile.style.background = 'var(--accent)';
+          } else if (width < 1024) {
+            mqTablet.style.background = 'var(--accent)';
+          } else {
+            mqDesktop.style.background = 'var(--accent)';
+          }
+        }
+
+        // Atualizar orientação
+        const orientationDisplay = document.getElementById('orientation-display');
+        const orientationText = document.getElementById('orientation-text');
+
+        if (orientationDisplay && orientationText) {
+          if (orientation === 'Portrait') {
+            orientationDisplay.textContent = '📱';
+            orientationText.textContent = 'Portrait';
+          } else {
+            orientationDisplay.textContent = '📱';
+            orientationText.textContent = 'Landscape';
+          }
+        }
+      }
+
+      window.addEventListener('resize', updateViewportInfo);
+      window.addEventListener('orientationchange', updateViewportInfo);
+      updateViewportInfo();
+
+      // Inicializar abas de teste
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
+</html>

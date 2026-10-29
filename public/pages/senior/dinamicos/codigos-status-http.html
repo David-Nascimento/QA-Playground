@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Códigos de Status HTTP — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Códigos de Status HTTP</h2>
+          <div class="section-desc">Teste respostas e fluxos para diferentes códigos HTTP. Esta página permite testar a validação de códigos de status HTTP, tratamento de erros e simulação de diferentes respostas de servidor.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Simular Códigos de Status</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Selecione um código de status HTTP para simular uma resposta do servidor.
+            </p>
+
+            <div class="form-group" style="margin-bottom: var(--spacing-md);">
+              <label for="status-select">Código de Status HTTP</label>
+              <select id="status-select" data-testid="select-status-http" style="width: 100%; padding: var(--spacing-sm);">
+                <option value="200">200 - OK (Sucesso)</option>
+                <option value="201">201 - Created (Criado)</option>
+                <option value="301">301 - Moved Permanently (Redirecionamento)</option>
+                <option value="400">400 - Bad Request (Requisição Inválida)</option>
+                <option value="401">401 - Unauthorized (Não Autorizado)</option>
+                <option value="403">403 - Forbidden (Proibido)</option>
+                <option value="404">404 - Not Found (Não Encontrado)</option>
+                <option value="500">500 - Internal Server Error (Erro do Servidor)</option>
+                <option value="502">502 - Bad Gateway</option>
+                <option value="503">503 - Service Unavailable (Serviço Indisponível)</option>
+              </select>
+            </div>
+
+            <div class="controls" style="margin-bottom: var(--spacing-md);">
+              <button id="btn-simular-status" class="btn" data-testid="btn-simular-status">Simular Resposta</button>
+              <button id="btn-fazer-requisicao" class="btn btn-secondary" data-testid="btn-fazer-requisicao">Fazer Requisição Simulada</button>
+            </div>
+
+            <div id="status-result" data-testid="status-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 150px;">
+              <p class="muted" style="margin: 0;">Selecione um código e clique em "Simular Resposta".</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar códigos de sucesso (2xx)</li>
+                <li>Testar códigos de redirecionamento (3xx)</li>
+                <li>Testar códigos de erro do cliente (4xx)</li>
+                <li>Testar códigos de erro do servidor (5xx)</li>
+                <li>Validar tratamento de erros em automação</li>
+                <li>Testar interceptação de status codes</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Interceptar e validar status code
+cy.intercept('GET', '**/api/**', { statusCode: 404, body: { error: 'Not found' } }).as('notFound')
+cy.visit('/page')
+cy.wait('@notFound').then((interception) => {
+  expect(interception.response.statusCode).to.equal(404)
+})
+
+// Testar diferentes status codes
+cy.intercept('GET', '**/api/**', { statusCode: 500 }).as('serverError')
+cy.wait('@serverError').its('response.statusCode').should('eq', 500)
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Validar status code
+const response = await page.request.get('/api/endpoint')
+expect(response.status()).toBe(200)
+
+// Interceptar e mockar status
+await page.route('**/api/**', route => {
+  route.fulfill({ status: 404, body: JSON.stringify({ error: 'Not found' }) })
+})
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Validar status code (requer biblioteca adicional)
+// Use bibliotecas como WireMock ou MockServer para interceptar requisições
+// Ou valide status codes em respostas reais:
+// driver.get("http://example.com/api/endpoint");
+// // Validar status code via logs ou resposta
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Validar status code
+# Use bibliotecas como WebMock ou VCR para interceptar requisições
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Validar status code
+    # Use bibliotecas como RequestsLibrary para validar status codes
+                </code></pre>
+              
+              </div>
+
+// Capybara (Ruby) - Interceptar requisições
+page.driver.browser.execute_script("window.fetch = function() { return Promise.resolve({status: 404, json: () => Promise.resolve({error: 'Not found'})}); }")
+
+// Robot Framework - Validar status code (requer biblioteca adicional)
+# Use bibliotecas como requests-mock ou configure proxy
+# Ou valide status codes em respostas HTTP reais</code></pre>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="select-status-http"</code> - Seletor de status</li>
+                <li><code>data-testid="btn-simular-status"</code> - Botão simular</li>
+                <li><code>data-testid="btn-fazer-requisicao"</code> - Botão fazer requisição</li>
+                <li><code>data-testid="status-result"</code> - Resultado do status</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../../js/index.js"></script>
+    <script>
+      const statusSelect = document.getElementById('status-select');
+      const resultEl = document.getElementById('status-result');
+      const btnSimular = document.getElementById('btn-simular-status');
+      const btnRequisicao = document.getElementById('btn-fazer-requisicao');
+
+      const statusMessages = {
+        200: { msg: 'Requisição bem-sucedida!', color: 'var(--accent)' },
+        201: { msg: 'Recurso criado com sucesso!', color: 'var(--accent)' },
+        301: { msg: 'Recurso movido permanentemente. Redirecionamento.', color: 'var(--accent-2)' },
+        400: { msg: 'Requisição inválida. Verifique os parâmetros.', color: 'var(--danger)' },
+        401: { msg: 'Não autorizado. Credenciais inválidas ou ausentes.', color: 'var(--danger)' },
+        403: { msg: 'Acesso proibido. Você não tem permissão.', color: 'var(--danger)' },
+        404: { msg: 'Recurso não encontrado.', color: 'var(--danger)' },
+        500: { msg: 'Erro interno do servidor.', color: 'var(--danger)' },
+        502: { msg: 'Bad Gateway. Servidor intermediário recebeu resposta inválida.', color: 'var(--danger)' },
+        503: { msg: 'Serviço indisponível. Tente novamente mais tarde.', color: 'var(--danger)' }
+      };
+
+      function simularStatus() {
+        const status = parseInt(statusSelect.value);
+        const info = statusMessages[status];
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        
+        resultEl.innerHTML = `
+          <div style="margin-bottom: var(--spacing-sm);">
+            <p style="margin: 0; font-size: var(--font-size-xl); font-weight: 700; color: ${info.color};">${status}</p>
+            <p style="margin: var(--spacing-xs) 0 0 0; font-weight: 600;">${info.msg}</p>
+          </div>
+          <div style="padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--level) 20%, transparent);">
+            <p style="margin: 0; color: var(--muted); font-size: var(--font-size-sm);"><strong>Categoria:</strong> ${status >= 200 && status < 300 ? 'Sucesso' : status >= 300 && status < 400 ? 'Redirecionamento' : status >= 400 && status < 500 ? 'Erro do Cliente' : 'Erro do Servidor'}</p>
+            <p style="margin: var(--spacing-xs) 0 0 0; color: var(--muted); font-size: var(--font-size-sm);">Horário: ${timestamp}</p>
+          </div>
+        `;
+        resultEl.style.borderLeftColor = info.color;
+        window.showToast(`Status ${status} simulado!`);
+      }
+
+      function fazerRequisicao() {
+        const status = parseInt(statusSelect.value);
+        resultEl.innerHTML = '<p class="muted" style="margin: 0;">Fazendo requisição...</p>';
+        
+        setTimeout(() => {
+          simularStatus();
+        }, 1000);
+      }
+
+      btnSimular.addEventListener('click', simularStatus);
+      btnRequisicao.addEventListener('click', fazerRequisicao);
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
+</html>

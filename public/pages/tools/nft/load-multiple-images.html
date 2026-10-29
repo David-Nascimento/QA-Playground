@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Carga - Múltiplas Imagens — Cenários NFT — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+      .image-controls {
+        background: var(--surface);
+        padding: var(--spacing-lg);
+        border-radius: var(--border-radius-lg);
+        margin-bottom: var(--spacing-lg);
+        box-shadow: var(--shadow-sm);
+      }
+      .image-controls h3 {
+        margin-top: 0;
+        color: var(--level);
+      }
+      .control-group {
+        display: flex;
+        gap: var(--spacing-md);
+        align-items: center;
+        margin-bottom: var(--spacing-md);
+        flex-wrap: wrap;
+      }
+      .control-group label {
+        font-weight: 600;
+        min-width: 150px;
+      }
+      .control-group input[type="number"] {
+        padding: var(--spacing-sm);
+        border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+        border-radius: var(--border-radius-sm);
+        width: 100px;
+      }
+      .images-container {
+        background: var(--surface);
+        border: 2px solid color-mix(in srgb, var(--text) 10%, transparent);
+        border-radius: var(--border-radius-lg);
+        padding: var(--spacing-lg);
+        min-height: 400px;
+        max-height: 600px;
+        overflow-y: auto;
+        margin-bottom: var(--spacing-lg);
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: var(--spacing-md);
+      }
+      .image-item {
+        position: relative;
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+        background: color-mix(in srgb, var(--text) 5%, transparent);
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .image-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .image-item.loading {
+        background: color-mix(in srgb, var(--level) 10%, transparent);
+      }
+      .image-item.loaded {
+        border: 2px solid var(--success);
+      }
+      .image-item.error {
+        border: 2px solid var(--danger);
+        background: color-mix(in srgb, var(--danger) 10%, transparent);
+      }
+      .image-placeholder {
+        color: var(--muted);
+        font-size: var(--font-size-sm);
+        text-align: center;
+        padding: var(--spacing-md);
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-lg);
+      }
+      .metric-card {
+        background: color-mix(in srgb, var(--text) 3%, transparent);
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-md);
+        border-left: 3px solid var(--level);
+      }
+      .metric-value {
+        font-size: 1.5em;
+        font-weight: 700;
+        color: var(--level);
+        margin: var(--spacing-xs) 0;
+      }
+      .metric-label {
+        font-size: var(--font-size-sm);
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Cenário: Carga - Múltiplas Imagens</h2>
+          <div class="section-desc">
+            Este cenário simula o carregamento de muitas imagens simultaneamente. 
+            Use este cenário para testar performance de carregamento de recursos, 
+            otimização de imagens e comportamento de lazy loading.
+          </div>
+        </div>
+
+        <div class="image-controls">
+          <h3>Controles de Teste</h3>
+          <div class="control-group">
+            <label for="image-count">Número de Imagens:</label>
+            <input type="number" id="image-count" min="10" max="200" value="50" step="10">
+            <span id="image-count-display">50</span>
+          </div>
+          <div class="control-group">
+            <label for="image-size">Tamanho da Imagem:</label>
+            <select id="image-size">
+              <option value="small">Pequeno (150x150)</option>
+              <option value="medium" selected>Médio (300x300)</option>
+              <option value="large">Grande (600x600)</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="lazy-load">Lazy Loading:</label>
+            <input type="checkbox" id="lazy-load">
+            <span>Ativado</span>
+          </div>
+          <div class="control-group">
+            <button id="load-images" class="btn btn-primary">Carregar Imagens</button>
+            <button id="clear-images" class="btn btn-secondary">Limpar</button>
+          </div>
+        </div>
+
+        <div class="images-container" id="images-container">
+          <p style="color: var(--muted); text-align: center; padding: var(--spacing-xl); grid-column: 1 / -1;">
+            Clique em "Carregar Imagens" para começar o teste de carga.
+          </p>
+        </div>
+
+        <div class="metrics">
+          <div class="metric-card">
+            <div class="metric-label">Imagens Carregadas</div>
+            <div class="metric-value" id="metric-loaded">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Tempo Total</div>
+            <div class="metric-value" id="metric-time">0ms</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Taxa de Carregamento</div>
+            <div class="metric-value" id="metric-rate">0 img/s</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Status</div>
+            <div class="metric-value" id="metric-status" style="font-size: 1em;">Aguardando</div>
+          </div>
+        </div>
+
+        <!-- Guia do especialista: o que este cenário ensina, como medir e como automatizar -->
+        <div class="content-card nft-card-enhanced nft-expert" id="nft-guia">
+          <h4>Guia do especialista</h4>
+          <p class="nft-lead">Pergunta que este cenário responde: <strong>as imagens atrasam o que importa na tela?</strong> Imagens costumam ser o maior peso de uma página e o elemento de LCP mais comum.</p>
+          <div class="guide-grid">
+            <div class="guide-item">
+              <h4>Hipótese de teste</h4>
+              <p>Com carregamento preguiçoso, só as imagens perto da área visível são baixadas no início. Neste cenário ele é feito com <code>IntersectionObserver</code>: a imagem começa com um marcador vazio e só recebe o endereço real (<code>picsum.photos</code>) quando entra na tela.</p>
+            </div>
+            <div class="guide-item">
+              <h4>O que medir</h4>
+              <table class="nft-metric-table"><tbody><tr><th scope="row">LCP</th><td>Se a maior imagem estiver na primeira dobra, ela define o LCP. Bom: ≤ 2,5 s.</td></tr><tr><th scope="row">Imagens requisitadas x visíveis</th><td>Com lazy, as que estão fora da tela não devem ser pedidas antes da rolagem (aba Network, filtro Img).</td></tr><tr><th scope="row">CLS</th><td>Imagens sem largura e altura empurram o conteúdo ao carregar.</td></tr><tr><th scope="row">Bytes transferidos</th><td>Aba Network, com cache desabilitado.</td></tr></tbody></table>
+            </div>
+            <div class="guide-item is-criteria">
+              <h4>Critério de aceite (exemplo)</h4>
+              <p>Com 50 imagens e lazy ativado, menos de 20 são requisitadas antes de rolar, e o CLS da página fica ≤ 0,1. <strong>Desafio:</strong> com lazy ativado, o contador "Carregadas" sobe antes de rolar e o status vira "Concluído" depois de 1 s fixo. O que os números estão contando de verdade?</p>
+            </div>
+            <div class="guide-item is-pitfall">
+              <h4>Armadilhas comuns</h4>
+              <ul><li>Usar lazy na imagem principal (LCP): ela passa a carregar mais tarde. Lazy é para o que está fora da primeira tela.</li><li>Testar com cache cheio: marque "Disable cache" no DevTools.</li><li>Esquecer <code>width</code> e <code>height</code> (ou <code>aspect-ratio</code>) e causar deslocamento de layout.</li></ul>
+            </div>
+            <div class="guide-item is-wide">
+              <h4>Automatize com Playwright</h4>
+              <p class="hint">Conta quantas imagens já receberam o endereço real antes e depois de rolar a página.</p>
+              <pre class="test-code active"><code>import { test, expect } from '@playwright/test';
+
+test('lazy load adia imagens fora da tela', async ({ page }) =&gt; {
+  await page.goto('/pages/tools/nft/load-multiple-images.html');
+  await page.fill('#image-count', '50');
+  await page.locator('#lazy-load').check();
+  await page.click('#load-images');
+
+  // imagens que já pediram o arquivo real (as demais ainda têm o marcador data:)
+  const requisitadas = () =&gt;
+    page.$$eval('#images-container img', (imgs) =&gt;
+      imgs.filter((i) =&gt; (i as HTMLImageElement).src.startsWith('https://')).length
+    );
+
+  const antes = await requisitadas();
+  expect(antes).toBeLessThan(20);
+
+  await page.locator('#images-container img').last().scrollIntoViewIfNeeded();
+  await expect.poll(requisitadas).toBeGreaterThan(antes);
+});</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-card" style="margin-top: var(--spacing-lg);">
+          <h4>Como Testar Este Cenário</h4>
+          <ul>
+            <li><strong>Network Tab:</strong> Use DevTools Network para observar o carregamento de imagens</li>
+            <li><strong>Performance:</strong> Meça o tempo total de carregamento e uso de banda</li>
+            <li><strong>Lazy Loading:</strong> Compare performance com e sem lazy loading</li>
+            <li><strong>Otimização:</strong> Teste diferentes tamanhos de imagem</li>
+            <li><strong>Memória:</strong> Monitore o uso de memória durante o carregamento</li>
+          </ul>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="index.html" class="btn btn-secondary">← Voltar para Cenários</a>
+          <a href="../nft-playground.html" class="btn btn-secondary" style="margin-left: var(--spacing-md);">
+            NFT Playground
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../../js/index.js"></script>
+    <script>
+      let loadedCount = 0;
+      let startTime = null;
+
+      const imageCountInput = document.getElementById('image-count');
+      const imageCountDisplay = document.getElementById('image-count-display');
+      const imageSizeSelect = document.getElementById('image-size');
+      const lazyLoadCheckbox = document.getElementById('lazy-load');
+      const loadBtn = document.getElementById('load-images');
+      const clearBtn = document.getElementById('clear-images');
+      const imagesContainer = document.getElementById('images-container');
+      const metricLoaded = document.getElementById('metric-loaded');
+      const metricTime = document.getElementById('metric-time');
+      const metricRate = document.getElementById('metric-rate');
+      const metricStatus = document.getElementById('metric-status');
+
+      imageCountInput.addEventListener('input', () => {
+        imageCountDisplay.textContent = imageCountInput.value;
+      });
+
+      function getImageSize(size) {
+        const sizes = {
+          small: 150,
+          medium: 300,
+          large: 600
+        };
+        return sizes[size] || 300;
+      }
+
+      function generateImageUrl(index, size) {
+        const pixelSize = getImageSize(size);
+        return `https://picsum.photos/${pixelSize}/${pixelSize}?random=${index}`;
+      }
+
+      loadBtn.addEventListener('click', async () => {
+        const count = Number.parseInt(imageCountInput.value, 10);
+        const size = imageSizeSelect.value;
+        const lazy = lazyLoadCheckbox.checked;
+
+        imagesContainer.innerHTML = '';
+        loadedCount = 0;
+        startTime = performance.now();
+        metricStatus.textContent = 'Carregando...';
+        metricStatus.style.color = 'var(--accent)';
+
+        for (let i = 1; i <= count; i++) {
+          const imageItem = document.createElement('div');
+          imageItem.className = 'image-item loading';
+          
+          const img = document.createElement('img');
+          img.src = lazy ? '' : generateImageUrl(i, size);
+          img.loading = lazy ? 'lazy' : 'eager';
+          img.alt = `Imagem ${i}`;
+          
+          if (lazy) {
+            img.dataset.src = generateImageUrl(i, size);
+            img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="1" height="1"%3E%3C/svg%3E';
+          }
+
+          img.onload = () => {
+            imageItem.classList.remove('loading');
+            imageItem.classList.add('loaded');
+            loadedCount++;
+            metricLoaded.textContent = loadedCount;
+            
+            const elapsed = performance.now() - startTime;
+            metricTime.textContent = elapsed.toFixed(0) + 'ms';
+            metricRate.textContent = (loadedCount / (elapsed / 1000)).toFixed(1) + ' img/s';
+          };
+
+          img.onerror = () => {
+            imageItem.classList.remove('loading');
+            imageItem.classList.add('error');
+            imageItem.innerHTML = '<div class="image-placeholder">Erro ao carregar</div>';
+          };
+
+          imageItem.appendChild(img);
+          imagesContainer.appendChild(imageItem);
+
+          if (lazy && 'IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  const img = entry.target;
+                  img.src = img.dataset.src;
+                  observer.unobserve(img);
+                }
+              });
+            });
+            observer.observe(img);
+          }
+        }
+
+        setTimeout(() => {
+          metricStatus.textContent = 'Concluído';
+          metricStatus.style.color = 'var(--success)';
+        }, 1000);
+      });
+
+      clearBtn.addEventListener('click', () => {
+        imagesContainer.innerHTML = '<p style="color: var(--muted); text-align: center; padding: var(--spacing-xl); grid-column: 1 / -1;">Clique em "Carregar Imagens" para começar o teste de carga.</p>';
+        metricLoaded.textContent = '0';
+        metricTime.textContent = '0ms';
+        metricRate.textContent = '0 img/s';
+        metricStatus.textContent = 'Aguardando';
+        metricStatus.style.color = 'var(--text)';
+        loadedCount = 0;
+      });
+    </script>
+  </body>
+</html>

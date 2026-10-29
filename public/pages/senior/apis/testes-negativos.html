@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Testes Negativos — APIs e Autenticação — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Testes Negativos (QA Mindset)</h2>
+          <div class="section-desc">Exemplos práticos de cenários que devem ser testados: payload inválido, campos ausentes, injeção, valores extremos e mais.</div>
+        </div>
+
+        <div class="info-box">
+          <h3>Payload Inválido</h3>
+          <p>Teste requisições com JSON malformado, estrutura incorreta ou tipos incompatíveis. API deve rejeitar com mensagem clara sem processar dados inválidos.</p>
+          <p><strong>Cenários de teste:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>JSON sintaticamente inválido: <code>{"name": "João",}</code> (vírgula trailing)</li>
+            <li>Tipos incompatíveis: <code>{"age": "30"}</code> quando espera number</li>
+            <li>Estrutura incorreta: <code>{"user": []}</code> quando espera objeto</li>
+            <li>JSON malformado: <code>{"name": "João"</code> (chave não fechada)</li>
+            <li>Caracteres de controle: <code>{"name": "João\n\0"}</code></li>
+            <li>Encoding incorreto: bytes inválidos em UTF-8</li>
+          </ul>
+          <p><strong>Resultado esperado:</strong> 400 Bad Request com mensagem indicando erro de parsing, sem expor stack trace ou detalhes internos.</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Campos Ausentes</h3>
+          <p>Campos obrigatórios não enviados, campos opcionais com null vs ausente.</p>
+          <p><strong>Testes:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Enviar sem campo obrigatório (ex: email ausente)</li>
+            <li>Enviar null em campo obrigatório</li>
+            <li>Enviar string vazia em campo obrigatório</li>
+            <li>Campo opcional ausente vs null (comportamento pode diferir)</li>
+          </ul>
+          <p><strong>Resultado esperado:</strong> 422 Unprocessable Entity com lista de campos ausentes.</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Tipos Errados</h3>
+          <p>String em campo numérico, array em campo string, objeto em campo primitivo.</p>
+          <p><strong>Exemplos:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li><code>{"age": "trinta"}</code> (string em campo number)</li>
+            <li><code>{"tags": "tag1"}</code> (string em campo array)</li>
+            <li><code>{"id": {"value": 123}}</code> (objeto em campo number)</li>
+          </ul>
+          <p><strong>Resultado esperado:</strong> 400 ou 422 com mensagem indicando tipo incorreto.</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Token Expirado</h3>
+          <p>Access token expirado, refresh token expirado, comportamento esperado.</p>
+          <p><strong>Testes:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Usar access token após expiração (401)</li>
+            <li>Refresh token expirado (401, deve exigir novo login)</li>
+            <li>Token sem claim exp (deve rejeitar ou aceitar indefinidamente?)</li>
+          </ul>
+          <p><strong>Resultado esperado:</strong> 401 Unauthorized com mensagem sobre token expirado.</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Permissões Insuficientes</h3>
+          <p>Usuário sem role adequado, recurso de outro usuário, escopo OAuth insuficiente.</p>
+          <p><strong>Testes:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Usuário comum tentando acessar recurso admin (403)</li>
+            <li>Usuário A tentando acessar recurso do usuário B (403)</li>
+            <li>Token OAuth sem escopo necessário (403)</li>
+            <li>API Key sem permissão para endpoint (403)</li>
+          </ul>
+          <p><strong>Resultado esperado:</strong> 403 Forbidden com mensagem clara sobre falta de permissão.</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Injeção de Código e Path Traversal</h3>
+          <p>Teste proteção contra injeção de código malicioso através de parâmetros não sanitizados. Valide que entrada do usuário não é executada como código.</p>
+          <p><strong>Cenários de teste:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li><strong>SQL Injection:</strong> <code>?filter=1' OR '1'='1</code> ou <code>?id=1; DROP TABLE users--</code></li>
+            <li><strong>NoSQL Injection:</strong> <code>{"$where": "this.password == this.username"}</code> ou <code>{"age": {"$gt": ""}}</code></li>
+            <li><strong>XSS (Stored):</strong> <code>{"name": "<script>alert('XSS')</script>"}</code> → Validar sanitização no armazenamento</li>
+            <li><strong>Path Traversal:</strong> <code>/api/files/../../../etc/passwd</code> ou <code>?file=../../config.json</code></li>
+            <li><strong>Command Injection:</strong> <code>{"command": "rm -rf /"}</code> ou <code>?exec=ls; cat /etc/passwd</code></li>
+            <li><strong>LDAP Injection:</strong> <code>?filter=(cn=*)(|(userPassword=*))</code></li>
+          </ul>
+          <p><strong>Resultado esperado:</strong> 400 Bad Request com rejeição clara, ou sanitização adequada que remove/escapa caracteres perigosos. Nunca executar código fornecido pelo cliente.</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Valores Extremos</h3>
+          <p>Strings muito longas, números negativos onde não permitido, arrays vazios, null em campos obrigatórios.</p>
+          <p><strong>Exemplos:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>String de 10.000 caracteres em campo com limite de 100</li>
+            <li>Idade negativa: <code>{"age": -5}</code></li>
+            <li>Array vazio em campo que requer pelo menos 1 item</li>
+            <li>Null em campo obrigatório</li>
+            <li>Número muito grande (overflow)</li>
+          </ul>
+          <p><strong>Resultado esperado:</strong> 422 com mensagem sobre limites ou formato inválido.</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Encoding Incorreto</h3>
+          <p>Caracteres especiais, emojis, encoding UTF-8 vs Latin-1.</p>
+          <p><strong>Testes:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>Caracteres especiais: <code>{"name": "João & Maria"}</code></li>
+            <li>Emojis: <code>{"name": "João 😀"}</code></li>
+            <li>Encoding misto (UTF-8 e Latin-1)</li>
+            <li>Caracteres de controle</li>
+          </ul>
+          <p><strong>Resultado esperado:</strong> Aceitar UTF-8 corretamente ou 400 se encoding inválido.</p>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Headers Ausentes/Incorretos</h3>
+          <p>Content-Type ausente, Accept incorreto, Authorization malformado.</p>
+          <p><strong>Testes:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>POST sem Content-Type (400)</li>
+            <li>Content-Type incorreto (ex: text/plain em endpoint JSON) (400 ou 415)</li>
+            <li>Accept: application/xml em endpoint JSON (406 ou 200 com formato diferente)</li>
+            <li>Authorization malformado (ex: "Bearer" sem token) (401)</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Métodos Não Permitidos</h3>
+          <p>POST em endpoint GET-only, DELETE sem permissão, OPTIONS não implementado.</p>
+          <p><strong>Testes:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li>POST em endpoint que só aceita GET (405)</li>
+            <li>DELETE em recurso sem permissão (405 ou 403)</li>
+            <li>OPTIONS não implementado (405 ou 200 com Allow header)</li>
+            <li>Método customizado não suportado (405)</li>
+          </ul>
+          <p><strong>Resultado esperado:</strong> 405 Method Not Allowed com header Allow listando métodos válidos.</p>
+        </div>
+
+        <!-- Exemplos Práticos de Testes Negativos -->
+        <div class="subsection" style="margin-top: var(--spacing-xl);">
+          <h3>Teste Prático de Cenários Negativos</h3>
+          <p class="muted" style="margin-bottom: var(--spacing-md);">Teste diferentes cenários negativos usando a API mockada.</p>
+          
+          <div class="form-group" style="margin-bottom: var(--spacing-md);">
+            <label for="negative-test-scenario">Cenário de Teste Negativo:</label>
+            <select id="negative-test-scenario" style="padding: var(--spacing-sm); border-radius: var(--border-radius-sm); border: 1px solid var(--border); background: var(--bg); color: var(--text); width: 100%; max-width: 500px;">
+              <option value="missing-fields">Campos Ausentes (POST sem email)</option>
+              <option value="invalid-email">Email Inválido (formato incorreto)</option>
+              <option value="duplicate-email">Email Duplicado (409 Conflict)</option>
+              <option value="invalid-types">Tipos Inválidos (string onde espera number)</option>
+              <option value="empty-payload">Payload Vazio</option>
+              <option value="malformed-json">JSON Malformado</option>
+              <option value="unauthorized">Não Autenticado (401)</option>
+              <option value="forbidden">Sem Permissão (403)</option>
+              <option value="not-found">Recurso Não Encontrado (404)</option>
+              <option value="validation-error">Erro de Validação (422)</option>
+            </select>
+          </div>
+
+          <div class="controls" style="margin-bottom: var(--spacing-md);">
+            <button id="btn-test-negative" class="btn">Testar Cenário Negativo</button>
+            <button id="btn-clear-negative" class="btn btn-secondary">Limpar</button>
+          </div>
+
+          <pre 
+            id="negative-test-result"
+            style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--danger); overflow-x: auto; font-size: var(--font-size-sm); min-height: 150px;"
+          ><span class="muted">Selecione um cenário negativo e clique em "Testar" para ver como a API responde.</span></pre>
+
+          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: color-mix(in srgb, var(--danger) 10%, transparent); border-radius: var(--border-radius-sm);">
+            <p style="margin-bottom: var(--spacing-sm);"><strong>💡 O que validar:</strong></p>
+            <ul style="margin-left: var(--spacing-lg); font-size: var(--font-size-sm);">
+              <li>Status code correto para o tipo de erro</li>
+              <li>Mensagem de erro clara e acionável</li>
+              <li>Estrutura de erro consistente</li>
+              <li>Campos problemáticos identificados</li>
+              <li>Não expõe informações sensíveis ou stack traces</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); justify-content: space-between; flex-wrap: wrap;">
+          <a href="autenticacao.html" class="btn btn-secondary">← Anterior: Autenticação</a>
+          <a href="performance.html" class="btn">Próximo: Performance</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script src="../../../js/api-config.js"></script>
+    <script type="module" src="../../../js/index.js"></script>
+    <script type="module">
+      const API_BASE_URL = window.getApiBaseUrl ? window.getApiBaseUrl() : (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3001/api' : '/api');
+
+      async function testNegativeScenario() {
+        const scenario = document.getElementById('negative-test-scenario').value;
+        const resultEl = document.getElementById('negative-test-result');
+        
+        resultEl.innerHTML = '<span class="muted">Testando...</span>';
+        resultEl.style.color = 'var(--muted)';
+
+        try {
+          let requestConfig = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+          };
+
+          // Preparar payloads baseados no cenário
+          switch (scenario) {
+            case 'missing-fields':
+              requestConfig.body = JSON.stringify({ name: 'Teste' }); // Sem email
+              break;
+            case 'invalid-email':
+              requestConfig.body = JSON.stringify({ name: 'Teste', email: 'email-invalido' });
+              break;
+            case 'duplicate-email':
+              requestConfig.body = JSON.stringify({ name: 'Teste', email: 'admin@example.com', role: 'user' });
+              break;
+            case 'invalid-types':
+              requestConfig.body = JSON.stringify({ name: 12345, email: 'teste@example.com' }); // name deveria ser string
+              break;
+            case 'empty-payload':
+              requestConfig.body = JSON.stringify({});
+              break;
+            case 'malformed-json':
+              // Simular JSON malformado
+              requestConfig.body = '{"name": "Teste",}'; // vírgula trailing
+              break;
+            case 'unauthorized':
+              requestConfig.method = 'GET';
+              requestConfig.body = undefined;
+              // Não adicionar token
+              break;
+            case 'forbidden':
+              requestConfig.method = 'GET';
+              requestConfig.body = undefined;
+              requestConfig.headers['Authorization'] = 'Bearer fake-token-viewer'; // Token de viewer tentando acessar admin
+              break;
+            case 'not-found':
+              requestConfig.method = 'GET';
+              requestConfig.body = undefined;
+              // Usar ID inexistente
+              break;
+            case 'validation-error':
+              requestConfig.body = JSON.stringify({ 
+                name: 'Teste', 
+                email: 'teste@example.com',
+                items: [] // Array vazio para orders
+              });
+              break;
+          }
+
+          let url = '/users';
+          if (scenario === 'not-found') {
+            url = '/users/99999'; // ID inexistente
+          } else if (scenario === 'validation-error') {
+            url = '/orders';
+          }
+
+          const response = await fetch(`${API_BASE_URL}${url}`, requestConfig);
+          let data;
+          
+          try {
+            data = await response.json();
+          } catch (e) {
+            data = { error: 'Resposta não é JSON válido', raw: await response.text() };
+          }
+
+          const result = {
+            scenario: scenario,
+            status: response.status,
+            statusText: response.statusText,
+            request: {
+              method: requestConfig.method,
+              url: url,
+              headers: Object.fromEntries(Object.entries(requestConfig.headers || {})),
+              body: requestConfig.body ? JSON.parse(requestConfig.body) : undefined,
+            },
+            response: data,
+            validation: {
+              statusCodeCorrect: response.status >= 400,
+              hasErrorMessage: !!data.error || !!data.message,
+              errorStructure: !!(data.error && data.message),
+            },
+            timestamp: new Date().toISOString(),
+          };
+
+          resultEl.textContent = JSON.stringify(result, null, 2);
+          resultEl.style.color = response.status >= 400 ? 'var(--danger)' : 'var(--warning)';
+
+        } catch (error) {
+          resultEl.textContent = JSON.stringify({
+            error: 'Erro de conexão',
+            message: error.message,
+            hint: 'Verifique se a API está rodando: npm run dev:api',
+          }, null, 2);
+          resultEl.style.color = 'var(--danger)';
+        }
+      }
+
+      document.getElementById('btn-test-negative').addEventListener('click', testNegativeScenario);
+      document.getElementById('btn-clear-negative').addEventListener('click', () => {
+        document.getElementById('negative-test-result').innerHTML = '<span class="muted">Selecione um cenário negativo e clique em "Testar" para ver como a API responde.</span>';
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+// ========================================
+// Button - Componente de Botão
+// ----------------------------------------
+// .btn            primário (cor da marca)
+// .btn-primary    primário com mais peso visual (CTA)
+// .btn-secondary  contorno
+// Altura mínima de 44px (alvo de toque, WCAG 2.5.8).
+// ========================================
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 20px;
+  background: var(--accent);
+  color: var(--on-accent);
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-family);
+  font-weight: $font-weight-semibold;
+  font-size: var(--font-size-base);
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  @include transition(background, border-color, color, box-shadow, transform);
+
+  @include hover-state {
+    background: var(--accent-strong);
+    color: var(--on-accent);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  &:disabled,
+  &[disabled],
+  &[aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.btn-primary {
+  box-shadow: 0 6px 18px -8px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border-strong);
+
+  @include hover-state {
+    background: var(--surface-2);
+    color: var(--text);
+    border-color: var(--input-border);
+  }
+}
+
+// Nas páginas de um nível, o botão principal assume a cor do nível
+body[data-level] .btn:not(.btn-secondary) {
+  background: var(--level);
+
+  @include hover-state {
+    background: color-mix(in srgb, var(--level) 82%, var(--text));
+  }
+
+  &:focus-visible {
+    outline-color: var(--level);
+  }
+}
+
+body[data-level] .btn-primary {
+  box-shadow: 0 6px 18px -8px color-mix(in srgb, var(--level) 70%, transparent);
+}

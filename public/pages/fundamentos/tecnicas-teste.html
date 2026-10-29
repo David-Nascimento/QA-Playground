@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Módulo 6: Técnicas de Teste — Fundamentos de Testes</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Módulo 6: Técnicas de Teste</h1>
+          <div class="section-desc">
+            Aprenda técnicas práticas de teste como particionamento de equivalência, análise de valor limite, tabela de decisão, e técnicas de caixa branca para criar casos de teste eficazes e cobrir adequadamente o software.
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>O que são Técnicas de Teste?</h2>
+          
+          <div class="content-card">
+            <h3>Definição</h3>
+            <p>Técnicas de teste são métodos sistemáticos usados para identificar condições de teste, casos de teste e dados de teste. Elas ajudam a garantir que os testes sejam eficientes e efetivos, cobrindo o máximo possível de cenários com um número razoável de casos de teste.</p>
+            <p>Usar técnicas de teste adequadas ajuda a:</p>
+            <ul>
+              <li>Reduzir o número de testes necessários mantendo boa cobertura</li>
+              <li>Identificar casos de teste que realmente importam</li>
+              <li>Encontrar defeitos de forma mais eficiente</li>
+              <li>Garantir que diferentes tipos de erros sejam cobertos</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Técnicas de Caixa Preta (Black Box)</h2>
+          <p>As técnicas de caixa preta não requerem conhecimento do código interno. Elas se baseiam na especificação e no comportamento esperado do software.</p>
+
+          <div class="content-card">
+            <h3>Particionamento de Equivalência</h3>
+            <p>Divide as entradas em grupos (partições) onde se espera que o comportamento seja o mesmo. Testamos um valor de cada partição, assumindo que todos os valores da mesma partição se comportarão de forma similar.</p>
+            
+            <h4>Como Aplicar</h4>
+            <ol>
+              <li>Identifique o campo ou entrada a ser testado</li>
+              <li>Divida as possíveis entradas em partições válidas e inválidas</li>
+              <li>Escolha um valor representativo de cada partição para testar</li>
+            </ol>
+
+            <h4>Exemplo Prático</h4>
+            <p>Para um campo de idade que aceita valores de 18 a 65:</p>
+            <ul>
+              <li><strong>Partição válida:</strong> 18-65 (teste com 30)</li>
+              <li><strong>Partição inválida - abaixo:</strong> Menor que 18 (teste com 17)</li>
+              <li><strong>Partição inválida - acima:</strong> Maior que 65 (teste com 66)</li>
+              <li><strong>Partição inválida - tipo:</strong> Não numérico (teste com "abc")</li>
+            </ul>
+            <p>Em vez de testar todos os valores possíveis (milhares), testamos apenas 4 valores representativos.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Análise de Valor Limite (Boundary Value Analysis)</h3>
+            <p>Foca em testar valores nos limites das partições. Bugs frequentemente ocorrem nos limites porque desenvolvedores podem usar operadores incorretos (como &gt; em vez de &gt;=).</p>
+            
+            <h4>Como Aplicar</h4>
+            <p>Para cada limite, teste:</p>
+            <ul>
+              <li>O valor exatamente no limite</li>
+              <li>Um valor imediatamente abaixo do limite</li>
+              <li>Um valor imediatamente acima do limite</li>
+            </ul>
+
+            <h4>Exemplo Prático</h4>
+            <p>Para um campo que aceita valores de 1 a 100:</p>
+            <ul>
+              <li><strong>Limite inferior:</strong> 0, 1, 2</li>
+              <li><strong>Limite superior:</strong> 99, 100, 101</li>
+            </ul>
+            <p>Isso cobre os pontos onde erros são mais prováveis de ocorrer.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Tabela de Decisão (Decision Table)</h3>
+            <p>Útil quando há múltiplas condições que se combinam de diferentes formas para produzir diferentes resultados. Ajuda a garantir que todas as combinações possíveis sejam consideradas.</p>
+            
+            <h4>Como Aplicar</h4>
+            <ol>
+              <li>Identifique todas as condições relevantes</li>
+              <li>Liste todas as ações possíveis</li>
+              <li>Crie uma tabela com todas as combinações de condições</li>
+              <li>Identifique qual ação deve ocorrer para cada combinação</li>
+              <li>Crie casos de teste para cada linha da tabela</li>
+            </ol>
+
+            <h4>Exemplo Prático</h4>
+            <p>Regra de negócio: Desconto aplicado baseado em tipo de cliente e valor da compra:</p>
+            <table style="width: 100%; border-collapse: collapse; margin: var(--spacing-md) 0;">
+              <thead>
+                <tr style="background: color-mix(in srgb, var(--text) 5%, transparent);">
+                  <th style="padding: var(--spacing-sm); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Cliente VIP</th>
+                  <th style="padding: var(--spacing-sm); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Valor &gt; 1000</th>
+                  <th style="padding: var(--spacing-sm); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Desconto</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: var(--spacing-sm); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Sim</td>
+                  <td style="padding: var(--spacing-sm); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Sim</td>
+                  <td style="padding: var(--spacing-sm); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">20%</td>
+                </tr>
+                <tr>
+                  <td style="padding: var(--spacing-sm); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Sim</td>
+                  <td style="padding: var(--spacing-sm); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Não</td>
+                  <td style="padding: var(--spacing-sm); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">10%</td>
+                </tr>
+                <tr>
+                  <td style="padding: var(--spacing-sm); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Não</td>
+                  <td style="padding: var(--spacing-sm); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Sim</td>
+                  <td style="padding: var(--spacing-sm); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">5%</td>
+                </tr>
+                <tr>
+                  <td style="padding: var(--spacing-sm); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Não</td>
+                  <td style="padding: var(--spacing-sm); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Não</td>
+                  <td style="padding: var(--spacing-sm); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">0%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="content-card">
+            <h3>Casos de Uso (Use Cases)</h3>
+            <p>Testa fluxos de usuário completos do início ao fim. Foca em como o usuário interage com o sistema para atingir um objetivo específico.</p>
+            
+            <h4>Como Aplicar</h4>
+            <ol>
+              <li>Identifique os principais fluxos de usuário</li>
+              <li>Documente os passos do usuário</li>
+              <li>Teste o fluxo completo</li>
+              <li>Teste variações e caminhos alternativos</li>
+            </ol>
+
+            <h4>Exemplo Prático</h4>
+            <p>Caso de uso: Usuário faz login e atualiza perfil:</p>
+            <ol>
+              <li>Acessar página de login</li>
+              <li>Inserir credenciais válidas</li>
+              <li>Ser redirecionado para dashboard</li>
+              <li>Navegar para página de perfil</li>
+              <li>Atualizar informações do perfil</li>
+              <li>Salvar alterações</li>
+              <li>Verificar se alterações foram salvas</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Técnicas de Caixa Branca (White Box)</h2>
+          <p>As técnicas de caixa branca requerem conhecimento do código interno. Elas focam em testar a estrutura e lógica do código.</p>
+
+          <div class="content-card">
+            <h3>Cobertura de Declarações (Statement Coverage)</h3>
+            <p>Garante que cada linha de código seja executada pelo menos uma vez. É a forma mais básica de cobertura.</p>
+            
+            <h4>Exemplo</h4>
+            <p>Para garantir 100% de cobertura de declarações, todos os caminhos do código devem ser executados pelo menos uma vez.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Cobertura de Decisões (Decision Coverage)</h3>
+            <p>Garante que cada decisão (if, switch, while, etc.) seja testada com valores que resultem em true e false.</p>
+            
+            <h4>Exemplo</h4>
+            <p>Para um if/else, você precisa de pelo menos dois testes: um onde a condição é verdadeira e outro onde é falsa.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Cobertura de Condições (Condition Coverage)</h3>
+            <p>Garante que cada condição individual em expressões booleanas seja testada com valores true e false.</p>
+            
+            <h4>Exemplo</h4>
+            <p>Para a expressão "if (A && B)", você precisa testar:
+            <ul>
+              <li>A = true, B = true</li>
+              <li>A = true, B = false</li>
+              <li>A = false, B = true</li>
+              <li>A = false, B = false</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Quando Usar Cada Técnica</h2>
+
+          <div class="content-card">
+            <h3>Particionamento de Equivalência</h3>
+            <p>Use quando há muitos valores possíveis para uma entrada e você quer reduzir o número de testes mantendo boa cobertura.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Análise de Valor Limite</h3>
+            <p>Use quando há limites numéricos ou limites de validade. Combine com particionamento de equivalência para melhor resultado.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Tabela de Decisão</h3>
+            <p>Use quando há múltiplas condições que se combinam de forma complexa. Ajuda a garantir que não esquecemos nenhuma combinação.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Casos de Uso</h3>
+            <p>Use para testar fluxos de usuário completos e garantir que o sistema funciona do ponto de vista do usuário final.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>Técnicas de Caixa Branca</h3>
+            <p>Use quando você tem acesso ao código e quer garantir cobertura específica. Geralmente usado mais por desenvolvedores, mas QAs também podem usar para validar.</p>
+          </div>
+        </div>
+
+        <!-- Navegação entre módulos -->
+        <div class="module-navigation">
+          <a href="como-estudar-praticar.html" class="module-nav-link module-nav-link--prev">← Anterior: Como Estudar e Praticar</a>
+          <a href="o-que-como-testar.html" class="module-nav-link module-nav-link--next">Próximo: O Que Testar e Como Testar →</a>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

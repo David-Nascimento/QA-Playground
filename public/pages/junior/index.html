@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Roadmap QA Júnior — QA Playground</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Roadmap: QA Júnior</h1>
+          <div class="section-desc">
+            Guia de orientação para quem está iniciando na área de QA ou buscando consolidar conhecimentos fundamentais. Este roadmap indica o caminho correto para desenvolver habilidades essenciais de um testador júnior, com foco em prática e aprendizado estruturado.
+          </div>
+        </div>
+
+        <!-- Introdução -->
+        <div class="content-section">
+          <h2>O que é Esperado de um QA Júnior</h2>
+          <p>Um QA Júnior deve ser capaz de executar testes manuais seguindo casos de teste pré-definidos, identificar e reportar bugs de forma clara, e trabalhar sob supervisão para garantir qualidade do software. O foco inicial está em aprender os fundamentos e desenvolver senso crítico para encontrar problemas.</p>
+          
+          <div class="content-card" style="background: color-mix(in srgb, var(--level) 10%, transparent); border-left-color: var(--level);">
+            <h3>Habilidades Essenciais</h3>
+            <ul>
+              <li>Executar casos de teste manual seguindo scripts</li>
+              <li>Reportar bugs de forma clara e profissional</li>
+              <li>Entender requisitos básicos e identificar ambiguidades</li>
+              <li>Testar funcionalidades web básicas (formulários, validações, navegação)</li>
+              <li>Usar ferramentas básicas de gerenciamento de testes (Jira, TestRail)</li>
+              <li>Comunicar efetivamente com equipe</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Roadmap de Aprendizado -->
+        <div class="content-section">
+          <h2>Roadmap de Aprendizado e Prática</h2>
+          <p>Siga esta sequência de aprendizados e práticas para desenvolver as habilidades necessárias. Cada área inclui indicações do que estudar e onde praticar.</p>
+        </div>
+
+        <!-- Áreas de Estudo -->
+        <div class="fundamentos-modules">
+          
+          <!-- 1. Fundamentos -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">1</span>
+              <h3>Fundamentos de Testes</h3>
+            </div>
+            <p class="module-description">Antes de tudo, entenda os conceitos básicos que fundamentam a prática de testes de software. Sem essa base, será difícil evoluir.</p>
+            <ul class="module-topics">
+              <li>Conceitos básicos (bug, defeito, falha, erro)</li>
+              <li>Objetivos e princípios de teste</li>
+              <li>Ciclo de vida do teste</li>
+              <li>Níveis e tipos de teste</li>
+              <li>Pirâmide de testes</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Crítica</span>
+              <span class="module-time">Tempo estimado: 2-3 semanas</span>
+            </div>
+            <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-top: var(--spacing-md);">
+              <a href="../fundamentos/index.html" class="btn btn-primary">Estudar Fundamentos</a>
+            </div>
+            <div style="margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <strong>Dica:</strong> Complete todos os módulos de Fundamentos antes de avançar para prática técnica.
+            </div>
+          </div>
+
+          <!-- 2. Testes Manuais -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">2</span>
+              <h3>Testes Manuais de Formulários</h3>
+            </div>
+            <p class="module-description">Formulários são uma das partes mais comuns de qualquer aplicação web. Aprenda a testá-los sistematicamente e identificar problemas de validação.</p>
+            <ul class="module-topics">
+              <li>Testar campos de texto e validações</li>
+              <li>Identificar mensagens de erro claras</li>
+              <li>Testar fluxos de login e cadastro</li>
+              <li>Validar regras de negócio em formulários</li>
+              <li>Testar diferentes tipos de inputs (email, senha, data)</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Alta</span>
+              <span class="module-time">Tempo estimado: 1-2 semanas</span>
+            </div>
+            <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-top: var(--spacing-md);">
+              <a href="formularios/index.html" class="btn btn-primary">Praticar Formulários</a>
+            </div>
+            <div style="margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <strong>Dica:</strong> Crie casos de teste para cada formulário antes de executar os testes. Pratique testar cenários positivos e negativos.
+            </div>
+          </div>
+
+          <!-- 3. Interações Básicas -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">3</span>
+              <h3>Interações Básicas de UI</h3>
+            </div>
+            <p class="module-description">Aprenda a testar elementos interativos comuns em interfaces web: botões, links, checkboxes, radio buttons e dropdowns.</p>
+            <ul class="module-topics">
+              <li>Testar botões e ações de clique</li>
+              <li>Validar estados de checkboxes e radio buttons</li>
+              <li>Testar dropdowns e seleções</li>
+              <li>Verificar feedback visual de interações</li>
+              <li>Identificar problemas de acessibilidade básicos</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Alta</span>
+              <span class="module-time">Tempo estimado: 1 semana</span>
+            </div>
+            <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-top: var(--spacing-md);">
+              <a href="interacoes/index.html" class="btn btn-primary">Praticar Interações</a>
+            </div>
+            <div style="margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <strong>Dica:</strong> Teste tanto com mouse quanto com teclado (Tab, Enter, Space). Isso ajuda a identificar problemas de acessibilidade.
+            </div>
+          </div>
+
+          <!-- 4. Tabelas e Dados -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">4</span>
+              <h3>Tabelas e Exibição de Dados</h3>
+            </div>
+            <p class="module-description">Aprenda a validar exibição de dados em tabelas, identificar problemas de formatação e verificar integridade de informações.</p>
+            <ul class="module-topics">
+              <li>Validar conteúdo de tabelas dinâmicas</li>
+              <li>Verificar formatação de dados (moeda, datas, números)</li>
+              <li>Testar paginação e navegação entre páginas</li>
+              <li>Identificar dados inconsistentes ou incorretos</li>
+              <li>Validar ordenação de colunas</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Média</span>
+              <span class="module-time">Tempo estimado: 1 semana</span>
+            </div>
+            <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-top: var(--spacing-md);">
+              <a href="tabelas/index.html" class="btn btn-primary">Praticar Tabelas</a>
+            </div>
+            <div style="margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <strong>Dica:</strong> Sempre verifique se os dados exibidos fazem sentido no contexto do negócio. Validações técnicas são importantes, mas validação de negócio também.
+            </div>
+          </div>
+
+          <!-- 5. Reportar Bugs -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">5</span>
+              <h3>Reportar Bugs Profissionalmente</h3>
+            </div>
+            <p class="module-description">Aprenda a documentar bugs de forma clara e profissional. Um bom bug report facilita muito a correção pelos desenvolvedores.</p>
+            <ul class="module-topics">
+              <li>Estrutura de um bom bug report</li>
+              <li>Como escrever passos para reproduzir</li>
+              <li>Capturar evidências (screenshots, logs)</li>
+              <li>Classificar prioridade e severidade</li>
+              <li>Comunicar de forma profissional e objetiva</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Alta</span>
+              <span class="module-time">Tempo estimado: 1 semana</span>
+            </div>
+            <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-top: var(--spacing-md);">
+              <a href="../fundamentos/encontrar-reportar-bugs.html" class="btn btn-primary">Ver Guia Completo</a>
+            </div>
+            <div style="margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <strong>Dica:</strong> Pratique escrevendo bug reports mesmo para bugs pequenos. A prática constante melhora sua habilidade de comunicação técnica.
+            </div>
+          </div>
+
+          <!-- 6. Ferramentas Básicas -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">6</span>
+              <h3>Ferramentas Essenciais</h3>
+            </div>
+            <p class="module-description">Familiarize-se com ferramentas básicas que todo QA júnior precisa conhecer para trabalhar efetivamente.</p>
+            <ul class="module-topics">
+              <li>Jira ou similar para gestão de bugs e tarefas</li>
+              <li>DevTools do navegador (inspecionar elementos, console)</li>
+              <li>Ferramentas de captura (screenshots, gravação de tela)</li>
+              <li>TestRail ou similar para gerenciar casos de teste</li>
+              <li>Navegadores e suas diferenças</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Média</span>
+              <span class="module-time">Tempo estimado: 2 semanas</span>
+            </div>
+            <div style="margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <strong>Dica:</strong> Aprenda DevTools cedo. Saber inspecionar elementos e ver erros no console te ajuda muito a encontrar e reportar bugs.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Próximos Passos -->
+        <div class="content-section">
+          <h2>Quando Está Pronto para Avançar</h2>
+          <p>Você pode considerar avançar para o nível Pleno quando:</p>
+          <ul>
+            <li>Consegue criar e executar casos de teste de forma independente</li>
+            <li>Reporta bugs de forma clara e profissional consistentemente</li>
+            <li>Entende e aplica técnicas de teste básicas (particionamento, valores limites)</li>
+            <li>Consegue trabalhar com menos supervisão direta</li>
+            <li>Começa a identificar melhorias em processos e casos de teste</li>
+          </ul>
+          <p style="margin-top: var(--spacing-md);">
+            <a href="../pleno/index.html" class="btn btn-secondary">Ver Roadmap: Nível Pleno →</a>
+          </p>
+        </div>
+
+        <!-- Recursos Adicionais -->
+        <div class="content-section">
+          <h2>Recursos Adicionais</h2>
+          <div class="content-card">
+            <h3>Áreas de Prática no QA Playground</h3>
+            <ul class="link-list">
+              <li><a href="formularios/index.html">Formulários — Praticar validações e inputs</a></li>
+              <li><a href="interacoes/index.html">Interações — Praticar elementos interativos</a></li>
+              <li><a href="tabelas/index.html">Tabelas — Praticar validação de dados</a></li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h3>Guias de Estudo</h3>
+            <ul class="link-list">
+              <li><a href="../fundamentos/index.html">Fundamentos de Testes — Referência completa</a></li>
+              <li><a href="../desafio/junior.html">Desafios Júnior — Teste suas habilidades</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

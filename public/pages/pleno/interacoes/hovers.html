@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hovers — QA Playground</title>
+  <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- @include header -->
+
+  <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Hovers</h2>
+          <div class="section-desc">Pratique testes de interações com hover (passar o mouse). Esta página é ideal para testar automação de eventos de mouse, validação de elementos que aparecem ao passar o mouse e menus dropdown que dependem de hover.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar eventos de hover (mouseenter/mouseleave)</li>
+                <li>Validar elementos que aparecem ao passar o mouse</li>
+                <li>Praticar automação de hover em diferentes frameworks</li>
+                <li>Testar menus dropdown que dependem de hover</li>
+                <li>Validar tooltips e informações que aparecem no hover</li>
+                <li>Testar múltiplos elementos com hover na mesma página</li>
+                <li>Validar feedback visual de hover (mudança de cor, tamanho, etc.)</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Como Utilizar:</strong></p>
+              <ol style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Passe o mouse sobre os elementos abaixo</li>
+                <li>Observe as informações que aparecem ao fazer hover</li>
+                <li>Valide que os elementos mudam de aparência ao passar o mouse</li>
+                <li>Teste com diferentes elementos na página</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Elementos com Hover</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Passe o mouse sobre os elementos para ver os efeitos de hover.</p>
+            
+            <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap; margin-bottom: var(--spacing-md);">
+              <div class="hover-box" data-testid="hover-box-1">
+                <span>Passe o mouse aqui</span>
+                <div class="hover-info" data-testid="hover-info-1">Informação ao passar o mouse!</div>
+              </div>
+
+              <div class="hover-box" data-testid="hover-box-2">
+                <span>Hover Box 2</span>
+                <div class="hover-info" data-testid="hover-info-2">Segunda caixa de hover</div>
+              </div>
+
+              <div class="hover-box" data-testid="hover-box-3">
+                <span>Hover Box 3</span>
+                <div class="hover-info" data-testid="hover-info-3">Terceira caixa de hover</div>
+              </div>
+            </div>
+
+            <div class="hover-button" data-testid="hover-button">
+              <span>Botão com Hover</span>
+              <div class="hover-tooltip" data-testid="hover-tooltip">Tooltip do botão</div>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Fazer hover sobre elementos e validar informações que aparecem</li>
+                <li>Validar que elementos mudam de aparência ao passar o mouse</li>
+                <li>Testar hover em múltiplos elementos</li>
+                <li>Validar que informações desaparecem ao remover o mouse</li>
+                <li>Testar hover em diferentes resoluções de tela</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="hover-box-1"</code> - Primeira caixa de hover</li>
+                <li><code>data-testid="hover-box-2"</code> - Segunda caixa de hover</li>
+                <li><code>data-testid="hover-box-3"</code> - Terceira caixa de hover</li>
+                <li><code>data-testid="hover-info-1"</code> - Informação da primeira caixa</li>
+                <li><code>data-testid="hover-button"</code> - Botão com hover</li>
+                <li><code>data-testid="hover-tooltip"</code> - Tooltip do botão</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Testar hover
+cy.get('[data-testid="hover-box-1"]').trigger('mouseover')
+cy.get('[data-testid="hover-info-1"]').should('be.visible')
+cy.get('[data-testid="hover-info-1"]').should('contain', 'Informação ao passar o mouse')
+cy.get('[data-testid="hover-box-1"]').trigger('mouseout')
+cy.get('[data-testid="hover-info-1"]').should('not.be.visible')
+
+// Testar botão com hover
+cy.get('[data-testid="hover-button"]').trigger('mouseover')
+cy.get('[data-testid="hover-tooltip"]').should('be.visible')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Testar hover
+await page.getByTestId('hover-box-1').hover()
+await expect(page.getByTestId('hover-info-1')).toBeVisible()
+await expect(page.getByTestId('hover-info-1')).toContainText('Informação ao passar o mouse')
+await page.getByTestId('hover-box-1').hover({ force: false })
+await page.mouse.move(0, 0)
+await expect(page.getByTestId('hover-info-1')).toBeHidden()
+
+// Testar botão com hover
+await page.getByTestId('hover-button').hover()
+await expect(page.getByTestId('hover-tooltip')).toBeVisible()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium Java - Testar hover
+WebElement hoverBox = driver.findElement(By.cssSelector("[data-testid='hover-box-1']"));
+Actions actions = new Actions(driver);
+actions.moveToElement(hoverBox).perform();
+WebElement hoverInfo = driver.findElement(By.cssSelector("[data-testid='hover-info-1']"));
+assert hoverInfo.isDisplayed();
+assert hoverInfo.getText().contains("Informação ao passar o mouse");
+
+// Testar botão com hover
+WebElement hoverButton = driver.findElement(By.cssSelector("[data-testid='hover-button']"));
+actions.moveToElement(hoverButton).perform();
+WebElement tooltip = driver.findElement(By.cssSelector("[data-testid='hover-tooltip']"));
+assert tooltip.isDisplayed();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Testar hover
+find('[data-testid="hover-box-1"]').hover
+expect(find('[data-testid="hover-info-1"]')).to be_visible
+expect(find('[data-testid="hover-info-1"]')).to have_content('Informação ao passar o mouse')
+
+# Testar botão com hover
+find('[data-testid="hover-button"]').hover
+expect(find('[data-testid="hover-tooltip"]')).to be_visible
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Testar hover em elemento
+    Mouse Over    css:[data-testid="hover-box-1"]
+    Element Should Be Visible    css:[data-testid="hover-info-1"]
+    Element Should Contain    css:[data-testid="hover-info-1"]    Informação ao passar o mouse
+
+Testar hover em botão
+    Mouse Over    css:[data-testid="hover-button"]
+    Element Should Be Visible    css:[data-testid="hover-tooltip"]
+                </code></pre>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+    </div>
+      </section>
+  </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../../js/index.js"></script>
+    <script>
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+    <style>
+      .hover-box {
+        width: 150px;
+        height: 150px;
+        background: var(--surface);
+        border: 2px solid var(--border);
+        border-radius: var(--border-radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .hover-box:hover {
+        background: var(--level);
+        color: var(--on-accent);
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px color-mix(in srgb, var(--text) 15%, transparent);
+      }
+
+      .hover-info {
+        display: none;
+        position: absolute;
+        bottom: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--text);
+        color: var(--on-accent);
+        padding: var(--spacing-sm) var(--spacing-md);
+        border-radius: var(--border-radius-sm);
+        font-size: var(--font-size-sm);
+        white-space: nowrap;
+        z-index: 10;
+      }
+
+      .hover-box:hover .hover-info {
+        display: block;
+      }
+
+      .hover-button {
+        display: inline-block;
+        padding: var(--spacing-md) var(--spacing-lg);
+        background: var(--level);
+        color: var(--on-accent);
+        border-radius: var(--border-radius-md);
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .hover-button:hover {
+        background: var(--accent-dark, #0056b3);
+        transform: scale(1.05);
+      }
+
+      .hover-tooltip {
+        display: none;
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--text);
+        color: var(--on-accent);
+        padding: var(--spacing-sm) var(--spacing-md);
+        border-radius: var(--border-radius-sm);
+        font-size: var(--font-size-sm);
+        white-space: nowrap;
+        z-index: 10;
+      }
+
+      .hover-button:hover .hover-tooltip {
+        display: block;
+      }
+    </style>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Verificador de Senha Segura — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Verificador de Senha Segura</h2>
+          <div class="section-desc">Teste a força de senhas e dicas de segurança. Esta página permite testar a validação de senhas, verificação de critérios de segurança e feedback em tempo real sobre a força da senha.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Verificar Força da Senha</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Digite uma senha no campo abaixo para verificar sua força. A senha será avaliada em tempo real.
+            </p>
+
+            <div class="form-group">
+              <label for="senha-verificar">Senha</label>
+              <input 
+                type="password" 
+                id="senha-verificar" 
+                data-testid="input-senha-verificar"
+                placeholder="Digite sua senha..."
+              />
+              <div id="senha-strength" data-testid="senha-strength" style="margin-top: var(--spacing-sm); height: 4px; background: var(--bg); border-radius: 2px; overflow: hidden;">
+                <div id="strength-bar" style="height: 100%; width: 0%; transition: all 0.3s; background: var(--danger);"></div>
+              </div>
+            </div>
+
+            <div id="senha-criterios" data-testid="senha-criterios" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md);">
+              <p style="margin: 0 0 var(--spacing-sm) 0; font-weight: 600;">Critérios de Segurança:</p>
+              <ul id="criterios-list" style="margin: 0; padding-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li id="criterio-length" data-testid="criterio-length">Pelo menos 8 caracteres</li>
+                <li id="criterio-uppercase" data-testid="criterio-uppercase">Uma letra maiúscula</li>
+                <li id="criterio-number" data-testid="criterio-number">Um número</li>
+                <li id="criterio-special" data-testid="criterio-special">Um caractere especial (!@#$%^&*)</li>
+              </ul>
+            </div>
+
+            <div id="senha-result" data-testid="senha-result" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 60px;">
+              <p class="muted" style="margin: 0;">Digite uma senha para verificar.</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar senha fraca (não atende critérios)</li>
+                <li>Testar senha média (atende alguns critérios)</li>
+                <li>Testar senha forte (atende todos os critérios)</li>
+                <li>Validar feedback em tempo real</li>
+                <li>Testar validação de cada critério individualmente</li>
+                <li>Validar barra de força da senha</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Testar senha fraca
+cy.get('[data-testid="input-senha-verificar"]').type('senha')
+cy.get('[data-testid="senha-result"]').should('contain', 'fraca')
+cy.get('[data-testid="criterio-length"]').should('have.class', 'incomplete')
+
+// Testar senha forte
+cy.get('[data-testid="input-senha-verificar"]').clear().type('Senha123!')
+cy.get('[data-testid="senha-result"]').should('contain', 'forte')
+cy.get('[data-testid="criterio-length"]').should('have.class', 'complete')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Validar senha
+await page.getByTestId('input-senha-verificar').fill('Senha123!')
+await expect(page.getByTestId('senha-result')).toContainText('forte')
+await expect(page.getByTestId('criterio-length')).toHaveClass(/complete/)
+
+// Testar senha fraca
+await page.getByTestId('input-senha-verificar').fill('senha')
+await expect(page.getByTestId('senha-result')).toContainText('fraca')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Validar senha forte
+driver.findElement(By.cssSelector("[data-testid='input-senha-verificar']")).sendKeys("Senha123!");
+WebElement result = driver.findElement(By.cssSelector("[data-testid='senha-result']"));
+assert result.getText().contains("forte");
+WebElement criterio = driver.findElement(By.cssSelector("[data-testid='criterio-length']"));
+assert criterio.getAttribute("class").contains("complete");
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Validar senha
+fill_in '[data-testid="input-senha-verificar"]', with: 'Senha123!'
+expect(page).to have_content('forte', within: '[data-testid="senha-result"]')
+expect(page).to have_css('[data-testid="criterio-length"].criterio-complete')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Validar senha forte
+    Input Text    css:[data-testid="input-senha-verificar"]    Senha123!
+    Element Should Contain    css:[data-testid="senha-result"]    forte
+    Element Should Contain    css:[data-testid="criterio-length"]    complete
+                </code></pre>
+              
+              </div>
+
+// Robot Framework - Validar senha
+Input Text    [data-testid="input-senha-verificar"]    Senha123!
+Element Should Contain    [data-testid="senha-result"]    forte
+Element Should Contain    [data-testid="criterio-length"]    ✅</code></pre>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="input-senha-verificar"</code> - Campo de senha</li>
+                <li><code>data-testid="senha-strength"</code> - Barra de força</li>
+                <li><code>data-testid="senha-criterios"</code> - Container de critérios</li>
+                <li><code>data-testid="criterio-length"</code> - Critério de tamanho</li>
+                <li><code>data-testid="criterio-uppercase"</code> - Critério maiúscula</li>
+                <li><code>data-testid="criterio-number"</code> - Critério número</li>
+                <li><code>data-testid="criterio-special"</code> - Critério especial</li>
+                <li><code>data-testid="senha-result"</code> - Resultado da verificação</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../../js/index.js"></script>
+    <style>
+      .criterio-complete {
+        color: var(--level) !important;
+      }
+      .criterio-complete::before {
+        content: '✅ ';
+      }
+      .criterio-incomplete {
+        color: var(--muted) !important;
+      }
+      .criterio-incomplete::before {
+        content: '❌ ';
+      }
+    </style>
+    <script>
+      const senhaInput = document.getElementById('senha-verificar');
+      const strengthBar = document.getElementById('strength-bar');
+      const resultEl = document.getElementById('senha-result');
+      const criterios = {
+        length: document.getElementById('criterio-length'),
+        uppercase: document.getElementById('criterio-uppercase'),
+        number: document.getElementById('criterio-number'),
+        special: document.getElementById('criterio-special')
+      };
+
+      function verificarSenha() {
+        const senha = senhaInput.value;
+        let score = 0;
+        let msg = '';
+
+        // Verificar critérios
+        const hasLength = senha.length >= 8;
+        const hasUppercase = /[A-Z]/.test(senha);
+        const hasNumber = /[0-9]/.test(senha);
+        const hasSpecial = /[!@#$%^&*]/.test(senha);
+
+        // Atualizar critérios
+        criterios.length.className = hasLength ? 'criterio-complete' : 'criterio-incomplete';
+        criterios.uppercase.className = hasUppercase ? 'criterio-complete' : 'criterio-incomplete';
+        criterios.number.className = hasNumber ? 'criterio-complete' : 'criterio-incomplete';
+        criterios.special.className = hasSpecial ? 'criterio-complete' : 'criterio-incomplete';
+
+        // Calcular score
+        if (hasLength) score++;
+        if (hasUppercase) score++;
+        if (hasNumber) score++;
+        if (hasSpecial) score++;
+
+        // Atualizar barra de força
+        const percent = (score / 4) * 100;
+        strengthBar.style.width = percent + '%';
+        
+        if (score === 0) {
+          strengthBar.style.background = 'var(--danger)';
+          msg = 'Senha muito fraca!';
+        } else if (score === 1) {
+          strengthBar.style.background = 'var(--danger)';
+          msg = 'Senha fraca';
+        } else if (score === 2) {
+          strengthBar.style.background = 'var(--accent-2)';
+          msg = 'Senha média';
+        } else if (score === 3) {
+          strengthBar.style.background = 'var(--accent)';
+          msg = 'Senha boa';
+        } else {
+          strengthBar.style.background = 'var(--accent)';
+          msg = 'Senha forte!';
+        }
+
+        // Atualizar resultado
+        if (senha.length === 0) {
+          resultEl.innerHTML = '<p class="muted" style="margin: 0;">Digite uma senha para verificar.</p>';
+          strengthBar.style.width = '0%';
+        } else {
+          resultEl.innerHTML = `
+            <p style="margin: 0;"><strong>${msg}</strong></p>
+            <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Score: ${score}/4 critérios atendidos</p>
+          `;
+          resultEl.style.borderLeftColor = score >= 3 ? 'var(--accent)' : score === 2 ? 'var(--accent-2)' : 'var(--danger)';
+        }
+      }
+
+      senhaInput.addEventListener('input', verificarSenha);
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
+</html>

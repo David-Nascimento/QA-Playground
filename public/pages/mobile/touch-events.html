@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Touch Events — Mobile — QA Playground</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Touch Events</h2>
+          <div class="section-desc">Pratique testes de gestos, toques, swipe e interações touch em dispositivos móveis. Esta página é ideal para testar automação de eventos touch, gestos e interações específicas de mobile.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div class="info-box">
+              <p><strong>Atividades do Dia a Dia:</strong></p>
+              <ul>
+                <li>Testar eventos de toque (tap, touchstart, touchend)</li>
+                <li>Validar gestos de swipe (deslizar)</li>
+                <li>Testar pinch e zoom em imagens</li>
+                <li>Validar long press (toque longo)</li>
+                <li>Testar double tap (toque duplo)</li>
+                <li>Validar área de toque e tamanhos de botões</li>
+                <li>Testar scroll e drag em mobile</li>
+              </ul>
+              
+              <p><strong>Como Utilizar:</strong></p>
+              <ol>
+                <li>Use um dispositivo móvel ou simule touch no navegador</li>
+                <li>Toque nos elementos abaixo para testar eventos</li>
+                <li>Deslize (swipe) nos elementos indicados</li>
+                <li>Observe os eventos registrados na área de log</li>
+                <li>Teste gestos como pinch, zoom e long press</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Área de Toque</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Toque na área abaixo para testar eventos touch.</p>
+            
+            <div 
+              id="touch-area" 
+              data-testid="touch-area"
+              style="background: var(--surface); border: 2px dashed var(--level); border-radius: var(--border-radius-md); padding: var(--spacing-xl); min-height: 200px; text-align: center; display: flex; align-items: center; justify-content: center; cursor: pointer; user-select: none;"
+            >
+              <div>
+                <strong>Toque aqui</strong>
+                <p style="color: var(--muted); font-size: var(--font-size-sm); margin-top: var(--spacing-sm);">Toque, deslize ou faça gestos nesta área</p>
+              </div>
+            </div>
+            
+            <div id="touch-log" data-testid="touch-log" style="background: color-mix(in srgb, var(--text) 3%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-top: var(--spacing-md); max-height: 200px; overflow-y: auto; font-family: monospace; font-size: var(--font-size-sm);">
+              <strong>Eventos Touch:</strong>
+              <div id="touch-events" style="margin-top: var(--spacing-sm);"></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Botões Touch</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Botões otimizados para toque em dispositivos móveis.</p>
+            
+            <div class="controls" style="display: flex; gap: var(--spacing-md); flex-wrap: wrap;">
+              <button id="btn-tap" class="btn" data-testid="btn-tap" style="min-width: 120px; min-height: 44px;">Tap</button>
+              <button id="btn-long-press" class="btn btn-secondary" data-testid="btn-long-press" style="min-width: 120px; min-height: 44px;">Long Press</button>
+              <button id="btn-double-tap" class="btn btn-secondary" data-testid="btn-double-tap" style="min-width: 120px; min-height: 44px;">Double Tap</button>
+            </div>
+            
+            <div id="button-result" data-testid="button-result" class="hint" style="margin-top: var(--spacing-sm);"></div>
+          </div>
+
+          <div class="subsection">
+            <h3>Swipe (Deslizar)</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Deslize horizontalmente na área abaixo.</p>
+            
+            <div 
+              id="swipe-area" 
+              data-testid="swipe-area"
+              style="background: var(--surface); border: 2px solid var(--level); border-radius: var(--border-radius-md); padding: var(--spacing-lg); min-height: 150px; position: relative; overflow: hidden; touch-action: pan-x;"
+            >
+              <div id="swipe-content" data-testid="swipe-content" style="text-align: center; padding: var(--spacing-lg); transition: transform 0.3s ease;">
+                <strong>Deslize para a esquerda ou direita</strong>
+                <p style="color: var(--muted); font-size: var(--font-size-sm); margin-top: var(--spacing-sm);">Swipe left ou right</p>
+              </div>
+            </div>
+            
+            <div id="swipe-direction" data-testid="swipe-direction" class="hint" style="margin-top: var(--spacing-sm);"></div>
+          </div>
+
+          <!-- Laboratório de gestos (src/client/features/mobile/gesture-lab.ts) -->
+          <div class="subsection" id="gesture-lab" data-testid="gesture-lab">
+            <h3>Laboratório de gestos</h3>
+            <p class="section-lead">A área acima usa <code>touchstart</code>/<code>touchend</code> e só responde ao dedo. Esta usa <strong>Pointer Events</strong>, o padrão atual: o mesmo código atende dedo, mouse e caneta. Ajuste os limites e veja como cada decisão muda o gesto reconhecido.</p>
+            <div class="mob-gesture">
+              <div class="mob-pad" data-gesture-pad data-testid="gesture-pad" style="touch-action: none;">
+                <span class="mob-pad-indicator" data-gesture-indicator>Toque, segure, arraste ou deslize aqui</span>
+                <span class="mob-pad-hint">Dois dedos fazem pinça (zoom)</span>
+              </div>
+              <div class="mob-gesture-side">
+                <dl class="mob-readout">
+                  <div class="is-main"><dt>Último gesto</dt><dd data-out="gesture" data-testid="gesture-last">—</dd></div>
+                  <div><dt>Ponteiro</dt><dd data-out="pointer" data-testid="gesture-pointer">—</dd></div>
+                  <div><dt>Dedos na tela</dt><dd data-out="points" data-testid="gesture-points">0</dd></div>
+                  <div><dt>Direção</dt><dd data-out="direction" data-testid="gesture-direction">—</dd></div>
+                  <div><dt>Distância</dt><dd data-out="distance" data-testid="gesture-distance">—</dd></div>
+                  <div><dt>Duração</dt><dd data-out="duration" data-testid="gesture-duration">—</dd></div>
+                  <div><dt>Velocidade</dt><dd data-out="velocity" data-testid="gesture-velocity">—</dd></div>
+                  <div><dt>Escala (pinça)</dt><dd data-out="scale" data-testid="gesture-scale">—</dd></div>
+                </dl>
+                <details class="mob-thresholds">
+                  <summary>Limites do reconhecimento</summary>
+                  <label for="gl-longpress">Toque longo a partir de (ms)</label>
+                  <input id="gl-longpress" type="number" data-lab="longPress" min="200" max="2000" step="50" value="500" data-testid="gesture-longpress-ms" />
+                  <label for="gl-swipe">Swipe a partir de (px)</label>
+                  <input id="gl-swipe" type="number" data-lab="swipeDistance" min="10" max="300" step="5" value="30" data-testid="gesture-swipe-px" />
+                  <label for="gl-double">Janela do toque duplo (ms)</label>
+                  <input id="gl-double" type="number" data-lab="doubleTap" min="100" max="800" step="25" value="300" data-testid="gesture-doubletap-ms" />
+                  <label for="gl-touch-action"><code>touch-action</code> da área</label>
+                  <select id="gl-touch-action" data-lab="touchAction" data-testid="gesture-touch-action">
+                    <option value="none" selected>none (a página trata todos os gestos)</option>
+                    <option value="pan-y">pan-y (o navegador rola na vertical)</option>
+                    <option value="manipulation">manipulation (sem zoom por toque duplo)</option>
+                    <option value="auto">auto (o navegador decide)</option>
+                  </select>
+                  <p class="hint">Com <code>auto</code> ou <code>pan-y</code>, um arrasto vertical vira rolagem e o navegador envia <code>pointercancel</code>: é por isso que gestos "somem" em apps reais.</p>
+                </details>
+                <button type="button" class="btn btn-secondary" data-lab="clear" data-testid="gesture-clear">Limpar</button>
+              </div>
+            </div>
+            <h4 class="mob-log-title">Histórico (<span data-out="count" data-testid="gesture-count">0</span> gestos)</h4>
+            <ol class="mob-log" data-out="log" data-testid="gesture-log" aria-live="polite"></ol>
+          </div>
+
+          <!-- Guia do especialista -->
+          <div class="subsection mob-expert" id="mobile-guia">
+            <h3>Guia do especialista</h3>
+            <p class="section-lead">Teste de toque não é "clicar com o dedo". O navegador espera para decidir se o gesto é rolagem, zoom ou clique, e cada plataforma decide de um jeito. Estes são os pontos que mais geram bugs.</p>
+            <div class="guide-grid">
+              <div class="guide-item">
+                <h4>Touch, Pointer ou Mouse?</h4>
+                <ul><li><strong>Touch Events</strong> (<code>touchstart</code>…) só existem com tela de toque. É o que a área de cima usa: no desktop ela não responde ao mouse.</li><li><strong>Pointer Events</strong> unificam dedo, mouse e caneta. Leia <code>event.pointerType</code> para saber a origem.</li><li>Depois de um toque, o navegador ainda dispara eventos de mouse "de compatibilidade" e <code>click</code>. Handlers nos dois mundos executam a ação duas vezes.</li></ul>
+              </div>
+              <div class="guide-item">
+                <h4>O atraso do toque</h4>
+                <ul><li>Navegadores antigos esperavam ~300 ms para descobrir se era um toque duplo (zoom). Com <code>&lt;meta name="viewport" content="width=device-width"&gt;</code> esse atraso não existe nos navegadores atuais.</li><li><code>touch-action: manipulation</code> também desliga o zoom por toque duplo naquele elemento.</li><li>Teste: meça o tempo entre o toque e a reação visual. Acima de 100 ms já é perceptível.</li></ul>
+              </div>
+              <div class="guide-item is-criteria">
+                <h4>Alvos de toque</h4>
+                <ul><li><strong>WCAG 2.2 (2.5.8, AA):</strong> pelo menos 24 × 24 px CSS, ou espaço livre ao redor equivalente.</li><li><strong>Plataformas:</strong> 44 × 44 pt (Apple) e 48 × 48 dp (Material Design).</li><li>Meça com o auditor da página <a href="responsividade.html#target-audit">Responsividade</a>.</li></ul>
+              </div>
+              <div class="guide-item is-pitfall">
+                <h4>Armadilhas comuns</h4>
+                <ul><li>Listener de <code>touchmove</code> sem <code>{ passive: true }</code> deixa a rolagem travando.</li><li><code>preventDefault()</code> no <code>touchstart</code> mata a rolagem e o clique do elemento.</li><li>Gesto que funciona no emulador do DevTools e falha no Safari do iPhone: sempre valide em aparelho real.</li><li>Toque longo abre o menu de contexto do sistema (copiar, salvar imagem) e interfere no gesto.</li></ul>
+              </div>
+              <div class="guide-item is-wide">
+                <h4>Automatize</h4>
+                <div class="a11y-tabs" data-tabs>
+              <div role="tablist" aria-label="Exemplos de automação">
+                <button type="button" role="tab" id="touch-tab-pw" aria-controls="touch-panel-pw" aria-selected="true">Playwright</button><button type="button" role="tab" id="touch-tab-appium" aria-controls="touch-panel-appium" aria-selected="false" tabindex="-1">Appium 2 (Java)</button><button type="button" role="tab" id="touch-tab-lab" aria-controls="touch-panel-lab" aria-selected="false" tabindex="-1">Laboratório (Playwright)</button>
+              </div>
+              <div role="tabpanel" id="touch-panel-pw" aria-labelledby="touch-tab-pw" tabindex="0">
+                <p class="hint">Emula um Pixel 7 (<code>hasTouch</code> e <code>isMobile</code> ligados). <code>tap()</code> gera eventos de toque reais; para swipe, o Chromium aceita toques diretos pelo protocolo do DevTools (CDP).</p>
+                <pre class="test-code active"><code>import { test, expect, devices } from '@playwright/test';
+
+test.use({ ...devices['Pixel 7'] });
+
+test('toque registra touchstart e touchend', async ({ page }) =&gt; {
+  await page.goto('/pages/mobile/touch-events.html');
+  await page.getByTestId('touch-area').tap();
+  await expect(page.getByTestId('touch-log')).toContainText('touchstart');
+  await expect(page.getByTestId('touch-log')).toContainText('touchend');
+});
+
+test('swipe para a esquerda', async ({ page, context }) =&gt; {
+  await page.goto('/pages/mobile/touch-events.html');
+  const area = page.getByTestId('swipe-area');
+  await area.scrollIntoViewIfNeeded();
+  const box = (await area.boundingBox())!;
+  const y = box.y + box.height / 2;
+
+  // Chromium: toques sintéticos via CDP (touchStart -&gt; touchMove -&gt; touchEnd)
+  const cdp = await context.newCDPSession(page);
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: box.x + box.width - 20, y }] });
+  for (let i = 1; i &lt;= 5; i++) {
+    const x = box.x + box.width - 20 - (i * (box.width - 40)) / 5;
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x, y }] });
+  }
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+
+  await expect(page.getByTestId('swipe-direction')).toContainText('Left');
+});</code></pre>
+              </div><div role="tabpanel" id="touch-panel-appium" aria-labelledby="touch-tab-appium" tabindex="0" hidden>
+                <p class="hint"><code>TouchAction</code> está obsoleto desde o java-client 8 e foi removido nas versões seguintes. O padrão atual são as <strong>W3C Actions</strong> com um ponteiro do tipo toque.</p>
+                <pre class="test-code active"><code>import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
+import org.openqa.selenium.interactions.Pause;
+import java.time.Duration;
+import java.util.List;
+
+PointerInput dedo = new PointerInput(PointerInput.Kind.TOUCH, "dedo");
+
+// Swipe da direita para a esquerda
+Sequence swipe = new Sequence(dedo, 0)
+    .addAction(dedo.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), 320, 600))
+    .addAction(dedo.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
+    .addAction(dedo.createPointerMove(Duration.ofMillis(250), PointerInput.Origin.viewport(), 60, 600))
+    .addAction(dedo.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+driver.perform(List.of(swipe));
+
+// Toque longo: aperta, espera 800 ms e solta
+Sequence toqueLongo = new Sequence(dedo, 0)
+    .addAction(dedo.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), 200, 400))
+    .addAction(dedo.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
+    .addAction(new Pause(dedo, Duration.ofMillis(800)))
+    .addAction(dedo.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+driver.perform(List.of(toqueLongo));</code></pre>
+              </div><div role="tabpanel" id="touch-panel-lab" aria-labelledby="touch-tab-lab" tabindex="0" hidden>
+                <p class="hint">O laboratório usa Pointer Events, então também dá para testar com o mouse, em qualquer navegador.</p>
+                <pre class="test-code active"><code>import { test, expect } from '@playwright/test';
+
+test('arrasto lento não é swipe', async ({ page }) =&gt; {
+  await page.goto('/pages/mobile/touch-events.html');
+  const pad = page.getByTestId('gesture-pad');
+  const box = (await pad.boundingBox())!;
+
+  await page.mouse.move(box.x + 40, box.y + 60);
+  await page.mouse.down();
+  await page.mouse.move(box.x + 200, box.y + 60, { steps: 30 });
+  await page.waitForTimeout(800); // devagar: velocidade abaixo do limite
+  await page.mouse.up();
+
+  await expect(page.getByTestId('gesture-last')).toHaveText('arrasto');
+  await expect(page.getByTestId('gesture-pointer')).toHaveText('mouse');
+});</code></pre>
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div class="info-box">
+              <p><strong>Cenários de Teste:</strong></p>
+              <ul>
+                <li>Testar eventos touchstart, touchmove, touchend</li>
+                <li>Validar gestos de swipe em diferentes direções</li>
+                <li>Testar long press e double tap</li>
+                <li>Validar área de toque mínima (44x44px recomendado)</li>
+                <li>Testar scroll e drag em elementos móveis</li>
+                <li>Validar prevenção de zoom acidental</li>
+                <li>Testar multi-touch (pinch, zoom)</li>
+              </ul>
+              
+              <p><strong>Elementos identificáveis:</strong></p>
+              <ul>
+                <li><code>data-testid="touch-area"</code> - Área de teste de toque</li>
+                <li><code>data-testid="touch-log"</code> - Log de eventos touch</li>
+                <li><code>data-testid="btn-tap"</code> - Botão de tap</li>
+                <li><code>data-testid="btn-long-press"</code> - Botão de long press</li>
+                <li><code>data-testid="btn-double-tap"</code> - Botão de double tap</li>
+                <li><code>data-testid="swipe-area"</code> - Área de swipe</li>
+                <li><code>data-testid="swipe-direction"</code> - Direção do swipe</li>
+              </ul>
+
+              <p><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-appium-ruby">Appium + Ruby</button>
+                <button class="test-tab" data-target="tab-appium-java">Appium + Java</button>
+                <button class="test-tab" data-target="tab-appium-robot">Appium + Robot</button>
+              </div>
+              
+              <div class="test-tab-content">
+                <pre id="tab-appium-ruby" class="test-code active"><code>
+# Appium + Ruby - Testar touch events
+caps = {
+  platformName: 'Android',
+  deviceName: 'Android Emulator',
+  browserName: 'Chrome',
+  automationName: 'UiAutomator2'
+}
+driver = Appium::Driver.new({ caps: caps }).start_driver
+
+driver.get('http://localhost:8080/pages/mobile/touch-events.html')
+
+# Testar tap
+touch_area = driver.find_element(:css, '[data-testid="touch-area"]')
+Appium::TouchAction.new.tap(element: touch_area).perform
+
+touch_log = driver.find_element(:css, '[data-testid="touch-log"]')
+expect(touch_log.text).to include('touchstart')
+
+# Testar swipe
+swipe_area = driver.find_element(:css, '[data-testid="swipe-area"]')
+Appium::TouchAction.new
+  .press(element: swipe_area, x: 100, y: 50)
+  .move_to(element: swipe_area, x: 50, y: 50)
+  .release
+  .perform
+
+swipe_direction = driver.find_element(:css, '[data-testid="swipe-direction"]')
+expect(swipe_direction.text).to include('left')
+                </code></pre>
+              
+                <pre id="tab-appium-java" class="test-code"><code>
+// Appium + Java - Testar touch events
+DesiredCapabilities caps = new DesiredCapabilities();
+caps.setCapability("platformName", "Android");
+caps.setCapability("deviceName", "Android Emulator");
+caps.setCapability("browserName", "Chrome");
+caps.setCapability("automationName", "UiAutomator2");
+
+AppiumDriver driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), caps);
+
+driver.get("http://localhost:8080/pages/mobile/touch-events.html");
+
+// Testar tap
+WebElement touchArea = driver.findElement(By.cssSelector("[data-testid='touch-area']"));
+TouchAction touchAction = new TouchAction(driver);
+touchAction.tap(touchArea).perform();
+
+WebElement touchLog = driver.findElement(By.cssSelector("[data-testid='touch-log']"));
+assert touchLog.getText().contains("touchstart");
+
+// Testar swipe
+WebElement swipeArea = driver.findElement(By.cssSelector("[data-testid='swipe-area']"));
+new TouchAction(driver)
+  .press(swipeArea, 100, 50)
+  .moveTo(swipeArea, 50, 50)
+  .release()
+  .perform();
+
+WebElement swipeDirection = driver.findElement(By.cssSelector("[data-testid='swipe-direction']"));
+assert swipeDirection.getText().contains("left");
+                </code></pre>
+              
+                <pre id="tab-appium-robot" class="test-code"><code>
+*** Settings ***
+Library    AppiumLibrary
+
+*** Test Cases ***
+Testar Touch Events
+    Open Application    http://localhost:4723/wd/hub
+    ...    platformName=Android
+    ...    deviceName=Android Emulator
+    ...    browserName=Chrome
+    ...    automationName=UiAutomator2
+    
+    Go To Url    http://localhost:8080/pages/mobile/touch-events.html
+    
+    Tap    css:[data-testid="touch-area"]
+    Element Should Contain    css:[data-testid="touch-log"]    touchstart
+    
+    # Testar swipe
+    Swipe    css:[data-testid="swipe-area"]    100    50    50    50
+    Element Should Contain    css:[data-testid="swipe-direction"]    left
+    
+    # Testar long press
+    Long Press    css:[data-testid="btn-long-press"]    500
+    Element Should Contain    css:[data-testid="button-result"]    Long press
+                </code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../js/index.js"></script>
+    <script>
+      // Touch Area
+      const touchArea = document.getElementById('touch-area');
+      const touchEvents = document.getElementById('touch-events');
+      let touchStartTime = 0;
+      let touchCount = 0;
+      let touchTimeout = null;
+
+      function logTouchEvent(event, data = '') {
+        if (touchEvents) {
+          const time = new Date().toLocaleTimeString();
+          const logEntry = document.createElement('div');
+          logEntry.textContent = `[${time}] ${event} ${data}`;
+          touchEvents.appendChild(logEntry);
+          touchEvents.scrollTop = touchEvents.scrollHeight;
+          
+          // Limitar a 10 entradas
+          while (touchEvents.children.length > 10) {
+            touchEvents.removeChild(touchEvents.firstChild);
+          }
+        }
+      }
+
+      if (touchArea) {
+        touchArea.addEventListener('touchstart', (e) => {
+          touchStartTime = Date.now();
+          logTouchEvent('touchstart', `(${e.touches.length} touch${e.touches.length > 1 ? 'es' : ''})`);
+          e.preventDefault();
+        });
+
+        touchArea.addEventListener('touchmove', (e) => {
+          logTouchEvent('touchmove', `(${e.touches.length} touch${e.touches.length > 1 ? 'es' : ''})`);
+        });
+
+        touchArea.addEventListener('touchend', (e) => {
+          const duration = Date.now() - touchStartTime;
+          logTouchEvent('touchend', `(duração: ${duration}ms)`);
+          e.preventDefault();
+        });
+
+        // Mouse events para desktop
+        touchArea.addEventListener('mousedown', () => {
+          logTouchEvent('mousedown (simulação touch)');
+        });
+
+        touchArea.addEventListener('mouseup', () => {
+          logTouchEvent('mouseup (simulação touch)');
+        });
+      }
+
+      // Botões
+      const btnTap = document.getElementById('btn-tap');
+      const btnLongPress = document.getElementById('btn-long-press');
+      const btnDoubleTap = document.getElementById('btn-double-tap');
+      const buttonResult = document.getElementById('button-result');
+
+      if (btnTap) {
+        btnTap.addEventListener('click', () => {
+          if (buttonResult) {
+            buttonResult.textContent = 'Tap detectado!';
+            buttonResult.style.color = 'var(--accent)';
+          }
+        });
+      }
+
+      let longPressTimer = null;
+      if (btnLongPress) {
+        btnLongPress.addEventListener('mousedown', () => {
+          longPressTimer = setTimeout(() => {
+            if (buttonResult) {
+              buttonResult.textContent = 'Long press detectado!';
+              buttonResult.style.color = 'var(--accent)';
+            }
+          }, 500);
+        });
+
+        btnLongPress.addEventListener('mouseup', () => {
+          if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+          }
+        });
+
+        btnLongPress.addEventListener('touchstart', () => {
+          longPressTimer = setTimeout(() => {
+            if (buttonResult) {
+              buttonResult.textContent = 'Long press detectado!';
+              buttonResult.style.color = 'var(--accent)';
+            }
+          }, 500);
+        });
+
+        btnLongPress.addEventListener('touchend', () => {
+          if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+          }
+        });
+      }
+
+      if (btnDoubleTap) {
+        btnDoubleTap.addEventListener('click', () => {
+          touchCount++;
+          if (touchCount === 1) {
+            touchTimeout = setTimeout(() => {
+              touchCount = 0;
+            }, 300);
+          } else if (touchCount === 2) {
+            clearTimeout(touchTimeout);
+            if (buttonResult) {
+              buttonResult.textContent = 'Double tap detectado!';
+              buttonResult.style.color = 'var(--accent)';
+            }
+            touchCount = 0;
+          }
+        });
+      }
+
+      // Swipe
+      const swipeArea = document.getElementById('swipe-area');
+      const swipeDirection = document.getElementById('swipe-direction');
+      let swipeStartX = 0;
+      let swipeStartY = 0;
+
+      if (swipeArea) {
+        swipeArea.addEventListener('touchstart', (e) => {
+          swipeStartX = e.touches[0].clientX;
+          swipeStartY = e.touches[0].clientY;
+        });
+
+        swipeArea.addEventListener('touchend', (e) => {
+          if (!swipeStartX || !swipeStartY) return;
+          
+          const swipeEndX = e.changedTouches[0].clientX;
+          const swipeEndY = e.changedTouches[0].clientY;
+          const diffX = swipeStartX - swipeEndX;
+          const diffY = swipeStartY - swipeEndY;
+
+          if (Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX > 50) {
+              if (swipeDirection) {
+                swipeDirection.textContent = 'Swipe Left detectado ←';
+                swipeDirection.style.color = 'var(--accent)';
+              }
+            } else if (diffX < -50) {
+              if (swipeDirection) {
+                swipeDirection.textContent = 'Swipe Right detectado →';
+                swipeDirection.style.color = 'var(--accent)';
+              }
+            }
+          }
+
+          swipeStartX = 0;
+          swipeStartY = 0;
+        });
+
+        // Mouse events para desktop
+        let mouseDownX = 0;
+        swipeArea.addEventListener('mousedown', (e) => {
+          mouseDownX = e.clientX;
+        });
+
+        swipeArea.addEventListener('mouseup', (e) => {
+          const diffX = mouseDownX - e.clientX;
+          if (Math.abs(diffX) > 50) {
+            if (diffX > 0) {
+              if (swipeDirection) {
+                swipeDirection.textContent = 'Swipe Left detectado ← (mouse)';
+                swipeDirection.style.color = 'var(--accent)';
+              }
+            } else {
+              if (swipeDirection) {
+                swipeDirection.textContent = 'Swipe Right detectado → (mouse)';
+                swipeDirection.style.color = 'var(--accent)';
+              }
+            }
+          }
+          mouseDownX = 0;
+        });
+      }
+
+      // Inicializar abas de teste
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
+</html>

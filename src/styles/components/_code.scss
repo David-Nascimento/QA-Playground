@@ -1,0 +1,124 @@
+// ========================================
+// Code - Abas de exemplos de automação e blocos de código
+// ----------------------------------------
+// .test-tabs/.test-tab/.test-code: exemplos Selenium/Cypress/Playwright
+// presentes em ~60 páginas. Painel de código escuro nos dois temas.
+// ========================================
+
+.test-tab-content,
+.code-example {
+  margin-top: var(--spacing-md);
+}
+
+.test-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: var(--spacing-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-md);
+  overflow-x: auto;
+  scrollbar-width: none;
+  width: fit-content;
+  max-width: 100%;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.test-tab {
+  @include button-reset;
+  flex-shrink: 0;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: $font-weight-semibold;
+  color: var(--muted);
+  white-space: nowrap;
+  @include transition(background, color, box-shadow);
+
+  @include hover-state {
+    color: var(--text);
+  }
+
+  &.active {
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow-sm), 0 0 0 1px var(--border);
+  }
+}
+
+.test-code,
+.code-content,
+
+.a11y-code-example {
+  background: var(--code-bg);
+  color: var(--code-text);
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  line-height: 1.65;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  pre {
+    margin: 0;
+    padding: var(--spacing-md) var(--spacing-lg);
+    white-space: pre;
+    background: transparent;
+    color: inherit;
+  }
+
+  code {
+    background: transparent;
+    border: 0;
+    color: inherit;
+    padding: 0;
+  }
+}
+
+.test-code {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
+
+// Quando o próprio <pre> é o bloco (pre.test-code), o respiro vai nele
+pre.test-code,
+pre.code-content,
+pre.a11y-code-example {
+  margin: 0;
+  padding: var(--spacing-md) var(--spacing-lg);
+  white-space: pre;
+}
+
+// Realce de sintaxe usado nos exemplos (spans .keyword/.string/...)
+.test-code,
+.code-content,
+
+pre {
+  .keyword { color: #c4a7ff; }
+  .string { color: #8ef0b8; }
+  .comment { color: var(--code-muted); font-style: italic; }
+  .function { color: #8fc1ff; }
+  .number { color: #ffc98f; }
+}
+
+// Blocos <pre> soltos no conteúdo. Os que já trazem fundo próprio em
+// style="" (marcação antiga) mantêm o fundo e usam a cor de texto do tema.
+main pre:not([class])[style*='background'] {
+  color: var(--text);
+}
+
+main pre:not([class]):not([style*='background']) {
+  background: var(--code-bg);
+  color: var(--code-text);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  margin: var(--spacing-sm) 0 var(--spacing-md);
+}

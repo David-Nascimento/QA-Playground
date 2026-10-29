@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Floating Menu — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+          <div class="section-header">
+          <h2>Floating Menu</h2>
+          <div class="section-desc">Pratique testes de menus integrados ao conteúdo. Esta página é ideal para testar automação de elementos de menu, validação de interações com menus e elementos de navegação.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Testar menus integrados ao conteúdo</li>
+                <li>Validar estrutura e elementos do menu</li>
+                <li>Praticar automação de elementos de menu</li>
+                <li>Testar interações com menus</li>
+                <li>Validar comportamento em diferentes resoluções de tela</li>
+                <li>Testar cliques em itens do menu</li>
+                <li>Validar feedback visual de interações</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Como Utilizar:</strong></p>
+              <ol style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Observe o menu flutuante na área de conteúdo abaixo</li>
+                <li>Clique nos itens do menu para testar interações</li>
+                <li>Valide que o menu está visível e funcional</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Menu Flutuante</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">O menu abaixo está integrado ao conteúdo da página.</p>
+            
+            <div class="floating-menu-wrapper">
+              <div class="floating-menu" data-testid="floating-menu">
+                <header class="floating-menu-header" data-testid="floating-menu-header">
+                  <h4 class="floating-menu-title">Menu Flutuante</h4>
+                </header>
+                <nav class="floating-menu-nav">
+                  <div class="floating-menu-items">
+                    <a href="#" class="floating-menu-item" data-testid="menu-item-home" onclick="handleMenuClick('Home'); return false;">Home</a>
+                    <a href="#" class="floating-menu-item" data-testid="menu-item-about" onclick="handleMenuClick('Sobre'); return false;">Sobre</a>
+                    <a href="#" class="floating-menu-item" data-testid="menu-item-contact" onclick="handleMenuClick('Contato'); return false;">Contato</a>
+                  </div>
+                </nav>
+              </div>
+            </div>
+
+            <div id="menu-result" data-testid="menu-result" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); min-height: 50px;">
+              <p class="muted">Clique em um item do menu para ver o resultado...</p>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Validar que menu está visível</li>
+                <li>Clicar em itens do menu e validar ações</li>
+                <li>Testar menu em diferentes resoluções de tela</li>
+                <li>Validar estrutura e elementos do menu</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="floating-menu"</code> - Menu flutuante</li>
+                <li><code>data-testid="floating-menu-header"</code> - Cabeçalho do menu</li>
+                <li><code>data-testid="menu-item-home"</code> - Item Home</li>
+                <li><code>data-testid="menu-item-about"</code> - Item Sobre</li>
+                <li><code>data-testid="menu-item-contact"</code> - Item Contato</li>
+                <li><code>data-testid="menu-result"</code> - Área de resultado</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Testar menu flutuante
+cy.get('[data-testid="floating-menu"]').should('be.visible')
+cy.get('[data-testid="menu-item-home"]').click()
+cy.get('[data-testid="menu-result"]').should('contain', 'Home')
+cy.get('[data-testid="menu-item-about"]').click()
+cy.get('[data-testid="menu-result"]').should('contain', 'Sobre')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Testar menu flutuante
+await expect(page.getByTestId('floating-menu')).toBeVisible()
+await page.getByTestId('menu-item-home').click()
+await expect(page.getByTestId('menu-result')).toContainText('Home')
+await page.getByTestId('menu-item-about').click()
+await expect(page.getByTestId('menu-result')).toContainText('Sobre')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium Java - Testar menu flutuante
+WebElement menu = driver.findElement(By.cssSelector("[data-testid='floating-menu']"));
+assert menu.isDisplayed();
+driver.findElement(By.cssSelector("[data-testid='menu-item-home']")).click();
+WebElement result = driver.findElement(By.cssSelector("[data-testid='menu-result']"));
+assert result.getText().contains("Home");
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Testar menu flutuante
+expect(find('[data-testid="floating-menu"]')).to be_visible
+find('[data-testid="menu-item-home"]').click
+expect(find('[data-testid="menu-result"]')).to have_content('Home')
+find('[data-testid="menu-item-about"]').click
+expect(find('[data-testid="menu-result"]')).to have_content('Sobre')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Testar menu flutuante
+    Element Should Be Visible    css:[data-testid="floating-menu"]
+    Click Element    css:[data-testid="menu-item-home"]
+    Element Should Contain    css:[data-testid="menu-result"]    Home
+    Click Element    css:[data-testid="menu-item-about"]
+    Element Should Contain    css:[data-testid="menu-result"]    Sobre
+                </code></pre>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../../js/index.js"></script>
+    <script>
+      function handleMenuClick(item) {
+        const result = document.getElementById('menu-result');
+        result.innerHTML = `<strong style="color: var(--level);">Item clicado:</strong> ${item}`;
+        window.showToast(`Menu item "${item}" clicado`);
+      }
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+    <style>
+      .floating-menu-wrapper {
+        position: relative;
+        margin-bottom: var(--spacing-md);
+      }
+
+      .floating-menu {
+        position: relative;
+        background: var(--surface);
+        border: 2px solid color-mix(in srgb, var(--text) 10%, transparent);
+        border-radius: var(--border-radius-md);
+        box-shadow: 0 4px 12px color-mix(in srgb, var(--text) 15%, transparent);
+        min-width: 200px;
+        max-width: 300px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .floating-menu-header {
+        padding: var(--spacing-md);
+        background: var(--level);
+        color: var(--on-accent);
+        border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+        margin: 0;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .floating-menu-title {
+        margin: 0;
+        font-size: var(--font-size-base);
+        font-weight: 600;
+        color: inherit;
+      }
+
+      .floating-menu-nav {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .floating-menu-items {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .floating-menu-item {
+        padding: var(--spacing-md);
+        color: var(--text);
+        text-decoration: none;
+        border-bottom: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+        transition: background 0.2s ease, color 0.2s ease;
+        display: block;
+      }
+
+      .floating-menu-item:hover {
+        background: color-mix(in srgb, var(--level) 10%, transparent);
+        color: var(--level);
+      }
+
+      .floating-menu-item:last-child {
+        border-bottom: none;
+      }
+
+      @media (max-width: 768px) {
+        .floating-menu {
+          max-width: 100%;
+        }
+      }
+    </style>
+  </body>
+</html>

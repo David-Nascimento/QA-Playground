@@ -1,0 +1,342 @@
+// ========================================
+// Header - Cabeçalho do Site
+// ----------------------------------------
+// Sticky, translúcido. Acima de 960px: menu em linha.
+// Abaixo: botão #nav-toggle abre o #main-nav como gaveta (classe .open,
+// controlada por initResponsiveNav em src/client/ui/navigation.ts).
+// ========================================
+
+.et-header {
+  position: sticky;
+  top: 0;
+  z-index: z-index('fixed');
+  width: 100%;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: saturate(160%) blur(10px);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+}
+
+.et-header-inner {
+  @include container;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  height: var(--header-height);
+}
+
+// === Logo ===
+.et-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: var(--border-radius-md);
+  padding: 4px 0;
+
+  img {
+    height: 34px;
+    width: auto;
+    display: block;
+  }
+}
+
+// === Navegação principal (desktop) ===
+.et-nav {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.et-nav-list {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  > li > a,
+  .dropdown-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: var(--border-radius-pill);
+    color: var(--text);
+    font-family: var(--font-family);
+    font-size: var(--font-size-sm);
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    white-space: nowrap;
+    @include transition(background, color);
+
+    @include hover-state {
+      background: var(--surface-2);
+      color: var(--accent);
+    }
+  }
+
+  // Página atual (aria-current é gerado pelo build)
+  a[aria-current='page'] {
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+}
+
+// === Dropdown "Desafios" ===
+.nav-dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  @include button-reset;
+
+  &::after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    @include transition(transform);
+  }
+}
+
+.nav-dropdown.open .dropdown-toggle {
+  background: var(--surface-2);
+
+  &::after {
+    transform: translateY(1px) rotate(-135deg);
+  }
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 220px;
+  padding: 6px;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  @include transition(opacity, transform, visibility);
+  z-index: z-index('dropdown');
+
+  li {
+    margin: 0;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 40px;
+    padding: 0 12px;
+    border-radius: var(--border-radius-md);
+    color: var(--text);
+    font-size: var(--font-size-sm);
+    font-weight: $font-weight-medium;
+    text-decoration: none;
+
+    @include hover-state {
+      background: var(--surface-2);
+    }
+
+    &[aria-current='page'] {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+  }
+
+  // Marcador de cor do nível em cada desafio
+  a[href$='junior.html']::before,
+  a[href$='pleno.html']::before,
+  a[href$='senior.html']::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  a[href$='junior.html']::before { background: var(--junior-fill); }
+  a[href$='pleno.html']::before { background: var(--pleno-fill); }
+  a[href$='senior.html']::before { background: var(--senior-fill); }
+}
+
+.nav-dropdown.open .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+// === Ações (tema + menu) ===
+.et-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex-shrink: 0;
+
+  button {
+    @include button-reset;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--border-radius-pill);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 1.15rem;
+    line-height: 1;
+    @include transition(background, border-color);
+
+    @include hover-state {
+      background: var(--surface-2);
+      border-color: var(--border-strong);
+    }
+  }
+}
+
+// === Botão hambúrguer ===
+.nav-toggle {
+  display: none !important;
+
+  .nav-toggle-bars,
+  .nav-toggle-bars::before,
+  .nav-toggle-bars::after {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    @include transition(transform, opacity);
+  }
+
+  .nav-toggle-bars {
+    position: relative;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+    }
+
+    &::before { top: -6px; }
+    &::after { top: 6px; }
+  }
+
+  &[aria-expanded='true'] .nav-toggle-bars {
+    background: transparent;
+
+    &::before { transform: translateY(6px) rotate(45deg); }
+    &::after { transform: translateY(-6px) rotate(-45deg); }
+  }
+}
+
+// ========================================
+// Modo gaveta (< 960px)
+// ========================================
+@include respond-to(nav) {
+  // backdrop-filter criaria um bloco de contenção para a gaveta (position: fixed)
+  .et-header {
+    background: var(--surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .et-header-inner {
+    justify-content: space-between;
+  }
+
+  .nav-toggle {
+    display: inline-flex !important;
+  }
+
+  .et-nav {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    padding: var(--spacing-md) var(--gutter) var(--spacing-xl);
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    @include transition(opacity, transform, visibility);
+
+    &.open {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+    }
+  }
+
+  .et-nav-list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    max-width: 560px;
+    margin: 0 auto;
+
+    > li > a,
+    .dropdown-toggle {
+      width: 100%;
+      min-height: 52px;
+      padding: 0 var(--spacing-md);
+      border-radius: var(--border-radius-md);
+      font-size: var(--font-size-lg);
+      justify-content: space-between;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+  }
+
+  // No modo gaveta o submenu abre dentro do fluxo
+  .dropdown-menu {
+    position: static;
+    display: none;
+    min-width: 0;
+    margin-top: 4px;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+
+    a {
+      min-height: 48px;
+      font-size: var(--font-size-base);
+    }
+  }
+
+  .nav-dropdown.open .dropdown-menu {
+    display: block;
+  }
+
+  // Trava a rolagem do fundo com a gaveta aberta
+  html.nav-open,
+  html.nav-open body {
+    overflow: hidden;
+  }
+}
+
+@include respond-to(sm) {
+  .et-logo img {
+    height: 30px;
+  }
+}

@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Challenging DOM — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Challenging DOM</h2>
+          <div class="section-desc">Teste automação em DOMs complexos e desafiadores. Este desafio apresenta elementos com classes dinâmicas, IDs variáveis e conteúdo que muda constantemente - um cenário realista para testar suas habilidades de automação.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>DOM Dinâmico com Classes Aleatórias</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              Os elementos abaixo têm classes e estilos que mudam dinamicamente. Use <code>data-testid</code> ou estratégias robustas de seleção para garantir testes estáveis.
+            </p>
+
+            <div class="controls" style="margin-bottom: var(--spacing-lg);">
+              <button id="shuffle" class="btn" data-testid="btn-embaralhar">Embaralhar Classes</button>
+              <button id="refresh" class="btn btn-secondary" data-testid="btn-atualizar">Atualizar DOM</button>
+            </div>
+
+            <div id="challenge-dom" data-testid="container-dom-desafiador" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+              <button class="btn btn-dynamic" id="btn-a" data-testid="btn-a">Botão A</button>
+              <button class="btn btn-dynamic" id="btn-b" data-testid="btn-b">Botão B</button>
+              <button class="btn btn-dynamic" id="btn-c" data-testid="btn-c">Botão C</button>
+              
+              <div class="box" id="box1" data-testid="box1">
+                <span class="box-content">Box 1</span>
+              </div>
+              <div class="box" id="box2" data-testid="box2">
+                <span class="box-content">Box 2</span>
+              </div>
+              <div class="box" id="box3" data-testid="box3">
+                <span class="box-content">Box 3</span>
+              </div>
+            </div>
+
+            <div id="result" data-testid="resultado-acao" style="min-height: 60px; padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
+              <p class="muted" style="margin: 0;">Nenhuma ação realizada ainda. Clique nos botões ou boxes acima.</p>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Desafios de Automação:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Elementos com classes dinâmicas que mudam a cada interação</li>
+                <li>IDs podem ser alterados dinamicamente</li>
+                <li>Conteúdo dos elementos pode variar</li>
+                <li>Múltiplos elementos similares que exigem seleção precisa</li>
+                <li>Validar estado após ações dinâmicas</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Estratégias Recomendadas:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Use <code>data-testid</code> para seleção estável</li>
+                <li>Prefira seletores por conteúdo quando apropriado</li>
+                <li>Evite depender de classes CSS que mudam</li>
+                <li>Valide estados, não apenas classes</li>
+                <li>Use waits explícitos para elementos dinâmicos</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Usar data-testid (recomendado)
+cy.get('[data-testid="btn-a"]').click()
+cy.get('[data-testid="resultado-acao"]').should('contain', 'Botão A')
+cy.get('[data-testid="box1"]').should('be.visible')
+
+// Testar botão B
+cy.get('[data-testid="btn-b"]').click()
+cy.get('[data-testid="resultado-acao"]').should('contain', 'Botão B')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Seleção estável
+await page.getByTestId('btn-b').click()
+await expect(page.getByTestId('resultado-acao')).toContainText('Botão B')
+
+// Testar botão A
+await page.getByTestId('btn-a').click()
+await expect(page.getByTestId('resultado-acao')).toContainText('Botão A')
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Usar data-testid
+driver.findElement(By.cssSelector("[data-testid='btn-a']")).click();
+WebElement resultado = driver.findElement(By.cssSelector("[data-testid='resultado-acao']"));
+assert resultado.getText().contains("Botão A");
+
+// Testar botão B
+driver.findElement(By.cssSelector("[data-testid='btn-b']")).click();
+assert resultado.getText().contains("Botão B");
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Seleção estável
+click_button '[data-testid="btn-a"]'
+expect(page).to have_content('Botão A', within: '[data-testid="resultado-acao"]')
+
+# Testar botão B
+click_button '[data-testid="btn-b"]'
+expect(page).to have_content('Botão B', within: '[data-testid="resultado-acao"]')
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Testar botão A
+    Click Button    css:[data-testid="btn-a"]
+    Element Should Contain    css:[data-testid="resultado-acao"]    Botão A
+
+Testar botão B
+    Click Button    css:[data-testid="btn-b"]
+    Element Should Contain    css:[data-testid="resultado-acao"]    Botão B
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="container-dom-desafiador"</code></li>
+                <li><code>data-testid="btn-a"</code>, <code>btn-b</code>, <code>btn-c</code></li>
+                <li><code>data-testid="box1"</code>, <code>box2</code>, <code>box3</code></li>
+                <li><code>data-testid="btn-embaralhar"</code></li>
+                <li><code>data-testid="resultado-acao"</code></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../../js/index.js"></script>
+    <style>
+      .btn-dynamic {
+        transition: all 0.3s ease;
+      }
+      
+      .box {
+        padding: var(--spacing-lg);
+        background: var(--surface);
+        border: 2px solid color-mix(in srgb, var(--level) 20%, transparent);
+        border-radius: var(--border-radius-md);
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .box:hover {
+        border-color: var(--level);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      
+      .box.highlight {
+        background: linear-gradient(135deg, color-mix(in srgb, var(--level) 10%, transparent), color-mix(in srgb, var(--accent-2) 10%, transparent));
+        border-color: var(--level);
+        font-weight: 600;
+      }
+      
+      .box.active {
+        background: var(--level);
+        color: var(--on-accent);
+        border-color: var(--level);
+      }
+      
+      .btn-dynamic.active {
+        background: var(--accent-2);
+        transform: scale(1.05);
+      }
+    </style>
+    <script>
+      const classes = ['highlight', 'active', 'primary', 'secondary', 'success'];
+      const styles = ['border-dashed', 'border-solid', 'shadow-sm', 'shadow-md'];
+      
+      function shuffleClasses() {
+        const boxes = ['box1', 'box2', 'box3'];
+        const buttons = ['btn-a', 'btn-b', 'btn-c'];
+        
+        boxes.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            // Remove todas as classes dinâmicas
+            el.className = 'box';
+            // Adiciona uma classe aleatória
+            if (Math.random() > 0.3) {
+              const randomClass = classes[Math.floor(Math.random() * classes.length)];
+              el.classList.add(randomClass);
+            }
+          }
+        });
+        
+        buttons.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.classList.remove('active');
+            if (Math.random() > 0.5) {
+              el.classList.add('active');
+            }
+          }
+        });
+        
+        updateResult('Classes embaralhadas! Os elementos mudaram de aparência.');
+      }
+      
+      function refreshDOM() {
+        shuffleClasses();
+        updateResult('DOM atualizado. Novas classes e estilos aplicados.');
+      }
+      
+      function updateResult(message) {
+        const resultEl = document.getElementById('result');
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        resultEl.innerHTML = `
+          <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>Ação realizada:</strong></p>
+          <p style="margin: 0; color: var(--muted);">${message}</p>
+          <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+        `;
+      }
+      
+      // Event listeners
+      document.getElementById('shuffle').addEventListener('click', shuffleClasses);
+      document.getElementById('refresh').addEventListener('click', refreshDOM);
+      
+      // Box click handlers
+      ['box1', 'box2', 'box3'].forEach(id => {
+        document.getElementById(id).addEventListener('click', function() {
+          this.classList.toggle('active');
+          updateResult(`Box ${id.replace('box', '')} foi clicado e seu estado foi alterado.`);
+        });
+      });
+      
+      // Button click handlers
+      ['btn-a', 'btn-b', 'btn-c'].forEach(id => {
+        document.getElementById(id).addEventListener('click', function() {
+          const label = this.textContent;
+          updateResult(`Botão ${label} foi clicado.`);
+        });
+      });
+      
+      // Inicialização
+      shuffleClasses();
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
+</html>

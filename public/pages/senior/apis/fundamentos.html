@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Fundamentos de Testes de API — APIs e Autenticação — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Fundamentos de Testes de API</h2>
+          <div class="section-desc">Conceitos essenciais sobre APIs REST, SOAP, GraphQL e estrutura de requisições e respostas para QA Engineers.</div>
+        </div>
+
+        <div class="info-box">
+          <h3>O que é uma API REST?</h3>
+          <p>Representational State Transfer (REST) é um estilo arquitetural que define princípios para comunicação entre sistemas. APIs REST utilizam métodos HTTP padrão (GET, POST, PUT, DELETE) e retornam dados tipicamente em JSON, embora outros formatos sejam suportados.</p>
+          <p><strong>Princípios fundamentais:</strong></p>
+          <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+            <li><strong>Stateless:</strong> Cada requisição é independente e contém todas as informações necessárias para processamento</li>
+            <li><strong>Cacheável:</strong> Respostas podem ser cacheadas, reduzindo latência e carga no servidor</li>
+            <li><strong>Interface uniforme:</strong> Uso consistente de métodos HTTP padrão e recursos identificados por URIs</li>
+            <li><strong>Cliente-Servidor:</strong> Separação de responsabilidades permite evolução independente</li>
+            <li><strong>Sistema em camadas:</strong> Arquitetura pode incluir proxies, gateways e balanceadores sem afetar comunicação</li>
+          </ul>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>REST vs SOAP vs GraphQL (Visão QA)</h3>
+          
+          <div style="margin-top: var(--spacing-md);">
+            <h4 style="color: var(--level); margin-bottom: var(--spacing-sm);">REST</h4>
+            <p><strong>Características:</strong> Arquitetura baseada em HTTP, stateless, cacheável, múltiplos formatos de dados (JSON, XML).</p>
+            <p><strong>Foco de testes:</strong> Métodos HTTP e semântica, códigos de status, estrutura de payloads, headers HTTP, idempotência, cache.</p>
+            <p><strong>Vantagens para QA:</strong> Ferramentas maduras (Postman, Insomnia, curl), documentação OpenAPI/Swagger, testes simples e diretos.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4 style="color: var(--level); margin-bottom: var(--spacing-sm);">SOAP</h4>
+            <p><strong>Características:</strong> Protocolo baseado em XML, contrato rígido via WSDL, transporte independente (HTTP, SMTP, etc.).</p>
+            <p><strong>Foco de testes:</strong> Estrutura de envelopes SOAP, namespaces XML, validação contra schema XSD, headers SOAP (Action, To), fault codes.</p>
+            <p><strong>Vantagens para QA:</strong> Contrato formal (WSDL) define estrutura completa, validação forte de tipos, ferramentas de geração de testes.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4 style="color: var(--level); margin-bottom: var(--spacing-sm);">GraphQL</h4>
+            <p><strong>Características:</strong> Query language, endpoint único, cliente especifica campos necessários, schema tipado.</p>
+            <p><strong>Foco de testes:</strong> Estrutura de queries/mutations, validação de schema, depth limiting (prevenção de queries complexas), rate limiting por query, fragmentos e variáveis.</p>
+            <p><strong>Vantagens para QA:</strong> Introspection permite descobrir schema, flexibilidade para testar diferentes combinações de campos, validação de tipos em tempo de execução.</p>
+          </div>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Estrutura de uma Requisição</h3>
+          
+          <div style="margin-top: var(--spacing-md);">
+            <h4 style="margin-bottom: var(--spacing-sm);">Method (Método HTTP)</h4>
+            <p>Define a operação a ser executada no recurso. Métodos principais: GET (leitura), POST (criação), PUT (substituição completa), PATCH (atualização parcial), DELETE (remoção). Métodos auxiliares: OPTIONS (métodos permitidos), HEAD (metadados sem body).</p>
+            <p><strong>Exemplo:</strong> <code>GET</code>, <code>POST</code>, <code>PUT</code></p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4 style="margin-bottom: var(--spacing-sm);">Endpoint (URI)</h4>
+            <p>Identificador único do recurso. Composto por path (caminho do recurso) e opcionalmente query string (parâmetros de consulta). Path parameters identificam recursos específicos, query params filtram ou modificam a resposta.</p>
+            <p><strong>Exemplos:</strong></p>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><code>GET /api/users/123</code> — Recurso específico</li>
+              <li><code>GET /api/users?status=active&page=1</code> — Lista com filtros</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4 style="margin-bottom: var(--spacing-sm);">Headers (Cabeçalhos HTTP)</h4>
+            <p>Metadados que fornecem contexto sobre a requisição. Headers essenciais: Content-Type (formato do body), Authorization (credenciais), Accept (formato esperado na resposta), User-Agent (identificação do cliente).</p>
+            <p><strong>Exemplo:</strong></p>
+            <pre style="background: color-mix(in srgb, var(--text) 5%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; margin-top: var(--spacing-sm);"><code>Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Accept: application/json
+X-API-Key: abc123def456</code></pre>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4 style="margin-bottom: var(--spacing-sm);">Query Parameters</h4>
+            <p>Parâmetros opcionais na URL após <code>?</code>, separados por <code>&</code>. Usados para filtros, paginação, ordenação, inclusão de recursos relacionados.</p>
+            <p><strong>Exemplos:</strong></p>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li><code>?page=1&limit=10</code> — Paginação</li>
+              <li><code>?sort=name&order=asc</code> — Ordenação</li>
+              <li><code>?include=profile,address</code> — Inclusão de recursos relacionados</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4 style="margin-bottom: var(--spacing-sm);">Request Body</h4>
+            <p>Dados enviados no corpo da requisição. Formato definido pelo Content-Type. Comum: application/json, application/xml, application/x-www-form-urlencoded, multipart/form-data.</p>
+            <p><strong>Exemplo JSON:</strong></p>
+            <pre style="background: color-mix(in srgb, var(--text) 5%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; margin-top: var(--spacing-sm);"><code>{
+  "name": "João Silva",
+  "email": "joao@example.com",
+  "age": 30,
+  "active": true
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="info-box" style="margin-top: var(--spacing-xl);">
+          <h3>Estrutura de uma Resposta</h3>
+          
+          <div style="margin-top: var(--spacing-md);">
+            <h4 style="margin-bottom: var(--spacing-sm);">Status Code</h4>
+            <p>Indicador numérico de três dígitos que comunica o resultado da requisição. Primeira validação em qualquer teste. Categorias: 2xx (sucesso), 3xx (redirecionamento), 4xx (erro do cliente), 5xx (erro do servidor).</p>
+            <p><strong>Exemplos:</strong> 200 OK, 201 Created, 400 Bad Request, 404 Not Found, 500 Internal Server Error</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4 style="margin-bottom: var(--spacing-sm);">Response Headers</h4>
+            <p>Metadados da resposta que fornecem informações sobre o recurso e comportamento do servidor. Headers críticos para validação: Content-Type (formato do payload), Cache-Control (diretivas de cache), ETag (versionamento), Location (URI do recurso criado), X-RateLimit-* (controle de taxa).</p>
+            <p><strong>Validações importantes:</strong> Content-Type corresponde ao Accept solicitado, Cache-Control adequado para o tipo de recurso, ETag presente em recursos cacheáveis.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4 style="margin-bottom: var(--spacing-sm);">Response Body (Payload)</h4>
+            <p>Dados retornados pela API no formato especificado pelo Content-Type. Estrutura deve seguir o contrato definido (schema JSON, OpenAPI, etc.).</p>
+            <p><strong>Validações essenciais:</strong> Conformidade com schema, tipos de dados corretos, campos obrigatórios presentes, valores dentro dos ranges esperados, regras de negócio aplicadas, ausência de dados sensíveis não autorizados.</p>
+          </div>
+
+          <div style="margin-top: var(--spacing-md);">
+            <h4 style="margin-bottom: var(--spacing-sm);">Response Time (Latência)</h4>
+            <p>Tempo decorrido entre envio da requisição e recebimento completo da resposta (incluindo headers e body). Métrica crítica para performance e experiência do usuário.</p>
+            <p><strong>Benchmarks recomendados:</strong> GET simples < 200ms, POST/PUT < 500ms, operações complexas < 1s, relatórios/queries pesadas < 5s. Monitorar percentis p50, p95, p99.</p>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); justify-content: space-between; flex-wrap: wrap;">
+          <a href="index.html" class="btn btn-secondary">← Voltar</a>
+          <a href="metodos-http.html" class="btn">Próximo: Métodos HTTP</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../../js/index.js"></script>
+  </body>
+</html>

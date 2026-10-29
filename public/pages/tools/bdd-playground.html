@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>BDD Playground — Validação de Cenários Gherkin — QA Playground</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <div class="bdd-container">
+        <div class="bdd-header">
+          <h1>BDD Playground</h1>
+          <p>Crie, valide e avalie cenários BDD em Gherkin. Aprenda na prática e evolua por níveis!</p>
+        </div>
+
+
+        <!-- Gherkin em 1 minuto: anatomia de um cenário -->
+        <section class="bdd-panel bdd-intro" aria-labelledby="bdd-intro-title">
+          <h2 id="bdd-intro-title">Gherkin em 1 minuto</h2>
+          <p class="bdd-lead">BDD descreve o comportamento do sistema com exemplos que qualquer pessoa do time entende. Cada exemplo é um <strong>cenário</strong> com três partes: o contexto, uma ação e o resultado esperado.</p>
+          <div class="bdd-anatomy">
+            <pre class="bdd-anatomy-code" aria-label="Exemplo de cenário anotado"><code><span class="gk gk-feature">Funcionalidade:</span> Saque no caixa eletrônico
+  <span class="gk-text">Como correntista, quero sacar dinheiro</span>
+
+  <span class="gk gk-scenario">Cenário:</span> Saque com saldo suficiente
+    <span class="gk gk-given">Dado</span> que tenho R$ 100 na conta
+    <span class="gk gk-when">Quando</span> saco R$ 30
+    <span class="gk gk-then">Então</span> meu saldo deve ser R$ 70
+    <span class="gk gk-and">E</span> devo receber o comprovante</code></pre>
+            <dl class="bdd-legend">
+              <div class="bdd-legend-item lg-feature"><dt>Funcionalidade</dt><dd>O que está sendo descrito. Uma por arquivo <code>.feature</code>.</dd></div>
+              <div class="bdd-legend-item lg-scenario"><dt>Cenário</dt><dd>Um exemplo concreto de comportamento, com título que aparece no relatório.</dd></div>
+              <div class="bdd-legend-item lg-given"><dt>Dado</dt><dd>O contexto: como as coisas já estão antes do teste.</dd></div>
+              <div class="bdd-legend-item lg-when"><dt>Quando</dt><dd>A ação (uma só) que dispara o comportamento.</dd></div>
+              <div class="bdd-legend-item lg-then"><dt>Então</dt><dd>O resultado que dá para conferir. É ele que faz o teste passar ou falhar.</dd></div>
+              <div class="bdd-legend-item lg-and"><dt>E / Mas</dt><dd>Continuam o passo anterior, sem repetir a palavra.</dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <!-- Trilha guiada -->
+        <section class="bdd-panel bdd-missions" id="bdd-missions" aria-labelledby="bdd-missions-title">
+          <div class="bdd-missions-head">
+            <div>
+              <h2 id="bdd-missions-title">Trilha para iniciantes</h2>
+              <p class="bdd-lead">Seis missões curtas, do primeiro cenário ao Esquema do Cenário. Cada uma traz um cenário com um problema para você corrigir no editor.</p>
+            </div>
+            <div class="bdd-progress" id="bdd-missions-progress" role="status" aria-live="polite"></div>
+          </div>
+          <ol class="bdd-mission-list" id="bdd-mission-list"></ol>
+          <div class="bdd-mission-panel" id="bdd-mission-panel" hidden></div>
+        </section>
+
+        <div class="bdd-layout">
+          <!-- Painel de Entrada -->
+          <div class="bdd-panel">
+            <h2>Editor de Cenários</h2>
+            
+            <div class="session-selector">
+              <label for="session-select">Nível de Validação:</label>
+              <select id="session-select">
+                <option value="basico">Básico - Estrutura</option>
+                <option value="intermediario">Intermediário - Estrutura + Semântica</option>
+                <option value="avancado">Avançado - Estrutura + Semântica + Linguagem</option>
+                <option value="especialista">Especialista - Todas as Validações</option>
+              </select>
+              <div class="session-info" id="session-info"></div>
+              <div class="session-tips" id="session-tips"></div>
+            </div>
+
+            <div class="bdd-editor-tools">
+              <fieldset class="bdd-lang" aria-describedby="bdd-lang-help">
+                <legend>Idioma dos exemplos</legend>
+                <label><input type="radio" name="bdd-lang" value="pt" checked /> Português</label>
+                <label><input type="radio" name="bdd-lang" value="en" /> English</label>
+              </fieldset>
+              <p class="hint" id="bdd-lang-help">O validador entende os dois idiomas. Em português use <code>Funcionalidade</code>, <code>Cenário</code>, <code>Dado</code>, <code>Quando</code>, <code>Então</code>.</p>
+              <div class="bdd-toolbar" id="bdd-toolbar" role="toolbar" aria-label="Inserir palavra-chave na linha atual"></div>
+            </div>
+
+            <div class="gherkin-editor" id="gherkin-editor">
+              <div class="gherkin-gutter" id="gherkin-gutter" aria-hidden="true"></div>
+            <textarea 
+              id="gherkin-input" 
+              wrap="off"
+              spellcheck="false"
+              aria-describedby="bdd-editor-help"
+              aria-label="Editor de cenário Gherkin" 
+              placeholder="Digite seu cenário Gherkin aqui...
+
+Exemplo básico:
+Feature: Login de usuário
+  Como usuário do sistema
+  Eu quero fazer login
+  Para acessar minha conta
+
+  Scenario: Login com credenciais válidas
+    Given que o usuário está na página de login
+    When o usuário preenche email e senha corretos
+    Then o usuário deve ser redirecionado para o dashboard
+    And deve aparecer uma mensagem de boas-vindas
+
+Dica: Use o botão 'Carregar Exemplo' para ver exemplos mais complexos por nível."></textarea>
+            </div>
+            <p class="hint" id="bdd-editor-help">Atalho: <kbd>Ctrl</kbd> + <kbd>Enter</kbd> valida. Clique em um problema da lista para ir direto à linha.</p>
+            <label class="checkbox-group bdd-live">
+              <input type="checkbox" id="bdd-live-validate" /> Validar enquanto digito
+            </label>
+
+            <button class="btn-validate" id="btn-validate">Validar Cenário</button>
+
+            <a href="#" class="example-link" id="load-example">Carregar Exemplo</a>
+          </div>
+
+          <!-- Painel de Resultados -->
+          <div class="bdd-panel result-panel">
+            <h2>Resultados</h2>
+            <div id="results-container" aria-live="polite">
+              <div class="empty-state">
+                <p>Digite um cenário Gherkin e clique em "Validar Cenário" para ver os resultados.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Da especificação para o código -->
+        <section class="bdd-panel bdd-stepdefs" id="bdd-stepdefs" aria-labelledby="bdd-stepdefs-title">
+          <h2 id="bdd-stepdefs-title">Da especificação para o código</h2>
+          <p class="bdd-lead">Na automação, cada passo do cenário é ligado a uma função chamada <em>step definition</em>. Valide um cenário e veja abaixo o esqueleto que o Cucumber espera. Textos entre aspas viram <code>{string}</code> e números viram <code>{int}</code>.</p>
+          <div class="bdd-stepdefs-bar">
+            <div class="bdd-segmented" role="tablist" aria-label="Linguagem dos step definitions">
+              <button type="button" role="tab" id="stepdefs-tab-js" aria-selected="true" aria-controls="stepdefs-output" data-target-lang="js">Cucumber.js</button>
+              <button type="button" role="tab" id="stepdefs-tab-java" aria-selected="false" aria-controls="stepdefs-output" data-target-lang="java" tabindex="-1">Java</button>
+            </div>
+            <button type="button" class="btn btn-secondary" id="stepdefs-copy" disabled>Copiar código</button>
+          </div>
+          <pre class="bdd-stepdefs-output" id="stepdefs-output" role="tabpanel" aria-labelledby="stepdefs-tab-js" tabindex="0"><code>// Valide um cenário para gerar os step definitions.</code></pre>
+        </section>
+
+        <!-- Seção de Boas Práticas BDD -->
+        <div class="bdd-panel bdd-practices">
+          <h2>Como Usar e Boas Práticas de BDD</h2>
+          
+          <div style="margin-bottom: var(--spacing-lg);">
+            <h3 style="color: var(--level); font-size: var(--font-size-lg); margin-top: 0;">O que é BDD?</h3>
+            <p><strong>Behavior-Driven Development (BDD)</strong> é uma metodologia que foca no comportamento observável do software, usando uma linguagem natural estruturada (Gherkin) para descrever cenários de teste de forma compreensível para todos os stakeholders.</p>
+          </div>
+
+          <div style="margin-bottom: var(--spacing-lg);">
+            <h3 style="color: var(--level); font-size: var(--font-size-lg);">Estrutura Básica do Gherkin</h3>
+            <div style="background: color-mix(in srgb, var(--text) 2%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-top: var(--spacing-sm);">
+              <ul style="line-height: 1.8; margin: 0; padding-left: var(--spacing-lg);">
+                <li><strong>Feature:</strong> Descreve a funcionalidade sendo testada</li>
+                <li><strong>Como [persona]:</strong> Define quem se beneficia da funcionalidade</li>
+                <li><strong>Eu quero [objetivo]:</strong> O que a persona deseja fazer</li>
+                <li><strong>Para [benefício]:</strong> O valor ou benefício esperado</li>
+                <li><strong>Scenario:</strong> Um exemplo específico de comportamento</li>
+                <li><strong>Given:</strong> Contexto inicial (pré-condições)</li>
+                <li><strong>When:</strong> Ação que dispara o comportamento</li>
+                <li><strong>Then:</strong> Resultado esperado (pós-condições)</li>
+                <li><strong>And/But:</strong> Conectores para adicionar mais passos</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="margin-bottom: var(--spacing-lg);">
+            <h3 style="color: var(--level); font-size: var(--font-size-lg);">Boas Práticas</h3>
+            <div style="background: color-mix(in srgb, var(--success) 10%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--success); margin-top: var(--spacing-sm);">
+              <ul style="line-height: 1.8; margin: 0; padding-left: var(--spacing-lg);">
+                <li><strong>Use linguagem de negócio:</strong> Escreva em termos que stakeholders entendam</li>
+                <li><strong>Seja específico:</strong> Evite ambiguidades, use dados concretos</li>
+                <li><strong>Um cenário = um comportamento:</strong> Não misture múltiplos comportamentos</li>
+                <li><strong>Given-When-Then claro:</strong> Contexto → Ação → Resultado esperado</li>
+                <li><strong>Nomes descritivos:</strong> Scenario deve explicar o que está sendo testado</li>
+                <li><strong>Evite detalhes técnicos:</strong> Foque no "o quê", não no "como"</li>
+                <li><strong>Use Background:</strong> Para pré-condições compartilhadas entre cenários</li>
+                <li><strong>Scenario Outline:</strong> Para testar múltiplos dados com mesmo comportamento</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="margin-bottom: var(--spacing-lg);">
+            <h3 style="color: var(--level); font-size: var(--font-size-lg);">Evite</h3>
+            <div style="background: color-mix(in srgb, var(--danger) 10%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--danger); margin-top: var(--spacing-sm);">
+              <ul style="line-height: 1.8; margin: 0; padding-left: var(--spacing-lg);">
+                <li>Passos muito longos ou complexos</li>
+                <li>Linguagem técnica desnecessária (ex: "clique no botão submit")</li>
+                <li>Cenários que testam múltiplas funcionalidades</li>
+                <li>Dados hardcoded quando Scenario Outline seria melhor</li>
+                <li>Passos que dependem de ordem específica sem contexto claro</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="background: color-mix(in srgb, var(--level) 15%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
+            <h3 style="color: var(--level); font-size: var(--font-size-lg); margin-top: 0;">Dica de Uso</h3>
+            <p style="margin: 0;">Comece pelo nível <strong>Básico</strong> para entender a estrutura. Avance gradualmente para níveis mais complexos que validam semântica e uso correto da linguagem Gherkin. Use o botão "Carregar Exemplo" para ver exemplos práticos de cada nível.</p>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <div class="controls" style="justify-content: center; margin: var(--spacing-xl) auto; max-width: 800px;">
+      <a href="../../index.html" class="btn btn-secondary">← Voltar ao Início</a>
+      <a href="../fundamentos/bdd-cucumber.html" class="btn">Documentação BDD</a>
+    </div>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../js/index.js"></script>
+    <!-- Módulos BDD legados mantidos para compatibilidade -->
+  </body>
+</html>

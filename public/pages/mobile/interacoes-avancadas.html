@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Interações Avançadas — Mobile — QA Playground</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Interações Avançadas</h2>
+          <div class="section-desc">Teste gestos complexos e interações avançadas de mobile: pinch/zoom, pull to refresh, scroll infinito, multi-touch e shake detection. Esta página é ideal para validar automação de gestos complexos e comportamentos avançados de aplicações mobile.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Sobre esta Seção</h3>
+            <div class="info-box">
+              <p><strong>Atividades do Dia a Dia:</strong></p>
+              <ul>
+                <li>Testar gestos de pinch e zoom em imagens e mapas</li>
+                <li>Validar pull to refresh (puxar para atualizar)</li>
+                <li>Testar scroll infinito e lazy loading</li>
+                <li>Validar gestos multi-touch (dois dedos ou mais)</li>
+                <li>Testar shake detection (detecção de agitação)</li>
+                <li>Validar gestos de rotação e pan</li>
+                <li>Testar interações com elementos sobrepostos</li>
+              </ul>
+              
+              <p><strong>Como Utilizar:</strong></p>
+              <ol>
+                <li>Use um dispositivo móvel real ou emulador para melhor experiência</li>
+                <li>Teste gestos de pinch/zoom na área de imagem</li>
+                <li>Puxe para baixo na área de pull to refresh</li>
+                <li>Role até o final para testar scroll infinito</li>
+                <li>Use dois dedos para testar multi-touch</li>
+                <li>Use os <code>data-testid</code> para criar testes automatizados</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Pinch e Zoom</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Teste gestos de pinch (apertar) e zoom em imagens.</p>
+            
+            <div id="pinch-zoom-container" data-testid="pinch-zoom-container" style="background: var(--surface); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent); border-radius: var(--border-radius-md); padding: var(--spacing-md); overflow: hidden; position: relative;">
+              <div id="pinch-zoom-info" data-testid="pinch-zoom-info" style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--muted);">
+                <strong>Zoom:</strong> <span id="zoom-level" data-testid="zoom-level">100%</span> | 
+                <strong>Toques:</strong> <span id="touch-count" data-testid="touch-count">0</span>
+              </div>
+              <div id="pinch-zoom-area" data-testid="pinch-zoom-area" style="width: 100%; height: 300px; background: linear-gradient(135deg, color-mix(in srgb, var(--level) 10%, transparent) 0%, color-mix(in srgb, var(--level) 30%, transparent) 100%); border-radius: var(--border-radius-sm); display: flex; align-items: center; justify-content: center; position: relative; touch-action: none; cursor: grab;">
+                <img 
+                  src="../../assets/img/image-bug.png" 
+                  alt="Imagem para zoom"
+                  id="zoom-image"
+                  data-testid="zoom-image"
+                  style="max-width: 100%; max-height: 100%; object-fit: contain; user-select: none; pointer-events: none;"
+                />
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: var(--muted); pointer-events: none;">
+                  <div style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-xs);">🔍</div>
+                  <div>Use pinch para zoom in/out</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Pull to Refresh</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Puxe para baixo para atualizar o conteúdo.</p>
+            
+            <div id="pull-refresh-container" data-testid="pull-refresh-container" style="background: var(--surface); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent); border-radius: var(--border-radius-md); overflow: hidden; position: relative; touch-action: pan-y;">
+              <div id="pull-refresh-indicator" data-testid="pull-refresh-indicator" style="position: absolute; top: 0; left: 0; right: 0; height: 60px; display: flex; align-items: center; justify-content: center; background: var(--level); color: var(--on-accent); transform: translateY(-100%); transition: transform 0.3s;">
+                <span id="pull-refresh-text" data-testid="pull-refresh-text">⬇️ Solte para atualizar</span>
+              </div>
+              <div id="pull-refresh-content" data-testid="pull-refresh-content" style="padding: var(--spacing-md); min-height: 200px;">
+                <div id="refresh-timestamp" data-testid="refresh-timestamp" style="font-size: var(--font-size-sm); color: var(--muted); margin-bottom: var(--spacing-md);">
+                  Última atualização: <span id="last-refresh" data-testid="last-refresh">-</span>
+                </div>
+                <div style="display: grid; gap: var(--spacing-sm);">
+                  <div style="padding: var(--spacing-sm); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-sm);">Item 1</div>
+                  <div style="padding: var(--spacing-sm); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-sm);">Item 2</div>
+                  <div style="padding: var(--spacing-sm); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-sm);">Item 3</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Scroll Infinito</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Role até o final para carregar mais conteúdo automaticamente.</p>
+            
+            <div id="infinite-scroll-container" data-testid="infinite-scroll-container" style="background: var(--surface); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent); border-radius: var(--border-radius-md); max-height: 400px; overflow-y: auto; padding: var(--spacing-md);">
+              <div id="infinite-scroll-content" data-testid="infinite-scroll-content">
+                <!-- Conteúdo será adicionado dinamicamente -->
+              </div>
+              <div id="infinite-scroll-loader" data-testid="infinite-scroll-loader" style="display: none; text-align: center; padding: var(--spacing-md); color: var(--muted);">
+                Carregando mais itens...
+              </div>
+              <div id="infinite-scroll-end" data-testid="infinite-scroll-end" style="display: none; text-align: center; padding: var(--spacing-md); color: var(--muted); font-size: var(--font-size-sm);">
+                Fim do conteúdo
+              </div>
+            </div>
+            <div style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--muted);">
+              <strong>Itens carregados:</strong> <span id="items-loaded" data-testid="items-loaded">0</span>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Multi-Touch</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Teste gestos com múltiplos toques simultâneos.</p>
+            
+            <div id="multi-touch-area" data-testid="multi-touch-area" style="background: var(--surface); border: 2px dashed var(--level); border-radius: var(--border-radius-md); padding: var(--spacing-lg); min-height: 250px; position: relative; touch-action: none;">
+              <div id="multi-touch-info" data-testid="multi-touch-info" style="margin-bottom: var(--spacing-md); text-align: center;">
+                <div style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-xs);">👆</div>
+                <div style="color: var(--muted); font-size: var(--font-size-sm);">Toque com múltiplos dedos</div>
+              </div>
+              <div id="multi-touch-points" data-testid="multi-touch-points" style="position: relative; width: 100%; height: 200px;">
+                <!-- Pontos de toque serão renderizados aqui -->
+              </div>
+              <div id="multi-touch-log" data-testid="multi-touch-log" style="margin-top: var(--spacing-md); font-size: var(--font-size-sm); color: var(--muted); max-height: 100px; overflow-y: auto;">
+                <strong>Eventos:</strong>
+                <div id="touch-events-log" style="font-family: monospace; font-size: var(--font-size-xs); margin-top: var(--spacing-xs);"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Shake Detection</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">Simulação de detecção de agitação do dispositivo (shake).</p>
+            
+            <div id="shake-container" data-testid="shake-container" style="background: var(--surface); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent); border-radius: var(--border-radius-md); padding: var(--spacing-lg); text-align: center;">
+              <div id="shake-icon" data-testid="shake-icon" style="font-size: var(--font-size-4xl); margin-bottom: var(--spacing-md);">📱</div>
+              <div id="shake-status" data-testid="shake-status" style="font-size: var(--font-size-lg); font-weight: 600; color: var(--level); margin-bottom: var(--spacing-sm);">
+                Aguardando shake...
+              </div>
+              <div style="font-size: var(--font-size-sm); color: var(--muted); margin-bottom: var(--spacing-md);">
+                <p>Em dispositivos reais, use o acelerômetro para detectar shake.</p>
+                <p>Nesta página, clique no botão abaixo para simular.</p>
+              </div>
+              <button id="simulate-shake" data-testid="simulate-shake" class="btn">Simular Shake</button>
+              <div id="shake-count" data-testid="shake-count" style="margin-top: var(--spacing-md); font-size: var(--font-size-sm); color: var(--muted);">
+                <strong>Shakes detectados:</strong> <span id="shake-counter">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Guia do especialista -->
+          <div class="subsection mob-expert" id="mobile-guia">
+            <h3>Guia do especialista</h3>
+            <p class="section-lead">Gestos avançados são onde a automação mobile mais quebra: dependem de tempo, de vários dedos e de sensores. A regra é testar o comportamento (o zoom mudou, a lista atualizou), não a coreografia exata dos dedos.</p>
+            <div class="guide-grid">
+              <div class="guide-item">
+                <h4>Pinça e multi-touch</h4>
+                <ul><li>São dois ponteiros simultâneos. Em Appium, duas sequências W3C executadas juntas; em Playwright, toques com dois pontos via CDP (só Chromium).</li><li>Verifique o resultado (<code>zoom-level</code>), não as coordenadas.</li><li>No iOS, gestos de três dedos podem ser capturados pelo sistema (acessibilidade e zoom do iOS).</li></ul>
+              </div>
+              <div class="guide-item">
+                <h4>Puxar para atualizar e scroll infinito</h4>
+                <ul><li>O gesto só vale com a lista no topo (<code>scrollTop === 0</code>). Teste também puxar com a lista rolada: nada deve acontecer.</li><li>No scroll infinito, verifique o contador, o indicador de carregamento e o fim da lista.</li><li>Rolagem infinita sem fim é um problema de acessibilidade: o rodapé fica inalcançável.</li></ul>
+              </div>
+              <div class="guide-item is-criteria">
+                <h4>Sensores (shake)</h4>
+                <ul><li>Emuladores e navegadores de desktop não têm acelerômetro. Dispare um <code>DeviceMotionEvent</code> sintético para testar a lógica.</li><li>No iOS 13+, o acesso ao sensor exige permissão (<code>DeviceMotionEvent.requestPermission()</code>) iniciada por um toque.</li><li>Critério: toda ação feita por movimento também tem um botão (WCAG 2.5.4), como o "Simular Shake" desta página.</li></ul>
+              </div>
+              <div class="guide-item is-pitfall">
+                <h4>Armadilhas comuns</h4>
+                <ul><li>Usar <code>TouchAction</code>/<code>MultiTouchAction</code>: estão obsoletos desde o java-client 8 e foram removidos dos clientes mais novos. Os exemplos com Appium mais abaixo ainda usam essa API antiga; prefira as W3C Actions.</li><li>Coordenadas fixas: mudam com o aparelho e a orientação. Calcule a partir do retângulo do elemento.</li><li>Esperas fixas (<code>sleep</code>) depois de gestos. Espere pelo estado: contador, texto ou visibilidade.</li></ul>
+              </div>
+              <div class="guide-item is-wide">
+                <h4>Automatize</h4>
+                <div class="a11y-tabs" data-tabs>
+              <div role="tablist" aria-label="Exemplos de automação">
+                <button type="button" role="tab" id="adv-tab-pw" aria-controls="adv-panel-pw" aria-selected="true">Playwright</button><button type="button" role="tab" id="adv-tab-appium" aria-controls="adv-panel-appium" aria-selected="false" tabindex="-1">Appium 2 (Java)</button>
+              </div>
+              <div role="tabpanel" id="adv-panel-pw" aria-labelledby="adv-tab-pw" tabindex="0">
+                <p class="hint">Sensores e scroll são testados pelo estado da página; a pinça usa dois toques via CDP.</p>
+                <pre class="test-code active"><code>import { test, expect, devices } from '@playwright/test';
+
+test.use({ ...devices['Pixel 7'] });
+
+test('shake simulado incrementa o contador', async ({ page }) =&gt; {
+  await page.goto('/pages/mobile/interacoes-avancadas.html');
+  await page.evaluate(() =&gt;
+    window.dispatchEvent(
+      new DeviceMotionEvent('devicemotion', { accelerationIncludingGravity: { x: 25, y: 0, z: 9.8 } })
+    )
+  );
+  await expect(page.getByTestId('shake-count')).toContainText('1');
+});
+
+test('scroll infinito carrega mais itens', async ({ page }) =&gt; {
+  await page.goto('/pages/mobile/interacoes-avancadas.html');
+  const lista = page.getByTestId('infinite-scroll-container');
+  const antes = Number((await page.getByTestId('items-loaded').innerText()).replace(/\D/g, ''));
+  await lista.evaluate((el) =&gt; (el.scrollTop = el.scrollHeight));
+  await expect
+    .poll(async () =&gt; Number((await page.getByTestId('items-loaded').innerText()).replace(/\D/g, '')))
+    .toBeGreaterThan(antes);
+});
+
+test('pinça com dois dedos aumenta o zoom', async ({ page, context }) =&gt; {
+  await page.goto('/pages/mobile/interacoes-avancadas.html');
+  const area = page.getByTestId('pinch-zoom-area');
+  await area.scrollIntoViewIfNeeded();
+  const b = (await area.boundingBox())!;
+  const cx = b.x + b.width / 2, cy = b.y + b.height / 2;
+  const cdp = await context.newCDPSession(page);
+
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: cx - 20, y: cy, id: 1 }, { x: cx + 20, y: cy, id: 2 }] });
+  for (let d = 30; d &lt;= 120; d += 15) {
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: cx - d, y: cy, id: 1 }, { x: cx + d, y: cy, id: 2 }] });
+  }
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+
+  await expect(page.getByTestId('zoom-level')).not.toContainText('100%');
+});</code></pre>
+              </div><div role="tabpanel" id="adv-panel-appium" aria-labelledby="adv-tab-appium" tabindex="0" hidden>
+                <p class="hint">Pinça com dois dedos usando W3C Actions: duas sequências executadas ao mesmo tempo.</p>
+                <pre class="test-code active"><code>PointerInput dedo1 = new PointerInput(PointerInput.Kind.TOUCH, "dedo1");
+PointerInput dedo2 = new PointerInput(PointerInput.Kind.TOUCH, "dedo2");
+int cx = 540, cy = 900; // calcule a partir de element.getRect()
+
+Sequence a = new Sequence(dedo1, 0)
+    .addAction(dedo1.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), cx - 30, cy))
+    .addAction(dedo1.createPointerDown(0))
+    .addAction(dedo1.createPointerMove(Duration.ofMillis(400), PointerInput.Origin.viewport(), cx - 250, cy))
+    .addAction(dedo1.createPointerUp(0));
+
+Sequence b = new Sequence(dedo2, 0)
+    .addAction(dedo2.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), cx + 30, cy))
+    .addAction(dedo2.createPointerDown(0))
+    .addAction(dedo2.createPointerMove(Duration.ofMillis(400), PointerInput.Origin.viewport(), cx + 250, cy))
+    .addAction(dedo2.createPointerUp(0));
+
+driver.perform(List.of(a, b)); // os dois dedos se afastam: zoom +
+
+// Em apps nativos Android (UiAutomator2) também há atalhos prontos:
+driver.executeScript("mobile: pinchOpenGesture", Map.of(
+    "elementId", ((RemoteWebElement) imagem).getId(), "percent", 0.75));</code></pre>
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection" style="margin-top: var(--spacing-lg);">
+            <h3>Informações para Testes</h3>
+            <div class="info-box">
+              <p><strong>Cenários de Teste:</strong></p>
+              <ul>
+                <li>Testar pinch e zoom em imagens e mapas</li>
+                <li>Validar pull to refresh em listas</li>
+                <li>Testar scroll infinito e lazy loading</li>
+                <li>Validar gestos multi-touch</li>
+                <li>Testar shake detection</li>
+                <li>Validar gestos de rotação e pan</li>
+                <li>Testar performance de gestos complexos</li>
+              </ul>
+              
+              <p><strong>Elementos identificáveis:</strong></p>
+              <ul>
+                <li><code>data-testid="pinch-zoom-container"</code> - Container de pinch/zoom</li>
+                <li><code>data-testid="zoom-level"</code> - Nível de zoom atual</li>
+                <li><code>data-testid="pull-refresh-container"</code> - Container de pull to refresh</li>
+                <li><code>data-testid="infinite-scroll-container"</code> - Container de scroll infinito</li>
+                <li><code>data-testid="items-loaded"</code> - Contador de itens carregados</li>
+                <li><code>data-testid="multi-touch-area"</code> - Área de multi-touch</li>
+                <li><code>data-testid="shake-container"</code> - Container de shake detection</li>
+              </ul>
+
+              <p><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-appium-ruby">Appium + Ruby</button>
+                <button class="test-tab" data-target="tab-appium-java">Appium + Java</button>
+                <button class="test-tab" data-target="tab-appium-robot">Appium + Robot</button>
+              </div>
+              
+              <div class="test-tab-content">
+                <pre id="tab-appium-ruby" class="test-code active"><code>
+# Appium + Ruby - Testar interações avançadas
+caps = {
+  platformName: 'Android',
+  deviceName: 'Android Emulator',
+  browserName: 'Chrome',
+  automationName: 'UiAutomator2'
+}
+driver = Appium::Driver.new({ caps: caps }).start_driver
+
+driver.get('http://localhost:8080/pages/mobile/interacoes-avancadas.html')
+
+# Testar pinch e zoom
+pinch_area = driver.find_element(:css, '[data-testid="pinch-zoom-area"]')
+Appium::TouchAction.new
+  .press(x: 200, y: 150)
+  .move_to(x: 250, y: 200)
+  .release
+  .perform
+
+# Testar pull to refresh
+refresh_container = driver.find_element(:css, '[data-testid="pull-refresh-container"]')
+Appium::TouchAction.new
+  .press(element: refresh_container, x: 0, y: 0)
+  .move_to(element: refresh_container, x: 0, y: 100)
+  .release
+  .perform
+
+# Testar scroll infinito
+scroll_container = driver.find_element(:css, '[data-testid="infinite-scroll-container"]')
+driver.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', scroll_container)
+sleep(2) # Aguardar carregamento
+items_loaded = driver.find_element(:css, '[data-testid="items-loaded"]')
+expect(items_loaded.text.to_i).to be > 0
+                </code></pre>
+              
+                <pre id="tab-appium-java" class="test-code"><code>
+// Appium + Java - Testar interações avançadas
+DesiredCapabilities caps = new DesiredCapabilities();
+caps.setCapability("platformName", "Android");
+caps.setCapability("deviceName", "Android Emulator");
+caps.setCapability("browserName", "Chrome");
+caps.setCapability("automationName", "UiAutomator2");
+
+AppiumDriver driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), caps);
+
+driver.get("http://localhost:8080/pages/mobile/interacoes-avancadas.html");
+
+// Testar pinch e zoom
+WebElement pinchArea = driver.findElement(By.cssSelector("[data-testid='pinch-zoom-area']"));
+TouchAction touchAction = new TouchAction(driver);
+touchAction.press(pinchArea, 200, 150)
+  .moveTo(pinchArea, 250, 200)
+  .release()
+  .perform();
+
+// Testar pull to refresh
+WebElement refreshContainer = driver.findElement(By.cssSelector("[data-testid='pull-refresh-container']"));
+new TouchAction(driver)
+  .press(refreshContainer, 0, 0)
+  .moveTo(refreshContainer, 0, 100)
+  .release()
+  .perform();
+
+// Testar scroll infinito
+WebElement scrollContainer = driver.findElement(By.cssSelector("[data-testid='infinite-scroll-container']"));
+JavascriptExecutor js = (JavascriptExecutor) driver;
+js.executeScript("arguments[0].scrollTop = arguments[0].scrollHeight", scrollContainer);
+Thread.sleep(2000);
+WebElement itemsLoaded = driver.findElement(By.cssSelector("[data-testid='items-loaded']"));
+assert Integer.parseInt(itemsLoaded.getText()) > 0;
+                </code></pre>
+              
+                <pre id="tab-appium-robot" class="test-code"><code>
+*** Settings ***
+Library    AppiumLibrary
+
+*** Test Cases ***
+Testar Interações Avançadas
+    Open Application    http://localhost:4723/wd/hub
+    ...    platformName=Android
+    ...    deviceName=Android Emulator
+    ...    browserName=Chrome
+    ...    automationName=UiAutomator2
+    
+    Go To Url    http://localhost:8080/pages/mobile/interacoes-avancadas.html
+    
+    # Testar pinch e zoom
+    Swipe    css:[data-testid="pinch-zoom-area"]    200    150    250    200
+    
+    # Testar pull to refresh
+    Swipe    css:[data-testid="pull-refresh-container"]    0    0    0    100
+    
+    # Testar scroll infinito
+    Scroll    css:[data-testid="infinite-scroll-container"]    down
+    Wait Until Element Contains    css:[data-testid="items-loaded"]    1
+    
+    # Testar shake (simulado)
+    Click Element    css:[data-testid="simulate-shake"]
+    Element Should Contain    css:[data-testid="shake-status"]    Shake detectado
+                </code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../js/index.js"></script>
+    <script>
+      // Pinch e Zoom
+      (function() {
+        const pinchArea = document.getElementById('pinch-zoom-area');
+        const zoomImage = document.getElementById('zoom-image');
+        const zoomLevel = document.getElementById('zoom-level');
+        const touchCount = document.getElementById('touch-count');
+        
+        let currentScale = 1;
+        let initialDistance = 0;
+        let touches = [];
+
+        if (pinchArea) {
+          pinchArea.addEventListener('touchstart', (e) => {
+            touches = Array.from(e.touches);
+            touchCount.textContent = touches.length;
+            
+            if (touches.length === 2) {
+              const touch1 = touches[0];
+              const touch2 = touches[1];
+              initialDistance = Math.hypot(
+                touch2.clientX - touch1.clientX,
+                touch2.clientY - touch1.clientY
+              );
+            }
+          });
+
+          pinchArea.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            touches = Array.from(e.touches);
+            touchCount.textContent = touches.length;
+            
+            if (touches.length === 2) {
+              const touch1 = touches[0];
+              const touch2 = touches[1];
+              const currentDistance = Math.hypot(
+                touch2.clientX - touch1.clientX,
+                touch2.clientY - touch1.clientY
+              );
+              
+              if (initialDistance > 0) {
+                const scale = currentDistance / initialDistance;
+                currentScale = Math.max(0.5, Math.min(3, currentScale * scale));
+                zoomImage.style.transform = `scale(${currentScale})`;
+                zoomLevel.textContent = Math.round(currentScale * 100) + '%';
+                initialDistance = currentDistance;
+              }
+            }
+          });
+
+          pinchArea.addEventListener('touchend', () => {
+            touches = [];
+            touchCount.textContent = '0';
+            initialDistance = 0;
+          });
+        }
+      })();
+
+      // Pull to Refresh
+      (function() {
+        const container = document.getElementById('pull-refresh-container');
+        const indicator = document.getElementById('pull-refresh-indicator');
+        const content = document.getElementById('pull-refresh-content');
+        const lastRefresh = document.getElementById('last-refresh');
+        
+        let startY = 0;
+        let currentY = 0;
+        let isPulling = false;
+
+        if (container) {
+          container.addEventListener('touchstart', (e) => {
+            if (container.scrollTop === 0) {
+              startY = e.touches[0].clientY;
+              isPulling = true;
+            }
+          });
+
+          container.addEventListener('touchmove', (e) => {
+            if (isPulling && container.scrollTop === 0) {
+              currentY = e.touches[0].clientY;
+              const pullDistance = currentY - startY;
+              
+              if (pullDistance > 0) {
+                const pullPercent = Math.min(pullDistance / 100, 1);
+                indicator.style.transform = `translateY(${pullDistance - 60}px)`;
+                
+                if (pullDistance > 60) {
+                  indicator.querySelector('#pull-refresh-text').textContent = '⬆️ Solte para atualizar';
+                } else {
+                  indicator.querySelector('#pull-refresh-text').textContent = '⬇️ Puxe para atualizar';
+                }
+              }
+            }
+          });
+
+          container.addEventListener('touchend', () => {
+            if (isPulling && currentY - startY > 60) {
+              // Atualizar
+              lastRefresh.textContent = new Date().toLocaleTimeString();
+              indicator.style.transform = 'translateY(0)';
+              
+              setTimeout(() => {
+                indicator.style.transform = 'translateY(-100%)';
+              }, 1000);
+            } else {
+              indicator.style.transform = 'translateY(-100%)';
+            }
+            isPulling = false;
+            startY = 0;
+            currentY = 0;
+          });
+        }
+      })();
+
+      // Scroll Infinito
+      (function() {
+        const container = document.getElementById('infinite-scroll-container');
+        const content = document.getElementById('infinite-scroll-content');
+        const loader = document.getElementById('infinite-scroll-loader');
+        const end = document.getElementById('infinite-scroll-end');
+        const itemsLoaded = document.getElementById('items-loaded');
+        
+        let itemCount = 0;
+        const maxItems = 50;
+        const itemsPerLoad = 10;
+
+        function loadItems() {
+          if (itemCount >= maxItems) {
+            end.style.display = 'block';
+            loader.style.display = 'none';
+            return;
+          }
+
+          loader.style.display = 'block';
+          
+          setTimeout(() => {
+            for (let i = 0; i < itemsPerLoad && itemCount < maxItems; i++) {
+              const item = document.createElement('div');
+              item.style.padding = 'var(--spacing-sm)';
+              item.style.background = 'rgba(122, 168, 116, 0.1)';
+              item.style.borderRadius = 'var(--border-radius-sm)';
+              item.style.marginBottom = 'var(--spacing-xs)';
+              item.textContent = `Item ${itemCount + 1}`;
+              item.setAttribute('data-testid', `infinite-item-${itemCount + 1}`);
+              content.appendChild(item);
+              itemCount++;
+            }
+            
+            itemsLoaded.textContent = itemCount;
+            loader.style.display = 'none';
+          }, 500);
+        }
+
+        if (container) {
+          container.addEventListener('scroll', () => {
+            const scrollTop = container.scrollTop;
+            const scrollHeight = container.scrollHeight;
+            const clientHeight = container.clientHeight;
+            
+            if (scrollTop + clientHeight >= scrollHeight - 50 && itemCount < maxItems) {
+              loadItems();
+            }
+          });
+
+          // Carregar itens iniciais
+          loadItems();
+        }
+      })();
+
+      // Multi-Touch
+      (function() {
+        const area = document.getElementById('multi-touch-area');
+        const points = document.getElementById('multi-touch-points');
+        const log = document.getElementById('touch-events-log');
+        
+        let activeTouches = new Map();
+
+        function addLogEntry(message) {
+          if (log) {
+            const entry = document.createElement('div');
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+            
+            while (log.children.length > 10) {
+              log.removeChild(log.firstChild);
+            }
+          }
+        }
+
+        if (area) {
+          area.addEventListener('touchstart', (e) => {
+            Array.from(e.touches).forEach(touch => {
+              const point = document.createElement('div');
+              point.style.position = 'absolute';
+              point.style.width = '30px';
+              point.style.height = '30px';
+              point.style.borderRadius = '50%';
+              point.style.background = 'var(--accent)';
+              point.style.left = (touch.clientX - area.offsetLeft - 15) + 'px';
+              point.style.top = (touch.clientY - area.offsetTop - 15) + 'px';
+              point.style.pointerEvents = 'none';
+              point.setAttribute('data-touch-id', touch.identifier);
+              
+              points.appendChild(point);
+              activeTouches.set(touch.identifier, point);
+            });
+            
+            addLogEntry(`Touch start: ${e.touches.length} toque(s)`);
+          });
+
+          area.addEventListener('touchmove', (e) => {
+            Array.from(e.touches).forEach(touch => {
+              const point = activeTouches.get(touch.identifier);
+              if (point) {
+                point.style.left = (touch.clientX - area.offsetLeft - 15) + 'px';
+                point.style.top = (touch.clientY - area.offsetTop - 15) + 'px';
+              }
+            });
+          });
+
+          area.addEventListener('touchend', (e) => {
+            Array.from(e.changedTouches).forEach(touch => {
+              const point = activeTouches.get(touch.identifier);
+              if (point) {
+                point.remove();
+                activeTouches.delete(touch.identifier);
+              }
+            });
+            
+            addLogEntry(`Touch end: ${e.touches.length} toque(s) restante(s)`);
+          });
+        }
+      })();
+
+      // Shake Detection
+      (function() {
+        const shakeStatus = document.getElementById('shake-status');
+        const shakeIcon = document.getElementById('shake-icon');
+        const shakeCounter = document.getElementById('shake-counter');
+        const simulateBtn = document.getElementById('simulate-shake');
+        
+        let shakeCount = 0;
+
+        function triggerShake() {
+          shakeCount++;
+          shakeCounter.textContent = shakeCount;
+          shakeStatus.textContent = 'Shake detectado!';
+          shakeStatus.style.color = 'var(--accent)';
+          shakeIcon.textContent = '📳';
+          
+          setTimeout(() => {
+            shakeStatus.textContent = 'Aguardando shake...';
+            shakeStatus.style.color = 'var(--accent)';
+            shakeIcon.textContent = '📱';
+          }, 2000);
+        }
+
+        if (simulateBtn) {
+          simulateBtn.addEventListener('click', triggerShake);
+        }
+
+        // Detecção real de shake usando DeviceMotionEvent (se disponível)
+        if (window.DeviceMotionEvent) {
+          let lastAcceleration = { x: 0, y: 0, z: 0 };
+          const threshold = 15;
+
+          window.addEventListener('devicemotion', (e) => {
+            const acceleration = e.accelerationIncludingGravity;
+            
+            if (acceleration) {
+              const deltaX = Math.abs(acceleration.x - lastAcceleration.x);
+              const deltaY = Math.abs(acceleration.y - lastAcceleration.y);
+              const deltaZ = Math.abs(acceleration.z - lastAcceleration.z);
+              
+              if (deltaX > threshold || deltaY > threshold || deltaZ > threshold) {
+                triggerShake();
+              }
+              
+              lastAcceleration = { x: acceleration.x, y: acceleration.y, z: acceleration.z };
+            }
+          });
+        }
+      })();
+
+      // Inicializar abas de teste
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -1,9 +1,8 @@
 # Arquivos que não devem ser enviados para Vercel
 # (mas os arquivos compilados precisam estar incluídos)
 
-# Código fonte (não necessário no deploy, mas build precisa deles)
-# src/
-# styles/
+# Código fonte: NÃO ignorar src/, public/, server/ e tools/
+# (o build da Vercel usa todos eles)
 
 # Arquivos de desenvolvimento
 node_modules/
@@ -28,7 +27,11 @@ Thumbs.db
 *.tsbuildinfo
 
 # Scripts de migração (não necessários no deploy)
-scripts/
+# A barra inicial limita à raiz: sem ela, "scripts/" ignoraria qualquer pasta
+# com esse nome no projeto.
+/scripts/
 
-# Documentação de desenvolvimento
-docs/
+# Documentação de desenvolvimento (só a pasta da raiz).
+# Atenção: "docs/" sem barra inicial também ignorava server/docs/, que é
+# código da API (documentação servida em GET /api e coleção Postman).
+/docs/

@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Shadow DOM — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>Shadow DOM</h2>
+          <div class="section-desc">Teste automação e inspeção em componentes com Shadow DOM. O Shadow DOM permite encapsular estilos e estrutura HTML, criando um desafio interessante para testes automatizados que precisam acessar elementos dentro do shadow root.</div>
+        </div>
+
+        <div class="subsections subsections-vertical">
+          <div class="subsection">
+            <h3>Componente com Shadow DOM</h3>
+            <p class="muted" style="margin-bottom: var(--spacing-md);">
+              O componente abaixo utiliza Shadow DOM para encapsular seu conteúdo. Teste diferentes estratégias para acessar elementos dentro do shadow root.
+            </p>
+
+            <div id="shadow-host" data-testid="shadow-host" style="margin-bottom: var(--spacing-lg); padding: var(--spacing-lg); border: 2px solid color-mix(in srgb, var(--level) 20%, transparent); border-radius: var(--border-radius-md); background: var(--surface);"></div>
+
+            <div id="shadow-result" data-testid="shadow-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 60px;">
+              <p class="muted" style="margin: 0;">Interaja com os elementos acima para ver os resultados.</p>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Informações para Testes</h3>
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
+              <p style="margin-bottom: var(--spacing-sm);"><strong>Desafios de Automação:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Elementos dentro do Shadow DOM não são acessíveis por seletores CSS normais</li>
+                <li>É necessário atravessar o shadow root para acessar elementos internos</li>
+                <li>Diferentes frameworks têm diferentes abordagens para Shadow DOM</li>
+                <li>Elementos podem ter estilos encapsulados que não vazam para fora</li>
+                <li>IDs e classes dentro do Shadow DOM são isolados do documento principal</li>
+              </ul>
+              
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Estratégias Recomendadas:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li>Use <code>shadowRoot</code> para acessar o shadow DOM (modo 'open')</li>
+                <li>Prefira <code>data-testid</code> dentro do Shadow DOM para seleção estável</li>
+                <li>Use métodos específicos do framework (ex: <code>cy.shadow()</code> no Cypress)</li>
+                <li>Considere usar seletores por conteúdo quando apropriado</li>
+                <li>Teste tanto elementos do host quanto do shadow root</li>
+              </ul>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Exemplos de Teste Automatizado:</strong></p>
+              
+              <div class="test-tabs">
+                <button class="test-tab active" data-target="tab-cypress">Cypress</button>
+                <button class="test-tab" data-target="tab-playwright">Playwright</button>
+                <button class="test-tab" data-target="tab-selenium-java">Selenium (Java)</button>
+                <button class="test-tab" data-target="tab-capybara">Capybara (Ruby)</button>
+                <button class="test-tab" data-target="tab-robot">Robot Framework</button>
+              </div>
+              
+              <div class="test-tab-content">
+              
+                <pre id="tab-cypress" class="test-code active"><code>
+// Cypress - Acessar Shadow DOM
+cy.get('[data-testid="shadow-host"]').shadow().find('[data-testid="shadow-btn"]').click()
+cy.get('[data-testid="shadow-host"]').shadow().find('[data-testid="shadow-input"]').type('Texto')
+                </code></pre>
+              
+                <pre id="tab-playwright" class="test-code"><code>
+// Playwright - Acessar Shadow DOM
+const shadowHost = page.getByTestId('shadow-host')
+const shadowRoot = await shadowHost.evaluateHandle(el => el.shadowRoot)
+const shadowBtn = shadowRoot.evaluateHandle(root => root.querySelector('[data-testid="shadow-btn"]'))
+await shadowBtn.click()
+                </code></pre>
+              
+                <pre id="tab-selenium-java" class="test-code"><code>
+// Selenium (Java) - Acessar Shadow DOM
+WebElement host = driver.findElement(By.cssSelector("[data-testid='shadow-host']"));
+JavascriptExecutor js = (JavascriptExecutor) driver;
+WebElement shadowRoot = (WebElement) js.executeScript("return arguments[0].shadowRoot", host);
+WebElement shadowBtn = shadowRoot.findElement(By.cssSelector("[data-testid='shadow-btn']"));
+shadowBtn.click();
+                </code></pre>
+              
+                <pre id="tab-capybara" class="test-code"><code>
+# Capybara (Ruby) - Acessar Shadow DOM
+shadow_host = find('[data-testid="shadow-host"]')
+shadow_root = page.evaluate_script('arguments[0].shadowRoot', shadow_host.native)
+shadow_btn = page.evaluate_script('arguments[0].querySelector("[data-testid=\\"shadow-btn\\"]")', shadow_root)
+page.execute_script('arguments[0].click()', shadow_btn)
+                </code></pre>
+                  
+                <pre id="tab-robot" class="test-code"><code>
+*** Test Cases ***
+Acessar Shadow DOM
+    ${shadow_root}=    Execute JavaScript    return document.querySelector('[data-testid="shadow-host"]').shadowRoot
+    ${shadow_btn}=    Execute JavaScript    return arguments[0].querySelector('[data-testid="shadow-btn"]')    ${shadow_root}
+    Execute JavaScript    arguments[0].click()    ${shadow_btn}
+                </code></pre>
+              
+              </div>
+
+              <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Elementos identificáveis:</strong></p>
+              <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
+                <li><code>data-testid="shadow-host"</code> - Host do Shadow DOM</li>
+                <li><code>data-testid="shadow-btn"</code> - Botão dentro do Shadow DOM</li>
+                <li><code>data-testid="shadow-content"</code> - Conteúdo dentro do Shadow DOM</li>
+                <li><code>data-testid="shadow-input"</code> - Input dentro do Shadow DOM</li>
+                <li><code>data-testid="shadow-result"</code> - Área de resultados</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../../js/index.js"></script>
+    <script>
+      const host = document.getElementById('shadow-host');
+      const shadow = host.attachShadow({mode: 'open'});
+      
+      shadow.innerHTML = `
+        <style>
+          :host {
+            display: block;
+            padding: var(--spacing-md);
+          }
+          .shadow-container {
+            padding: var(--spacing-md);
+            background: color-mix(in srgb, var(--level) 10%, transparent);
+            border-radius: var(--border-radius-md);
+            border: 1px solid color-mix(in srgb, var(--level) 30%, transparent);
+          }
+          .shadow-btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--accent, var(--level));
+            color: var(--on-accent);
+            border: none;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+          }
+          .shadow-btn:hover {
+            background: var(--accent-hover, var(--accent-strong));
+          }
+          .shadow-input {
+            padding: var(--spacing-sm);
+            border: 1px solid color-mix(in srgb, var(--level) 30%, transparent);
+            border-radius: var(--border-radius-sm);
+            width: 100%;
+            margin-bottom: var(--spacing-sm);
+          }
+          .shadow-content {
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-sm);
+            background: white;
+            border-radius: var(--border-radius-sm);
+            color: var(--text);
+          }
+        </style>
+        <div class="shadow-container">
+          <h4 style="margin-top: 0; color: var(--accent, var(--level));">Conteúdo dentro do Shadow DOM</h4>
+          <button id="shadow-btn" class="shadow-btn" data-testid="shadow-btn">Clique aqui</button>
+          <input type="text" id="shadow-input" class="shadow-input" data-testid="shadow-input" placeholder="Digite algo aqui...">
+          <div id="shadow-content" class="shadow-content" data-testid="shadow-content">Conteúdo inicial do Shadow DOM</div>
+        </div>
+      `;
+      
+      const shadowBtn = shadow.getElementById('shadow-btn');
+      const shadowInput = shadow.getElementById('shadow-input');
+      const shadowContent = shadow.getElementById('shadow-content');
+      const resultEl = document.getElementById('shadow-result');
+      
+      let clickCount = 0;
+      
+      shadowBtn.addEventListener('click', function() {
+        clickCount++;
+        shadowContent.textContent = `Botão clicado ${clickCount} vez(es)!`;
+        shadowContent.style.background = clickCount % 2 === 0 ? 'rgba(122, 168, 116, 0.2)' : 'white';
+        
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        resultEl.innerHTML = `
+          <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>✅ Ação detectada:</strong></p>
+          <p style="margin: 0; color: var(--muted);">Botão dentro do Shadow DOM foi clicado ${clickCount} vez(es)</p>
+          <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+        `;
+        window.showToast('Botão do Shadow DOM clicado!');
+      });
+      
+      shadowInput.addEventListener('input', function() {
+        shadowContent.textContent = `Você digitou: ${this.value || '(vazio)'}`;
+        
+        const timestamp = new Date().toLocaleTimeString('pt-BR');
+        resultEl.innerHTML = `
+          <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>✅ Input detectado:</strong></p>
+          <p style="margin: 0; color: var(--muted);">Valor digitado: "${this.value || '(vazio)'}"</p>
+          <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
+        `;
+      });
+
+      // Inicializar abas de teste automatizado
+      (function() {
+        function initTabs() {
+          const tabsContainer = document.querySelector('.test-tabs');
+          
+          if (!tabsContainer) {
+            setTimeout(initTabs, 100);
+            return;
+          }
+
+          tabsContainer.addEventListener('click', function(e) {
+            const clickedTab = e.target.closest('.test-tab');
+            
+            if (!clickedTab) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetId = clickedTab.dataset.target;
+            if (!targetId) return;
+            
+            document.querySelectorAll('.test-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.test-code').forEach(c => c.classList.remove('active'));
+
+            clickedTab.classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+              targetContent.classList.add('active');
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTabs);
+        } else {
+          initTabs();
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Roadmap QA Sênior — QA Playground</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Roadmap: QA Sênior</h1>
+          <div class="section-desc">
+            Guia de orientação para QAs experientes que buscam dominar testes avançados, arquitetura de testes, liderança técnica, e contribuir estrategicamente para qualidade de software. Este roadmap foca em especialização, inovação e liderança técnica.
+          </div>
+        </div>
+
+        <!-- Introdução -->
+        <div class="content-section">
+          <h2>O que é Esperado de um QA Sênior</h2>
+          <p>Um QA Sênior deve liderar iniciativas técnicas, definir estratégias de teste em nível organizacional, trabalhar com testes avançados e complexos, e ser referência técnica na equipe. O foco está em especialização, arquitetura, e impacto estratégico na qualidade do produto.</p>
+          
+          <div class="content-card" style="background: color-mix(in srgb, var(--level) 10%, transparent); border-left-color: var(--level);">
+            <h3>Habilidades Essenciais</h3>
+            <ul>
+              <li>Definir estratégias de teste em nível organizacional</li>
+              <li>Arquitetar e construir frameworks de teste robustos</li>
+              <li>Trabalhar com testes avançados (Shadow DOM, iframes, múltiplas janelas)</li>
+              <li>Testar autenticação complexa (OAuth, HTTP Basic/Digest)</li>
+              <li>Implementar testes de performance e segurança</li>
+              <li>Liderar iniciativas de qualidade e melhoria contínua</li>
+              <li>Mentorear e desenvolver outros QAs</li>
+              <li>Contribuir para decisões arquiteturais e técnicas</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Roadmap de Aprendizado -->
+        <div class="content-section">
+          <h2>Roadmap de Especialização e Liderança</h2>
+          <p>Foque em dominar técnicas avançadas, construir expertise em áreas específicas, e desenvolver habilidades de liderança técnica.</p>
+        </div>
+
+        <!-- Áreas de Estudo -->
+        <div class="fundamentos-modules">
+          
+          <!-- 1. Elementos Avançados -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">1</span>
+              <h3>Testar Elementos Avançados da Web</h3>
+            </div>
+            <p class="module-description">Domine técnicas para testar elementos complexos que desafiam automação: Shadow DOM, iframes, múltiplas janelas, e conteúdo dinâmico avançado.</p>
+            <ul class="module-topics">
+              <li>Automatizar testes com Shadow DOM</li>
+              <li>Trabalhar com iframes e frames aninhados</li>
+              <li>Gerenciar múltiplas janelas e abas</li>
+              <li>Testar conteúdo carregado dinamicamente</li>
+              <li>Lidar com elementos com IDs dinâmicos</li>
+              <li>Testar infinite scroll e lazy loading</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Alta</span>
+              <span class="module-time">Tempo estimado: 1-2 meses</span>
+            </div>
+            <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-top: var(--spacing-md);">
+              <a href="dinamicos/index.html" class="btn btn-primary">Praticar Elementos Avançados</a>
+            </div>
+            <div style="margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <strong>Dica:</strong> Esses elementos são propositalmente desafiadores. Use-os para desenvolver estratégias robustas de localização e sincronização.
+            </div>
+          </div>
+
+          <!-- 2. Autenticação Avançada -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">2</span>
+              <h3>Autenticação e Segurança Avançada</h3>
+            </div>
+            <p class="module-description">Domine testes de autenticação complexa e segurança. Essas habilidades são essenciais para aplicações enterprise.</p>
+            <ul class="module-topics">
+              <li>Testar autenticação HTTP Basic e Digest</li>
+              <li>Trabalhar com OAuth 2.0 e fluxos de autorização</li>
+              <li>Testar múltiplos provedores de autenticação</li>
+              <li>Validar segurança e proteção de dados</li>
+              <li>Testar tokens, sessões e cookies</li>
+              <li>Implementar testes de segurança automatizados</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Alta</span>
+              <span class="module-time">Tempo estimado: 1-2 meses</span>
+            </div>
+            <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-top: var(--spacing-md);">
+              <a href="dinamicos/oauth2-providers.html" class="btn btn-primary">Praticar OAuth</a>
+              <a href="dinamicos/autenticacao-basica.html" class="btn btn-secondary">HTTP Basic/Digest</a>
+            </div>
+          </div>
+
+          <!-- 3. APIs e Integrações -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">3</span>
+              <h3>Testes Avançados de API</h3>
+            </div>
+            <p class="module-description">Domine testes de APIs complexas, incluindo validação de contratos, testes de integração, e cenários avançados.</p>
+            <ul class="module-topics">
+              <li>Testar APIs REST complexas</li>
+              <li>Validar contratos e schemas</li>
+              <li>Testar códigos de status HTTP</li>
+              <li>Trabalhar com headers customizados</li>
+              <li>Testar rate limiting e throttling</li>
+              <li>Implementar testes de integração end-to-end</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Alta</span>
+              <span class="module-time">Tempo estimado: 1 mês</span>
+            </div>
+            <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-top: var(--spacing-md);">
+              <a href="apis/index.html" class="btn btn-primary">Praticar APIs</a>
+            </div>
+          </div>
+
+          <!-- 4. Testes Não Funcionais -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">4</span>
+              <h3>Testes Não Funcionais (Performance, Segurança)</h3>
+            </div>
+            <p class="module-description">Especialize-se em testes não funcionais que são críticos para qualidade de software em produção.</p>
+            <ul class="module-topics">
+              <li>Implementar testes de performance (JMeter, K6)</li>
+              <li>Testes de carga, stress e volume</li>
+              <li>Testes de segurança (OWASP Top 10)</li>
+              <li>Análise de vulnerabilidades</li>
+              <li>Testes de resiliência e tolerância a falhas</li>
+              <li>Monitoramento e observabilidade</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Alta</span>
+              <span class="module-time">Tempo estimado: 2-3 meses</span>
+            </div>
+            <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-top: var(--spacing-md);">
+              <a href="../fundamentos/testes-nao-funcionais.html" class="btn btn-primary">Estudar NFT</a>
+              <a href="../tools/nft-playground.html" class="btn btn-secondary">NFT Playground</a>
+            </div>
+            <div style="margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <strong>Dica:</strong> Combine testes não funcionais com testes funcionais para garantir qualidade completa. Use o NFT Playground para praticar conceitos.
+            </div>
+          </div>
+
+          <!-- 5. Arquitetura de Testes -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">5</span>
+              <h3>Arquitetura e Frameworks de Teste</h3>
+            </div>
+            <p class="module-description">Desenvolva expertise em arquitetar e construir frameworks de teste robustos, escaláveis e mantíveis.</p>
+            <ul class="module-topics">
+              <li>Design de arquiteturas de teste escaláveis</li>
+              <li>Implementar padrões avançados (Page Object, Factory, Builder)</li>
+              <li>Criar bibliotecas e utilitários reutilizáveis</li>
+              <li>Gerenciar dados de teste complexos</li>
+              <li>Otimizar execução e paralelização</li>
+              <li>Gerenciar ambientes e configurações</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Alta</span>
+              <span class="module-time">Tempo estimado: Contínuo</span>
+            </div>
+            <div style="margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <strong>Dica:</strong> Estude arquiteturas de projetos open source. Contribua para frameworks existentes ou crie seus próprios projetos.
+            </div>
+          </div>
+
+          <!-- 6. Liderança e Mentoria -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">6</span>
+              <h3>Liderança Técnica e Mentoria</h3>
+            </div>
+            <p class="module-description">Desenvolva habilidades de liderança técnica, mentoria, e contribuição estratégica para qualidade.</p>
+            <ul class="module-topics">
+              <li>Mentorear e desenvolver outros QAs</li>
+              <li>Definir padrões e melhores práticas</li>
+              <li>Liderar iniciativas de melhoria contínua</li>
+              <li>Contribuir para decisões arquiteturais</li>
+              <li>Comunicar efetivamente com stakeholders</li>
+              <li>Promover cultura de qualidade na organização</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Alta</span>
+              <span class="module-time">Tempo estimado: Contínuo</span>
+            </div>
+            <div style="margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <strong>Dica:</strong> Comece mentoreando juniores em projetos específicos. A experiência prática é fundamental para desenvolver liderança.
+            </div>
+          </div>
+
+          <!-- 7. Especialização -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">7</span>
+              <h3>Especialização e Inovação</h3>
+            </div>
+            <p class="module-description">Desenvolva expertise em áreas específicas e contribua para inovação em testes e qualidade.</p>
+            <ul class="module-topics">
+              <li>Especializar-se em uma área (performance, segurança, mobile, etc.)</li>
+              <li>Explorar novas tecnologias e ferramentas</li>
+              <li>Contribuir para projetos open source</li>
+              <li>Compartilhar conhecimento (blogs, palestras, artigos)</li>
+              <li>Participar de comunidades técnicas</li>
+              <li>Manter-se atualizado com tendências do mercado</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Média</span>
+              <span class="module-time">Tempo estimado: Contínuo</span>
+            </div>
+            <div style="margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <strong>Dica:</strong> Escolha uma área que te interessa e aprofunde. Expertise profunda é mais valiosa que conhecimento superficial em muitas áreas.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Recursos Adicionais -->
+        <div class="content-section">
+          <h2>Recursos e Práticas Avançadas</h2>
+          <div class="content-card">
+            <h3>Áreas de Prática no QA Playground</h3>
+            <ul class="link-list">
+              <li><a href="dinamicos/index.html">Elementos Dinâmicos Avançados — Shadow DOM, iframes, múltiplas janelas</a></li>
+              <li><a href="apis/index.html">APIs e Autenticação — OAuth, HTTP Basic/Digest, códigos de status</a></li>
+              <li><a href="interacoes/index.html">Interações Avançadas — Context menu, testes específicos</a></li>
+              <li><a href="utilitarios/index.html">Utilitários — Ferramentas e helpers para testes</a></li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h3>Desafios e Ferramentas</h3>
+            <ul class="link-list">
+              <li><a href="../desafio/senior.html">Desafios Sênior — Teste suas habilidades avançadas</a></li>
+              <li><a href="../tools/nft-playground.html">NFT Playground — Praticar testes não funcionais</a></li>
+              <li><a href="../tools/bdd-playground.html">BDD Playground — Validador de cenários Gherkin</a></li>
+              <li><a href="../tools/xpath-css-tester.html">XPath & CSS Tester — Testar seletores avançados</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

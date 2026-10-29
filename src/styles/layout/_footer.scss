@@ -1,0 +1,54 @@
+// ========================================
+// Footer - Rodapé do Site
+// ========================================
+
+.site-footer {
+  margin-top: auto;
+  padding: var(--spacing-xl) var(--gutter);
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: var(--font-size-sm);
+}
+
+.footer-content {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm) var(--spacing-xl);
+
+  @include respond-to(md) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.footer-main {
+  font-family: var(--font-display);
+  font-weight: $font-weight-bold;
+  color: var(--text);
+  font-size: var(--font-size-base);
+}
+
+.footer-secondary {
+  color: var(--muted);
+
+  strong {
+    color: var(--text);
+  }
+
+  a {
+    color: var(--accent);
+    font-weight: $font-weight-semibold;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+    text-underline-offset: 0.2em;
+
+    @include hover-state {
+      text-decoration-color: currentColor;
+    }
+  }
+}

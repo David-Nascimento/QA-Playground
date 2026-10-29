@@ -1,0 +1,21 @@
+// ========================================
+// Playgrounds - Páginas de Playground
+// ========================================
+
+// Estilos específicos para páginas de playground
+// Expandir conforme necessário
+
+// ----------------------------------------
+// Guardas responsivas para páginas de prática
+// (marcação antiga com larguras/flex fixos em style="")
+// ----------------------------------------
+
+// Blocos com largura fixa inline nunca passam da largura disponível
+main :where(div, section, form, table, img, canvas)[style*='width'] {
+  max-width: 100%;
+}
+
+// Barras de abas e grupos de botões montados com flex inline quebram linha
+main :where(.tabs, [data-testid$='-container'])[style*='display: flex'] {
+  flex-wrap: wrap;
+}

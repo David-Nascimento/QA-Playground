@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Roadmap QA Pleno — QA Playground</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Roadmap: QA Pleno</h1>
+          <div class="section-desc">
+            Guia de orientação para QAs que já dominam os fundamentos e estão evoluindo para o nível pleno. Este roadmap foca em automação, testes avançados, e desenvolvimento de habilidades técnicas e comportamentais necessárias para trabalhar com maior autonomia.
+          </div>
+        </div>
+
+        <!-- Introdução -->
+        <div class="content-section">
+          <h2>O que é Esperado de um QA Pleno</h2>
+          <p>Um QA Pleno deve trabalhar com autonomia, criar e manter estratégias de teste, automatizar testes, e contribuir ativamente para melhorias de processos. O foco está em desenvolvimento técnico, automação, e liderança técnica dentro da equipe de QA.</p>
+          
+          <div class="content-card" style="background: color-mix(in srgb, var(--level) 10%, transparent); border-left-color: var(--level);">
+            <h3>Habilidades Essenciais</h3>
+            <ul>
+              <li>Criar e manter estratégias de teste independentemente</li>
+              <li>Automatizar testes usando ferramentas como Selenium, Playwright ou Cypress</li>
+              <li>Testar APIs e integrações entre sistemas</li>
+              <li>Analisar requisitos e identificar riscos técnicos</li>
+              <li>Contribuir para arquitetura de testes e frameworks</li>
+              <li>Mentorear QAs juniores e compartilhar conhecimento</li>
+              <li>Trabalhar com metodologias ágeis (Scrum, Kanban)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Roadmap de Aprendizado -->
+        <div class="content-section">
+          <h2>Roadmap de Aprendizado e Prática</h2>
+          <p>Siga esta sequência para desenvolver as habilidades necessárias para evoluir para o nível pleno. Priorize automação e testes avançados.</p>
+        </div>
+
+        <!-- Áreas de Estudo -->
+        <div class="fundamentos-modules">
+          
+          <!-- 1. Automação Básica -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">1</span>
+              <h3>Automação de Testes Básica</h3>
+            </div>
+            <p class="module-description">Comece sua jornada em automação escolhendo uma ferramenta e automatizando cenários básicos. Automação é essencial para um QA pleno.</p>
+            <ul class="module-topics">
+              <li>Escolher e aprender uma ferramenta (Selenium, Playwright ou Cypress)</li>
+              <li>Automatizar cenários simples (login, formulários)</li>
+              <li>Usar seletores eficientes (CSS, XPath)</li>
+              <li>Implementar Page Object Model</li>
+              <li>Gerenciar dados de teste e configurações</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Crítica</span>
+              <span class="module-time">Tempo estimado: 2-3 meses</span>
+            </div>
+            <div style="margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <strong>Dica:</strong> Pratique automatizando os formulários e interações disponíveis neste playground. Use os seletores estáveis fornecidos para aprender patterns corretos.
+            </div>
+          </div>
+
+          <!-- 2. Testes de API -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">2</span>
+              <h3>Testes de API</h3>
+            </div>
+            <p class="module-description">APIs são fundamentais em aplicações modernas. Aprenda a testá-las tanto manualmente quanto com automação.</p>
+            <ul class="module-topics">
+              <li>Conceitos de REST e HTTP (GET, POST, PUT, DELETE)</li>
+              <li>Usar Postman ou Insomnia para testes manuais</li>
+              <li>Validar status codes, headers e responses</li>
+              <li>Testar autenticação e autorização</li>
+              <li>Automatizar testes de API (REST Assured, Postman/Newman)</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Alta</span>
+              <span class="module-time">Tempo estimado: 1-2 meses</span>
+            </div>
+            <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-top: var(--spacing-md);">
+              <a href="../senior/apis/index.html" class="btn btn-primary">Praticar APIs</a>
+            </div>
+            <div style="margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <strong>Dica:</strong> Comece testando APIs públicas como GitHub API ou JSONPlaceholder antes de avançar para APIs mais complexas.
+            </div>
+          </div>
+
+          <!-- 3. Elementos Dinâmicos -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">3</span>
+              <h3>Testar Elementos Dinâmicos</h3>
+            </div>
+            <p class="module-description">Elementos que mudam dinamicamente são desafios comuns em automação. Aprenda estratégias para lidar com eles.</p>
+            <ul class="module-topics">
+              <li>Usar waits explícitos e implícitos</li>
+              <li>Lidar com elementos que aparecem/desaparecem</li>
+              <li>Testar conteúdo carregado dinamicamente</li>
+              <li>Automatizar interações avançadas (drag-drop, hovers)</li>
+              <li>Gerenciar múltiplas janelas e iframes</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Alta</span>
+              <span class="module-time">Tempo estimado: 1 mês</span>
+            </div>
+            <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-top: var(--spacing-md);">
+              <a href="interacoes/index.html" class="btn btn-primary">Praticar Interações</a>
+            </div>
+            <div style="margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <strong>Dica:</strong> Pratique com os elementos dinâmicos disponíveis neste playground. Eles foram criados especificamente para desafiar habilidades de automação.
+            </div>
+          </div>
+
+          <!-- 4. Upload e Arquivos -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">4</span>
+              <h3>Testar Upload e Download</h3>
+            </div>
+            <p class="module-description">Funcionalidades de arquivo são comuns e requerem conhecimento específico tanto para testes manuais quanto automação.</p>
+            <ul class="module-topics">
+              <li>Testar upload de arquivos (simples e múltiplos)</li>
+              <li>Validar tipos e tamanhos de arquivo</li>
+              <li>Testar download e verificar integridade</li>
+              <li>Automatizar uploads em testes</li>
+              <li>Validar progresso e feedback visual</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Média</span>
+              <span class="module-time">Tempo estimado: 2 semanas</span>
+            </div>
+            <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-top: var(--spacing-md);">
+              <a href="arquivos/index.html" class="btn btn-primary">Praticar Upload/Download</a>
+            </div>
+          </div>
+
+          <!-- 5. Tabelas Avançadas -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">5</span>
+              <h3>Tabelas com Paginação e Ordenação</h3>
+            </div>
+            <p class="module-description">Tabelas complexas com paginação, ordenação e filtros são comuns. Aprenda a testá-las efetivamente.</p>
+            <ul class="module-topics">
+              <li>Testar paginação e navegação entre páginas</li>
+              <li>Validar ordenação de colunas</li>
+              <li>Testar filtros e buscas</li>
+              <li>Automatizar navegação em tabelas</li>
+              <li>Validar dados através de múltiplas páginas</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Média</span>
+              <span class="module-time">Tempo estimado: 2 semanas</span>
+            </div>
+            <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-top: var(--spacing-md);">
+              <a href="tabelas/index.html" class="btn btn-primary">Praticar Tabelas</a>
+            </div>
+          </div>
+
+          <!-- 6. CI/CD e Frameworks -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">6</span>
+              <h3>Integração com CI/CD</h3>
+            </div>
+            <p class="module-description">Integrar testes automatizados em pipelines de CI/CD é essencial para entrega contínua de qualidade.</p>
+            <ul class="module-topics">
+              <li>Integrar testes em Jenkins, GitLab CI ou GitHub Actions</li>
+              <li>Executar testes em diferentes ambientes</li>
+              <li>Gerar e publicar relatórios de teste</li>
+              <li>Gerenciar configurações e variáveis de ambiente</li>
+              <li>Tratar falhas e notificações</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Alta</span>
+              <span class="module-time">Tempo estimado: 1 mês</span>
+            </div>
+            <div style="margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <strong>Dica:</strong> Comece integrando testes simples em pipelines. A experiência prática é fundamental para entender CI/CD.
+            </div>
+          </div>
+
+          <!-- 7. BDD -->
+          <div class="fundamentos-module">
+            <div class="module-header">
+              <span class="module-number">7</span>
+              <h3>BDD e Testes Orientados a Comportamento</h3>
+            </div>
+            <p class="module-description">BDD facilita colaboração entre equipes e cria documentação executável. É uma habilidade valiosa para QAs plenos.</p>
+            <ul class="module-topics">
+              <li>Escrever cenários em Gherkin</li>
+              <li>Usar Cucumber ou SpecFlow</li>
+              <li>Criar step definitions reutilizáveis</li>
+              <li>Integrar BDD com automação</li>
+              <li>Colaborar com equipe usando BDD</li>
+            </ul>
+            <div class="module-meta">
+              <span class="module-level">Prioridade: Média</span>
+              <span class="module-time">Tempo estimado: 1-2 meses</span>
+            </div>
+            <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-top: var(--spacing-md);">
+              <a href="../fundamentos/bdd-cucumber.html" class="btn btn-primary">Estudar BDD</a>
+              <a href="../tools/bdd-playground.html" class="btn btn-secondary">BDD Playground</a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Próximos Passos -->
+        <div class="content-section">
+          <h2>Quando Está Pronto para Avançar</h2>
+          <p>Você pode considerar avançar para o nível Sênior quando:</p>
+          <ul>
+            <li>Constrói e mantém frameworks de automação complexos</li>
+            <li>Lidera iniciativas técnicas dentro da equipe de QA</li>
+            <li>Contribui para arquitetura de testes e estratégias de qualidade</li>
+            <li>Mentoreia outros QAs efetivamente</li>
+            <li>Trabalha com testes avançados (performance, segurança, integrações complexas)</li>
+          </ul>
+          <p style="margin-top: var(--spacing-md);">
+            <a href="../senior/index.html" class="btn btn-secondary">Ver Roadmap: Nível Sênior →</a>
+          </p>
+        </div>
+
+        <!-- Recursos Adicionais -->
+        <div class="content-section">
+          <h2>Recursos Adicionais</h2>
+          <div class="content-card">
+            <h3>Áreas de Prática no QA Playground</h3>
+            <ul class="link-list">
+              <li><a href="interacoes/index.html">Interações Avançadas — Drag-drop, hovers, geolocalização</a></li>
+              <li><a href="arquivos/index.html">Upload e Download — Praticar testes de arquivos</a></li>
+              <li><a href="tabelas/index.html">Tabelas Avançadas — Paginação e ordenação</a></li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h3>Guias de Estudo</h3>
+            <ul class="link-list">
+              <li><a href="../fundamentos/junior-para-pleno.html">De Júnior para Pleno — Guia completo</a></li>
+              <li><a href="../desafio/pleno.html">Desafios Pleno — Teste suas habilidades</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

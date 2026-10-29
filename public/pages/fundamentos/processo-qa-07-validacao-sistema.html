@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Processo QA 07: Validação do Sistema — Fundamentos de Testes</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h1>Processo QA: Etapa 07 — Validação do Sistema</h1>
+          <div class="section-desc">
+            Sétima etapa do processo: validar que o sistema completo atende a todos os requisitos, critérios de qualidade, e está pronto para produção. Esta etapa consolida todas as validações anteriores.
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Objetivo da Etapa</h2>
+          <p>Validar que o sistema completo está pronto para produção, atendendo todos os requisitos, critérios de qualidade definidos, e que todos os testes críticos foram executados e passaram com sucesso.</p>
+        </div>
+
+        <div class="content-section">
+          <h2>Atividades Principais</h2>
+
+          <div class="content-card">
+            <h3>1. Consolidar Resultados de Todos os Testes</h3>
+            <p>Revisar e consolidar resultados de todas as etapas de teste executadas.</p>
+            <p><strong>O que consolidar:</strong></p>
+            <ul>
+              <li>Resultados de testes funcionais</li>
+              <li>Resultados de testes não funcionais</li>
+              <li>Resultados de testes de regressão</li>
+              <li>Resultados de UAT</li>
+              <li>Status de todos os defeitos encontrados</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Validar Critérios de Saída</h3>
+            <p>Verificar se todos os critérios de saída definidos no planejamento foram atendidos.</p>
+            <p><strong>Critérios comuns:</strong></p>
+            <ul>
+              <li>Percentual mínimo de casos de teste passando</li>
+              <li>Nenhum defeito crítico aberto</li>
+              <li>Defeitos de alta prioridade resolvidos ou aceitos</li>
+              <li>Cobertura de teste adequada</li>
+              <li>UAT concluído e aprovado</li>
+              <li>Documentação completa e atualizada</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Validação Final de Requisitos</h3>
+            <p>Garantir que todos os requisitos definidos foram atendidos e validados.</p>
+            <p><strong>O que validar:</strong></p>
+            <ul>
+              <li>Requisitos funcionais implementados e testados</li>
+              <li>Requisitos não funcionais atendidos</li>
+              <li>Critérios de aceitação cumpridos</li>
+              <li>Rastreabilidade completa (requisitos → testes → resultados)</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Testes de Regressão Final</h3>
+            <p>Executar testes de regressão para garantir que correções não introduziram novos problemas.</p>
+            <p><strong>O que testar:</strong></p>
+            <ul>
+              <li>Funcionalidades críticas e principais</li>
+              <li>Áreas onde correções foram feitas</li>
+              <li>Integrações entre módulos</li>
+              <li>Casos de teste de alto nível</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>5. Revisão de Qualidade</h3>
+            <p>Avaliar qualidade geral do sistema considerando todos os aspectos testados.</p>
+            <p><strong>Aspectos a avaliar:</strong></p>
+            <ul>
+              <li>Funcionalidade: Sistema funciona como esperado?</li>
+              <li>Performance: Tempo de resposta adequado?</li>
+              <li>Usabilidade: Interface é intuitiva?</li>
+              <li>Segurança: Proteções adequadas implementadas?</li>
+              <li>Confiabilidade: Sistema é estável?</li>
+            </ul>
+          </div>
+
+          <div class="content-card">
+            <h3>6. Preparar Recomendação de Release</h3>
+            <p>Preparar recomendação clara sobre se o sistema está pronto para produção ou se ajustes são necessários.</p>
+            <p><strong>O que incluir:</strong></p>
+            <ul>
+              <li>Resumo executivo dos resultados</li>
+              <li>Status dos critérios de saída</li>
+              <li>Riscos identificados e mitigação</li>
+              <li>Recomendação (aprovado, aprovado com ressalvas, não aprovado)</li>
+              <li>Justificativa para recomendação</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Entregáveis desta Etapa</h2>
+
+          <div class="content-card">
+            <h3>Documentação de Validação</h3>
+            <ul>
+              <li><strong>Relatório de Validação:</strong> Consolidação de todos os resultados</li>
+              <li><strong>Matriz de Rastreabilidade:</strong> Requisitos → Testes → Resultados</li>
+              <li><strong>Recomendação de Release:</strong> Go/No-Go com justificativa</li>
+              <li><strong>Relatório Final de Testes:</strong> Resumo completo do processo de teste</li>
+              <li><strong>Métricas Finais:</strong> Métricas de qualidade e cobertura</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Checklist de Verificação</h2>
+
+          <div class="content-card">
+            <p>Antes de recomendar release, verifique se:</p>
+            <ul>
+              <li>Todos os critérios de saída foram atendidos</li>
+              <li>Requisitos críticos foram validados</li>
+              <li>Defeitos críticos foram resolvidos ou aceitos</li>
+              <li>Testes de regressão foram executados</li>
+              <li>UAT foi concluído e aprovado</li>
+              <li>Riscos foram identificados e mitigados</li>
+              <li>Documentação está completa</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h2>Boas Práticas</h2>
+
+          <div class="content-card">
+            <h3>1. Seja Objetivo</h3>
+            <p>Recomendações devem ser baseadas em fatos e dados, não em opiniões. Use métricas e evidências para justificar.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>2. Comunique Riscos</h3>
+            <p>Se houver riscos conhecidos, comunique-os claramente. Stakeholders precisam tomar decisões informadas.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>3. Documente Tudo</h3>
+            <p>Documentação completa é essencial. Ela serve como referência e justificativa para decisões tomadas.</p>
+          </div>
+
+          <div class="content-card">
+            <h3>4. Mantenha Rastreabilidade</h3>
+            <p>Mantenha rastreabilidade clara entre requisitos, testes e resultados. Isso facilita auditorias e justificativas.</p>
+          </div>
+        </div>
+
+        <!-- Navegação entre módulos -->
+        <div class="module-navigation">
+          <a href="processo-qa-06-teste-aceitacao.html" class="module-nav-link module-nav-link--prev">← Anterior: Teste de Aceitação</a>
+          <a href="processo-qa-08-licoes-aprendizado.html" class="module-nav-link module-nav-link--next">Próximo: Lições e Melhoria Contínua →</a>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../js/index.js"></script>
+  </body>
+</html>

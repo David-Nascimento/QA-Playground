@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>APIs e Autenticação — Nível Sênior — QA Playground</title>
+    <link rel="stylesheet" href="../../../css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- @include header -->
+
+    <main class="container">
+      <section class="section">
+        <div class="section-header">
+          <h2>APIs e Autenticação — Nível Sênior</h2>
+          <div class="section-desc">Guia completo e prático para testes de APIs REST, autenticação, validações e boas práticas para QA Engineers.</div>
+        </div>
+
+        <!-- Navegação de Conteúdo -->
+        <div class="info-blocks" style="margin-bottom: var(--spacing-xl);">
+          <div class="info-block">
+            <h3>Fundamentos</h3>
+            <p>Conceitos essenciais: REST, SOAP, GraphQL, estrutura de requisições e respostas.</p>
+            <a href="fundamentos.html" class="area-link">Explorar</a>
+          </div>
+          <div class="info-block">
+            <h3>Métodos HTTP</h3>
+            <p>GET, POST, PUT, PATCH, DELETE e outros. Quando usar, o que validar e riscos comuns.</p>
+            <a href="metodos-http.html" class="area-link">Explorar</a>
+          </div>
+          <div class="info-block">
+            <h3>Status Codes</h3>
+            <p>Guia completo de códigos HTTP: 2xx, 3xx, 4xx, 5xx. Validações e cenários de teste. <strong>Teste prático conectado à API.</strong></p>
+            <a href="status-codes.html" class="area-link">Explorar</a>
+          </div>
+          <div class="info-block">
+            <h3>Validações</h3>
+            <p>Checklist completo: schema, tipos, campos, regras de negócio, paginação e mais.</p>
+            <a href="validacoes.html" class="area-link">Explorar</a>
+          </div>
+          <div class="info-block">
+            <h3>Autenticação</h3>
+            <p>API Key, Basic Auth, Bearer Token, OAuth 2.0, JWT. Como testar cada método. <strong>Teste prático de login e tokens.</strong></p>
+            <a href="autenticacao.html" class="area-link">Explorar</a>
+          </div>
+          <div class="info-block">
+            <h3>Testes Negativos</h3>
+            <p>QA mindset: payload inválido, campos ausentes, injeção, valores extremos e mais. <strong>10 cenários práticos testáveis.</strong></p>
+            <a href="testes-negativos.html" class="area-link">Explorar</a>
+          </div>
+          <div class="info-block">
+            <h3>Performance</h3>
+            <p>Tempo de resposta, carga, timeout, retry e resiliência. Testes não funcionais.</p>
+            <a href="performance.html" class="area-link">Explorar</a>
+          </div>
+          <div class="info-block">
+            <h3>Boas Práticas</h3>
+            <p>Casos de teste, coleções Postman, ambientes e como reportar bugs de API.</p>
+            <a href="boas-praticas.html" class="area-link">Explorar</a>
+          </div>
+        </div>
+
+        <!-- Playgrounds e Ferramentas -->
+        <h3 class="section-title" style="margin-top: var(--spacing-2xl);">Playgrounds e Ferramentas</h3>
+        
+        <div style="margin-bottom: var(--spacing-lg); padding: var(--spacing-md); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-md); border-left: 4px solid var(--success);">
+          <p style="margin-bottom: var(--spacing-sm);"><strong>API Mockada Disponível</strong></p>
+          <p style="font-size: var(--font-size-sm); color: var(--text); margin-bottom: var(--spacing-sm);">
+            Todas as páginas abaixo estão conectadas à API mockada real. A API está disponível automaticamente em produção.
+          </p>
+          
+          <div style="margin-top: var(--spacing-md); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.1); border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-sm);">
+            <p style="font-size: var(--font-size-sm); margin-bottom: var(--spacing-xs); color: var(--text);"><strong>URLs da API:</strong></p>
+            <ul style="margin-left: var(--spacing-lg); font-size: var(--font-size-sm); color: var(--text); margin-bottom: var(--spacing-sm);">
+              <li style="margin-bottom: var(--spacing-xs);">Base: <code>https://qa-playground-azure.vercel.app/api</code></li>
+              <li style="margin-bottom: var(--spacing-xs);">Health Check: <code>GET https://qa-playground-azure.vercel.app/api/health</code></li>
+              <li style="margin-bottom: var(--spacing-xs);">Documentação: <code>GET https://qa-playground-azure.vercel.app/api</code></li>
+            </ul>
+          </div>
+          
+          <p style="font-size: var(--font-size-sm); color: var(--text); margin-bottom: var(--spacing-sm);">
+            <strong>Credenciais de teste:</strong> <code>admin@example.com / admin123</code> | <code>user@example.com / user123</code> | <code>viewer@example.com / viewer123</code>
+          </p>
+          
+          <div style="margin-top: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1px solid color-mix(in srgb, var(--level) 30%, transparent);">
+            <p style="font-size: var(--font-size-sm); margin-bottom: var(--spacing-sm); color: var(--text);"><strong>Testando com Postman ou Insomnia?</strong></p>
+            <p style="font-size: var(--font-size-sm); color: var(--text); margin-bottom: var(--spacing-sm);">
+              <strong>Documentação completa:</strong> Acesse <code>GET https://qa-playground-azure.vercel.app/api</code> ou <code>GET https://qa-playground-azure.vercel.app/api/docs</code> para ver o guia completo com instruções passo a passo, exemplos de requisições e como configurar variáveis de ambiente.
+            </p>
+            <p style="font-size: var(--font-size-sm); color: var(--text);">
+              <strong>Coleção Postman pronta:</strong> <a href="https://qa-playground-azure.vercel.app/api/postman-collection" download="QA-Playground-API.postman_collection.json" style="color: var(--level); text-decoration: underline;">Baixar coleção Postman</a> ou importe diretamente no Postman usando o link: <code>https://qa-playground-azure.vercel.app/api/postman-collection</code>
+            </p>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <div class="card">
+            <h3>API Playground</h3>
+            <p>Pratique testes de API REST com endpoints reais. Autenticação, CRUD completo, controle de cenários e mais.</p>
+            <a href="api.html" class="btn">Acessar</a>
+          </div>
+
+          <div class="card">
+            <h3>OAuth 2.0 Providers</h3>
+            <p>Teste autenticação com provedores OAuth 2.0.</p>
+            <a href="../dinamicos/oauth2-providers.html" class="btn">Acessar</a>
+          </div>
+
+          <div class="card">
+            <h3>Autenticação Básica</h3>
+            <p>Valide autenticação básica (admin/admin).</p>
+            <a href="../dinamicos/autenticacao-basica.html" class="btn">Acessar</a>
+          </div>
+
+          <div class="card">
+            <h3>Digest Authentication</h3>
+            <p>Teste autenticação Digest (admin/admin).</p>
+            <a href="../dinamicos/digest-authentication.html" class="btn">Acessar</a>
+          </div>
+
+          <div class="card">
+            <h3>Cabeçalhos HTTP</h3>
+            <p>Visualize e teste headers HTTP personalizados.</p>
+            <a href="../dinamicos/cabecalhos-http.html" class="btn">Acessar</a>
+          </div>
+
+          <div class="card">
+            <h3>Códigos de Status HTTP</h3>
+            <p>Teste respostas e fluxos para diferentes códigos HTTP.</p>
+            <a href="../dinamicos/codigos-status-http.html" class="btn">Acessar</a>
+          </div>
+        </div>
+
+        <!-- Informações sobre a API -->
+        <div style="margin-top: var(--spacing-xl); padding: var(--spacing-lg); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
+          <h3 style="margin-bottom: var(--spacing-md);">Sobre a API Mockada</h3>
+          <p style="margin-bottom: var(--spacing-md);">
+            A API mockada foi criada especificamente para prática de testes QA. Ela simula comportamentos reais de backend,
+            incluindo sucessos, erros (4xx, 5xx), autenticação, autorização e regras de negócio.
+          </p>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-md); margin-bottom: var(--spacing-md);">
+            <div>
+              <h4 style="font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Autenticação</h4>
+              <ul style="margin-left: var(--spacing-lg); font-size: var(--font-size-sm); color: var(--text);">
+                <li>Login/Logout</li>
+                <li>Tokens Bearer</li>
+                <li>Validação de tokens</li>
+                <li>Controle de permissões</li>
+              </ul>
+            </div>
+            <div>
+              <h4 style="font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Usuários</h4>
+              <ul style="margin-left: var(--spacing-lg); font-size: var(--font-size-sm); color: var(--text);">
+                <li>GET /users (admin)</li>
+                <li>POST /users (admin)</li>
+                <li>PUT /users/:id</li>
+                <li>DELETE /users/:id (admin)</li>
+              </ul>
+            </div>
+            <div>
+              <h4 style="font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Pedidos</h4>
+              <ul style="margin-left: var(--spacing-lg); font-size: var(--font-size-sm); color: var(--text);">
+                <li>GET /orders</li>
+                <li>POST /orders</li>
+                <li>PUT /orders/:id</li>
+                <li>DELETE /orders/:id (admin)</li>
+              </ul>
+            </div>
+            <div>
+              <h4 style="font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Cenários</h4>
+              <ul style="margin-left: var(--spacing-lg); font-size: var(--font-size-sm); color: var(--text);">
+                <li>Sucesso (200, 201, 204)</li>
+                <li>Erros 4xx (400, 401, 403, 404, 409, 422, 429)</li>
+                <li>Erros 5xx (500, 503)</li>
+                <li>Timeout (504)</li>
+              </ul>
+            </div>
+          </div>
+
+          <p style="font-size: var(--font-size-sm); color: var(--text);">
+            <strong>Dica:</strong> Use query param <code>?scenario=&lt;tipo&gt;</code> ou header <code>x-mock-scenario</code> 
+            para controlar o comportamento da API em cada requisição. Perfeito para testar diferentes cenários sem modificar código!
+          </p>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
+          <a href="../../../index.html" class="btn btn-secondary">← Voltar para Início</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- @include footer -->
+
+    <script type="module" src="../../../js/index.js"></script>
+  </body>
+</html>
