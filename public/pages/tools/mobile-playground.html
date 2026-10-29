@@ -426,7 +426,7 @@
                 </div>
                 <div class="info-card">
                   <h4>Passo 2: Instalar Java JDK</h4>
-                  <p>Requerido para executar Appium e testes Java. JDK 8 ou superior.</p>
+                  <p>Requerido para executar Appium e testes Java. JDK 11 ou superior (o java-client 9 exige Java 11; prefira uma versão LTS como 17 ou 21).</p>
                   <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">
                     <strong>Verificar instalação:</strong><br>
                     <code>java -version</code>
@@ -563,9 +563,8 @@ appium driver install uiautomator2
 appium --version
 appium driver list
 
-<span class="comment"># Instalar Appium Doctor (opcional, mas recomendado)</span>
-npm install -g appium-doctor
-appium-doctor --android</pre>
+<span class="comment"># Diagnosticar o ambiente (Appium 2: o doctor vem com cada driver)</span>
+appium driver doctor uiautomator2</pre>
               </div>
 
               <h4>6. Criar e Configurar Emulador Android</h4>
@@ -1049,19 +1048,23 @@ driver = webdriver.Remote(<span class="string">"http://localhost:4723"</span>, o
 <pre><span class="comment"># WEB: Cliques simples</span>
 driver.findElement(By.id("button")).click()
 
-<span class="comment"># MOBILE: Gestos complexos</span>
+<span class="comment"># MOBILE (Appium 2 + UiAutomator2): gestos prontos do driver</span>
+<span class="comment"># TouchAction está obsoleto desde o java-client 8: use estes comandos ou W3C Actions</span>
 <span class="comment"># Tap (toque simples)</span>
-driver.tap(1, 500, 500, 100)
+driver.executeScript(<span class="string">"mobile: clickGesture"</span>, Map.of(<span class="string">"x"</span>, 500, <span class="string">"y"</span>, 500));
 
-<span class="comment"># Swipe (deslizar)</span>
-TouchAction action = <span class="keyword">new</span> TouchAction(driver);
-action.press(500, 1000).moveTo(500, 500).release().perform();
+<span class="comment"># Swipe (deslizar para cima dentro de uma área)</span>
+driver.executeScript(<span class="string">"mobile: swipeGesture"</span>, Map.of(
+    <span class="string">"left"</span>, 100, <span class="string">"top"</span>, 500, <span class="string">"width"</span>, 600, <span class="string">"height"</span>, 800,
+    <span class="string">"direction"</span>, <span class="string">"up"</span>, <span class="string">"percent"</span>, 0.75));
 
 <span class="comment"># Long Press (toque longo)</span>
-action.longPress(element).release().perform();
+driver.executeScript(<span class="string">"mobile: longClickGesture"</span>, Map.of(
+    <span class="string">"elementId"</span>, ((RemoteWebElement) element).getId(), <span class="string">"duration"</span>, 1000));
 
 <span class="comment"># Pinch/Zoom (pinçar)</span>
-<span class="comment"># Requer múltiplos toques simultâneos</span></pre>
+driver.executeScript(<span class="string">"mobile: pinchOpenGesture"</span>, Map.of(
+    <span class="string">"elementId"</span>, ((RemoteWebElement) element).getId(), <span class="string">"percent"</span>, 0.75));</pre>
               </div>
 
               <h4>3. Contextos e WebViews</h4>
@@ -1472,8 +1475,7 @@ appium --version
 appium driver list
 
 <span class="comment"># Instalar Appium Doctor (opcional, mas recomendado)</span>
-npm install -g appium-doctor
-appium-doctor --ios</pre>
+appium driver doctor xcuitest</pre>
               </div>
 
               <h4>6. Configurar Certificados (Para Dispositivos Físicos)</h4>
@@ -1936,19 +1938,20 @@ driver = webdriver.Remote(<span class="string">"http://localhost:4723"</span>, o
 <pre><span class="comment"># WEB: Cliques simples</span>
 driver.findElement(By.id("button")).click()
 
-<span class="comment"># MOBILE iOS: Gestos específicos</span>
+<span class="comment"># MOBILE iOS (Appium 2 + XCUITest): gestos prontos do driver</span>
 <span class="comment"># Tap (toque simples)</span>
-driver.tap(1, 500, 500, 100)
+driver.executeScript(<span class="string">"mobile: tap"</span>, Map.of(<span class="string">"x"</span>, 200, <span class="string">"y"</span>, 400));
 
 <span class="comment"># Swipe (deslizar)</span>
-TouchAction action = <span class="keyword">new</span> TouchAction(driver);
-action.press(500, 1000).moveTo(500, 500).release().perform();
+driver.executeScript(<span class="string">"mobile: swipe"</span>, Map.of(<span class="string">"direction"</span>, <span class="string">"up"</span>));
 
 <span class="comment"># Long Press (toque longo)</span>
-action.longPress(element).release().perform();
+driver.executeScript(<span class="string">"mobile: touchAndHold"</span>, Map.of(
+    <span class="string">"elementId"</span>, ((RemoteWebElement) element).getId(), <span class="string">"duration"</span>, 1.0));
 
-<span class="comment"># Pinch/Zoom (pinçar)</span>
-<span class="comment"># iOS suporta gestos multi-touch nativamente</span>
+<span class="comment"># Pinch/Zoom (pinçar): scale maior que 1 aproxima</span>
+driver.executeScript(<span class="string">"mobile: pinch"</span>, Map.of(
+    <span class="string">"elementId"</span>, ((RemoteWebElement) element).getId(), <span class="string">"scale"</span>, 2.0, <span class="string">"velocity"</span>, 1.0));
 
 <span class="comment"># Scroll específico iOS</span>
 JavascriptExecutor js = (JavascriptExecutor) driver;

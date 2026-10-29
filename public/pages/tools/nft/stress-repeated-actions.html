@@ -117,12 +117,12 @@
         <div class="stress-controls">
           <h3>Controles de Teste</h3>
           <div class="control-group">
-            <label>Número de Ações:</label>
+            <label for="action-count">Número de Ações:</label>
             <input type="number" id="action-count" min="10" max="1000" value="100" step="10">
             <span id="action-count-display">100</span>
           </div>
           <div class="control-group">
-            <label>Delay entre Ações (ms):</label>
+            <label for="action-delay">Delay entre Ações (ms):</label>
             <input type="number" id="action-delay" min="0" max="1000" value="10" step="10">
             <span id="action-delay-display">10ms</span>
           </div>
@@ -159,6 +159,48 @@
           <div class="metric-card">
             <div class="metric-label">Status</div>
             <div class="metric-value" id="metric-status" style="font-size: 1em;">Aguardando</div>
+          </div>
+        </div>
+
+        <!-- Guia do especialista: o que este cenário ensina, como medir e como automatizar -->
+        <div class="content-card nft-card-enhanced nft-expert" id="nft-guia">
+          <h4>Guia do especialista</h4>
+          <p class="nft-lead">Pergunta que este cenário responde: <strong>o que acontece quando o usuário (ou um robô) clica muito rápido, muitas vezes?</strong> Cliques duplicados geram pedidos em dobro, contadores errados e vazamentos de memória.</p>
+          <div class="guide-grid">
+            <div class="guide-item">
+              <h4>Hipótese de teste</h4>
+              <p>Com 100 ações a cada 10 ms, todas são registradas e o contador chega a exatamente 100. Se o contador ficar abaixo, ações se perderam; acima, houve duplicação.</p>
+            </div>
+            <div class="guide-item">
+              <h4>O que medir</h4>
+              <table class="nft-metric-table"><tbody><tr><th scope="row">Ações registradas</th><td>Devem ser exatamente as disparadas.</td></tr><tr><th scope="row">Ações por segundo</th><td>Vazão real comparada com a configurada.</td></tr><tr><th scope="row">Tamanho do log</th><td>Crescer sem limite indica vazamento: o DOM só aumenta.</td></tr><tr><th scope="row">Memória (heap)</th><td>DevTools > Memory: tire um snapshot antes e depois de várias rodadas.</td></tr></tbody></table>
+            </div>
+            <div class="guide-item is-criteria">
+              <h4>Critério de aceite (exemplo)</h4>
+              <p>Após 3 rodadas de 100 ações, o contador mostra o total esperado e o uso de memória volta ao patamar inicial depois de "Limpar".</p>
+            </div>
+            <div class="guide-item is-pitfall">
+              <h4>Armadilhas comuns</h4>
+              <ul><li>Assumir que um botão desabilitado impede duplo envio. Teclado (Enter repetido) e requisições já em voo também contam.</li><li>Não testar o "Parar": interromper no meio deve deixar o sistema consistente.</li><li>Log que cresce para sempre em sessões longas (teste de resistência).</li></ul>
+            </div>
+            <div class="guide-item is-wide">
+              <h4>Automatize com Playwright</h4>
+              <p class="hint">Dispara a rodada e confere que nenhuma ação se perdeu nem duplicou.</p>
+              <pre class="test-code active"><code>import { test, expect } from '@playwright/test';
+
+test('100 ações rápidas são contadas exatamente uma vez', async ({ page }) =&gt; {
+  await page.goto('/pages/tools/nft/stress-repeated-actions.html');
+  await page.fill('#action-count', '100');
+  await page.fill('#action-delay', '10');
+
+  await page.click('#start-stress');
+  await expect(page.locator('#metric-actions')).toHaveText('100', { timeout: 20_000 });
+
+  // espera um pouco mais: o número não pode continuar subindo
+  await page.waitForTimeout(500);
+  await expect(page.locator('#metric-actions')).toHaveText('100');
+});</code></pre>
+            </div>
           </div>
         </div>
 

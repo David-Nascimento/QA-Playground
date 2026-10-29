@@ -27,9 +27,9 @@ label {
 }
 
 // Campos de texto (checkbox/radio/range/arquivo/cor têm tratamento próprio)
-input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='color']):not([type='submit']):not([type='button']):not([type='reset']):not([type='image']),
-select,
-textarea {
+// :where() zera a especificidade: estilos específicos de uma página (ex.: um
+// campo numérico estreito) sempre vencem este padrão.
+:where(input:not([type='checkbox'], [type='radio'], [type='range'], [type='file'], [type='color'], [type='submit'], [type='button'], [type='reset'], [type='image']), select, textarea) {
   width: 100%;
   max-width: 100%;
   min-height: 44px;
@@ -80,6 +80,12 @@ textarea {
 // Campos que as páginas definem com width explícito (OTP etc.) mantêm o tamanho
 input[style*='width'] {
   width: auto;
+}
+
+// Campos fora de um grupo de formulário de largura total não esticam
+:where(.control-group, .controls) > :where(input, select) {
+  width: auto;
+  min-width: 120px;
 }
 
 select {
@@ -250,13 +256,6 @@ input[type='file'] {
   flex-wrap: wrap;
   align-items: center;
   margin-bottom: var(--spacing-md);
-}
-
-.control-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
 }
 
 fieldset {

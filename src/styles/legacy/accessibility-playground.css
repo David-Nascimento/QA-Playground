@@ -381,17 +381,20 @@
 }
 
 .a11y-code-example {
-  background: color-mix(in srgb, var(--text) 5%, transparent);
-  border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+  background: var(--code-bg);
+  color: var(--code-text);
   border-radius: var(--border-radius-md);
-  padding: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
   margin: var(--spacing-md) 0;
   overflow-x: auto;
 }
 
 .a11y-code-example pre {
   margin: 0;
-  font-family: "Courier New", monospace;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-mono);
   font-size: var(--font-size-sm);
   line-height: 1.6;
   white-space: pre-wrap;
@@ -399,7 +402,7 @@
 }
 
 .a11y-code-example code {
-  color: var(--text);
+  color: inherit;
   background: transparent;
 }
 

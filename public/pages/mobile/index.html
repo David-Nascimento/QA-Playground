@@ -21,25 +21,71 @@
           <div class="card">
             <h3>Responsividade</h3>
             <p>Teste adaptação de layouts em diferentes tamanhos de tela e breakpoints responsivos.</p>
+            <p class="card-question"><span class="guide-tag">Layout</span> Inclui auditor de alvos de toque (WCAG 2.5.8).</p>
             <a href="responsividade.html" class="btn">Acessar</a>
           </div>
 
           <div class="card">
             <h3>Touch Events</h3>
             <p>Pratique testes de gestos, toques, swipe e interações touch em dispositivos móveis.</p>
+            <p class="card-question"><span class="guide-tag">Gestos</span> Inclui laboratório de gestos com Pointer Events.</p>
             <a href="touch-events.html" class="btn">Acessar</a>
           </div>
 
           <div class="card">
             <h3>Viewport e Orientação</h3>
             <p>Teste comportamento em diferentes viewports, orientação portrait/landscape e media queries.</p>
+            <p class="card-question"><span class="guide-tag">Ambiente</span> Inclui raio-x do viewport, das unidades vh/dvh e do teclado.</p>
             <a href="viewport.html" class="btn">Acessar</a>
           </div>
 
           <div class="card">
             <h3>Interações Avançadas</h3>
             <p>Teste gestos complexos: pinch/zoom, pull to refresh, scroll infinito, multi-touch e shake detection.</p>
+            <p class="card-question"><span class="guide-tag">Multi-touch</span> Pinça, puxar para atualizar, scroll infinito e sensores.</p>
             <a href="interacoes-avancadas.html" class="btn">Acessar</a>
+          </div>
+        </div>
+
+        <!-- Estratégia de teste mobile -->
+        <div class="subsection mob-strategy" id="mobile-estrategia">
+          <h3>Como testar mobile web como especialista</h3>
+          <p class="section-lead">O erro mais comum é testar tudo no modo dispositivo do DevTools e considerar o mobile coberto. Ele é ótimo para começar, mas simula só parte do que muda num celular de verdade.</p>
+          <div class="nft-table-wrap">
+            <table class="table mob-compare" data-testid="mobile-emulation-table">
+              <thead>
+                <tr><th scope="col">O que você quer testar</th><th scope="col">Emulação (DevTools, Playwright)</th><th scope="col">Aparelho real ou nuvem de dispositivos</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Breakpoints e layout</th><td class="is-yes">Sim</td><td class="is-yes">Sim</td></tr>
+                <tr><th scope="row">Eventos de toque e <code>pointer: coarse</code></th><td class="is-yes">Sim</td><td class="is-yes">Sim</td></tr>
+                <tr><th scope="row">Motor do Safari no iPhone (WebKit)</th><td class="is-partial">Parcial: WebKit do Playwright, não o Safari</td><td class="is-yes">Sim</td></tr>
+                <tr><th scope="row">Barras do navegador, <code>100vh</code> e teclado virtual</th><td class="is-no">Não</td><td class="is-yes">Sim</td></tr>
+                <tr><th scope="row">Desempenho de CPU e rede reais</th><td class="is-partial">Aproximado (throttling)</td><td class="is-yes">Sim</td></tr>
+                <tr><th scope="row">Sensores, câmera, notch e gestos do sistema</th><td class="is-no">Não</td><td class="is-yes">Sim</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="guide-grid">
+            <div class="guide-item">
+              <h4>Matriz mínima de dispositivos</h4>
+              <ul>
+                <li>Um Android intermediário com Chrome (a maior parte do público no Brasil).</li>
+                <li>Um iPhone com Safari na versão atual e na anterior do iOS.</li>
+                <li>Uma tela estreita (360 px ou menos) e um tablet em paisagem.</li>
+                <li>Confirme com os dados de acesso do seu produto: a matriz certa é a dos seus usuários.</li>
+              </ul>
+            </div>
+            <div class="guide-item">
+              <h4>Por onde começar</h4>
+              <ol class="nft-path">
+                <li><a href="viewport.html">Viewport e Orientação</a>: entenda os tamanhos que mudam no celular.</li>
+                <li><a href="responsividade.html">Responsividade</a>: critérios de reflow, zoom e alvos de toque.</li>
+                <li><a href="touch-events.html">Touch Events</a>: gestos, Pointer Events e <code>touch-action</code>.</li>
+                <li><a href="interacoes-avancadas.html">Interações Avançadas</a>: multi-touch, sensores e listas.</li>
+                <li><a href="../tools/mobile-playground.html">Mobile Playground</a>: automação de apps com Appium.</li>
+              </ol>
+            </div>
           </div>
         </div>
 

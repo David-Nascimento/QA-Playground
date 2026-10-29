@@ -105,6 +105,118 @@
             <div class="hint">Esta imagem se adapta automaticamente ao tamanho do container.</div>
           </div>
 
+          <!-- Auditoria de alvos de toque (src/client/features/mobile/target-size.ts) -->
+          <div class="subsection" id="target-audit" data-testid="target-audit">
+            <h3>Auditor de alvos de toque</h3>
+            <p class="section-lead">Mede todos os botões, links e campos visíveis e compara com o WCAG 2.2 (24 px, critério 2.5.8) e com as diretrizes de Apple e Google (44 a 48 px). Rode em larguras diferentes: um botão que passa no desktop pode encolher no celular.</p>
+            <div class="mob-target-demo" data-target-demo data-testid="target-demo">
+              <span class="hint">Exemplos:</span>
+              <button type="button" class="mob-size" style="width: 16px; height: 16px" aria-label="Alvo de 16 pixels">16</button>
+              <button type="button" class="mob-size" style="width: 24px; height: 24px" aria-label="Alvo de 24 pixels">24</button>
+              <button type="button" class="mob-size" style="width: 32px; height: 32px" aria-label="Alvo de 32 pixels">32</button>
+              <button type="button" class="mob-size" style="width: 44px; height: 44px" aria-label="Alvo de 44 pixels">44</button>
+              <button type="button" class="mob-size" style="width: 48px; height: 48px" aria-label="Alvo de 48 pixels">48</button>
+            </div>
+            <div class="mob-target-controls" data-target-controls>
+              <label for="ta-scope">Analisar</label>
+              <select id="ta-scope" data-lab="scope" data-testid="target-scope">
+                <option value="page" selected>O conteúdo desta página</option>
+                <option value="demo">Só os exemplos</option>
+              </select>
+              <label class="checkbox-group" for="ta-highlight"><input id="ta-highlight" type="checkbox" data-lab="highlight" data-testid="target-highlight" /> Destacar na tela</label>
+              <button type="button" class="btn" data-lab="run" data-testid="target-run">Analisar alvos</button>
+            </div>
+            <dl class="mob-readout mob-target-summary">
+              <div><dt>Alvos medidos</dt><dd data-out="total" data-testid="target-total">—</dd></div>
+              <div class="is-fail"><dt>Abaixo de 24 px</dt><dd data-out="falha" data-testid="target-fail">—</dd></div>
+              <div class="is-warn"><dt>24 a 43 px</dt><dd data-out="aa" data-testid="target-aa">—</dd></div>
+              <div class="is-pass"><dt>44 px ou mais</dt><dd data-out="plataforma" data-testid="target-platform">—</dd></div>
+              <div><dt>Links em texto</dt><dd data-out="excecao" data-testid="target-inline">—</dd></div>
+            </dl>
+            <p class="hint" data-out="status" role="status"></p>
+            <h4 class="mob-log-title">Menores alvos encontrados</h4>
+            <ol class="mob-target-list" data-out="worst" data-testid="target-worst"></ol>
+          </div>
+
+          <!-- Guia do especialista -->
+          <div class="subsection mob-expert" id="mobile-guia">
+            <h3>Guia do especialista</h3>
+            <p class="section-lead">Responsividade não é "caber na tela do iPhone". É o conteúdo continuar legível e operável em qualquer largura, com zoom e com texto maior. Estes critérios têm número no WCAG e viram casos de teste objetivos.</p>
+            <div class="guide-grid">
+              <div class="guide-item">
+                <h4>Breakpoints pelo conteúdo</h4>
+                <ul><li>Não existe "largura do celular": aparelhos vão de 320 px a mais de 430 px, e tablets passam de 1024 px.</li><li>Teste nas bordas de cada breakpoint (767 e 768, 1023 e 1024), não só no meio.</li><li>Componentes que mudam pelo espaço do contêiner usam <em>container queries</em>; teste-os em colunas estreitas também.</li></ul>
+              </div>
+              <div class="guide-item is-criteria">
+                <h4>Critérios do WCAG</h4>
+                <ul><li><strong>1.4.10 Reflow:</strong> em 320 px de largura, nada de rolagem horizontal (exceto tabelas, mapas e código).</li><li><strong>1.4.4 Redimensionar texto:</strong> com zoom de 200%, tudo continua legível e funcional.</li><li><strong>1.4.12 Espaçamento de texto:</strong> aumentar entrelinha e espaços não pode cortar texto.</li><li><strong>2.5.8 Tamanho do alvo:</strong> veja o auditor acima.</li></ul>
+              </div>
+              <div class="guide-item">
+                <h4>Imagens e mídia</h4>
+                <ul><li><code>max-width: 100%</code> evita estouro, mas não economiza dados: use <code>srcset</code> e <code>sizes</code>.</li><li>Reserve espaço com <code>width</code>/<code>height</code> ou <code>aspect-ratio</code> para não causar CLS.</li><li>Verifique a aba Network em uma largura de celular: o navegador baixou a versão pequena?</li></ul>
+              </div>
+              <div class="guide-item is-pitfall">
+                <h4>Armadilhas comuns</h4>
+                <ul><li>Testar só redimensionando a janela do desktop: o celular tem toque, DPR alto e barras do navegador.</li><li>Conteúdo escondido no celular com <code>display: none</code> que o usuário precisa (por exemplo, o preço).</li><li>Tabelas largas espremidas até ficarem ilegíveis em vez de rolar no próprio bloco.</li><li>Esquecer o modo paisagem do celular, que costuma cair no breakpoint de tablet.</li></ul>
+              </div>
+              <div class="guide-item is-wide">
+                <h4>Automatize</h4>
+                <div class="a11y-tabs" data-tabs>
+              <div role="tablist" aria-label="Exemplos de automação">
+                <button type="button" role="tab" id="resp-tab-pw" aria-controls="resp-panel-pw" aria-selected="true">Playwright</button><button type="button" role="tab" id="resp-tab-targets" aria-controls="resp-panel-targets" aria-selected="false" tabindex="-1">Alvos de toque</button>
+              </div>
+              <div role="tabpanel" id="resp-panel-pw" aria-labelledby="resp-tab-pw" tabindex="0">
+                <p class="hint">Percorre as larguras críticas, verifica rolagem horizontal (WCAG 1.4.10) e guarda uma captura de tela para comparação visual.</p>
+                <pre class="test-code active"><code>import { test, expect } from '@playwright/test';
+
+const larguras = [320, 375, 767, 768, 1023, 1024, 1440];
+
+for (const largura of larguras) {
+  test(`sem rolagem horizontal em ${largura} px`, async ({ page }) =&gt; {
+    await page.setViewportSize({ width: largura, height: 800 });
+    await page.goto('/pages/mobile/responsividade.html');
+
+    const sobra = await page.evaluate(
+      () =&gt; document.documentElement.scrollWidth - document.documentElement.clientWidth
+    );
+    expect(sobra).toBe(0);
+
+    // regressão visual: a primeira execução cria a imagem de referência
+    await expect(page).toHaveScreenshot(`responsividade-${largura}.png`, { fullPage: true });
+  });
+}
+
+test('breakpoint muda exatamente em 768 px', async ({ page }) =&gt; {
+  await page.setViewportSize({ width: 767, height: 800 });
+  await page.goto('/pages/mobile/responsividade.html');
+  await expect(page.getByTestId('breakpoint')).toContainText('Mobile');
+
+  await page.setViewportSize({ width: 768, height: 800 });
+  await expect(page.getByTestId('breakpoint')).toContainText('Tablet');
+});</code></pre>
+              </div><div role="tabpanel" id="resp-panel-targets" aria-labelledby="resp-tab-targets" tabindex="0" hidden>
+                <p class="hint">O mesmo critério do auditor, como teste automatizado.</p>
+                <pre class="test-code active"><code>import { test, expect, devices } from '@playwright/test';
+
+test.use({ ...devices['iPhone 13'] });
+
+test('nenhum botão menor que 24 x 24 px (WCAG 2.5.8)', async ({ page }) =&gt; {
+  await page.goto('/pages/mobile/responsividade.html');
+  const pequenos = await page.$$eval('main button, main [role=button]', (els) =&gt;
+    els
+      .map((el) =&gt; ({ el, r: el.getBoundingClientRect() }))
+      .filter(({ r }) =&gt; r.width &gt; 0 &amp;&amp; (r.width &lt; 24 || r.height &lt; 24))
+      .map(({ el, r }) =&gt; `${el.textContent?.trim()} (${Math.round(r.width)}x${Math.round(r.height)})`)
+  );
+  // os exemplos de 16 px do auditor são propositais
+  expect(pequenos.filter((p) =&gt; !p.startsWith('16'))).toEqual([]);
+});</code></pre>
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>
+
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
             <div class="info-box">

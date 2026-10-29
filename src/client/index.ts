@@ -11,6 +11,13 @@ import { BDDPlayground } from './features/bdd/bdd-playground.js';
 import { ChallengeCodeReveal } from './features/challenge/challenge.js';
 import { FundamentosManager } from './features/fundamentos/fundamentos.js';
 import { XPathCSSTester, exposeXPathFunctions } from './features/xpath/xpath-tester.js';
+import { initAccessibility } from './features/accessibility/accessibility.js';
+import { initVitals } from './features/nft/vitals.js';
+import { initLatencyLab } from './features/nft/latency-lab.js';
+import { initBackoffLab } from './features/nft/backoff-lab.js';
+import { initEnvPanel } from './features/mobile/env-panel.js';
+import { initGestureLab } from './features/mobile/gesture-lab.js';
+import { initTargetAudit } from './features/mobile/target-size.js';
 
 /**
  * Inicializa todas as funcionalidades da aplicação
@@ -46,6 +53,19 @@ function initApp(): void {
     const xpathTester = new XPathCSSTester();
     xpathTester.init();
     exposeXPathFunctions(xpathTester);
+
+    // Acessibilidade (playgrounds, checklist, contraste, abas)
+    initAccessibility();
+
+    // NFT: Web Vitals e laboratórios de latência e retry
+    initVitals();
+    initLatencyLab();
+    initBackoffLab();
+
+    // Mobile: ambiente do dispositivo, gestos e tamanho de alvos de toque
+    initEnvPanel();
+    initGestureLab();
+    initTargetAudit();
 
     // Helpers globais (compatibilidade)
     exposeGlobalHelpers();

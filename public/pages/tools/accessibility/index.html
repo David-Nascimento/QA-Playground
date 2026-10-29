@@ -45,7 +45,7 @@
                 <h4>Deficiência Motora</h4>
                 <ul>
                   <li>Limitações de movimento (navegação por teclado)</li>
-                  <li>Precisão reduzida (áreas de toque grandes, 44x44px mínimo)</li>
+                  <li>Precisão reduzida (áreas de toque grandes: mínimo de 24×24px pela WCAG 2.2, ideal 44x44px)</li>
                   <li>Uso de tecnologias assistivas (varredura, comandos de voz)</li>
                 </ul>
               </div>
@@ -88,10 +88,11 @@
             <div class="a11y-info-box">
               <h4>Aspectos Legais</h4>
               <ul>
-                <li>Lei Brasileira de Inclusão (LBI - Lei 13.146/2015)</li>
-                <li>Decreto 9.296/2018 (obrigatoriedade de acessibilidade digital no Brasil)</li>
-                <li>Americans with Disabilities Act (ADA) nos EUA</li>
-                <li>European Accessibility Act na UE</li>
+                <li>Lei Brasileira de Inclusão (LBI - Lei 13.146/2015): o art. 63 torna obrigatória a acessibilidade nos sites de empresas com sede ou representação no Brasil e de órgãos de governo</li>
+                <li><strong>ABNT NBR 17225:2025</strong>: primeira norma técnica brasileira de acessibilidade em conteúdo e aplicações web (março de 2025), com requisitos e recomendações alinhados à WCAG</li>
+                <li>Decreto 5.296/2004 (art. 47) e <strong>eMAG</strong> (Modelo de Acessibilidade em Governo Eletrônico): acessibilidade obrigatória nos portais da administração pública</li>
+                <li>Americans with Disabilities Act (ADA) e Section 508 nos EUA</li>
+                <li>European Accessibility Act na UE, aplicável desde 28 de junho de 2025, com a norma EN 301 549 como referência técnica</li>
               </ul>
             </div>
             <div class="a11y-info-box">
@@ -109,7 +110,16 @@
         <!-- Navegação das Seções -->
         <nav class="a11y-nav-sections" aria-label="Navegação das seções de acessibilidade">
           <h2 class="a11y-section-title" style="margin-bottom: var(--spacing-lg);">Explore as Seções</h2>
-          <div class="a11y-nav-grid">
+          <p class="a11y-path-intro">As seções formam uma trilha: comece pelos conceitos, pratique nos playgrounds e termine com o checklist e os casos de teste para aplicar no seu projeto.</p>
+          <div class="a11y-nav-grid a11y-path">
+            <a href="introducao.html" class="a11y-nav-card">
+              <h3>Introdução</h3>
+              <p>O que é acessibilidade digital e quem são as pessoas beneficiadas.</p>
+            </a>
+            <a href="importancia-legal-etica.html" class="a11y-nav-card">
+              <h3>Importância Legal e Ética</h3>
+              <p>WCAG 2.2, LBI, ABNT NBR 17225 e o que muda para quem testa.</p>
+            </a>
             <a href="playgrounds.html" class="a11y-nav-card">
               <h3>Playgrounds Interativos</h3>
               <p>Explore problemas comuns e suas soluções de forma prática.</p>
@@ -121,6 +131,18 @@
             <a href="checklist.html" class="a11y-nav-card">
               <h3>Checklist de Acessibilidade</h3>
               <p>Use este checklist para validar requisitos WCAG 2.2 AA.</p>
+            </a>
+            <a href="casos-teste.html" class="a11y-nav-card">
+              <h3>Casos de Teste</h3>
+              <p>Casos prontos com passos, resultado esperado e critério WCAG.</p>
+            </a>
+            <a href="ferramentas.html" class="a11y-nav-card">
+              <h3>Ferramentas</h3>
+              <p>Extensões, leitores de tela e um verificador de contraste nesta página.</p>
+            </a>
+            <a href="documentacao.html" class="a11y-nav-card">
+              <h3>Documentação</h3>
+              <p>Referências oficiais para aprofundar.</p>
             </a>
           </div>
         </nav>

@@ -138,27 +138,27 @@
         <div class="timeout-controls">
           <h3>Controles de Teste</h3>
           <div class="control-group">
-            <label>Timeout (ms):</label>
+            <label for="timeout-value">Timeout (ms):</label>
             <input type="number" id="timeout-value" min="100" max="10000" value="2000" step="100">
             <span id="timeout-display">2000ms</span>
           </div>
           <div class="control-group">
-            <label>Latência Simulada (ms):</label>
+            <label for="latency-value">Latência Simulada (ms):</label>
             <input type="number" id="latency-value" min="0" max="10000" value="1500" step="100">
             <span id="latency-display">1500ms</span>
           </div>
           <div class="control-group">
-            <label>Número de Requisições:</label>
+            <label for="request-count">Número de Requisições:</label>
             <input type="number" id="request-count" min="1" max="20" value="5" step="1">
             <span id="request-count-display">5</span>
           </div>
           <div class="control-group">
-            <label>Retry Automático:</label>
+            <label for="auto-retry">Retry Automático:</label>
             <input type="checkbox" id="auto-retry" checked>
             <span>Sim</span>
           </div>
           <div class="control-group">
-            <label>Máximo de Retries:</label>
+            <label for="max-retries">Máximo de Retries:</label>
             <input type="number" id="max-retries" min="0" max="5" value="2" step="1">
             <span id="max-retries-display">2</span>
           </div>
@@ -190,6 +190,94 @@
           <div class="metric-card">
             <div class="metric-label">Retries Executados</div>
             <div class="metric-value" id="metric-retries">0</div>
+          </div>
+        </div>
+
+        <!-- Laboratório: estratégias de retry (src/client/features/nft/backoff-lab.ts) -->
+        <div class="content-card nft-card-enhanced" id="backoff-lab" data-testid="backoff-lab">
+          <h4>Laboratório: retry fixo x backoff exponencial x jitter</h4>
+          <p class="nft-lead">O servidor cai por alguns segundos e volta com capacidade limitada. Centenas de clientes tentam de novo. Veja como cada estratégia distribui as tentativas e por que <strong>backoff exponencial com jitter</strong> é a recomendação padrão.</p>
+          <div class="nft-lab">
+            <div class="nft-lab-controls">
+              <label>Clientes
+                <input type="number" data-lab="clients" min="10" max="2000" step="10" value="300" data-testid="backoff-clients" />
+              </label>
+              <label>Tempo fora do ar (s)
+                <input type="number" data-lab="outage" min="1" max="20" step="1" value="4" data-testid="backoff-outage" />
+              </label>
+              <label>Capacidade depois de voltar (req/s)
+                <input type="number" data-lab="capacity" min="10" max="1000" step="10" value="80" data-testid="backoff-capacity" />
+              </label>
+              <label>Atraso base (s)
+                <input type="number" data-lab="base" min="0.1" max="5" step="0.1" value="1" data-testid="backoff-base" />
+              </label>
+              <label>Atraso máximo (s)
+                <input type="number" data-lab="cap" min="1" max="60" step="1" value="16" data-testid="backoff-cap" />
+              </label>
+              <label>Tentativas por cliente
+                <input type="number" data-lab="max" min="1" max="20" step="1" value="10" data-testid="backoff-max" />
+              </label>
+              <label>Semente
+                <input type="number" data-lab="seed" min="1" max="9999" step="1" value="7" data-testid="backoff-seed" />
+              </label>
+              <button type="button" class="btn" data-lab="run" data-testid="backoff-run">Simular</button>
+            </div>
+            <div>
+              <div class="nft-chart" data-out="chart"></div>
+              <div class="nft-table-wrap">
+                <table class="table" data-testid="backoff-table">
+                  <thead><tr><th scope="col">Estratégia</th><th scope="col">Tentativas</th><th scope="col">Pico em 0,5 s</th><th scope="col">Último sucesso</th><th scope="col">Desistiram</th><th scope="col">Ainda tentando</th></tr></thead>
+                  <tbody data-out="table"></tbody>
+                </table>
+              </div>
+              <ul class="nft-insight" data-out="insight"></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Guia do especialista: o que este cenário ensina, como medir e como automatizar -->
+        <div class="content-card nft-card-enhanced nft-expert" id="nft-guia">
+          <h4>Guia do especialista</h4>
+          <p class="nft-lead">Pergunta que este cenário responde: <strong>o cliente desiste na hora certa e tenta de novo sem piorar a situação?</strong> Timeout curto demais gera falhas falsas; longo demais deixa o usuário preso. Retry mal feito multiplica a carga justamente quando o servidor está fraco.</p>
+          <div class="guide-grid">
+            <div class="guide-item">
+              <h4>Hipótese de teste</h4>
+              <p>Com timeout de 2000 ms e latência de 1500 ms, nenhuma requisição deveria expirar. Ao subir a latência para 2500 ms, todas expiram e cada uma é repetida até o máximo de retries: 5 requisições × (1 tentativa + 2 retries) = 15 tentativas, todas expiradas. Como as requisições rodam em série, o teste leva cerca de 37 s.</p>
+            </div>
+            <div class="guide-item">
+              <h4>O que medir</h4>
+              <table class="nft-metric-table"><tbody><tr><th scope="row">Timeouts</th><td>Devem acontecer só quando latência &gt; timeout.</td></tr><tr><th scope="row">Retries executados</th><td>Nunca acima de requisições × máximo de retries.</td></tr><tr><th scope="row">Tempo até desistir</th><td>Timeout × (1 + retries) + esperas entre tentativas.</td></tr><tr><th scope="row">Intervalo entre tentativas</th><td>Aqui é fixo em 500 ms. Em produção, deve crescer (backoff) e variar entre clientes (jitter).</td></tr></tbody></table>
+            </div>
+            <div class="guide-item is-criteria">
+              <h4>Critério de aceite (exemplo)</h4>
+              <p>Com latência de 2500 ms, timeout de 2000 ms e 2 retries, o contador de retries chega a exatamente 10, o de timeouts a 15 e o de sucessos fica em 0. Nenhuma tentativa extra depois disso. <strong>Desafio:</strong> no fim, "Requisições Totais" mostra 15, embora só 5 requisições tenham sido feitas. Isso é um bug? Escreva o relato.</p>
+            </div>
+            <div class="guide-item is-pitfall">
+              <h4>Armadilhas comuns</h4>
+              <ul><li>As requisições deste cenário são simuladas no navegador com <code>setTimeout</code>: elas não aparecem na aba Network. Para tráfego de rede real, use a API mock (<code>npm run dev:api</code>) com o cenário <code>?scenario=timeout</code>.</li><li>Retry imediato e sincronizado: todos os clientes voltam ao mesmo tempo e derrubam o servidor de novo (veja o laboratório abaixo).</li><li>Repetir operações que não são idempotentes, como um pagamento, sem chave de idempotência.</li><li>Timeout no cliente maior que o do servidor ou do gateway: o usuário espera por uma resposta que nunca vem.</li></ul>
+            </div>
+            <div class="guide-item is-wide">
+              <h4>Automatize com Playwright</h4>
+              <p class="hint">Verifique o limite de retries com valores fixos, para o teste ser determinístico.</p>
+              <pre class="test-code active"><code>import { test, expect } from '@playwright/test';
+
+test('respeita o máximo de retries quando tudo expira', async ({ page }) =&gt; {
+  test.setTimeout(60_000); // 5 requisições em série, cada uma com 3 tentativas de 2 s
+  await page.goto('/pages/tools/nft/resilience-timeout-retry.html');
+  await page.fill('#timeout-value', '2000');
+  await page.fill('#latency-value', '2500');   // sempre acima do timeout
+  await page.fill('#request-count', '5');
+  await page.fill('#max-retries', '2');
+  await page.locator('#auto-retry').check();
+
+  await page.click('#start-test');
+
+  // 5 requisições x 2 retries = 10 retries, nenhum sucesso
+  await expect(page.locator('#metric-retries')).toHaveText('10', { timeout: 45_000 });
+  await expect(page.locator('#metric-timeout')).toHaveText('15', { timeout: 10_000 });
+  await expect(page.locator('#metric-success')).toHaveText('0');
+});</code></pre>
+            </div>
           </div>
         </div>
 

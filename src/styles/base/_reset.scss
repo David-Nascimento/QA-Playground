@@ -33,7 +33,7 @@ img, picture, video, canvas, svg {
   height: auto;
 }
 
-input, button, textarea, select {
+:where(input, button, textarea, select) {
   font: inherit;
   color: inherit;
 }

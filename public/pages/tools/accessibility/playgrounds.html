@@ -49,12 +49,14 @@
                 <h4>Versão com Problema</h4>
                 <p><strong>Problema:</strong> Botão apenas com ícone, sem texto ou aria-label. Usuários de leitores de tela não conseguem entender a função.</p>
                 <div class="playground-demo">
-                  <button class="demo-button-icon" aria-hidden="true">[Ícone]</button>
+                  <button class="demo-button-icon" type="button"><span aria-hidden="true">[Ícone]</span></button>
                   <p class="demo-note">Leitores de tela anunciarão: "botão" (sem contexto)</p>
                 </div>
                 <div class="a11y-code-example">
-                  <pre><code>&lt;button&gt;[Ícone]&lt;/button&gt;
-&lt;!-- Sem aria-label ou texto --&gt;</code></pre>
+                  <pre><code>&lt;button&gt;
+  &lt;svg aria-hidden="true"&gt;…&lt;/svg&gt;
+&lt;/button&gt;
+&lt;!-- Só um ícone: o botão fica sem nome acessível --&gt;</code></pre>
                 </div>
               </div>
 
@@ -62,17 +64,19 @@
                 <h4>Versão Corrigida</h4>
                 <p><strong>Solução:</strong> Adicionar aria-label descritivo ou texto acessível.</p>
                 <div class="playground-demo">
-                  <button class="demo-button-icon" aria-label="Ver notificações" aria-hidden="true">[Ícone]</button>
+                  <button class="demo-button-icon" type="button" aria-label="Ver notificações"><span aria-hidden="true">[Ícone]</span></button>
                   <p class="demo-note">Leitores de tela anunciarão: "Ver notificações, botão"</p>
                 </div>
                 <div class="a11y-code-example">
-                  <pre><code>&lt;button aria-label="Ver notificações"&gt;[Ícone]&lt;/button&gt;
+                  <pre><code>&lt;button aria-label="Ver notificações"&gt;
+  &lt;svg aria-hidden="true"&gt;…&lt;/svg&gt;
+&lt;/button&gt;
 
 &lt;!-- Ou com texto visível: --&gt;
 &lt;button&gt;[Ícone] &lt;span class="sr-only"&gt;Ver notificações&lt;/span&gt;&lt;/button&gt;</code></pre>
                 </div>
                 <div class="a11y-explanation">
-                  <p><strong>Por que funciona:</strong> O atributo <code>aria-label</strong> fornece um nome acessível para tecnologias assistivas, 
+                  <p><strong>Por que funciona:</strong> O atributo <code>aria-label</code> fornece um nome acessível para tecnologias assistivas, 
                   mesmo quando o botão contém apenas um ícone visual.</p>
                 </div>
               </div>
@@ -347,17 +351,19 @@ button:focus:not(:focus-visible) {
                 <p><strong>Solução:</strong> Usar ARIA apenas quando necessário, com semântica HTML adequada e atributos consistentes.</p>
                 <div class="playground-demo">
                   <button>Botão acessível</button>
-                  <button class="demo-button-interactive" onclick="alert('Clicou')" onkeydown="if(event.key==='Enter'||event.key===' ') {this.click(); event.preventDefault();}">
+                  <button class="demo-button-interactive" type="button" onclick="this.nextElementSibling.textContent = 'Ação executada'">
                     Botão com suporte a teclado
                   </button>
+                  <span class="demo-output" role="status"></span>
                   <button aria-label="Enviar formulário">Enviar</button>
                 </div>
                 <p class="demo-note">Todos acessíveis: sem aria-hidden em interativos, sem roles redundantes, aria-label único</p>
                 <div class="a11y-code-example">
                   <pre><code>&lt;!-- CORRETO: Use elementos semânticos HTML --&gt;
 &lt;button&gt;Ação importante&lt;/button&gt;
+&lt;!-- &lt;button&gt; já é focável e responde a Enter e Espaço --&gt;
 
-&lt;!-- CORRETO: Se precisar de elemento customizado, use ARIA corretamente --&gt;
+&lt;!-- Se for inevitável um elemento customizado, ele precisa de tudo isto: --&gt;
 &lt;div role="button" 
      tabindex="0"
      aria-label="Clique para enviar"
@@ -377,12 +383,214 @@ button:focus:not(:focus-visible) {
               </div>
             </div>
           </div>
+
+          <!-- Playground 7: Links genéricos -->
+          <div class="a11y-playground" id="playground-link-text">
+            <div class="a11y-playground-header">
+              <h3>Playground 7: Links com texto genérico</h3>
+              <button class="a11y-toggle-btn" data-playground="link-text">
+                <span class="toggle-label">Mostrar versão corrigida</span>
+                <span class="toggle-icon" aria-hidden="true">▼</span>
+              </button>
+            </div>
+            <div class="a11y-playground-content">
+              <div class="a11y-version-bad" data-version="bad">
+                <h4>Versão com Problema</h4>
+                <p><strong>Problema:</strong> Leitores de tela permitem listar todos os links da página. Fora do contexto, "clique aqui" e "saiba mais" não dizem para onde levam.</p>
+                <div class="playground-demo">
+                  <p>Relatório anual disponível. <a href="#playground-link-text" data-testid="a11y-link-bad-1">Clique aqui</a>.</p>
+                  <p>Novo plano de saúde. <a href="#playground-link-text" data-testid="a11y-link-bad-2">Saiba mais</a>.</p>
+                  <p class="demo-note">Lista de links do leitor de tela: "Clique aqui", "Saiba mais"</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>&lt;p&gt;Relatório anual disponível. &lt;a href="/relatorio.pdf"&gt;Clique aqui&lt;/a&gt;.&lt;/p&gt;</code></pre>
+                </div>
+              </div>
+              <div class="a11y-version-good" data-version="good" style="display: none;">
+                <h4>Versão Corrigida</h4>
+                <p><strong>Solução:</strong> O texto do link descreve o destino. Se o link abre um arquivo, diga o formato e o tamanho.</p>
+                <div class="playground-demo">
+                  <p><a href="#playground-link-text" data-testid="a11y-link-good-1">Baixar o relatório anual 2025 (PDF, 2 MB)</a></p>
+                  <p><a href="#playground-link-text" data-testid="a11y-link-good-2">Conhecer o novo plano de saúde</a></p>
+                  <p class="demo-note">Lista de links: "Baixar o relatório anual 2025 (PDF, 2 MB)", "Conhecer o novo plano de saúde"</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>&lt;a href="/relatorio.pdf"&gt;Baixar o relatório anual 2025 (PDF, 2 MB)&lt;/a&gt;</code></pre>
+                </div>
+                <div class="a11y-explanation">
+                  <p><strong>WCAG 2.4.4 Finalidade do Link (A):</strong> o propósito de cada link deve ser claro pelo texto (ou pelo contexto imediato). Como testar: no NVDA, <kbd>Insert</kbd> + <kbd>F7</kbd> abre a lista de links.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Playground 8: Mensagens de status -->
+          <div class="a11y-playground" id="playground-status-message">
+            <div class="a11y-playground-header">
+              <h3>Playground 8: Mensagem de status que ninguém ouve</h3>
+              <button class="a11y-toggle-btn" data-playground="status-message">
+                <span class="toggle-label">Mostrar versão corrigida</span>
+                <span class="toggle-icon" aria-hidden="true">▼</span>
+              </button>
+            </div>
+            <div class="a11y-playground-content">
+              <div class="a11y-version-bad" data-version="bad">
+                <h4>Versão com Problema</h4>
+                <p><strong>Problema:</strong> A confirmação aparece só visualmente. Quem usa leitor de tela clica e não recebe nenhum retorno.</p>
+                <div class="playground-demo">
+                  <button type="button" class="btn" data-demo="status-bad" data-testid="a11y-status-bad-btn">Adicionar ao carrinho</button>
+                  <div class="demo-toast" data-testid="a11y-status-bad-msg" hidden>Produto adicionado ao carrinho</div>
+                  <p class="demo-note">Leitores de tela: silêncio</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>&lt;div class="toast"&gt;Produto adicionado ao carrinho&lt;/div&gt;
+&lt;!-- inserido via JS, sem região "live" --&gt;</code></pre>
+                </div>
+              </div>
+              <div class="a11y-version-good" data-version="good" style="display: none;">
+                <h4>Versão Corrigida</h4>
+                <p><strong>Solução:</strong> A mensagem é escrita dentro de uma região <code>role="status"</code> que já existe na página. O leitor de tela anuncia sem tirar o foco do botão.</p>
+                <div class="playground-demo">
+                  <button type="button" class="btn" data-demo="status-good" data-testid="a11y-status-good-btn">Adicionar ao carrinho</button>
+                  <div class="demo-toast" role="status" data-testid="a11y-status-good-msg"></div>
+                  <p class="demo-note">Leitores de tela: "Produto adicionado ao carrinho"</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>&lt;!-- A região existe vazia desde o carregamento --&gt;
+&lt;div role="status"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  status.textContent = 'Produto adicionado ao carrinho';
+&lt;/script&gt;</code></pre>
+                </div>
+                <div class="a11y-explanation">
+                  <p><strong>WCAG 4.1.3 Mensagens de Status (AA):</strong> mensagens de sucesso, erro ou progresso precisam ser anunciadas sem mover o foco. Use <code>role="status"</code> (educado) para confirmações e <code>role="alert"</code> só para erros urgentes. A região precisa existir antes da mensagem: criada junto com o texto, muitos leitores não anunciam.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Playground 9: Modal e foco -->
+          <div class="a11y-playground" id="playground-modal-focus">
+            <div class="a11y-playground-header">
+              <h3>Playground 9: Modal sem gerenciamento de foco</h3>
+              <button class="a11y-toggle-btn" data-playground="modal-focus">
+                <span class="toggle-label">Mostrar versão corrigida</span>
+                <span class="toggle-icon" aria-hidden="true">▼</span>
+              </button>
+            </div>
+            <div class="a11y-playground-content">
+              <div class="a11y-version-bad" data-version="bad">
+                <h4>Versão com Problema</h4>
+                <p><strong>Problema:</strong> O modal aparece, mas o foco fica no botão de trás. Com Tab, você continua navegando pela página escondida. Esc não fecha.</p>
+                <div class="playground-demo">
+                  <button type="button" class="btn" data-demo="modal-bad" data-testid="a11y-modal-bad-open">Excluir conta</button>
+                  <div class="demo-modal-bad" data-testid="a11y-modal-bad" hidden>
+                    <div class="demo-modal-box">
+                      <div class="demo-modal-title">Excluir sua conta?</div>
+                      <p>Essa ação não pode ser desfeita.</p>
+                      <div class="demo-modal-actions">
+                        <div class="demo-fake-btn" data-demo="modal-bad-close">Cancelar</div>
+                        <div class="demo-fake-btn danger" data-demo="modal-bad-close">Excluir</div>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="demo-note">Teste: abra e pressione Tab e Esc</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>&lt;div class="modal"&gt;          &lt;!-- sem role, sem foco --&gt;
+  &lt;div onclick="fechar()"&gt;Cancelar&lt;/div&gt; &lt;!-- div não é focável --&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+              </div>
+              <div class="a11y-version-good" data-version="good" style="display: none;">
+                <h4>Versão Corrigida</h4>
+                <p><strong>Solução:</strong> O elemento nativo <code>&lt;dialog&gt;</code> aberto com <code>showModal()</code> já move o foco para dentro, torna o fundo inerte e fecha com Esc. Ao fechar, devolvemos o foco ao botão que abriu.</p>
+                <div class="playground-demo">
+                  <button type="button" class="btn" data-demo="modal-good" data-testid="a11y-modal-good-open">Excluir conta</button>
+                  <dialog class="demo-dialog" aria-labelledby="demo-dialog-title" data-testid="a11y-modal-good">
+                    <h4 id="demo-dialog-title">Excluir sua conta?</h4>
+                    <p>Essa ação não pode ser desfeita.</p>
+                    <form method="dialog" class="demo-modal-actions">
+                      <button value="cancel" class="btn btn-secondary" autofocus>Cancelar</button>
+                      <button value="confirm" class="btn">Excluir</button>
+                    </form>
+                  </dialog>
+                  <p class="demo-note">Teste: o foco vai para "Cancelar", Tab circula dentro do modal e Esc fecha</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>&lt;dialog aria-labelledby="titulo"&gt;
+  &lt;h2 id="titulo"&gt;Excluir sua conta?&lt;/h2&gt;
+  &lt;form method="dialog"&gt;
+    &lt;button value="cancel" autofocus&gt;Cancelar&lt;/button&gt;
+    &lt;button value="confirm"&gt;Excluir&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/dialog&gt;
+
+&lt;script&gt;
+  abrir.onclick = () =&gt; dialog.showModal();
+  dialog.onclose = () =&gt; abrir.focus(); // devolve o foco
+&lt;/script&gt;</code></pre>
+                </div>
+                <div class="a11y-explanation">
+                  <p><strong>WCAG 2.4.3 Ordem do Foco (A) e 2.1.2 Sem Bloqueio do Teclado (A):</strong> prender o foco dentro de um modal aberto é correto <em>desde que</em> exista uma saída pelo teclado (Esc ou um botão "Fechar"). O problema é quando não há saída.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Playground 10: Tamanho do alvo -->
+          <div class="a11y-playground" id="playground-target-size">
+            <div class="a11y-playground-header">
+              <h3>Playground 10: Alvos de toque pequenos demais</h3>
+              <button class="a11y-toggle-btn" data-playground="target-size">
+                <span class="toggle-label">Mostrar versão corrigida</span>
+                <span class="toggle-icon" aria-hidden="true">▼</span>
+              </button>
+            </div>
+            <div class="a11y-playground-content">
+              <div class="a11y-version-bad" data-version="bad">
+                <h4>Versão com Problema</h4>
+                <p><strong>Problema:</strong> Botões de 16×16 px colados um no outro. Quem tem tremor ou usa o celular com uma mão erra o toque.</p>
+                <div class="playground-demo">
+                  <div class="demo-targets demo-targets-bad" role="group" aria-label="Quantidade">
+                    <button type="button" aria-label="Diminuir" data-testid="a11y-target-bad-minus">−</button>
+                    <span>1</span>
+                    <button type="button" aria-label="Aumentar" data-testid="a11y-target-bad-plus">+</button>
+                  </div>
+                  <p class="demo-note">Alvos de 16×16 px sem espaço entre si</p>
+                </div>
+              </div>
+              <div class="a11y-version-good" data-version="good" style="display: none;">
+                <h4>Versão Corrigida</h4>
+                <p><strong>Solução:</strong> Alvos com pelo menos 24×24 px (mínimo da WCAG 2.2) e, de preferência, 44×44 px, com espaço entre eles.</p>
+                <div class="playground-demo">
+                  <div class="demo-targets demo-targets-good" role="group" aria-label="Quantidade">
+                    <button type="button" aria-label="Diminuir" data-testid="a11y-target-good-minus">−</button>
+                    <span>1</span>
+                    <button type="button" aria-label="Aumentar" data-testid="a11y-target-good-plus">+</button>
+                  </div>
+                  <p class="demo-note">Alvos de 44×44 px com 8 px de espaço</p>
+                </div>
+                <div class="a11y-code-example">
+                  <pre><code>.quantidade button {
+  min-width: 44px;   /* WCAG 2.5.8 exige 24px; 44px é a recomendação de iOS/Android */
+  min-height: 44px;
+}
+.quantidade { gap: 8px; }</code></pre>
+                </div>
+                <div class="a11y-explanation">
+                  <p><strong>WCAG 2.5.8 Tamanho do Alvo – Mínimo (AA, novo na 2.2):</strong> alvos com pelo menos 24×24 px, ou espaçados o bastante para que um círculo de 24 px em volta de cada um não encoste no vizinho. O nível AAA (2.5.5) pede 44×44 px.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </main>
 
     <!-- @include footer -->
 
     <script type="module" src="../../../js/index.js"></script>
-    <script src="../../../js/accessibility-playground.js"></script>
   </body>
 </html>

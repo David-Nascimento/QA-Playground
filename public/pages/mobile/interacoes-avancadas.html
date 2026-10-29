@@ -149,6 +149,104 @@
             </div>
           </div>
 
+          <!-- Guia do especialista -->
+          <div class="subsection mob-expert" id="mobile-guia">
+            <h3>Guia do especialista</h3>
+            <p class="section-lead">Gestos avançados são onde a automação mobile mais quebra: dependem de tempo, de vários dedos e de sensores. A regra é testar o comportamento (o zoom mudou, a lista atualizou), não a coreografia exata dos dedos.</p>
+            <div class="guide-grid">
+              <div class="guide-item">
+                <h4>Pinça e multi-touch</h4>
+                <ul><li>São dois ponteiros simultâneos. Em Appium, duas sequências W3C executadas juntas; em Playwright, toques com dois pontos via CDP (só Chromium).</li><li>Verifique o resultado (<code>zoom-level</code>), não as coordenadas.</li><li>No iOS, gestos de três dedos podem ser capturados pelo sistema (acessibilidade e zoom do iOS).</li></ul>
+              </div>
+              <div class="guide-item">
+                <h4>Puxar para atualizar e scroll infinito</h4>
+                <ul><li>O gesto só vale com a lista no topo (<code>scrollTop === 0</code>). Teste também puxar com a lista rolada: nada deve acontecer.</li><li>No scroll infinito, verifique o contador, o indicador de carregamento e o fim da lista.</li><li>Rolagem infinita sem fim é um problema de acessibilidade: o rodapé fica inalcançável.</li></ul>
+              </div>
+              <div class="guide-item is-criteria">
+                <h4>Sensores (shake)</h4>
+                <ul><li>Emuladores e navegadores de desktop não têm acelerômetro. Dispare um <code>DeviceMotionEvent</code> sintético para testar a lógica.</li><li>No iOS 13+, o acesso ao sensor exige permissão (<code>DeviceMotionEvent.requestPermission()</code>) iniciada por um toque.</li><li>Critério: toda ação feita por movimento também tem um botão (WCAG 2.5.4), como o "Simular Shake" desta página.</li></ul>
+              </div>
+              <div class="guide-item is-pitfall">
+                <h4>Armadilhas comuns</h4>
+                <ul><li>Usar <code>TouchAction</code>/<code>MultiTouchAction</code>: estão obsoletos desde o java-client 8 e foram removidos dos clientes mais novos. Os exemplos com Appium mais abaixo ainda usam essa API antiga; prefira as W3C Actions.</li><li>Coordenadas fixas: mudam com o aparelho e a orientação. Calcule a partir do retângulo do elemento.</li><li>Esperas fixas (<code>sleep</code>) depois de gestos. Espere pelo estado: contador, texto ou visibilidade.</li></ul>
+              </div>
+              <div class="guide-item is-wide">
+                <h4>Automatize</h4>
+                <div class="a11y-tabs" data-tabs>
+              <div role="tablist" aria-label="Exemplos de automação">
+                <button type="button" role="tab" id="adv-tab-pw" aria-controls="adv-panel-pw" aria-selected="true">Playwright</button><button type="button" role="tab" id="adv-tab-appium" aria-controls="adv-panel-appium" aria-selected="false" tabindex="-1">Appium 2 (Java)</button>
+              </div>
+              <div role="tabpanel" id="adv-panel-pw" aria-labelledby="adv-tab-pw" tabindex="0">
+                <p class="hint">Sensores e scroll são testados pelo estado da página; a pinça usa dois toques via CDP.</p>
+                <pre class="test-code active"><code>import { test, expect, devices } from '@playwright/test';
+
+test.use({ ...devices['Pixel 7'] });
+
+test('shake simulado incrementa o contador', async ({ page }) =&gt; {
+  await page.goto('/pages/mobile/interacoes-avancadas.html');
+  await page.evaluate(() =&gt;
+    window.dispatchEvent(
+      new DeviceMotionEvent('devicemotion', { accelerationIncludingGravity: { x: 25, y: 0, z: 9.8 } })
+    )
+  );
+  await expect(page.getByTestId('shake-count')).toContainText('1');
+});
+
+test('scroll infinito carrega mais itens', async ({ page }) =&gt; {
+  await page.goto('/pages/mobile/interacoes-avancadas.html');
+  const lista = page.getByTestId('infinite-scroll-container');
+  const antes = Number((await page.getByTestId('items-loaded').innerText()).replace(/\D/g, ''));
+  await lista.evaluate((el) =&gt; (el.scrollTop = el.scrollHeight));
+  await expect
+    .poll(async () =&gt; Number((await page.getByTestId('items-loaded').innerText()).replace(/\D/g, '')))
+    .toBeGreaterThan(antes);
+});
+
+test('pinça com dois dedos aumenta o zoom', async ({ page, context }) =&gt; {
+  await page.goto('/pages/mobile/interacoes-avancadas.html');
+  const area = page.getByTestId('pinch-zoom-area');
+  await area.scrollIntoViewIfNeeded();
+  const b = (await area.boundingBox())!;
+  const cx = b.x + b.width / 2, cy = b.y + b.height / 2;
+  const cdp = await context.newCDPSession(page);
+
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: cx - 20, y: cy, id: 1 }, { x: cx + 20, y: cy, id: 2 }] });
+  for (let d = 30; d &lt;= 120; d += 15) {
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: cx - d, y: cy, id: 1 }, { x: cx + d, y: cy, id: 2 }] });
+  }
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+
+  await expect(page.getByTestId('zoom-level')).not.toContainText('100%');
+});</code></pre>
+              </div><div role="tabpanel" id="adv-panel-appium" aria-labelledby="adv-tab-appium" tabindex="0" hidden>
+                <p class="hint">Pinça com dois dedos usando W3C Actions: duas sequências executadas ao mesmo tempo.</p>
+                <pre class="test-code active"><code>PointerInput dedo1 = new PointerInput(PointerInput.Kind.TOUCH, "dedo1");
+PointerInput dedo2 = new PointerInput(PointerInput.Kind.TOUCH, "dedo2");
+int cx = 540, cy = 900; // calcule a partir de element.getRect()
+
+Sequence a = new Sequence(dedo1, 0)
+    .addAction(dedo1.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), cx - 30, cy))
+    .addAction(dedo1.createPointerDown(0))
+    .addAction(dedo1.createPointerMove(Duration.ofMillis(400), PointerInput.Origin.viewport(), cx - 250, cy))
+    .addAction(dedo1.createPointerUp(0));
+
+Sequence b = new Sequence(dedo2, 0)
+    .addAction(dedo2.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), cx + 30, cy))
+    .addAction(dedo2.createPointerDown(0))
+    .addAction(dedo2.createPointerMove(Duration.ofMillis(400), PointerInput.Origin.viewport(), cx + 250, cy))
+    .addAction(dedo2.createPointerUp(0));
+
+driver.perform(List.of(a, b)); // os dois dedos se afastam: zoom +
+
+// Em apps nativos Android (UiAutomator2) também há atalhos prontos:
+driver.executeScript("mobile: pinchOpenGesture", Map.of(
+    "elementId", ((RemoteWebElement) imagem).getId(), "percent", 0.75));</code></pre>
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>
+
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
             <div class="info-box">

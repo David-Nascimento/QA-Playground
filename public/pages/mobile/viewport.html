@@ -116,6 +116,112 @@
             </div>
           </div>
 
+          <!-- Painel do ambiente (src/client/features/mobile/env-panel.ts) -->
+          <div class="subsection" id="mobile-env" data-testid="mobile-env">
+            <h3>Raio-x do ambiente</h3>
+            <p class="section-lead">O que o navegador informa agora. Abra o teclado virtual, dê zoom ou gire o aparelho e compare: são exatamente as diferenças que quebram layouts no celular e que a emulação do DevTools nem sempre reproduz.</p>
+            <div class="mob-env">
+              <dl class="mob-readout mob-readout-wide">
+                <div><dt>Layout viewport</dt><dd data-out="layout" data-testid="env-layout">—</dd></div>
+                <div><dt>Visual viewport</dt><dd data-out="visual" data-testid="env-visual">—</dd></div>
+                <div><dt>Zoom (pinça)</dt><dd data-out="scale" data-testid="env-scale">—</dd></div>
+                <div><dt>Tela física</dt><dd data-out="screen" data-testid="env-screen">—</dd></div>
+                <div><dt>Device pixel ratio</dt><dd data-out="dpr" data-testid="env-dpr">—</dd></div>
+                <div><dt>Teclado / zoom</dt><dd data-out="keyboard" data-testid="env-keyboard">—</dd></div>
+              </dl>
+              <div class="mob-units">
+                <h4>Quanto vale "100% da altura"?</h4>
+                <table class="table">
+                  <thead><tr><th scope="col">Unidade</th><th scope="col">Altura agora</th><th scope="col">O que é</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row"><code>100vh</code></th><td data-out="vh" data-testid="env-vh">—</td><td>Altura com as barras do navegador recolhidas. No celular, pode ficar maior que a tela visível.</td></tr>
+                    <tr><th scope="row"><code>100svh</code></th><td data-out="svh" data-testid="env-svh">—</td><td>Menor altura possível (barras visíveis).</td></tr>
+                    <tr><th scope="row"><code>100lvh</code></th><td data-out="lvh" data-testid="env-lvh">—</td><td>Maior altura possível (barras recolhidas).</td></tr>
+                    <tr><th scope="row"><code>100dvh</code></th><td data-out="dvh" data-testid="env-dvh">—</td><td>Altura dinâmica: acompanha as barras aparecendo e sumindo.</td></tr>
+                    <tr><th scope="row">Área segura</th><td colspan="2" data-out="safe" data-testid="env-safe">—</td></tr>
+                  </tbody>
+                </table>
+                <div class="mob-probes" aria-hidden="true">
+                  <div data-probe="vh" style="height: 100vh"></div>
+                  <div data-probe="svh" style="height: 100svh"></div>
+                  <div data-probe="lvh" style="height: 100lvh"></div>
+                  <div data-probe="dvh" style="height: 100dvh"></div>
+                  <div data-probe="safe" style="padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)"></div>
+                </div>
+              </div>
+            </div>
+            <h4 class="mob-log-title">Media features deste dispositivo</h4>
+            <ul class="mob-media" data-out="media" data-testid="env-media"></ul>
+          </div>
+
+          <!-- Guia do especialista -->
+          <div class="subsection mob-expert" id="mobile-guia">
+            <h3>Guia do especialista</h3>
+            <p class="section-lead">No desktop, "tamanho da tela" é um número. No celular são vários: a área do layout, a área visível (que encolhe com o teclado e o zoom), a tela física e a densidade de pixels. Testar viewport é testar a relação entre eles.</p>
+            <div class="guide-grid">
+              <div class="guide-item">
+                <h4>A meta viewport</h4>
+                <ul><li>Sem <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code>, o celular renderiza como se tivesse ~980 px e encolhe tudo.</li><li><code>user-scalable=no</code> e <code>maximum-scale=1</code> impedem o zoom: falha no WCAG 1.4.4 (redimensionar texto).</li><li>Teste: a página abre legível sem zoom e permite ampliar até 200%.</li></ul>
+              </div>
+              <div class="guide-item">
+                <h4>100vh no celular</h4>
+                <ul><li>Uma tela "100vh" fica mais alta que a área visível quando as barras do navegador aparecem: o botão do rodapé some atrás delas.</li><li>Use <code>100dvh</code> (ou <code>100svh</code>) e compare na tabela acima.</li><li>Teste: role a página no Chrome Android e no Safari iOS e observe elementos fixos no rodapé.</li></ul>
+              </div>
+              <div class="guide-item is-criteria">
+                <h4>Teclado virtual e notch</h4>
+                <ul><li>O teclado reduz o <strong>visual viewport</strong>, não o layout viewport. Campos no fim da página e barras fixas ficam escondidos.</li><li>Critério: com o teclado aberto, o campo em foco e o botão de enviar continuam visíveis.</li><li>Em aparelhos com notch, conteúdo encostado na borda precisa de <code>env(safe-area-inset-*)</code>.</li></ul>
+              </div>
+              <div class="guide-item is-pitfall">
+                <h4>Armadilhas comuns</h4>
+                <ul><li>Confiar só no "modo dispositivo" do DevTools: ele não simula barras do navegador, teclado virtual nem o motor do Safari.</li><li>Testar só retrato. Muitos usuários usam paisagem para vídeo, formulários longos e tablets.</li><li>Imagens nítidas no desktop e borradas no celular: DPR 3 pede imagens 3× maiores (<code>srcset</code>).</li><li>Detectar "celular" pela largura. Use <code>(pointer: coarse)</code> e <code>(hover: none)</code> para decidir interações.</li></ul>
+              </div>
+              <div class="guide-item is-wide">
+                <h4>Automatize</h4>
+                <div class="a11y-tabs" data-tabs>
+              <div role="tablist" aria-label="Exemplos de automação">
+                <button type="button" role="tab" id="vp-tab-pw" aria-controls="vp-panel-pw" aria-selected="true">Playwright</button><button type="button" role="tab" id="vp-tab-appium" aria-controls="vp-panel-appium" aria-selected="false" tabindex="-1">Appium 2 (Java)</button>
+              </div>
+              <div role="tabpanel" id="vp-panel-pw" aria-labelledby="vp-tab-pw" tabindex="0">
+                <p class="hint">Os <em>device descriptors</em> definem largura, DPR, user agent e toque de uma vez. "Girar" o aparelho é trocar largura e altura.</p>
+                <pre class="test-code active"><code>import { test, expect, devices } from '@playwright/test';
+
+test.use({ ...devices['Pixel 7'] }); // 412 x 915, DPR 2.625, touch
+
+test('retrato e paisagem', async ({ page }) =&gt; {
+  await page.goto('/pages/mobile/viewport.html');
+  await expect(page.getByTestId('viewport-orientation')).toContainText('Portrait');
+  await expect(page.getByTestId('viewport-width')).toContainText('412');
+
+  await page.setViewportSize({ width: 915, height: 412 }); // paisagem
+  await expect(page.getByTestId('viewport-orientation')).toContainText('Landscape');
+});
+
+test('o dispositivo é de toque', async ({ page }) =&gt; {
+  await page.goto('/pages/mobile/viewport.html');
+  const toque = await page.evaluate(() =&gt; matchMedia('(pointer: coarse)').matches);
+  expect(toque).toBe(true);
+});</code></pre>
+              </div><div role="tabpanel" id="vp-panel-appium" aria-labelledby="vp-tab-appium" tabindex="0" hidden>
+                <p class="hint">Em aparelho ou emulador real, a orientação é do sistema operacional. No navegador do celular, use o contexto web (<code>CHROMIUM</code> ou <code>WEBVIEW_*</code>).</p>
+                <pre class="test-code active"><code>import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.By;
+
+driver.get("http://10.0.2.2:8000/pages/mobile/viewport.html"); // 10.0.2.2 = localhost do PC no emulador Android
+WebElement orientacao = driver.findElement(By.cssSelector("[data-testid=viewport-orientation]"));
+assertTrue(orientacao.getText().contains("Portrait"));
+
+driver.rotate(ScreenOrientation.LANDSCAPE);
+new WebDriverWait(driver, Duration.ofSeconds(5))
+    .until(d -&gt; orientacao.getText().contains("Landscape"));
+
+driver.rotate(ScreenOrientation.PORTRAIT); // sempre devolva o aparelho ao estado inicial</code></pre>
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>
+
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
             <div class="info-box">

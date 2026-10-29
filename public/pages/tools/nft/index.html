@@ -20,52 +20,73 @@
           </div>
         </div>
 
+        <!-- Trilha sugerida -->
+        <div class="content-card nft-card-enhanced" id="nft-trilha">
+          <h4>Por onde começar</h4>
+          <p class="nft-lead">Cada cenário tem um <strong>guia do especialista</strong> com a hipótese de teste, as métricas, um critério de aceite e um teste Playwright pronto. Para quem está começando, esta ordem funciona bem:</p>
+          <ol class="nft-path">
+            <li><a href="performance-api-latency.html">Latência de API</a>: entenda média x percentis no laboratório.</li>
+            <li><a href="resilience-timeout-retry.html">Timeout e retry</a>: veja por que retries sincronizados derrubam servidores.</li>
+            <li><a href="load-large-table.html">Tabela com muitos dados</a>: meça o custo do DOM e o que o usuário sente.</li>
+            <li><a href="performance-slow-render.html">Renderização lenta</a>: responsividade (INP) durante trabalho pesado.</li>
+            <li>Os demais cenários (imagens, estresse e falhas) combinam o que você praticou.</li>
+          </ol>
+        </div>
+
         <div class="card-grid">
           <div class="card card-dinamico">
             <h3>Performance - Renderização Lenta</h3>
             <p>Cenário com muitos elementos DOM sendo renderizados simultaneamente, simulando problemas de performance.</p>
+            <p class="nft-card-question"><span class="guide-tag">Responsividade</span> A página continua reagindo a cliques enquanto trabalha?</p>
             <a href="performance-slow-render.html" class="btn">Acessar</a>
           </div>
 
           <div class="card card-dinamico">
             <h3>Performance - Latência de API</h3>
             <p>Simulação de chamadas de API com diferentes níveis de latência para testar comportamento assíncrono.</p>
+            <p class="nft-card-question"><span class="guide-tag">Latência</span> Por que p95 importa mais que a média? Inclui laboratório.</p>
             <a href="performance-api-latency.html" class="btn">Acessar</a>
           </div>
 
           <div class="card card-dinamico">
             <h3>Carga - Tabela com Muitos Dados</h3>
             <p>Tabela renderizando grandes volumes de dados para testar performance de renderização.</p>
+            <p class="nft-card-question"><span class="guide-tag">Tamanho do DOM</span> A partir de quantas linhas a tabela fica lenta?</p>
             <a href="load-large-table.html" class="btn">Acessar</a>
           </div>
 
           <div class="card card-dinamico">
             <h3>Carga - Múltiplas Imagens</h3>
             <p>Página com muitas imagens sendo carregadas simultaneamente para testar otimização de recursos.</p>
+            <p class="nft-card-question"><span class="guide-tag">Recursos</span> As imagens atrasam a primeira tela?</p>
             <a href="load-multiple-images.html" class="btn">Acessar</a>
           </div>
 
           <div class="card card-dinamico">
             <h3>Stress - Ações Repetidas</h3>
             <p>Interface que permite ações repetidas rapidamente para testar comportamento sob stress.</p>
+            <p class="nft-card-question"><span class="guide-tag">Cliques repetidos</span> Alguma ação se perde ou duplica?</p>
             <a href="stress-repeated-actions.html" class="btn">Acessar</a>
           </div>
 
           <div class="card card-dinamico">
             <h3>Stress - Eventos Simultâneos</h3>
             <p>Múltiplos eventos sendo disparados simultaneamente para testar capacidade de processamento.</p>
+            <p class="nft-card-question"><span class="guide-tag">Eventos em rajada</span> Muitos eventos travam a interface?</p>
             <a href="stress-simultaneous-events.html" class="btn">Acessar</a>
           </div>
 
           <div class="card card-dinamico">
             <h3>Resiliência - Falhas Simuladas</h3>
             <p>Simulação de falhas de requisições e comportamento de retry/fallback.</p>
+            <p class="nft-card-question"><span class="guide-tag">Falhas parciais</span> Os retries recuperam as falhas temporárias?</p>
             <a href="resilience-failures.html" class="btn">Acessar</a>
           </div>
 
           <div class="card card-dinamico">
             <h3>Resiliência - Timeout e Retry</h3>
             <p>Cenário com timeouts e mecanismos de retry para testar resiliência do front-end.</p>
+            <p class="nft-card-question"><span class="guide-tag">Timeout e retry</span> O cliente desiste na hora certa? Inclui laboratório.</p>
             <a href="resilience-timeout-retry.html" class="btn">Acessar</a>
           </div>
         </div>

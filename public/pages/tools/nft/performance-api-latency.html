@@ -127,17 +127,17 @@
         <div class="api-controls">
           <h3>Controles de Teste</h3>
           <div class="control-group">
-            <label>Latência Simulada (ms):</label>
+            <label for="latency-input">Latência Simulada (ms):</label>
             <input type="number" id="latency-input" min="0" max="5000" value="1000" step="100">
             <span id="latency-display">1000ms</span>
           </div>
           <div class="control-group">
-            <label>Número de Requisições:</label>
+            <label for="request-count">Número de Requisições:</label>
             <input type="number" id="request-count" min="1" max="20" value="5" step="1">
             <span id="request-count-display">5</span>
           </div>
           <div class="control-group">
-            <label>Requisições Simultâneas:</label>
+            <label for="concurrent-requests">Requisições Simultâneas:</label>
             <input type="checkbox" id="concurrent-requests">
             <span>Sim</span>
           </div>
@@ -169,6 +169,104 @@
           <div class="metric-card">
             <div class="metric-label">Tempo Total</div>
             <div class="metric-value" id="metric-total">0ms</div>
+          </div>
+        </div>
+
+        <!-- Laboratório: por que a média engana (src/client/features/nft/latency-lab.ts) -->
+        <div class="content-card nft-card-enhanced" id="latency-lab" data-testid="latency-lab">
+          <h4>Laboratório: por que a média engana</h4>
+          <p class="nft-lead">Em sistemas reais, a maioria das respostas é rápida, mas algumas demoram muito: a distribuição tem uma <strong>cauda longa</strong>. Ajuste os controles e compare a média com os percentis. A semente fixa torna o resultado reproduzível para automação.</p>
+          <div class="nft-lab">
+            <div class="nft-lab-controls">
+              <label>Latência típica (mediana)
+                <input type="range" data-lab="median" min="50" max="1000" step="10" value="200" data-testid="lab-median" />
+                <span class="hint" data-show="median"></span>
+              </label>
+              <label>Estabilidade do servidor
+                <select data-lab="spread" data-testid="lab-spread">
+                  <option value="estavel">Estável (pouca variação)</option>
+                  <option value="moderada" selected>Moderada</option>
+                  <option value="instavel">Instável (muita variação)</option>
+                </select>
+              </label>
+              <label>Requisições muito lentas (picos)
+                <input type="range" data-lab="outliers" data-unit="%" min="0" max="10" step="1" value="2" data-testid="lab-outliers" />
+                <span class="hint" data-show="outliers"></span>
+              </label>
+              <label>SLO de p95 (ms)
+                <input type="number" data-lab="slo" min="50" max="5000" step="50" value="400" data-testid="lab-slo" />
+              </label>
+              <label>Amostras
+                <input type="number" data-lab="count" min="50" max="5000" step="50" value="500" data-testid="lab-count" />
+              </label>
+              <label>Semente
+                <input type="number" data-lab="seed" min="1" max="9999" step="1" value="42" data-testid="lab-seed" />
+              </label>
+              <button type="button" class="btn" data-lab="run" data-testid="lab-run">Gerar novamente</button>
+            </div>
+            <div>
+              <dl class="nft-lab-stats">
+                <div class="is-mean"><dt>Média</dt><dd data-out="mean" data-testid="lab-mean">—</dd></div>
+                <div><dt>p50</dt><dd data-out="p50" data-testid="lab-p50">—</dd></div>
+                <div class="is-p95"><dt>p95</dt><dd data-out="p95" data-testid="lab-p95">—</dd></div>
+                <div class="is-p99"><dt>p99</dt><dd data-out="p99" data-testid="lab-p99">—</dd></div>
+                <div><dt>Máximo</dt><dd data-out="max" data-testid="lab-max">—</dd></div>
+              </dl>
+              <div class="nft-chart">
+                <svg data-out="histogram" role="img" aria-label="Histograma das latências com marcadores de média, p95 e p99"></svg>
+              </div>
+              <p class="nft-slo" data-out="slo" role="status" data-testid="lab-slo-verdict"></p>
+              <p class="nft-insight" data-out="insight"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Guia do especialista: o que este cenário ensina, como medir e como automatizar -->
+        <div class="content-card nft-card-enhanced nft-expert" id="nft-guia">
+          <h4>Guia do especialista</h4>
+          <p class="nft-lead">Pergunta que este cenário responde: <strong>a interface continua útil quando a API demora?</strong> Latência alta não é só "esperar mais": muda a ordem em que as respostas chegam, trava botões e confunde o usuário se não houver feedback.</p>
+          <div class="guide-grid">
+            <div class="guide-item">
+              <h4>Hipótese de teste</h4>
+              <p>Com 5 requisições de 1 s em série, o tempo total é a soma (~5 s). Em paralelo, é o da mais lenta (~1 s). Se o tempo total em paralelo for perto da soma, as requisições estão sendo enfileiradas sem necessidade.</p>
+            </div>
+            <div class="guide-item">
+              <h4>O que medir</h4>
+              <table class="nft-metric-table"><tbody><tr><th scope="row">Tempo até feedback</th><td>Quanto tempo até aparecer um indicador de carregamento. Ideal: menos de 100 ms após o clique.</td></tr><tr><th scope="row">Latência por requisição</th><td>Distribuição (p50, p95), não só a média. Veja o laboratório abaixo.</td></tr><tr><th scope="row">Tempo total</th><td>Série = soma das latências; paralelo ≈ a maior delas.</td></tr><tr><th scope="row">Botão durante a espera</th><td>Fica desabilitado ou aceita cliques duplicados?</td></tr></tbody></table>
+            </div>
+            <div class="guide-item is-criteria">
+              <h4>Critério de aceite (exemplo)</h4>
+              <p>Com latência de 1000 ms e 5 requisições simultâneas, o tempo total fica abaixo de 1,5 s e as 5 aparecem como concluídas.</p>
+            </div>
+            <div class="guide-item is-pitfall">
+              <h4>Armadilhas comuns</h4>
+              <ul><li>As requisições deste cenário são simuladas no navegador com <code>setTimeout</code>: elas não aparecem na aba Network. Para tráfego de rede real, use a API mock (<code>npm run dev:api</code>) com o cenário <code>?scenario=timeout</code>.</li><li>Comparar só a média: duas configurações com a mesma média podem ter p95 muito diferentes.</li><li>Medir uma única execução. Repita pelo menos 3 vezes e compare a mediana.</li><li>Esquecer o estado intermediário: o teste também deve verificar o que o usuário vê <em>durante</em> a espera.</li></ul>
+            </div>
+            <div class="guide-item is-wide">
+              <h4>Automatize com Playwright</h4>
+              <p class="hint">O teste fixa os parâmetros, mede de fora (como o usuário) e compara série x paralelo.</p>
+              <pre class="test-code active"><code>import { test, expect } from '@playwright/test';
+
+async function rodar(page, simultaneas: boolean) {
+  await page.goto('/pages/tools/nft/performance-api-latency.html');
+  await page.fill('#latency-input', '1000');
+  await page.fill('#request-count', '5');
+  await page.locator('#concurrent-requests').setChecked(simultaneas);
+
+  const inicio = Date.now();
+  await page.click('#start-requests');
+  await expect(page.locator('#metric-completed')).toHaveText('5', { timeout: 10_000 });
+  return Date.now() - inicio;
+}
+
+test('requisições simultâneas terminam em ~1 latência, não na soma', async ({ page }) =&gt; {
+  const serie = await rodar(page, false);
+  const paralelo = await rodar(page, true);
+
+  expect(serie).toBeGreaterThan(4500);   // ~5 x 1000 ms
+  expect(paralelo).toBeLessThan(1500);   // ~1 x 1000 ms + margem
+});</code></pre>
+            </div>
           </div>
         </div>
 

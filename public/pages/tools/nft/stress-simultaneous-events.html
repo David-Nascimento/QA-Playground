@@ -113,12 +113,12 @@
         <div class="events-controls">
           <h3>Controles de Teste</h3>
           <div class="control-group">
-            <label>Número de Eventos:</label>
+            <label for="event-count">Número de Eventos:</label>
             <input type="number" id="event-count" min="10" max="1000" value="100" step="10">
             <span id="event-count-display">100</span>
           </div>
           <div class="control-group">
-            <label>Intervalo (ms):</label>
+            <label for="event-interval">Intervalo (ms):</label>
             <input type="number" id="event-interval" min="0" max="100" value="10" step="1">
             <span id="event-interval-display">10ms</span>
           </div>
@@ -154,6 +154,50 @@
           <div class="metric-card">
             <div class="metric-label">Status</div>
             <div class="metric-value" id="metric-status" style="font-size: 1em;">Aguardando</div>
+          </div>
+        </div>
+
+        <!-- Guia do especialista: o que este cenário ensina, como medir e como automatizar -->
+        <div class="content-card nft-card-enhanced nft-expert" id="nft-guia">
+          <h4>Guia do especialista</h4>
+          <p class="nft-lead">Pergunta que este cenário responde: <strong>a página processa muitos eventos ao mesmo tempo sem perder nenhum e sem travar?</strong> É o caso de notificações em tempo real, websockets e dashboards ao vivo.</p>
+          <div class="guide-grid">
+            <div class="guide-item">
+              <h4>Hipótese de teste</h4>
+              <p>Com 100 eventos a cada 10 ms, a página precisa de ~1 s para processar tudo. Reduzindo o intervalo para 0, os eventos se acumulam numa fila e a interface pode congelar enquanto ela esvazia.</p>
+            </div>
+            <div class="guide-item">
+              <h4>O que medir</h4>
+              <table class="nft-metric-table"><tbody><tr><th scope="row">Eventos processados</th><td>Iguais aos disparados, na ordem certa.</td></tr><tr><th scope="row">Eventos por segundo</th><td>Vazão sustentada.</td></tr><tr><th scope="row">Atraso de processamento</th><td>Tempo entre disparo e exibição de cada evento.</td></tr><tr><th scope="row">Tarefas longas</th><td>Agrupar atualizações em um frame evita travamentos.</td></tr></tbody></table>
+            </div>
+            <div class="guide-item is-criteria">
+              <h4>Critério de aceite (exemplo)</h4>
+              <p>Com 100 eventos e intervalo de 10 ms, todos aparecem no log e nenhuma tarefa passa de 50 ms.</p>
+            </div>
+            <div class="guide-item is-pitfall">
+              <h4>Armadilhas comuns</h4>
+              <ul><li>Atualizar o DOM a cada evento. Agrupar com <code>requestAnimationFrame</code> é bem mais barato.</li><li>Não verificar a ordem: em sistemas reais, eventos podem chegar fora de ordem.</li><li>Testar só a quantidade e não o estado final mostrado ao usuário.</li></ul>
+            </div>
+            <div class="guide-item is-wide">
+              <h4>Automatize com Playwright</h4>
+              <p class="hint">Usa a Long Tasks API para provar que a thread principal não travou.</p>
+              <pre class="test-code active"><code>import { test, expect } from '@playwright/test';
+
+test('100 eventos sem tarefas longas', async ({ page }) =&gt; {
+  await page.goto('/pages/tools/nft/stress-simultaneous-events.html');
+  await page.evaluate(() =&gt; {
+    (window as any).longTasks = 0;
+    new PerformanceObserver((l) =&gt; ((window as any).longTasks += l.getEntries().length))
+      .observe({ type: 'longtask', buffered: false });
+  });
+  await page.fill('#event-count', '100');
+  await page.fill('#event-interval', '10');
+
+  await page.click('#start-events');
+  await expect(page.locator('#metric-events')).toHaveText('100', { timeout: 20_000 });
+  expect(await page.evaluate(() =&gt; (window as any).longTasks)).toBe(0);
+});</code></pre>
+            </div>
           </div>
         </div>
 

@@ -110,12 +110,12 @@
         <div class="table-controls">
           <h3>Controles de Teste</h3>
           <div class="control-group">
-            <label>Número de Linhas:</label>
+            <label for="row-count">Número de Linhas:</label>
             <input type="number" id="row-count" min="10" max="10000" value="1000" step="10">
             <span id="row-count-display">1000</span>
           </div>
           <div class="control-group">
-            <label>Colunas:</label>
+            <label for="col-count">Colunas:</label>
             <input type="number" id="col-count" min="3" max="10" value="5" step="1">
             <span id="col-count-display">5</span>
           </div>
@@ -145,6 +145,52 @@
           <div class="metric-card">
             <div class="metric-label">Elementos DOM</div>
             <div class="metric-value" id="metric-elements">0</div>
+          </div>
+        </div>
+
+        <!-- Guia do especialista: o que este cenário ensina, como medir e como automatizar -->
+        <div class="content-card nft-card-enhanced nft-expert" id="nft-guia">
+          <h4>Guia do especialista</h4>
+          <p class="nft-lead">Pergunta que este cenário responde: <strong>a partir de quantas linhas a tabela fica lenta para o usuário?</strong> Cada linha multiplica nós no DOM, e o custo aparece em layout, pintura e em toda interação seguinte.</p>
+          <div class="guide-grid">
+            <div class="guide-item">
+              <h4>Hipótese de teste</h4>
+              <p>O tempo cresce quase linearmente com o número de células. Dobrando as linhas, o tempo e o total de elementos dobram. Em algum ponto (geralmente alguns milhares de linhas), interações como rolar e limpar passam de 200 ms.</p>
+            </div>
+            <div class="guide-item">
+              <h4>O que medir</h4>
+              <table class="nft-metric-table"><tbody><tr><th scope="row">Elementos no DOM</th><td>Lighthouse alerta a partir de ~1.400 nós e reprova acima de ~3.000.</td></tr><tr><th scope="row">Tempo de geração</th><td>O valor exibido mede só o JavaScript, não a pintura.</td></tr><tr><th scope="row">Tarefas longas</th><td>Blocos acima de 50 ms na thread principal (aba Performance).</td></tr><tr><th scope="row">Resposta à próxima interação</th><td>Clique em "Limpar" logo depois: quanto demora?</td></tr></tbody></table>
+            </div>
+            <div class="guide-item is-criteria">
+              <h4>Critério de aceite (exemplo)</h4>
+              <p>Com 1000 linhas e 5 colunas, a tabela aparece em menos de 500 ms e o botão "Limpar" responde em menos de 200 ms.</p>
+            </div>
+            <div class="guide-item is-pitfall">
+              <h4>Armadilhas comuns</h4>
+              <ul><li>O "Tempo" da página para antes do navegador desenhar a tabela. Para medir o que o usuário vê, espere dois <code>requestAnimationFrame</code> depois da geração.</li><li>Testar só com 10 linhas no ambiente de teste e 10 mil em produção: use volumes realistas.</li><li>Concluir que "está rápido" na sua máquina. Use o throttling de CPU (4× ou 6×) do DevTools.</li></ul>
+            </div>
+            <div class="guide-item is-wide">
+              <h4>Automatize com Playwright</h4>
+              <p class="hint">Mede do clique até a tabela estar pintada, incluindo layout.</p>
+              <pre class="test-code active"><code>import { test, expect } from '@playwright/test';
+
+test('1000 linhas aparecem em menos de 500 ms', async ({ page }) =&gt; {
+  await page.goto('/pages/tools/nft/load-large-table.html');
+  await page.fill('#row-count', '1000');
+  await page.fill('#col-count', '5');
+
+  const ms = await page.evaluate(async () =&gt; {
+    const inicio = performance.now();
+    document.getElementById('generate-table')!.click();
+    // dois frames: o primeiro faz layout, o segundo garante que pintou
+    await new Promise((r) =&gt; requestAnimationFrame(() =&gt; requestAnimationFrame(r)));
+    return performance.now() - inicio;
+  });
+
+  await expect(page.locator('#table-container tbody tr')).toHaveCount(1000);
+  expect(ms).toBeLessThan(500);
+});</code></pre>
+            </div>
           </div>
         </div>
 

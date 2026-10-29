@@ -32,6 +32,113 @@
             </p>
           </div>
 
+
+          <!-- Conceitos: tipos de teste e métricas -->
+          <div class="content-card nft-card-enhanced nft-concepts" id="nft-conceitos">
+            <h5 class="nft-panel-header">Antes de começar: o que cada teste responde</h5>
+            <p class="nft-lead">Testes não funcionais diferem pelo <strong>formato da carga</strong> ao longo do tempo. Cada gráfico mostra usuários simultâneos (vertical) ao longo do teste (horizontal).</p>
+            <div class="nft-shapes">
+              <div class="nft-shape-card">
+                <svg viewBox="0 0 120 56" aria-hidden="true" class="nft-shape"><line x1="4" y1="50" x2="116" y2="50" class="nft-shape-axis"/><polyline points="4,50 30,18 96,18 116,50" class="nft-shape-line"/></svg>
+                <h4>Carga (load)</h4>
+                <p>Volume esperado no dia a dia, com rampa e platô. Responde: &quot;o sistema aguenta o uso normal dentro do SLO?&quot;</p>
+              </div>
+              <div class="nft-shape-card">
+                <svg viewBox="0 0 120 56" aria-hidden="true" class="nft-shape"><line x1="4" y1="50" x2="116" y2="50" class="nft-shape-axis"/><polyline points="4,50 20,50 20,40 40,40 40,30 60,30 60,20 80,20 80,8 116,8" class="nft-shape-line"/></svg>
+                <h4>Estresse (stress)</h4>
+                <p>Aumenta a carga em degraus além do esperado até quebrar. Responde: &quot;onde está o limite e como o sistema falha?&quot;</p>
+              </div>
+              <div class="nft-shape-card">
+                <svg viewBox="0 0 120 56" aria-hidden="true" class="nft-shape"><line x1="4" y1="50" x2="116" y2="50" class="nft-shape-axis"/><polyline points="4,46 50,46 56,6 66,6 72,46 116,46" class="nft-shape-line"/></svg>
+                <h4>Pico (spike)</h4>
+                <p>Salto repentino, como uma campanha ou a abertura de vendas. Responde: &quot;o sistema escala a tempo e se recupera depois?&quot;</p>
+              </div>
+              <div class="nft-shape-card">
+                <svg viewBox="0 0 120 56" aria-hidden="true" class="nft-shape"><line x1="4" y1="50" x2="116" y2="50" class="nft-shape-axis"/><polyline points="4,50 14,26 112,26 116,50" class="nft-shape-line"/></svg>
+                <h4>Resistência (soak)</h4>
+                <p>Carga moderada por horas. Responde: &quot;há vazamento de memória, conexões ou disco com o tempo?&quot;</p>
+              </div>
+            </div>
+            <div class="nft-glossary">
+              <div>
+                <h4>Métricas que importam</h4>
+                <dl>
+                  <div><dt>Latência p95 / p99</dt><dd>95% (ou 99%) das respostas foram mais rápidas que este valor. É o que os SLOs usam, porque a média esconde os usuários mais lentos.</dd></div>
+                  <div><dt>Vazão (throughput)</dt><dd>Requisições atendidas por segundo. Se a carga sobe e a vazão para de subir, você achou um gargalo.</dd></div>
+                  <div><dt>Taxa de erro</dt><dd>Fração de respostas com falha (5xx, timeouts). Sob carga, ela costuma subir antes da latência explodir.</dd></div>
+                  <div><dt>Apdex</dt><dd>Nota de 0 a 1 da satisfação: respostas até T são "satisfeitas", até 4T "toleradas" e acima disso "frustradas".</dd></div>
+                </dl>
+              </div>
+              <div>
+                <h4>Core Web Vitals (percentil 75 dos usuários)</h4>
+                <div class="nft-table-wrap">
+                  <table class="table">
+                    <thead><tr><th scope="col">Métrica</th><th scope="col">Bom</th><th scope="col">Precisa melhorar</th><th scope="col">Ruim</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">LCP (carregamento)</th><td>≤ 2,5 s</td><td>≤ 4 s</td><td>&gt; 4 s</td></tr>
+                      <tr><th scope="row">INP (resposta a interações)</th><td>≤ 200 ms</td><td>≤ 500 ms</td><td>&gt; 500 ms</td></tr>
+                      <tr><th scope="row">CLS (estabilidade visual)</th><td>≤ 0,1</td><td>≤ 0,25</td><td>&gt; 0,25</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Métricas reais desta página -->
+          <div class="content-card nft-card-enhanced" id="nft-vitals">
+            <div class="results-header">
+              <h5>Web Vitals reais desta página</h5>
+            </div>
+            <p class="nft-lead">Medidos agora no seu navegador com a <code>PerformanceObserver</code> API, a mesma que bibliotecas como <code>web-vitals</code> usam. Interaja com a página e veja os números mudarem.</p>
+            <div class="nft-vitals-grid">
+                <div class="nft-vital" data-metric="ttfb" data-rating="none" data-testid="vital-ttfb">
+                  <span class="nft-vital-name">TTFB</span>
+                  <span class="nft-vital-value" data-value>—</span>
+                  <span class="nft-vital-rating" data-rating-label>Aguardando</span>
+                  <span class="nft-vital-help">Tempo até o primeiro byte da resposta. Bom: ≤ 800 ms</span>
+                </div>
+                <div class="nft-vital" data-metric="fcp" data-rating="none" data-testid="vital-fcp">
+                  <span class="nft-vital-name">FCP</span>
+                  <span class="nft-vital-value" data-value>—</span>
+                  <span class="nft-vital-rating" data-rating-label>Aguardando</span>
+                  <span class="nft-vital-help">Primeiro conteúdo pintado na tela. Bom: ≤ 1,8 s</span>
+                </div>
+                <div class="nft-vital" data-metric="lcp" data-rating="none" data-testid="vital-lcp">
+                  <span class="nft-vital-name">LCP</span>
+                  <span class="nft-vital-value" data-value>—</span>
+                  <span class="nft-vital-rating" data-rating-label>Aguardando</span>
+                  <span class="nft-vital-help">Maior elemento visível renderizado. Bom: ≤ 2,5 s</span>
+                </div>
+                <div class="nft-vital" data-metric="cls" data-rating="none" data-testid="vital-cls">
+                  <span class="nft-vital-name">CLS</span>
+                  <span class="nft-vital-value" data-value>—</span>
+                  <span class="nft-vital-rating" data-rating-label>Aguardando</span>
+                  <span class="nft-vital-help">Quanto o layout “pula” sozinho. Bom: ≤ 0,1</span>
+                </div>
+                <div class="nft-vital" data-metric="inp" data-rating="none" data-testid="vital-inp">
+                  <span class="nft-vital-name">INP*</span>
+                  <span class="nft-vital-value" data-value>—</span>
+                  <span class="nft-vital-rating" data-rating-label>Aguardando</span>
+                  <span class="nft-vital-help">Atraso da interação mais lenta. Bom: ≤ 200 ms</span>
+                </div>
+                <div class="nft-vital" data-metric="tbt" data-rating="none" data-testid="vital-tbt">
+                  <span class="nft-vital-name">Tempo de bloqueio</span>
+                  <span class="nft-vital-value" data-value>—</span>
+                  <span class="nft-vital-rating" data-rating-label>Aguardando</span>
+                  <span class="nft-vital-help">Soma do que passou de 50 ms nas tarefas longas</span>
+                </div>
+            </div>
+            <div class="nft-vitals-actions">
+              <button type="button" class="btn btn-secondary" data-action="long-task" data-duration="300" data-testid="vital-long-task">Travar a página por 300 ms</button>
+              <button type="button" class="btn btn-secondary" data-action="layout-shift" data-testid="vital-layout-shift">Inserir um banner sem reservar espaço</button>
+              <span class="hint">Tarefas longas: <strong data-out="longtasks">0</strong></span>
+            </div>
+            <p class="hint" data-out="last-task" role="status"></p>
+            <div class="nft-shift-banner" data-out="shift-demo" hidden>Banner promocional que empurrou o conteúdo para baixo</div>
+            <p class="hint">* INP aproximado: aqui mostramos a interação mais lenta; o INP oficial usa um valor próximo do percentil 98 das interações da visita. Disponível no Chrome e no Edge.</p>
+          </div>
+
           <!-- Controles de Sessão -->
           <div class="session-card">
             <div class="session-header">
@@ -118,6 +225,112 @@
             </div>
             <div id="test-log" class="log-container">
               <div class="log-empty-state">Aguardando execução de testes...</div>
+            </div>
+          </div>
+
+
+          <!-- Ferramentas reais -->
+          <div class="content-card nft-card-enhanced" id="nft-ferramentas">
+            <h5 class="nft-panel-header">Pratique com ferramentas de verdade</h5>
+            <p class="nft-lead">O simulador acima ensina os conceitos. No dia a dia, esses testes são escritos como código e rodam no pipeline. Os exemplos abaixo usam a <strong>API mock do próprio QA Playground</strong>, que você sobe localmente com <code>npm run dev:api</code>.</p>
+            <div class="nft-warning" role="note"><strong>Use com responsabilidade:</strong> rode testes de carga só contra a API local ou um ambiente seu. Nunca aponte k6, JMeter ou Gatling para o site publicado ou para serviços de terceiros.</div>
+            <div class="a11y-tabs" data-tabs>
+              <div role="tablist" aria-label="Exemplos de testes não funcionais">
+                <button type="button" role="tab" id="nft-tab-k6" aria-controls="nft-panel-k6" aria-selected="true">k6: carga</button>
+                <button type="button" role="tab" id="nft-tab-k6r" aria-controls="nft-panel-k6r" aria-selected="false" tabindex="-1">k6: resiliência</button>
+                <button type="button" role="tab" id="nft-tab-pw" aria-controls="nft-panel-pw" aria-selected="false" tabindex="-1">Playwright</button>
+                <button type="button" role="tab" id="nft-tab-lh" aria-controls="nft-panel-lh" aria-selected="false" tabindex="-1">Lighthouse CI</button>
+              </div>
+              <div role="tabpanel" id="nft-panel-k6" aria-labelledby="nft-tab-k6" tabindex="0">
+                <p class="hint">Rode com <code>k6 run carga.js</code>. Os <em>thresholds</em> fazem o comando terminar com erro se o p95 passar de 300 ms: é isso que reprova o pipeline.</p>
+                <pre class="test-code active"><code>import http from &#x27;k6/http&#x27;;
+import { check, sleep } from &#x27;k6&#x27;;
+
+// Teste de carga: rampa até 10 usuários virtuais, platô e desaceleração
+export const options = {
+  stages: [
+    { duration: &#x27;30s&#x27;, target: 10 },
+    { duration: &#x27;1m&#x27;, target: 10 },
+    { duration: &#x27;15s&#x27;, target: 0 },
+  ],
+  thresholds: {
+    http_req_duration: [&#x27;p(95)&lt;300&#x27;, &#x27;p(99)&lt;800&#x27;], // percentis, não média
+    http_req_failed: [&#x27;rate&lt;0.01&#x27;],                // menos de 1% de erros
+  },
+};
+
+const BASE = __ENV.BASE_URL || &#x27;http://localhost:3001/api&#x27;;
+
+export default function () {
+  const res = http.get(`${BASE}/health`);
+  check(res, { &#x27;status 200&#x27;: (r) =&gt; r.status === 200 });
+  sleep(1); // &quot;tempo de pensar&quot; do usuário
+}</code></pre>
+              </div>
+              <div role="tabpanel" id="nft-panel-k6r" aria-labelledby="nft-tab-k6r" tabindex="0" hidden>
+                <p class="hint">Os cenários <code>error-503</code> e <code>timeout</code> estão documentados em <code>GET /api/docs</code>. O cenário é aplicado antes da autenticação, então <code>/api/users</code> responde sem token.</p>
+                <pre class="test-code active"><code>import http from &#x27;k6/http&#x27;;
+import { check } from &#x27;k6&#x27;;
+
+// Resiliência: a API mock do QA Playground força falhas com ?scenario=
+export const options = { vus: 5, iterations: 50 };
+const BASE = __ENV.BASE_URL || &#x27;http://localhost:3001/api&#x27;;
+
+export default function () {
+  // 503 simulado: o cliente deve tratar como &quot;tente mais tarde&quot;
+  const unavailable = http.get(`${BASE}/users?scenario=error-503`);
+  check(unavailable, { &#x27;responde 503&#x27;: (r) =&gt; r.status === 503 });
+
+  // Timeout: a API demora 10 s; o cliente desiste em 2 s
+  const slow = http.get(`${BASE}/users?scenario=timeout`, { timeout: &#x27;2s&#x27; });
+  check(slow, { &#x27;cliente aplicou timeout&#x27;: (r) =&gt; r.error_code !== 0 });
+}</code></pre>
+              </div>
+              <div role="tabpanel" id="nft-panel-pw" aria-labelledby="nft-tab-pw" tabindex="0" hidden>
+                <p class="hint">Performance percebida também se testa no front-end: tempo de resposta da interface e métricas do navegador.</p>
+                <pre class="test-code active"><code>import { test, expect } from &#x27;@playwright/test&#x27;;
+
+test(&#x27;LCP da home abaixo de 2,5 s&#x27;, async ({ page }) =&gt; {
+  await page.goto(&#x27;/&#x27;);
+  const lcp = await page.evaluate(
+    () =&gt;
+      new Promise&lt;number&gt;((resolve) =&gt; {
+        new PerformanceObserver((list) =&gt; {
+          const entries = list.getEntries();
+          resolve(entries[entries.length - 1].startTime);
+        }).observe({ type: &#x27;largest-contentful-paint&#x27;, buffered: true });
+      })
+  );
+  expect(lcp).toBeLessThan(2500);
+});
+
+test(&#x27;interface responde em até 200 ms sob 1000 linhas&#x27;, async ({ page }) =&gt; {
+  await page.goto(&#x27;/pages/tools/nft/load-large-table.html&#x27;);
+  await page.getByRole(&#x27;button&#x27;, { name: &#x27;Gerar Tabela&#x27; }).click();
+
+  const inicio = Date.now();
+  await page.getByRole(&#x27;button&#x27;, { name: &#x27;Limpar&#x27; }).click();
+  await expect(page.locator(&#x27;table tbody tr&#x27;)).toHaveCount(0);
+  expect(Date.now() - inicio).toBeLessThan(200);
+});</code></pre>
+              </div>
+              <div role="tabpanel" id="nft-panel-lh" aria-labelledby="nft-tab-lh" tabindex="0" hidden>
+                <p class="hint">Rode com <code>npx @lhci/cli autorun</code>. Orçamentos de performance evitam que o site fique mais lento a cada release.</p>
+                <pre class="test-code active"><code>// lighthouserc.json — falha o pipeline se o orçamento estourar
+{
+  &quot;ci&quot;: {
+    &quot;collect&quot;: { &quot;url&quot;: [&quot;http://localhost:8000/&quot;], &quot;numberOfRuns&quot;: 3 },
+    &quot;assert&quot;: {
+      &quot;assertions&quot;: {
+        &quot;largest-contentful-paint&quot;: [&quot;error&quot;, { &quot;maxNumericValue&quot;: 2500 }],
+        &quot;cumulative-layout-shift&quot;: [&quot;error&quot;, { &quot;maxNumericValue&quot;: 0.1 }],
+        &quot;total-blocking-time&quot;: [&quot;warn&quot;, { &quot;maxNumericValue&quot;: 200 }],
+        &quot;categories:performance&quot;: [&quot;warn&quot;, { &quot;minScore&quot;: 0.9 }]
+      }
+    }
+  }
+}</code></pre>
+              </div>
             </div>
           </div>
 

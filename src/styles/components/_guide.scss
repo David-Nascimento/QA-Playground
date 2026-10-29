@@ -1,0 +1,62 @@
+// ========================================
+// Guide - "Guia do especialista" (NFT, Mobile)
+// ========================================
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+
+  @include respond-to(md) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.guide-item {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-md);
+
+  h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  p,
+  li {
+    font-size: var(--font-size-sm);
+  }
+
+  p:last-child,
+  ul:last-child {
+    margin-bottom: 0;
+  }
+
+  &.is-wide {
+    grid-column: 1 / -1;
+  }
+
+  &.is-pitfall {
+    border-left: 4px solid var(--warning);
+  }
+
+  &.is-criteria {
+    border-left: 4px solid var(--success);
+  }
+}
+
+.nft-guide-tag,
+.guide-tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: var(--border-radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: var(--font-size-xs);
+  font-weight: $font-weight-bold;
+}
+

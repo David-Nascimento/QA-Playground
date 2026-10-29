@@ -28,10 +28,42 @@
 
         <!-- Content -->
         <section class="a11y-section" id="ferramentas">
+
+          <!-- Ferramenta: verificador de contraste -->
+          <div class="a11y-contrast-tool" id="contrast-checker" data-testid="contrast-checker">
+            <h3>Verificador de contraste (WCAG 1.4.3 e 1.4.11)</h3>
+            <p class="hint">Escolha as cores do texto e do fundo. O cálculo segue a fórmula de luminância relativa da WCAG.</p>
+            <div class="a11y-contrast-grid">
+              <div class="a11y-contrast-inputs">
+                <div class="form-group">
+                  <label for="contrast-fg">Cor do texto</label>
+                  <div class="a11y-color-field">
+                    <input type="color" id="contrast-fg-picker" value="#999999" aria-label="Seletor da cor do texto" data-testid="contrast-fg-picker" />
+                    <input type="text" id="contrast-fg" value="#999999" spellcheck="false" autocomplete="off" data-testid="contrast-fg" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="contrast-bg">Cor do fundo</label>
+                  <div class="a11y-color-field">
+                    <input type="color" id="contrast-bg-picker" value="#ffffff" aria-label="Seletor da cor do fundo" data-testid="contrast-bg-picker" />
+                    <input type="text" id="contrast-bg" value="#ffffff" spellcheck="false" autocomplete="off" data-testid="contrast-bg" />
+                  </div>
+                </div>
+                <button type="button" class="btn btn-secondary" id="contrast-swap" data-testid="contrast-swap">Inverter cores</button>
+              </div>
+              <div class="a11y-contrast-result">
+                <div class="a11y-contrast-preview" id="contrast-preview" data-testid="contrast-preview">
+                  <p class="a11y-contrast-big">Texto grande de exemplo</p>
+                  <p>Texto normal de exemplo para conferir a leitura.</p>
+                </div>
+                <p class="a11y-contrast-ratio" role="status" aria-live="polite">
+                  Razão de contraste: <strong id="contrast-ratio" data-testid="contrast-ratio">—</strong>
+                </p>
+                <ul class="a11y-contrast-checks" id="contrast-checks" data-testid="contrast-checks"></ul>
+              </div>
+            </div>
+          </div>
           
-          <p class="a11y-section-intro">
-            Extensões de navegador, simuladores e leitores de tela para desenvolvimento, teste e validação de acessibilidade web.
-          </p>
 
           <div class="a11y-tools-grid">
             <!-- Extensões de Navegador -->
@@ -64,8 +96,9 @@
 
               <div class="a11y-tool-item">
                 <h4>Color Contrast Analyzer</h4>
-                <p><strong>Descrição:</strong> Extensão para verificar rácios de contraste de cores rapidamente.</p>
+                <p><strong>Descrição:</strong> Verifica a razão de contraste entre duas cores. O mais conhecido é o Colour Contrast Analyser da TPGi (aplicativo gratuito para Windows e macOS, com conta-gotas que captura cores de qualquer janela).</p>
                 <ul>
+                  <li><a href="https://www.tpgi.com/color-contrast-checker/" target="_blank" rel="noopener">TPGi Colour Contrast Analyser (desktop)</a></li>
                   <li><a href="https://chrome.google.com/webstore/search/color%20contrast" target="_blank" rel="noopener">Chrome</a></li>
                   <li><a href="https://addons.mozilla.org/firefox/addon/color-contrast-checker/" target="_blank" rel="noopener">Firefox</a></li>
                 </ul>
@@ -85,9 +118,15 @@
               </div>
 
               <div class="a11y-tool-item">
+                <h4>Chrome DevTools: emular deficiências de visão</h4>
+                <p><strong>Descrição:</strong> Simula visão turva, perda de contraste e os principais tipos de daltonismo direto no navegador, sem instalar nada.</p>
+                <p><strong>Uso:</strong> F12 → <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> → "Show Rendering" → "Emulate vision deficiencies"</p>
+              </div>
+
+              <div class="a11y-tool-item">
                 <h4>High Contrast</h4>
                 <p><strong>Descrição:</strong> Ferramenta nativa do Windows para simular alto contraste.</p>
-                <p><strong>Uso:</strong> Windows → Configurações → Facilidade de Acesso → Alto Contraste</p>
+                <p><strong>Uso:</strong> Windows 11 → Configurações → Acessibilidade → Temas de contraste (atalho: <kbd>Alt</kbd> esquerdo + <kbd>Shift</kbd> esquerdo + <kbd>Print Screen</kbd>)</p>
               </div>
             </div>
 
@@ -117,6 +156,7 @@
               </div>
             </div>
           </div>
+        </section>
       </div>
     </main>
 

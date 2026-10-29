@@ -29,9 +29,6 @@
         <!-- Content -->
         <section class="a11y-section" id="casos-teste">
           
-          <p class="a11y-section-intro">
-            Casos de teste reais e acionáveis para validar acessibilidade em diferentes cenários de uso.
-          </p>
 
           <div class="a11y-test-case-grid">
             <!-- Caso de Teste 1 -->
@@ -126,7 +123,7 @@
                   <ul>
                     <li>Todo conteúdo permanece legível sem rolagem horizontal</li>
                     <li>Layout não quebra ou sobrepõe elementos</li>
-                    <li>Elementos interativos têm tamanho mínimo de 44x44px</li>
+                    <li>Elementos interativos têm pelo menos 24×24px (mínimo WCAG 2.2) e, de preferência, 44x44px</li>
                     <li>Navegação continua funcional</li>
                     <li>Texto pode ser redimensionado sem perda de funcionalidade</li>
                   </ul>
@@ -204,7 +201,7 @@
                 <div class="test-case-wcag">
                   <h4>Critério WCAG Relacionado:</h4>
                   <ul>
-                    <li><strong>2.1.2 Sem Armadilha de Teclado:</strong> Foco não fica preso (Nível A)</li>
+                    <li><strong>2.1.2 Sem Bloqueio do Teclado:</strong> o foco pode ficar contido no modal enquanto ele está aberto, desde que exista uma saída pelo teclado (Esc ou botão "Fechar") (Nível A)</li>
                     <li><strong>2.4.3 Ordem de Foco:</strong> Ordem de foco preserva significado (Nível A)</li>
                     <li><strong>4.1.3 Mensagens de Status:</strong> Status é programaticamente determinado (Nível AA)</li>
                   </ul>
@@ -212,6 +209,7 @@
               </div>
             </div>
           </div>
+        </section>
       </div>
     </main>
 

@@ -136,22 +136,22 @@
         <div class="resilience-controls">
           <h3>Controles de Teste</h3>
           <div class="control-group">
-            <label>Taxa de Falha (%):</label>
+            <label for="failure-rate">Taxa de Falha (%):</label>
             <input type="range" id="failure-rate" min="0" max="100" value="30" step="5">
             <span id="failure-rate-display">30%</span>
           </div>
           <div class="control-group">
-            <label>Número de Tentativas:</label>
+            <label for="attempt-count">Número de Tentativas:</label>
             <input type="number" id="attempt-count" min="1" max="20" value="10" step="1">
             <span id="attempt-count-display">10</span>
           </div>
           <div class="control-group">
-            <label>Retry Automático:</label>
+            <label for="auto-retry">Retry Automático:</label>
             <input type="checkbox" id="auto-retry" checked>
             <span>Sim</span>
           </div>
           <div class="control-group">
-            <label>Máximo de Retries:</label>
+            <label for="max-retries">Máximo de Retries:</label>
             <input type="number" id="max-retries" min="0" max="5" value="3" step="1">
             <span id="max-retries-display">3</span>
           </div>
@@ -183,6 +183,50 @@
           <div class="metric-card">
             <div class="metric-label">Taxa de Sucesso</div>
             <div class="metric-value" id="metric-rate">0%</div>
+          </div>
+        </div>
+
+        <!-- Guia do especialista: o que este cenário ensina, como medir e como automatizar -->
+        <div class="content-card nft-card-enhanced nft-expert" id="nft-guia">
+          <h4>Guia do especialista</h4>
+          <p class="nft-lead">Pergunta que este cenário responde: <strong>quando parte das chamadas falha, o sistema se recupera sozinho e avisa o usuário de forma honesta?</strong></p>
+          <div class="guide-grid">
+            <div class="guide-item">
+              <h4>Hipótese de teste</h4>
+              <p>Com 30% de falha e até 3 retries, a chance de uma operação falhar em todas as 4 tentativas é 0,3⁴ ≈ 0,8%. Logo, quase todas devem terminar com sucesso. Com 0 retries, ~30% falham.</p>
+            </div>
+            <div class="guide-item">
+              <h4>O que medir</h4>
+              <table class="nft-metric-table"><tbody><tr><th scope="row">Taxa de sucesso final</th><td>Depois dos retries. Compare com 1 − taxa_de_falha^(retries+1).</td></tr><tr><th scope="row">Tentativas por operação</th><td>Média e máximo. Se o máximo passar do limite, há bug.</td></tr><tr><th scope="row">Mensagem ao usuário</th><td>Falha definitiva deve explicar o que aconteceu e o que fazer.</td></tr><tr><th scope="row">Estado após falha</th><td>Nada pela metade: a interface volta a um estado consistente.</td></tr></tbody></table>
+            </div>
+            <div class="guide-item is-criteria">
+              <h4>Critério de aceite (exemplo)</h4>
+              <p>Com falha de 30%, 10 operações e 3 retries, a taxa de sucesso final fica acima de 90% na maioria das execuções. Cada tentativa leva de 0,5 s a 1,5 s, então reserve até um minuto para a rodada completa.</p>
+            </div>
+            <div class="guide-item is-pitfall">
+              <h4>Armadilhas comuns</h4>
+              <ul><li>Aleatoriedade: sem fixar a semente, o teste fica <em>flaky</em>. Em CI, valide faixas (≥ 90%) ou controle o gerador.</li><li>Tratar todo erro como temporário. 4xx (dado inválido) não deve ser repetido; 503 e timeout, sim.</li><li>Esconder a falha: "tente de novo mais tarde" é melhor que um carregamento infinito.</li></ul>
+            </div>
+            <div class="guide-item is-wide">
+              <h4>Automatize com Playwright</h4>
+              <p class="hint">Como o resultado é aleatório, o teste valida uma faixa e repete o cenário algumas vezes.</p>
+              <pre class="test-code active"><code>import { test, expect } from '@playwright/test';
+
+test('retries elevam a taxa de sucesso acima de 90%', async ({ page }) =&gt; {
+  test.setTimeout(90_000);
+  await page.goto('/pages/tools/nft/resilience-failures.html');
+  await page.locator('#failure-rate').fill('30');
+  await page.fill('#attempt-count', '10');
+  await page.locator('#auto-retry').check();
+  await page.fill('#max-retries', '3');
+
+  await page.click('#start-test');
+  await expect(page.locator('#metric-total')).toHaveText('10', { timeout: 80_000 });
+
+  const taxa = parseFloat((await page.textContent('#metric-rate')) ?? '0');
+  expect(taxa).toBeGreaterThanOrEqual(90);
+});</code></pre>
+            </div>
           </div>
         </div>
 

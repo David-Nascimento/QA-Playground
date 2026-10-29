@@ -29,9 +29,19 @@
         <!-- Content -->
         <section class="a11y-section" id="checklist">
           
-          <p class="a11y-section-intro">
-            Use este checklist para garantir que sua aplicação web atenda aos requisitos básicos de acessibilidade WCAG 2.2 AA.
-          </p>
+
+          <div class="a11y-checklist-toolbar" id="checklist-toolbar">
+            <div class="a11y-checklist-progress" role="status" aria-live="polite">
+              <span id="checklist-progress-text" data-testid="checklist-progress">0 de 0 itens verificados</span>
+              <span class="a11y-progress-bar" aria-hidden="true"><span id="checklist-progress-bar"></span></span>
+            </div>
+            <div class="a11y-checklist-actions">
+              <button type="button" class="btn btn-secondary" id="checklist-pending" aria-pressed="false" data-testid="checklist-pending">Mostrar só pendentes</button>
+              <button type="button" class="btn btn-secondary" id="checklist-copy" data-testid="checklist-copy">Copiar relatório</button>
+              <button type="button" class="btn btn-secondary" id="checklist-reset" data-testid="checklist-reset">Limpar marcações</button>
+            </div>
+            <p class="hint">As marcações ficam salvas neste navegador. O relatório é copiado em Markdown, pronto para colar num card do Jira ou num pull request.</p>
+          </div>
 
           <div class="a11y-checklist-container">
             <div class="a11y-checklist-category">
@@ -183,7 +193,7 @@
                 </li>
                 <li>
                   <input type="checkbox" id="zoom-3" />
-                  <label for="zoom-3">Elementos interativos têm tamanho mínimo de 44x44px (touch targets)</label>
+                  <label for="zoom-3">Elementos interativos têm pelo menos 24×24px (WCAG 2.5.8), idealmente 44x44px (touch targets)</label>
                 </li>
                 <li>
                   <input type="checkbox" id="zoom-4" />
@@ -214,6 +224,7 @@
               </ul>
             </div>
           </div>
+        </section>
       </div>
     </main>
 

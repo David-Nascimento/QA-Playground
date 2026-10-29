@@ -96,6 +96,157 @@
             <div id="swipe-direction" data-testid="swipe-direction" class="hint" style="margin-top: var(--spacing-sm);"></div>
           </div>
 
+          <!-- Laboratório de gestos (src/client/features/mobile/gesture-lab.ts) -->
+          <div class="subsection" id="gesture-lab" data-testid="gesture-lab">
+            <h3>Laboratório de gestos</h3>
+            <p class="section-lead">A área acima usa <code>touchstart</code>/<code>touchend</code> e só responde ao dedo. Esta usa <strong>Pointer Events</strong>, o padrão atual: o mesmo código atende dedo, mouse e caneta. Ajuste os limites e veja como cada decisão muda o gesto reconhecido.</p>
+            <div class="mob-gesture">
+              <div class="mob-pad" data-gesture-pad data-testid="gesture-pad" style="touch-action: none;">
+                <span class="mob-pad-indicator" data-gesture-indicator>Toque, segure, arraste ou deslize aqui</span>
+                <span class="mob-pad-hint">Dois dedos fazem pinça (zoom)</span>
+              </div>
+              <div class="mob-gesture-side">
+                <dl class="mob-readout">
+                  <div class="is-main"><dt>Último gesto</dt><dd data-out="gesture" data-testid="gesture-last">—</dd></div>
+                  <div><dt>Ponteiro</dt><dd data-out="pointer" data-testid="gesture-pointer">—</dd></div>
+                  <div><dt>Dedos na tela</dt><dd data-out="points" data-testid="gesture-points">0</dd></div>
+                  <div><dt>Direção</dt><dd data-out="direction" data-testid="gesture-direction">—</dd></div>
+                  <div><dt>Distância</dt><dd data-out="distance" data-testid="gesture-distance">—</dd></div>
+                  <div><dt>Duração</dt><dd data-out="duration" data-testid="gesture-duration">—</dd></div>
+                  <div><dt>Velocidade</dt><dd data-out="velocity" data-testid="gesture-velocity">—</dd></div>
+                  <div><dt>Escala (pinça)</dt><dd data-out="scale" data-testid="gesture-scale">—</dd></div>
+                </dl>
+                <details class="mob-thresholds">
+                  <summary>Limites do reconhecimento</summary>
+                  <label for="gl-longpress">Toque longo a partir de (ms)</label>
+                  <input id="gl-longpress" type="number" data-lab="longPress" min="200" max="2000" step="50" value="500" data-testid="gesture-longpress-ms" />
+                  <label for="gl-swipe">Swipe a partir de (px)</label>
+                  <input id="gl-swipe" type="number" data-lab="swipeDistance" min="10" max="300" step="5" value="30" data-testid="gesture-swipe-px" />
+                  <label for="gl-double">Janela do toque duplo (ms)</label>
+                  <input id="gl-double" type="number" data-lab="doubleTap" min="100" max="800" step="25" value="300" data-testid="gesture-doubletap-ms" />
+                  <label for="gl-touch-action"><code>touch-action</code> da área</label>
+                  <select id="gl-touch-action" data-lab="touchAction" data-testid="gesture-touch-action">
+                    <option value="none" selected>none (a página trata todos os gestos)</option>
+                    <option value="pan-y">pan-y (o navegador rola na vertical)</option>
+                    <option value="manipulation">manipulation (sem zoom por toque duplo)</option>
+                    <option value="auto">auto (o navegador decide)</option>
+                  </select>
+                  <p class="hint">Com <code>auto</code> ou <code>pan-y</code>, um arrasto vertical vira rolagem e o navegador envia <code>pointercancel</code>: é por isso que gestos "somem" em apps reais.</p>
+                </details>
+                <button type="button" class="btn btn-secondary" data-lab="clear" data-testid="gesture-clear">Limpar</button>
+              </div>
+            </div>
+            <h4 class="mob-log-title">Histórico (<span data-out="count" data-testid="gesture-count">0</span> gestos)</h4>
+            <ol class="mob-log" data-out="log" data-testid="gesture-log" aria-live="polite"></ol>
+          </div>
+
+          <!-- Guia do especialista -->
+          <div class="subsection mob-expert" id="mobile-guia">
+            <h3>Guia do especialista</h3>
+            <p class="section-lead">Teste de toque não é "clicar com o dedo". O navegador espera para decidir se o gesto é rolagem, zoom ou clique, e cada plataforma decide de um jeito. Estes são os pontos que mais geram bugs.</p>
+            <div class="guide-grid">
+              <div class="guide-item">
+                <h4>Touch, Pointer ou Mouse?</h4>
+                <ul><li><strong>Touch Events</strong> (<code>touchstart</code>…) só existem com tela de toque. É o que a área de cima usa: no desktop ela não responde ao mouse.</li><li><strong>Pointer Events</strong> unificam dedo, mouse e caneta. Leia <code>event.pointerType</code> para saber a origem.</li><li>Depois de um toque, o navegador ainda dispara eventos de mouse "de compatibilidade" e <code>click</code>. Handlers nos dois mundos executam a ação duas vezes.</li></ul>
+              </div>
+              <div class="guide-item">
+                <h4>O atraso do toque</h4>
+                <ul><li>Navegadores antigos esperavam ~300 ms para descobrir se era um toque duplo (zoom). Com <code>&lt;meta name="viewport" content="width=device-width"&gt;</code> esse atraso não existe nos navegadores atuais.</li><li><code>touch-action: manipulation</code> também desliga o zoom por toque duplo naquele elemento.</li><li>Teste: meça o tempo entre o toque e a reação visual. Acima de 100 ms já é perceptível.</li></ul>
+              </div>
+              <div class="guide-item is-criteria">
+                <h4>Alvos de toque</h4>
+                <ul><li><strong>WCAG 2.2 (2.5.8, AA):</strong> pelo menos 24 × 24 px CSS, ou espaço livre ao redor equivalente.</li><li><strong>Plataformas:</strong> 44 × 44 pt (Apple) e 48 × 48 dp (Material Design).</li><li>Meça com o auditor da página <a href="responsividade.html#target-audit">Responsividade</a>.</li></ul>
+              </div>
+              <div class="guide-item is-pitfall">
+                <h4>Armadilhas comuns</h4>
+                <ul><li>Listener de <code>touchmove</code> sem <code>{ passive: true }</code> deixa a rolagem travando.</li><li><code>preventDefault()</code> no <code>touchstart</code> mata a rolagem e o clique do elemento.</li><li>Gesto que funciona no emulador do DevTools e falha no Safari do iPhone: sempre valide em aparelho real.</li><li>Toque longo abre o menu de contexto do sistema (copiar, salvar imagem) e interfere no gesto.</li></ul>
+              </div>
+              <div class="guide-item is-wide">
+                <h4>Automatize</h4>
+                <div class="a11y-tabs" data-tabs>
+              <div role="tablist" aria-label="Exemplos de automação">
+                <button type="button" role="tab" id="touch-tab-pw" aria-controls="touch-panel-pw" aria-selected="true">Playwright</button><button type="button" role="tab" id="touch-tab-appium" aria-controls="touch-panel-appium" aria-selected="false" tabindex="-1">Appium 2 (Java)</button><button type="button" role="tab" id="touch-tab-lab" aria-controls="touch-panel-lab" aria-selected="false" tabindex="-1">Laboratório (Playwright)</button>
+              </div>
+              <div role="tabpanel" id="touch-panel-pw" aria-labelledby="touch-tab-pw" tabindex="0">
+                <p class="hint">Emula um Pixel 7 (<code>hasTouch</code> e <code>isMobile</code> ligados). <code>tap()</code> gera eventos de toque reais; para swipe, o Chromium aceita toques diretos pelo protocolo do DevTools (CDP).</p>
+                <pre class="test-code active"><code>import { test, expect, devices } from '@playwright/test';
+
+test.use({ ...devices['Pixel 7'] });
+
+test('toque registra touchstart e touchend', async ({ page }) =&gt; {
+  await page.goto('/pages/mobile/touch-events.html');
+  await page.getByTestId('touch-area').tap();
+  await expect(page.getByTestId('touch-log')).toContainText('touchstart');
+  await expect(page.getByTestId('touch-log')).toContainText('touchend');
+});
+
+test('swipe para a esquerda', async ({ page, context }) =&gt; {
+  await page.goto('/pages/mobile/touch-events.html');
+  const area = page.getByTestId('swipe-area');
+  await area.scrollIntoViewIfNeeded();
+  const box = (await area.boundingBox())!;
+  const y = box.y + box.height / 2;
+
+  // Chromium: toques sintéticos via CDP (touchStart -&gt; touchMove -&gt; touchEnd)
+  const cdp = await context.newCDPSession(page);
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: box.x + box.width - 20, y }] });
+  for (let i = 1; i &lt;= 5; i++) {
+    const x = box.x + box.width - 20 - (i * (box.width - 40)) / 5;
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x, y }] });
+  }
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+
+  await expect(page.getByTestId('swipe-direction')).toContainText('Left');
+});</code></pre>
+              </div><div role="tabpanel" id="touch-panel-appium" aria-labelledby="touch-tab-appium" tabindex="0" hidden>
+                <p class="hint"><code>TouchAction</code> está obsoleto desde o java-client 8 e foi removido nas versões seguintes. O padrão atual são as <strong>W3C Actions</strong> com um ponteiro do tipo toque.</p>
+                <pre class="test-code active"><code>import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
+import org.openqa.selenium.interactions.Pause;
+import java.time.Duration;
+import java.util.List;
+
+PointerInput dedo = new PointerInput(PointerInput.Kind.TOUCH, "dedo");
+
+// Swipe da direita para a esquerda
+Sequence swipe = new Sequence(dedo, 0)
+    .addAction(dedo.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), 320, 600))
+    .addAction(dedo.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
+    .addAction(dedo.createPointerMove(Duration.ofMillis(250), PointerInput.Origin.viewport(), 60, 600))
+    .addAction(dedo.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+driver.perform(List.of(swipe));
+
+// Toque longo: aperta, espera 800 ms e solta
+Sequence toqueLongo = new Sequence(dedo, 0)
+    .addAction(dedo.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), 200, 400))
+    .addAction(dedo.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
+    .addAction(new Pause(dedo, Duration.ofMillis(800)))
+    .addAction(dedo.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+driver.perform(List.of(toqueLongo));</code></pre>
+              </div><div role="tabpanel" id="touch-panel-lab" aria-labelledby="touch-tab-lab" tabindex="0" hidden>
+                <p class="hint">O laboratório usa Pointer Events, então também dá para testar com o mouse, em qualquer navegador.</p>
+                <pre class="test-code active"><code>import { test, expect } from '@playwright/test';
+
+test('arrasto lento não é swipe', async ({ page }) =&gt; {
+  await page.goto('/pages/mobile/touch-events.html');
+  const pad = page.getByTestId('gesture-pad');
+  const box = (await pad.boundingBox())!;
+
+  await page.mouse.move(box.x + 40, box.y + 60);
+  await page.mouse.down();
+  await page.mouse.move(box.x + 200, box.y + 60, { steps: 30 });
+  await page.waitForTimeout(800); // devagar: velocidade abaixo do limite
+  await page.mouse.up();
+
+  await expect(page.getByTestId('gesture-last')).toHaveText('arrasto');
+  await expect(page.getByTestId('gesture-pointer')).toHaveText('mouse');
+});</code></pre>
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>
+
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
             <div class="info-box">

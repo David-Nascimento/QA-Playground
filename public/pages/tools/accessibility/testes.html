@@ -147,7 +147,7 @@
           <div class="a11y-test-section">
             <h3>Testes Automatizados</h3>
             <p class="a11y-info">
-              <strong>Importante:</strong> Testes automatizados detectam apenas ~30-40% dos problemas de acessibilidade. 
+              <strong>Importante:</strong> Testes automatizados encontram apenas parte dos problemas de acessibilidade (estudos variam entre ~30% e ~57%, conforme o método). 
               Use-os como complemento aos testes manuais, não como substituto.
             </p>
 
@@ -280,6 +280,141 @@
               </div>
             </div>
           </div>
+
+          <!-- Automatizando na suíte de testes -->
+          <div class="a11y-test-section" id="automacao-axe">
+            <h3>Automatizando na sua suíte de testes</h3>
+            <p class="a11y-info">O <strong>axe-core</strong> é o mesmo motor do axe DevTools e roda dentro dos seus testes de interface. Use-o para impedir regressões: cada pull request roda as verificações automáticas, e a equipe guarda o tempo manual para o que só um humano avalia (ordem de leitura, clareza dos textos, experiência com leitor de tela).</p>
+            <ul class="a11y-tips">
+              <li><strong>Escolha as regras pelo nível:</strong> as tags <code>wcag2a</code>, <code>wcag2aa</code>, <code>wcag21aa</code> e <code>wcag22aa</code> cobrem o que a maioria das leis exige.</li>
+              <li><strong>Teste estados, não só a página carregada:</strong> abra modais, menus e mensagens de erro antes de rodar a análise.</li>
+              <li><strong>Restrinja o escopo</strong> com <code>include</code>/<code>exclude</code> para que um widget de terceiros não esconda os problemas do seu código.</li>
+              <li>Os playgrounds desta seção têm versões <code>data-version="bad"</code> e <code>data-version="good"</code>: bons alvos para treinar.</li>
+            </ul>
+            <div class="a11y-tabs" data-tabs>
+              <div role="tablist" aria-label="Exemplos de automação com axe-core">
+                <button type="button" role="tab" id="axe-tab-pw" aria-controls="axe-panel-pw" aria-selected="true">Playwright</button>
+                <button type="button" role="tab" id="axe-tab-cy" aria-controls="axe-panel-cy" aria-selected="false" tabindex="-1">Cypress</button>
+                <button type="button" role="tab" id="axe-tab-java" aria-controls="axe-panel-java" aria-selected="false" tabindex="-1">Selenium (Java)</button>
+              </div>
+              <div role="tabpanel" id="axe-panel-pw" aria-labelledby="axe-tab-pw" tabindex="0">
+                <p class="hint">Instale: <code>npm i -D @playwright/test @axe-core/playwright</code></p>
+                <pre class="a11y-code-example"><code>import { test, expect } from &#x27;@playwright/test&#x27;;
+import AxeBuilder from &#x27;@axe-core/playwright&#x27;;
+
+const WCAG_AA = [&#x27;wcag2a&#x27;, &#x27;wcag2aa&#x27;, &#x27;wcag21a&#x27;, &#x27;wcag21aa&#x27;, &#x27;wcag22aa&#x27;];
+
+test(&#x27;versão com problema é reprovada pelo axe&#x27;, async ({ page }) =&gt; {
+  await page.goto(&#x27;/pages/tools/accessibility/playgrounds.html&#x27;);
+
+  const results = await new AxeBuilder({ page })
+    .include(&#x27;#playground-inputs-labels [data-version=&quot;bad&quot;]&#x27;)
+    .withTags(WCAG_AA)
+    .analyze();
+
+  // Esperamos encontrar o problema de propósito
+  expect(results.violations.map((v) =&gt; v.id)).toContain(&#x27;label&#x27;);
+});
+
+test(&#x27;versão corrigida passa sem violações&#x27;, async ({ page }) =&gt; {
+  await page.goto(&#x27;/pages/tools/accessibility/playgrounds.html&#x27;);
+  const playground = page.locator(&#x27;#playground-inputs-labels&#x27;);
+  await playground.getByRole(&#x27;button&#x27;, { name: &#x27;Mostrar versão corrigida&#x27; }).click();
+
+  const results = await new AxeBuilder({ page })
+    .include(&#x27;#playground-inputs-labels [data-version=&quot;good&quot;]&#x27;)
+    .withTags(WCAG_AA)
+    .analyze();
+
+  expect(results.violations).toEqual([]);
+});</code></pre>
+              </div>
+              <div role="tabpanel" id="axe-panel-cy" aria-labelledby="axe-tab-cy" tabindex="0" hidden>
+                <p class="hint">Instale: <code>npm i -D cypress cypress-axe axe-core</code></p>
+                <pre class="a11y-code-example"><code>// cypress/support/e2e.js
+import &#x27;cypress-axe&#x27;;
+
+// cypress/e2e/acessibilidade.cy.js
+const WCAG_AA = [&#x27;wcag2a&#x27;, &#x27;wcag2aa&#x27;, &#x27;wcag21a&#x27;, &#x27;wcag21aa&#x27;, &#x27;wcag22aa&#x27;];
+
+describe(&#x27;Playgrounds de acessibilidade&#x27;, () =&gt; {
+  beforeEach(() =&gt; {
+    cy.visit(&#x27;/pages/tools/accessibility/playgrounds.html&#x27;);
+    cy.injectAxe();
+  });
+
+  it(&#x27;versão corrigida do formulário não tem violações&#x27;, () =&gt; {
+    cy.get(&#x27;#playground-inputs-labels&#x27;)
+      .contains(&#x27;button&#x27;, &#x27;Mostrar versão corrigida&#x27;)
+      .click();
+
+    cy.checkA11y(&#x27;#playground-inputs-labels [data-version=&quot;good&quot;]&#x27;, {
+      runOnly: { type: &#x27;tag&#x27;, values: WCAG_AA },
+    });
+  });
+
+  it(&#x27;registra (sem falhar) os problemas da versão com erro&#x27;, () =&gt; {
+    cy.checkA11y(
+      &#x27;#playground-inputs-labels [data-version=&quot;bad&quot;]&#x27;,
+      { runOnly: { type: &#x27;tag&#x27;, values: WCAG_AA } },
+      (violations) =&gt; cy.task(&#x27;log&#x27;, violations.map((v) =&gt; v.id)),
+      true // skipFailures: útil para relatório sem quebrar o build
+    );
+  });
+});</code></pre>
+              </div>
+              <div role="tabpanel" id="axe-panel-java" aria-labelledby="axe-tab-java" tabindex="0" hidden>
+                <p class="hint">Dependência Maven: <code>com.deque.html.axe-core:selenium</code></p>
+                <pre class="a11y-code-example"><code>// pom.xml: com.deque.html.axe-core:selenium
+import com.deque.html.axecore.results.Results;
+import com.deque.html.axecore.selenium.AxeBuilder;
+import org.junit.jupiter.api.Test;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class AcessibilidadeTest extends BaseTest {
+
+    @Test
+    void versaoCorrigidaSemViolacoes() {
+        driver.get(baseUrl + &quot;/pages/tools/accessibility/playgrounds.html&quot;);
+        driver.findElement(By.cssSelector(
+            &quot;#playground-inputs-labels .a11y-toggle-btn&quot;)).click();
+
+        Results results = new AxeBuilder()
+            .withTags(List.of(&quot;wcag2a&quot;, &quot;wcag2aa&quot;, &quot;wcag21aa&quot;, &quot;wcag22aa&quot;))
+            .include(&quot;#playground-inputs-labels [data-version=&#x27;good&#x27;]&quot;)
+            .analyze(driver);
+
+        assertTrue(results.violationFree(), results.getViolations().toString());
+    }
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comandos de leitores de tela -->
+          <div class="a11y-test-section" id="comandos-leitores">
+            <h3>Comandos essenciais de leitores de tela</h3>
+            <p class="a11y-info">O suficiente para um primeiro teste. Em todos eles, o ideal é navegar como um usuário faria: por títulos, por links e pelos campos do formulário.</p>
+            <div class="a11y-table-wrap">
+              <table class="table a11y-sr-table">
+                <caption class="sr-only">Comandos equivalentes no NVDA, VoiceOver e TalkBack</caption>
+                <thead>
+                  <tr><th scope="col">Tarefa</th><th scope="col">NVDA (Windows)</th><th scope="col">VoiceOver (macOS)</th><th scope="col">TalkBack (Android)</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Ligar / desligar</th><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>N</kbd> / <kbd>Insert</kbd>+<kbd>Q</kbd></td><td><kbd>Cmd</kbd>+<kbd>F5</kbd></td><td>Segurar as duas teclas de volume por 3 s</td></tr>
+                  <tr><th scope="row">Ler o próximo item</th><td><kbd>↓</kbd></td><td><kbd>Ctrl</kbd>+<kbd>Option</kbd>+<kbd>→</kbd></td><td>Deslizar para a direita</td></tr>
+                  <tr><th scope="row">Próximo título</th><td><kbd>H</kbd></td><td><kbd>Ctrl</kbd>+<kbd>Option</kbd>+<kbd>Cmd</kbd>+<kbd>H</kbd></td><td>Deslizar para cima/baixo para escolher "Títulos" e depois para a direita</td></tr>
+                  <tr><th scope="row">Lista de links / títulos</th><td><kbd>Insert</kbd>+<kbd>F7</kbd></td><td><kbd>Ctrl</kbd>+<kbd>Option</kbd>+<kbd>U</kbd> (Rotor)</td><td>Menu de leitura (deslizar para baixo e depois para a direita)</td></tr>
+                  <tr><th scope="row">Próximo campo de formulário</th><td><kbd>F</kbd></td><td><kbd>Ctrl</kbd>+<kbd>Option</kbd>+<kbd>Cmd</kbd>+<kbd>J</kbd></td><td>Escolher "Controles" no menu de leitura</td></tr>
+                  <tr><th scope="row">Ativar o item</th><td><kbd>Enter</kbd></td><td><kbd>Ctrl</kbd>+<kbd>Option</kbd>+<kbd>Espaço</kbd></td><td>Tocar duas vezes</td></tr>
+                  <tr><th scope="row">Parar a fala</th><td><kbd>Ctrl</kbd></td><td><kbd>Ctrl</kbd></td><td>Tocar com dois dedos</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
       </div>
     </main>
 

@@ -33,7 +33,12 @@ const allowed = new Set(
 
 const broken = [];
 for (const file of listHtml(ROOT)) {
-  const html = fs.readFileSync(file, 'utf8').replace(/<!--[\s\S]*?-->/g, '');
+  const html = fs
+    .readFileSync(file, 'utf8')
+    .replace(/<!--[\s\S]*?-->/g, '')
+    // exemplos de código (texto escapado) não são links de verdade
+    .replace(/<pre\b[\s\S]*?<\/pre>/gi, '')
+    .replace(/<code\b[\s\S]*?<\/code>/gi, '');
   const re = /\s(?:href|src)\s*=\s*"([^"]+)"/g;
   let m;
   while ((m = re.exec(html))) {

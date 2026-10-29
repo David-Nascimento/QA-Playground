@@ -120,12 +120,12 @@
         <div class="image-controls">
           <h3>Controles de Teste</h3>
           <div class="control-group">
-            <label>Número de Imagens:</label>
+            <label for="image-count">Número de Imagens:</label>
             <input type="number" id="image-count" min="10" max="200" value="50" step="10">
             <span id="image-count-display">50</span>
           </div>
           <div class="control-group">
-            <label>Tamanho da Imagem:</label>
+            <label for="image-size">Tamanho da Imagem:</label>
             <select id="image-size">
               <option value="small">Pequeno (150x150)</option>
               <option value="medium" selected>Médio (300x300)</option>
@@ -133,7 +133,7 @@
             </select>
           </div>
           <div class="control-group">
-            <label>Lazy Loading:</label>
+            <label for="lazy-load">Lazy Loading:</label>
             <input type="checkbox" id="lazy-load">
             <span>Ativado</span>
           </div>
@@ -165,6 +165,54 @@
           <div class="metric-card">
             <div class="metric-label">Status</div>
             <div class="metric-value" id="metric-status" style="font-size: 1em;">Aguardando</div>
+          </div>
+        </div>
+
+        <!-- Guia do especialista: o que este cenário ensina, como medir e como automatizar -->
+        <div class="content-card nft-card-enhanced nft-expert" id="nft-guia">
+          <h4>Guia do especialista</h4>
+          <p class="nft-lead">Pergunta que este cenário responde: <strong>as imagens atrasam o que importa na tela?</strong> Imagens costumam ser o maior peso de uma página e o elemento de LCP mais comum.</p>
+          <div class="guide-grid">
+            <div class="guide-item">
+              <h4>Hipótese de teste</h4>
+              <p>Com carregamento preguiçoso, só as imagens perto da área visível são baixadas no início. Neste cenário ele é feito com <code>IntersectionObserver</code>: a imagem começa com um marcador vazio e só recebe o endereço real (<code>picsum.photos</code>) quando entra na tela.</p>
+            </div>
+            <div class="guide-item">
+              <h4>O que medir</h4>
+              <table class="nft-metric-table"><tbody><tr><th scope="row">LCP</th><td>Se a maior imagem estiver na primeira dobra, ela define o LCP. Bom: ≤ 2,5 s.</td></tr><tr><th scope="row">Imagens requisitadas x visíveis</th><td>Com lazy, as que estão fora da tela não devem ser pedidas antes da rolagem (aba Network, filtro Img).</td></tr><tr><th scope="row">CLS</th><td>Imagens sem largura e altura empurram o conteúdo ao carregar.</td></tr><tr><th scope="row">Bytes transferidos</th><td>Aba Network, com cache desabilitado.</td></tr></tbody></table>
+            </div>
+            <div class="guide-item is-criteria">
+              <h4>Critério de aceite (exemplo)</h4>
+              <p>Com 50 imagens e lazy ativado, menos de 20 são requisitadas antes de rolar, e o CLS da página fica ≤ 0,1. <strong>Desafio:</strong> com lazy ativado, o contador "Carregadas" sobe antes de rolar e o status vira "Concluído" depois de 1 s fixo. O que os números estão contando de verdade?</p>
+            </div>
+            <div class="guide-item is-pitfall">
+              <h4>Armadilhas comuns</h4>
+              <ul><li>Usar lazy na imagem principal (LCP): ela passa a carregar mais tarde. Lazy é para o que está fora da primeira tela.</li><li>Testar com cache cheio: marque "Disable cache" no DevTools.</li><li>Esquecer <code>width</code> e <code>height</code> (ou <code>aspect-ratio</code>) e causar deslocamento de layout.</li></ul>
+            </div>
+            <div class="guide-item is-wide">
+              <h4>Automatize com Playwright</h4>
+              <p class="hint">Conta quantas imagens já receberam o endereço real antes e depois de rolar a página.</p>
+              <pre class="test-code active"><code>import { test, expect } from '@playwright/test';
+
+test('lazy load adia imagens fora da tela', async ({ page }) =&gt; {
+  await page.goto('/pages/tools/nft/load-multiple-images.html');
+  await page.fill('#image-count', '50');
+  await page.locator('#lazy-load').check();
+  await page.click('#load-images');
+
+  // imagens que já pediram o arquivo real (as demais ainda têm o marcador data:)
+  const requisitadas = () =&gt;
+    page.$$eval('#images-container img', (imgs) =&gt;
+      imgs.filter((i) =&gt; (i as HTMLImageElement).src.startsWith('https://')).length
+    );
+
+  const antes = await requisitadas();
+  expect(antes).toBeLessThan(20);
+
+  await page.locator('#images-container img').last().scrollIntoViewIfNeeded();
+  await expect.poll(requisitadas).toBeGreaterThan(antes);
+});</code></pre>
+            </div>
           </div>
         </div>
 
