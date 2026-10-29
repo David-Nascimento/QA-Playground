@@ -26,7 +26,22 @@ if (kind === 'express') {
         const segments = url.pathname.replace(/^\/api\/?/, '').split('/').filter(Boolean);
         if (segments.length) query.path = segments;
         req.query = query;
-        try { req.body = raw ? JSON.parse(raw) : undefined; } catch { req.body = raw; }
+        // Como o runtime da Vercel: req.body é preguiçoso; JSON inválido lança
+        // erro ao ser lido; sem content-type, undefined; JSON vazio, {}.
+        Object.defineProperty(req, 'body', {
+          configurable: true,
+          enumerable: true,
+          get() {
+            const type = req.headers['content-type'] || '';
+            if (!type) return undefined;
+            if (type.includes('application/json')) {
+              if (!raw) return {};
+              try { return JSON.parse(raw); } catch { const e = new Error('Invalid JSON'); e.statusCode = 400; throw e; }
+            }
+            return raw;
+          },
+          set(v) { Object.defineProperty(req, 'body', { value: v, writable: true, configurable: true, enumerable: true }); },
+        });
         res.status = (c) => { res.statusCode = c; return res; };
         res.json = (b) => { res.setHeader('Content-Type', 'application/json'); res.end(JSON.stringify(b)); return res; };
         res.send = (b) => { res.end(typeof b === 'string' || Buffer.isBuffer(b) ? b : JSON.stringify(b)); return res; };

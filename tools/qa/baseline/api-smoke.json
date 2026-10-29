@@ -720,7 +720,7 @@
   {
    "req": "POST /api/users (as admin) raw:{\"name\": \"Teste\",}",
    "status": 400,
-   "body": "{\"error\":\"Bad Request\",\"message\":\"Nome e email são obrigatórios\"}"
+   "body": "{\"error\":\"Bad Request\",\"message\":\"JSON malformado no corpo da requisição\"}"
   },
   {
    "req": "GET /api/users?scenario=timeout (as admin)",

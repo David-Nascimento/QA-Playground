@@ -52,7 +52,7 @@ Resposta esperada:
 
 ### Postman (Coleção Pronta)
 
-1. **Importar coleção**: Abra o Postman → Import → Selecione `api/QA-Playground-API.postman_collection.json`
+1. **Importar coleção**: Abra o Postman → Import → Selecione `server/docs/postman-collection.json` (ou baixe em `GET /api/postman-collection`)
 2. A coleção já vem com todas as requisições configuradas!
 3. Faça login primeiro para obter o token (será salvo automaticamente)
 
@@ -113,6 +113,30 @@ GET /api/users
 Headers: x-mock-scenario: error-500
 ```
 
+## 🧱 Arquitetura
+
+```
+server/
+├── app.ts            # monta o Express (não abre porta)
+├── dev.ts            # servidor local: app.listen(3001)
+├── routes/index.ts   # mapa ÚNICO de rotas: applyScenario -> requireAuth -> controller
+├── controllers/      # HTTP <-> service (lê req, devolve res). Sem regra de negócio
+├── services/         # regras de negócio e permissões; lançam HttpError
+├── data/             # armazenamento em memória (seeds + CRUD), sem regras
+├── middlewares/      # cenário forçado, autenticação, body, 404 e erros
+├── http/             # HttpError e helpers
+├── config/           # cenários de teste (?scenario=)
+└── docs/             # documentação (GET /api) e coleção Postman
+api/[...path].ts      # entrada da Vercel: exporta o mesmo app de server/app.ts
+```
+
+**Regras:**
+- Rota nova = uma linha em `routes/index.ts` + controller + service. Vale para local e Vercel.
+- Nada além do ponto de entrada em `api/`: a Vercel transforma cada arquivo dessa pasta em função.
+- Erros: lance `badRequest()`, `forbidden()`, `notFound()`… de `http/http-error.ts`. O `errorHandler` responde `{ error, message, details? }`.
+
+**Testes de contrato:** `npm run test:api` compila e roda o mesmo roteiro de 74 requisições no Express e no handler da Vercel, comparando com `tools/qa/baseline/api-smoke.json`.
+
 ## Credenciais de Teste
 
 - **Admin**: `admin@example.com` / `admin123`
@@ -129,7 +153,7 @@ Headers: x-mock-scenario: error-500
 - **Documentação da API**: `GET https://qa-playground-azure.vercel.app/api`
 - **Health Check**: `GET https://qa-playground-azure.vercel.app/api/health`
 
-- **Guia de Testes (Postman/Insomnia)**: Veja [GUIA_TESTES.md](./GUIA_TESTES.md)
+- **Guia de Testes (Postman/Insomnia)**: Veja [GUIA_TESTES.md](../api/GUIA_TESTES.md)
 
 ## 🔍 Exemplo Rápido de Teste
 

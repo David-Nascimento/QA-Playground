@@ -14,12 +14,11 @@ js/index.js.map
 js/index.d.ts
 js/index.d.ts.map
 
-# API compilada
+# Saída de build (API em dist/server)
+dist/
+
+# Build antigo da API (antes de server/)
 api/js/
-api/**/*.js
-api/**/*.js.map
-api/**/*.d.ts
-api/**/*.d.ts.map
 
 # CSS compilado
 # Nota: Para deploy na Vercel, o arquivo é gerado durante o build

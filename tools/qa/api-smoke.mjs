@@ -18,8 +18,8 @@ const argv = process.argv.slice(2);
 const opt = (k, d) => (argv.includes(`--${k}`) ? argv[argv.indexOf(`--${k}`) + 1] : d);
 
 const ADAPTERS = {
-  express: opt('express', 'api/js/index.js'),
-  vercel: opt('vercel', 'api/js/[...path].js'),
+  express: opt('express', 'dist/server/server/app.js'),
+  vercel: opt('vercel', 'dist/server/api/[...path].js'),
 };
 
 // Sequência fixa (o estado em memória evolui ao longo dela).

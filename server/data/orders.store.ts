@@ -1,5 +1,6 @@
 /**
- * Dados mockados de pedidos para testes QA
+ * Pedidos em memória (seed + operações CRUD).
+ * Apenas acesso a dados: regras de negócio ficam em services/orders.service.ts.
  */
 
 export interface Order {

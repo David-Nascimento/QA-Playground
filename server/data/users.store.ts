@@ -1,5 +1,6 @@
 /**
- * Dados mockados de usuários para testes QA
+ * Usuários em memória (seed + operações CRUD).
+ * Apenas acesso a dados: regras de negócio ficam em services/users.service.ts.
  */
 
 export interface User {

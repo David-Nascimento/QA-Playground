@@ -7,13 +7,13 @@
     "build:css": "sass styles/main.scss css/main.css --style=expanded --source-map",
     "watch:css": "sass styles/main.scss css/main.css --watch --style=expanded --source-map",
     "build:ts": "tsc",
-    "build:ts:api": "tsc --project tsconfig.api.json",
+    "build:ts:api": "tsc --project tsconfig.server.json",
     "watch:ts": "tsc --watch",
-    "watch:ts:api": "tsc --watch --project tsconfig.api.json",
+    "watch:ts:api": "tsc --watch --project tsconfig.server.json",
     "build": "npm run build:css && npm run build:ts && npm run build:ts:api",
     "watch": "npm run watch:css & npm run watch:ts",
     "serve": "npx http-server -p 8000 -o",
-    "serve:api": "node api/start-api.js",
+    "serve:api": "node tools/dev/start-api.cjs",
     "serve:dev": "npm run build && npx http-server -p 8000 -o",
     "dev": "npm run build:ts:api && concurrently \"npm run watch\" \"npm run watch:ts:api\" \"npm run serve:api\" \"npm run serve\"",
     "dev:api": "npm run build:ts:api && npm run serve:api",
@@ -21,7 +21,10 @@
     "start": "npm run build && concurrently \"npm run serve:api\" \"npm run serve\"",
     "start:api": "npm run build:ts:api && npm run serve:api",
     "start:all": "npm run build && concurrently \"npm run serve:api\" \"npm run serve\"",
-    "vercel-build": "npm run build"
+    "vercel-build": "npm run build",
+    "test:api": "npm run build:ts:api && node tools/qa/api-smoke.mjs --compare tools/qa/baseline/api-smoke.json",
+    "qa:dom": "node tools/qa/dom-snapshot.mjs --root . --compare tools/qa/baseline/dom-snapshot.json",
+    "qa:links": "node tools/qa/check-links.mjs"
   },
   "keywords": [
     "qa",
