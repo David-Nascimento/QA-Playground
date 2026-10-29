@@ -45,17 +45,17 @@ app.post('/api/auth/validate', authRoutes.validateToken);
 
 // Rotas de usuários
 app.get('/api/users', usersRoutes.getUsers);
-app.get('/api/users/:id', usersRoutes.getUserById);
+app.get('/api/users/:id(\\d+)', usersRoutes.getUserById);
 app.post('/api/users', usersRoutes.createUser);
-app.put('/api/users/:id', usersRoutes.updateUser);
-app.delete('/api/users/:id', usersRoutes.deleteUser);
+app.put('/api/users/:id(\\d+)', usersRoutes.updateUser);
+app.delete('/api/users/:id(\\d+)', usersRoutes.deleteUser);
 
 // Rotas de pedidos
 app.get('/api/orders', ordersRoutes.getOrders);
-app.get('/api/orders/:id', ordersRoutes.getOrderById);
+app.get('/api/orders/:id(\\d+)', ordersRoutes.getOrderById);
 app.post('/api/orders', ordersRoutes.createOrder);
-app.put('/api/orders/:id', ordersRoutes.updateOrder);
-app.delete('/api/orders/:id', ordersRoutes.deleteOrder);
+app.put('/api/orders/:id(\\d+)', ordersRoutes.updateOrder);
+app.delete('/api/orders/:id(\\d+)', ordersRoutes.deleteOrder);
 
 // Rota de documentação completa
 app.get('/api', (_req: Request, res: Response) => {
@@ -86,10 +86,18 @@ app.get('/api/postman-collection', (_req: Request, res: Response) => {
   }
 });
 
+// Rota inexistente
+app.use((_req: Request, res: Response) => {
+  res.status(404).json({ error: 'Not Found', message: 'Rota não encontrada' });
+});
+
 // Tratamento de erros
 app.use((err: any, _req: Request, res: Response, _next: any) => {
+  if (err?.type === 'entity.parse.failed') {
+    return res.status(400).json({ error: 'Bad Request', message: 'JSON malformado no corpo da requisição' });
+  }
   console.error('Erro:', err);
-  res.status(500).json({
+  return res.status(500).json({
     error: 'Internal Server Error',
     message: 'Erro inesperado no servidor',
   });

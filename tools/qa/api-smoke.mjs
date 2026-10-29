@@ -77,6 +77,8 @@ const STEPS = [
     ['GET', `/api/users?scenario=${s}`, { as: 'admin' }],
     ['GET', '/api/orders', { as: 'admin', headers: { 'x-mock-scenario': s } }],
   ]),
+  ['POST', '/api/users', { as: 'admin', raw: '{"name": "Teste",}' }],
+  ['GET', '/api/users?scenario=timeout', { as: 'admin' }],
   ['POST', '/api/auth/logout', { as: 'user' }],
   ['GET', '/api/auth/me', { as: 'user' }],
   ['POST', '/api/auth/logout'],
@@ -104,11 +106,11 @@ async function run(kind, modPath, port) {
       const r = await fetch(`http://127.0.0.1:${port}${url}`, {
         method,
         headers,
-        body: o.body !== undefined ? JSON.stringify(o.body) : undefined,
+        body: o.raw ?? (o.body !== undefined ? JSON.stringify(o.body) : undefined),
       });
       const text = await r.text();
       if (o.save) tokens[o.save] = text.match(/fake-jwt-[A-Za-z0-9+/=]+/)?.[0];
-      out.push({ req: `${method} ${url}${o.as ? ` (as ${o.as})` : ''}${o.body ? ` ${JSON.stringify(o.body)}` : ''}${o.headers ? ` ${JSON.stringify(o.headers)}` : ''}`, status: r.status, body: normalize(text) });
+      out.push({ req: `${method} ${url}${o.as ? ` (as ${o.as})` : ''}${o.body ? ` ${JSON.stringify(o.body)}` : ''}${o.raw ? ` raw:${o.raw}` : ''}${o.headers ? ` ${JSON.stringify(o.headers)}` : ''}`, status: r.status, body: normalize(text) });
     }
   } finally {
     child.kill();

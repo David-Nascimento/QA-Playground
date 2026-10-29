@@ -23,227 +23,227 @@
   {
    "req": "GET /api/nao-existe",
    "status": 404,
-   "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/nao-existe</pre>\n</body>\n</html>\n"
+   "body": "{\"error\":\"Not Found\",\"message\":\"Rota não encontrada\"}"
   },
   {
    "req": "POST /api/auth/login {}",
-   "status": 200,
-   "body": "{\"statusCode\":400,\"body\":{\"error\":\"Bad Request\",\"message\":\"Email e senha são obrigatórios\"}}"
+   "status": 400,
+   "body": "{\"error\":\"Bad Request\",\"message\":\"Email e senha são obrigatórios\"}"
   },
   {
    "req": "POST /api/auth/login {\"email\":\"admin@example.com\",\"password\":\"errada\"}",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Credenciais inválidas\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Credenciais inválidas\"}"
   },
   {
    "req": "POST /api/auth/login {\"email\":\"ADMIN@example.com\",\"password\":\"admin123\"}",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":1,\"role\":\"admin\"}}}}"
+   "body": "{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":1,\"role\":\"admin\"}}}"
   },
   {
    "req": "POST /api/auth/login {\"email\":\"user@example.com\",\"password\":\"user123\"}",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":2,\"role\":\"user\"}}}}"
+   "body": "{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":2,\"role\":\"user\"}}}"
   },
   {
    "req": "POST /api/auth/login {\"email\":\"viewer@example.com\",\"password\":\"viewer123\"}",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":4,\"role\":\"viewer\"}}}}"
+   "body": "{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":4,\"role\":\"viewer\"}}}"
   },
   {
    "req": "GET /api/auth/me",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}"
   },
   {
    "req": "GET /api/auth/me (as user)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"userId\":2,\"role\":\"user\",\"expiresAt\":\"<DATE>\"}}}"
+   "body": "{\"success\":true,\"data\":{\"userId\":2,\"role\":\"user\",\"expiresAt\":\"<DATE>\"}}"
   },
   {
    "req": "GET /api/auth/me {\"authorization\":\"Bearer invalido\"}",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token inválido ou expirado\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token inválido ou expirado\"}"
   },
   {
    "req": "POST /api/auth/validate (as admin)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"valid\":true,\"data\":{\"userId\":1,\"role\":\"admin\",\"expiresAt\":\"<DATE>\"}}}"
+   "body": "{\"success\":true,\"valid\":true,\"data\":{\"userId\":1,\"role\":\"admin\",\"expiresAt\":\"<DATE>\"}}"
   },
   {
    "req": "POST /api/auth/validate {}",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}"
   },
   {
    "req": "GET /api/users",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação não fornecido\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação não fornecido\"}"
   },
   {
    "req": "GET /api/users (as admin)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"name\":\"Maria Santos\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"name\":\"Pedro Oliveira\",\"email\":\"pedro.oliveira@example.com\",\"role\":\"user\",\"active\":false,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"name\":\"Ana Costa\",\"email\":\"ana.costa@example.com\",\"role\":\"viewer\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"name\":\"Carlos Ferreira\",\"email\":\"carlos.ferreira@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}}"
+   "body": "{\"success\":true,\"data\":[{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"name\":\"Maria Santos\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"name\":\"Pedro Oliveira\",\"email\":\"pedro.oliveira@example.com\",\"role\":\"user\",\"active\":false,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"name\":\"Ana Costa\",\"email\":\"ana.costa@example.com\",\"role\":\"viewer\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"name\":\"Carlos Ferreira\",\"email\":\"carlos.ferreira@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}"
   },
   {
    "req": "GET /api/users (as user)",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para listar usuários\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para listar usuários\"}"
   },
   {
    "req": "GET /api/users (as viewer)",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para listar usuários\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para listar usuários\"}"
   },
   {
    "req": "GET /api/users/1 (as admin)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+   "body": "{\"success\":true,\"data\":{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}"
   },
   {
    "req": "GET /api/users/1 (as user)",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este recurso\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este recurso\"}"
   },
   {
    "req": "GET /api/users/999 (as admin)",
-   "status": 200,
-   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}}"
+   "status": 404,
+   "body": "{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}"
   },
   {
    "req": "GET /api/users/abc (as admin)",
-   "status": 200,
-   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}}"
+   "status": 404,
+   "body": "{\"error\":\"Not Found\",\"message\":\"Rota não encontrada\"}"
   },
   {
    "req": "POST /api/users (as user) {\"name\":\"X\",\"email\":\"x@x.com\"}",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para criar usuários\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para criar usuários\"}"
   },
   {
    "req": "POST /api/users (as admin) {\"name\":\"Sem email\"}",
-   "status": 200,
-   "body": "{\"statusCode\":400,\"body\":{\"error\":\"Bad Request\",\"message\":\"Nome e email são obrigatórios\"}}"
+   "status": 400,
+   "body": "{\"error\":\"Bad Request\",\"message\":\"Nome e email são obrigatórios\"}"
   },
   {
    "req": "POST /api/users (as admin) {\"name\":\"Dup\",\"email\":\"user@example.com\"}",
-   "status": 200,
-   "body": "{\"statusCode\":201,\"body\":{\"success\":true,\"data\":{\"id\":6,\"name\":\"Dup\",\"email\":\"user@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+   "status": 201,
+   "body": "{\"success\":true,\"data\":{\"id\":6,\"name\":\"Dup\",\"email\":\"user@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}"
   },
   {
    "req": "POST /api/users (as admin) {\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\"}",
-   "status": 200,
-   "body": "{\"statusCode\":201,\"body\":{\"success\":true,\"data\":{\"id\":7,\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+   "status": 201,
+   "body": "{\"success\":true,\"data\":{\"id\":7,\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}"
   },
   {
    "req": "PUT /api/users/2 (as admin) {\"name\":\"Editado\"}",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"id\":2,\"name\":\"Editado\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+   "body": "{\"success\":true,\"data\":{\"id\":2,\"name\":\"Editado\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}"
   },
   {
    "req": "PUT /api/users/2 (as viewer) {\"name\":\"Hack\"}",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para atualizar este usuário\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para atualizar este usuário\"}"
   },
   {
    "req": "PUT /api/users/999 (as admin) {\"name\":\"X\"}",
-   "status": 200,
-   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}}"
+   "status": 404,
+   "body": "{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}"
   },
   {
    "req": "DELETE /api/users/3 (as user)",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para deletar usuários\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para deletar usuários\"}"
   },
   {
    "req": "DELETE /api/users/3 (as admin)",
-   "status": 200,
-   "body": "{\"statusCode\":204,\"body\":null}"
+   "status": 204,
+   "body": ""
   },
   {
    "req": "DELETE /api/users/3 (as admin)",
-   "status": 200,
-   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}}"
+   "status": 404,
+   "body": "{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}"
   },
   {
    "req": "GET /api/orders",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação não fornecido\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação não fornecido\"}"
   },
   {
    "req": "GET /api/orders (as admin)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"userId\":2,\"items\":[{\"productId\":103,\"productName\":\"Teclado\",\"quantity\":1,\"price\":150}],\"total\":150,\"status\":\"shipped\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"userId\":5,\"items\":[{\"productId\":104,\"productName\":\"Monitor\",\"quantity\":2,\"price\":800}],\"total\":1600,\"status\":\"processing\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"userId\":1,\"items\":[{\"productId\":105,\"productName\":\"Webcam\",\"quantity\":1,\"price\":200}],\"total\":200,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"userId\":3,\"items\":[{\"productId\":106,\"productName\":\"Headset\",\"quantity\":1,\"price\":300}],\"total\":300,\"status\":\"cancelled\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}}"
+   "body": "{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"userId\":2,\"items\":[{\"productId\":103,\"productName\":\"Teclado\",\"quantity\":1,\"price\":150}],\"total\":150,\"status\":\"shipped\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"userId\":5,\"items\":[{\"productId\":104,\"productName\":\"Monitor\",\"quantity\":2,\"price\":800}],\"total\":1600,\"status\":\"processing\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"userId\":1,\"items\":[{\"productId\":105,\"productName\":\"Webcam\",\"quantity\":1,\"price\":200}],\"total\":200,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"userId\":3,\"items\":[{\"productId\":106,\"productName\":\"Headset\",\"quantity\":1,\"price\":300}],\"total\":300,\"status\":\"cancelled\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}"
   },
   {
    "req": "GET /api/orders (as user)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"userId\":2,\"items\":[{\"productId\":103,\"productName\":\"Teclado\",\"quantity\":1,\"price\":150}],\"total\":150,\"status\":\"shipped\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":2}}"
+   "body": "{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"userId\":2,\"items\":[{\"productId\":103,\"productName\":\"Teclado\",\"quantity\":1,\"price\":150}],\"total\":150,\"status\":\"shipped\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":2}"
   },
   {
    "req": "GET /api/orders/1 (as user)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+   "body": "{\"success\":true,\"data\":{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}"
   },
   {
    "req": "GET /api/orders/1 (as viewer)",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este pedido\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este pedido\"}"
   },
   {
    "req": "GET /api/orders/999 (as admin)",
-   "status": 200,
-   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Pedido não encontrado\"}}"
+   "status": 404,
+   "body": "{\"error\":\"Not Found\",\"message\":\"Pedido não encontrado\"}"
   },
   {
    "req": "POST /api/orders (as user) {}",
-   "status": 200,
-   "body": "{\"statusCode\":400,\"body\":{\"error\":\"Bad Request\",\"message\":\"Items são obrigatórios e devem ser um array não vazio\"}}"
+   "status": 400,
+   "body": "{\"error\":\"Bad Request\",\"message\":\"Items são obrigatórios e devem ser um array não vazio\"}"
   },
   {
    "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1}]}",
-   "status": 200,
-   "body": "{\"statusCode\":422,\"body\":{\"error\":\"Unprocessable Entity\",\"message\":\"Cada item deve conter productId, productName, quantity e price\",\"details\":{\"item\":\"Campos obrigatórios: productId, productName, quantity, price\"}}}"
+   "status": 422,
+   "body": "{\"error\":\"Unprocessable Entity\",\"message\":\"Cada item deve conter productId, productName, quantity e price\",\"details\":{\"item\":\"Campos obrigatórios: productId, productName, quantity, price\"}}"
   },
   {
    "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":-1,\"price\":10}]}",
-   "status": 200,
-   "body": "{\"statusCode\":422,\"body\":{\"error\":\"Unprocessable Entity\",\"message\":\"Quantidade deve ser maior que zero\",\"details\":{\"quantity\":\"Quantidade deve ser um número positivo\"}}}"
+   "status": 422,
+   "body": "{\"error\":\"Unprocessable Entity\",\"message\":\"Quantidade deve ser maior que zero\",\"details\":{\"quantity\":\"Quantidade deve ser um número positivo\"}}"
   },
   {
    "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":-1}]}",
-   "status": 200,
-   "body": "{\"statusCode\":422,\"body\":{\"error\":\"Unprocessable Entity\",\"message\":\"Preço não pode ser negativo\",\"details\":{\"price\":\"Preço deve ser um número positivo ou zero\"}}}"
+   "status": 422,
+   "body": "{\"error\":\"Unprocessable Entity\",\"message\":\"Preço não pode ser negativo\",\"details\":{\"price\":\"Preço deve ser um número positivo ou zero\"}}"
   },
   {
    "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}]}",
-   "status": 200,
-   "body": "{\"statusCode\":201,\"body\":{\"success\":true,\"data\":{\"id\":6,\"userId\":2,\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}],\"total\":20,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+   "status": 201,
+   "body": "{\"success\":true,\"data\":{\"id\":6,\"userId\":2,\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}],\"total\":20,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}"
   },
   {
    "req": "PUT /api/orders/1 (as admin) {\"status\":\"shipped\"}",
-   "status": 200,
-   "body": "{\"statusCode\":409,\"body\":{\"error\":\"Conflict\",\"message\":\"Não é possível atualizar um pedido cancelado ou entregue\"}}"
+   "status": 409,
+   "body": "{\"error\":\"Conflict\",\"message\":\"Não é possível atualizar um pedido cancelado ou entregue\"}"
   },
   {
    "req": "PUT /api/orders/1 (as viewer) {\"status\":\"cancelled\"}",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para atualizar este pedido\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para atualizar este pedido\"}"
   },
   {
    "req": "PUT /api/orders/1 (as admin) {\"status\":\"invalido\"}",
-   "status": 200,
-   "body": "{\"statusCode\":409,\"body\":{\"error\":\"Conflict\",\"message\":\"Não é possível atualizar um pedido cancelado ou entregue\"}}"
+   "status": 409,
+   "body": "{\"error\":\"Conflict\",\"message\":\"Não é possível atualizar um pedido cancelado ou entregue\"}"
   },
   {
    "req": "DELETE /api/orders/2 (as user)",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para deletar pedidos\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para deletar pedidos\"}"
   },
   {
    "req": "DELETE /api/orders/2 (as admin)",
-   "status": 200,
-   "body": "{\"statusCode\":204,\"body\":null}"
+   "status": 204,
+   "body": ""
   },
   {
    "req": "GET /api/users?scenario=error-400 (as admin)",
@@ -338,27 +338,37 @@
   {
    "req": "GET /api/users?scenario=inexistente (as admin)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"name\":\"Editado\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"name\":\"Ana Costa\",\"email\":\"ana.costa@example.com\",\"role\":\"viewer\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"name\":\"Carlos Ferreira\",\"email\":\"carlos.ferreira@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":6,\"name\":\"Dup\",\"email\":\"user@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":7,\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":6}}"
+   "body": "{\"success\":true,\"data\":[{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"name\":\"Editado\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"name\":\"Ana Costa\",\"email\":\"ana.costa@example.com\",\"role\":\"viewer\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"name\":\"Carlos Ferreira\",\"email\":\"carlos.ferreira@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":6,\"name\":\"Dup\",\"email\":\"user@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":7,\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":6}"
   },
   {
    "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"inexistente\"}",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"userId\":5,\"items\":[{\"productId\":104,\"productName\":\"Monitor\",\"quantity\":2,\"price\":800}],\"total\":1600,\"status\":\"processing\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"userId\":1,\"items\":[{\"productId\":105,\"productName\":\"Webcam\",\"quantity\":1,\"price\":200}],\"total\":200,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"userId\":3,\"items\":[{\"productId\":106,\"productName\":\"Headset\",\"quantity\":1,\"price\":300}],\"total\":300,\"status\":\"cancelled\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":6,\"userId\":2,\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}],\"total\":20,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}}"
+   "body": "{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"userId\":5,\"items\":[{\"productId\":104,\"productName\":\"Monitor\",\"quantity\":2,\"price\":800}],\"total\":1600,\"status\":\"processing\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"userId\":1,\"items\":[{\"productId\":105,\"productName\":\"Webcam\",\"quantity\":1,\"price\":200}],\"total\":200,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"userId\":3,\"items\":[{\"productId\":106,\"productName\":\"Headset\",\"quantity\":1,\"price\":300}],\"total\":300,\"status\":\"cancelled\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":6,\"userId\":2,\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}],\"total\":20,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}"
+  },
+  {
+   "req": "POST /api/users (as admin) raw:{\"name\": \"Teste\",}",
+   "status": 400,
+   "body": "{\"error\":\"Bad Request\",\"message\":\"JSON malformado no corpo da requisição\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=timeout (as admin)",
+   "status": 504,
+   "body": "{\"error\":\"Gateway Timeout\",\"message\":\"A requisição demorou muito para ser processada\",\"details\":\"Tente novamente com uma requisição mais simples\"}"
   },
   {
    "req": "POST /api/auth/logout (as user)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"message\":\"Logout realizado com sucesso\"}}"
+   "body": "{\"success\":true,\"message\":\"Logout realizado com sucesso\"}"
   },
   {
    "req": "GET /api/auth/me (as user)",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token inválido ou expirado\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token inválido ou expirado\"}"
   },
   {
    "req": "POST /api/auth/logout",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}"
   }
  ],
  "vercel": [
@@ -380,7 +390,7 @@
   {
    "req": "GET /api/postman-collection",
    "status": 200,
-   "body": "{\"info\":{\"name\":\"QA Playground API\",\"description\":\"Coleção completa para testar a API Mockada do QA Playground\",\"schema\":\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\"},\"variable\":[{\"key\":\"base_url\",\"value\":\"http://localhost:3001/api\",\"type\":\"string\"},{\"key\":\"token\",\"value\":\"\",\"type\":\"string\"}],\"item\":[{\"name\":\"Health Check\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}/health\",\"host\":[\"{{base_url}}\"],\"path\":[\"health\"]},\"description\":\"Verifica se a API está rodando\"}},{\"name\":\"Autenticação\",\"item\":[{\"name\":\"Login (Admin)\",\"event\":[{\"listen\":\"test\",\"script\":{\"exec\":[\"if (pm.response.code === 200) {\",\"    const jsonData = pm.response.json();\",\"    if (jsonData.data && jsonData.data.token) {\",\"        pm.collectionVariables.set('token', jsonData.data.token);\",\"        console.log('Token salvo:', jsonData.data.token);\",\"    }\",\"}\"],\"type\":\"text/javascript\"}}],\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"email\\\": \\\"admin@example.com\\\",\\n  \\\"password\\\": \\\"admin123\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/auth/login\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"login\"]},\"description\":\"Faz login como admin e salva o token automaticamente\"}},{\"name\":\"Login (User)\",\"event\":[{\"listen\":\"test\",\"script\":{\"exec\":[\"if (pm.response.code === 200) {\",\"    const jsonData = pm.response.json();\",\"    if (jsonData.data && jsonData.data.token) {\",\"        pm.collectionVariables.set('token', jsonData.data.token);\",\"    }\",\"}\"],\"type\":\"text/javascript\"}}],\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"email\\\": \\\"user@example.com\\\",\\n  \\\"password\\\": \\\"user123\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/auth/login\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"login\"]}}},{\"name\":\"Logout\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/logout\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"logout\"]}}},{\"name\":\"Me (Informações do usuário)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/me\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"me\"]}}},{\"name\":\"Validar Token\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/validate\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"validate\"]}}}]},{\"name\":\"Usuários\",\"item\":[{\"name\":\"Listar Usuários (Admin)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"]}}},{\"name\":\"Listar Usuários - Erro 401\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-401\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-401\"}]},\"description\":\"Testa cenário de erro 401 (não autenticado)\"}},{\"name\":\"Buscar Usuário por ID\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}},{\"name\":\"Criar Usuário\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"name\\\": \\\"Novo Usuário\\\",\\n  \\\"email\\\": \\\"novo@example.com\\\",\\n  \\\"role\\\": \\\"user\\\",\\n  \\\"active\\\": true\\n}\"},\"url\":{\"raw\":\"{{base_url}}/users\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"]}}},{\"name\":\"Atualizar Usuário\",\"request\":{\"method\":\"PUT\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"name\\\": \\\"Usuário Atualizado\\\",\\n  \\\"email\\\": \\\"atualizado@example.com\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}},{\"name\":\"Deletar Usuário\",\"request\":{\"method\":\"DELETE\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}}]},{\"name\":\"Pedidos\",\"item\":[{\"name\":\"Listar Pedidos\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\"]}}},{\"name\":\"Buscar Pedido por ID\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}},{\"name\":\"Criar Pedido\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"items\\\": [\\n    {\\n      \\\"productId\\\": 101,\\n      \\\"productName\\\": \\\"Notebook\\\",\\n      \\\"quantity\\\": 1,\\n      \\\"price\\\": 2500.0\\n    },\\n    {\\n      \\\"productId\\\": 102,\\n      \\\"productName\\\": \\\"Mouse\\\",\\n      \\\"quantity\\\": 2,\\n      \\\"price\\\": 50.0\\n    }\\n  ]\\n}\"},\"url\":{\"raw\":\"{{base_url}}/orders\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\"]}}},{\"name\":\"Atualizar Pedido\",\"request\":{\"method\":\"PUT\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"status\\\": \\\"processing\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}},{\"name\":\"Deletar Pedido\",\"request\":{\"method\":\"DELETE\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}}]},{\"name\":\"Cenários de Erro\",\"item\":[{\"name\":\"Erro 400 - Bad Request\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-400\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-400\"}]}}},{\"name\":\"Erro 403 - Forbidden\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-403\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-403\"}]}}},{\"name\":\"Erro 404 - Not Found\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-404\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-404\"}]}}},{\"name\":\"Erro 500 - Internal Server Error\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-500\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-500\"}]}}},{\"name\":\"Timeout (504)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=timeout\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"timeout\"}]},\"description\":\"Aguarda 10 segundos antes de retornar timeout\"}}]},{\"name\":\"Documentação\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}\",\"host\":[\"{{base_url}}\"]},\"description\":\"Retorna documentação completa da API\"}}],\"default\":{\"info\":{\"name\":\"QA Playground API\",\"description\":\"Coleção completa para testar a API Mockada do QA Playground\",\"schema\":\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\"},\"variable\":[{\"key\":\"base_url\",\"value\":\"http://localhost:3001/api\",\"type\":\"string\"},{\"key\":\"token\",\"value\":\"\",\"type\":\"string\"}],\"item\":[{\"name\":\"Health Check\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}/health\",\"host\":[\"{{base_url}}\"],\"path\":[\"health\"]},\"description\":\"Verifica se a API está rodando\"}},{\"name\":\"Autenticação\",\"item\":[{\"name\":\"Login (Admin)\",\"event\":[{\"listen\":\"test\",\"script\":{\"exec\":[\"if (pm.response.code === 200) {\",\"    const jsonData = pm.response.json();\",\"    if (jsonData.data && jsonData.data.token) {\",\"        pm.collectionVariables.set('token', jsonData.data.token);\",\"        console.log('Token salvo:', jsonData.data.token);\",\"    }\",\"}\"],\"type\":\"text/javascript\"}}],\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"email\\\": \\\"admin@example.com\\\",\\n  \\\"password\\\": \\\"admin123\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/auth/login\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"login\"]},\"description\":\"Faz login como admin e salva o token automaticamente\"}},{\"name\":\"Login (User)\",\"event\":[{\"listen\":\"test\",\"script\":{\"exec\":[\"if (pm.response.code === 200) {\",\"    const jsonData = pm.response.json();\",\"    if (jsonData.data && jsonData.data.token) {\",\"        pm.collectionVariables.set('token', jsonData.data.token);\",\"    }\",\"}\"],\"type\":\"text/javascript\"}}],\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"email\\\": \\\"user@example.com\\\",\\n  \\\"password\\\": \\\"user123\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/auth/login\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"login\"]}}},{\"name\":\"Logout\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/logout\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"logout\"]}}},{\"name\":\"Me (Informações do usuário)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/me\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"me\"]}}},{\"name\":\"Validar Token\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/validate\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"validate\"]}}}]},{\"name\":\"Usuários\",\"item\":[{\"name\":\"Listar Usuários (Admin)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"]}}},{\"name\":\"Listar Usuários - Erro 401\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-401\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-401\"}]},\"description\":\"Testa cenário de erro 401 (não autenticado)\"}},{\"name\":\"Buscar Usuário por ID\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}},{\"name\":\"Criar Usuário\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"name\\\": \\\"Novo Usuário\\\",\\n  \\\"email\\\": \\\"novo@example.com\\\",\\n  \\\"role\\\": \\\"user\\\",\\n  \\\"active\\\": true\\n}\"},\"url\":{\"raw\":\"{{base_url}}/users\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"]}}},{\"name\":\"Atualizar Usuário\",\"request\":{\"method\":\"PUT\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"name\\\": \\\"Usuário Atualizado\\\",\\n  \\\"email\\\": \\\"atualizado@example.com\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}},{\"name\":\"Deletar Usuário\",\"request\":{\"method\":\"DELETE\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}}]},{\"name\":\"Pedidos\",\"item\":[{\"name\":\"Listar Pedidos\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\"]}}},{\"name\":\"Buscar Pedido por ID\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}},{\"name\":\"Criar Pedido\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"items\\\": [\\n    {\\n      \\\"productId\\\": 101,\\n      \\\"productName\\\": \\\"Notebook\\\",\\n      \\\"quantity\\\": 1,\\n      \\\"price\\\": 2500.0\\n    },\\n    {\\n      \\\"productId\\\": 102,\\n      \\\"productName\\\": \\\"Mouse\\\",\\n      \\\"quantity\\\": 2,\\n      \\\"price\\\": 50.0\\n    }\\n  ]\\n}\"},\"url\":{\"raw\":\"{{base_url}}/orders\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\"]}}},{\"name\":\"Atualizar Pedido\",\"request\":{\"method\":\"PUT\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"status\\\": \\\"processing\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}},{\"name\":\"Deletar Pedido\",\"request\":{\"method\":\"DELETE\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}}]},{\"name\":\"Cenários de Erro\",\"item\":[{\"name\":\"Erro 400 - Bad Request\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-400\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-400\"}]}}},{\"name\":\"Erro 403 - Forbidden\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-403\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-403\"}]}}},{\"name\":\"Erro 404 - Not Found\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-404\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-404\"}]}}},{\"name\":\"Erro 500 - Internal Server Error\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-500\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-500\"}]}}},{\"name\":\"Timeout (504)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=timeout\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"timeout\"}]},\"description\":\"Aguarda 10 segundos antes de retornar timeout\"}}]},{\"name\":\"Documentação\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}\",\"host\":[\"{{base_url}}\"]},\"description\":\"Retorna documentação completa da API\"}}]}}"
+   "body": "{\"info\":{\"name\":\"QA Playground API\",\"description\":\"Coleção completa para testar a API Mockada do QA Playground\",\"schema\":\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\"},\"variable\":[{\"key\":\"base_url\",\"value\":\"http://localhost:3001/api\",\"type\":\"string\"},{\"key\":\"token\",\"value\":\"\",\"type\":\"string\"}],\"item\":[{\"name\":\"Health Check\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}/health\",\"host\":[\"{{base_url}}\"],\"path\":[\"health\"]},\"description\":\"Verifica se a API está rodando\"}},{\"name\":\"Autenticação\",\"item\":[{\"name\":\"Login (Admin)\",\"event\":[{\"listen\":\"test\",\"script\":{\"exec\":[\"if (pm.response.code === 200) {\",\"    const jsonData = pm.response.json();\",\"    if (jsonData.data && jsonData.data.token) {\",\"        pm.collectionVariables.set('token', jsonData.data.token);\",\"        console.log('Token salvo:', jsonData.data.token);\",\"    }\",\"}\"],\"type\":\"text/javascript\"}}],\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"email\\\": \\\"admin@example.com\\\",\\n  \\\"password\\\": \\\"admin123\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/auth/login\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"login\"]},\"description\":\"Faz login como admin e salva o token automaticamente\"}},{\"name\":\"Login (User)\",\"event\":[{\"listen\":\"test\",\"script\":{\"exec\":[\"if (pm.response.code === 200) {\",\"    const jsonData = pm.response.json();\",\"    if (jsonData.data && jsonData.data.token) {\",\"        pm.collectionVariables.set('token', jsonData.data.token);\",\"    }\",\"}\"],\"type\":\"text/javascript\"}}],\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"email\\\": \\\"user@example.com\\\",\\n  \\\"password\\\": \\\"user123\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/auth/login\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"login\"]}}},{\"name\":\"Logout\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/logout\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"logout\"]}}},{\"name\":\"Me (Informações do usuário)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/me\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"me\"]}}},{\"name\":\"Validar Token\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/validate\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"validate\"]}}}]},{\"name\":\"Usuários\",\"item\":[{\"name\":\"Listar Usuários (Admin)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"]}}},{\"name\":\"Listar Usuários - Erro 401\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-401\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-401\"}]},\"description\":\"Testa cenário de erro 401 (não autenticado)\"}},{\"name\":\"Buscar Usuário por ID\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}},{\"name\":\"Criar Usuário\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"name\\\": \\\"Novo Usuário\\\",\\n  \\\"email\\\": \\\"novo@example.com\\\",\\n  \\\"role\\\": \\\"user\\\",\\n  \\\"active\\\": true\\n}\"},\"url\":{\"raw\":\"{{base_url}}/users\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"]}}},{\"name\":\"Atualizar Usuário\",\"request\":{\"method\":\"PUT\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"name\\\": \\\"Usuário Atualizado\\\",\\n  \\\"email\\\": \\\"atualizado@example.com\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}},{\"name\":\"Deletar Usuário\",\"request\":{\"method\":\"DELETE\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}}]},{\"name\":\"Pedidos\",\"item\":[{\"name\":\"Listar Pedidos\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\"]}}},{\"name\":\"Buscar Pedido por ID\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}},{\"name\":\"Criar Pedido\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"items\\\": [\\n    {\\n      \\\"productId\\\": 101,\\n      \\\"productName\\\": \\\"Notebook\\\",\\n      \\\"quantity\\\": 1,\\n      \\\"price\\\": 2500.0\\n    },\\n    {\\n      \\\"productId\\\": 102,\\n      \\\"productName\\\": \\\"Mouse\\\",\\n      \\\"quantity\\\": 2,\\n      \\\"price\\\": 50.0\\n    }\\n  ]\\n}\"},\"url\":{\"raw\":\"{{base_url}}/orders\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\"]}}},{\"name\":\"Atualizar Pedido\",\"request\":{\"method\":\"PUT\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"status\\\": \\\"processing\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}},{\"name\":\"Deletar Pedido\",\"request\":{\"method\":\"DELETE\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}}]},{\"name\":\"Cenários de Erro\",\"item\":[{\"name\":\"Erro 400 - Bad Request\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-400\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-400\"}]}}},{\"name\":\"Erro 403 - Forbidden\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-403\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-403\"}]}}},{\"name\":\"Erro 404 - Not Found\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-404\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-404\"}]}}},{\"name\":\"Erro 500 - Internal Server Error\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-500\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-500\"}]}}},{\"name\":\"Timeout (504)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=timeout\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"timeout\"}]},\"description\":\"Aguarda 10 segundos antes de retornar timeout\"}}]},{\"name\":\"Documentação\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}\",\"host\":[\"{{base_url}}\"]},\"description\":\"Retorna documentação completa da API\"}}]}"
   },
   {
    "req": "GET /api/nao-existe",
@@ -389,88 +399,88 @@
   },
   {
    "req": "POST /api/auth/login {}",
-   "status": 200,
-   "body": "{\"statusCode\":400,\"body\":{\"error\":\"Bad Request\",\"message\":\"Email e senha são obrigatórios\"}}"
+   "status": 400,
+   "body": "{\"error\":\"Bad Request\",\"message\":\"Email e senha são obrigatórios\"}"
   },
   {
    "req": "POST /api/auth/login {\"email\":\"admin@example.com\",\"password\":\"errada\"}",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Credenciais inválidas\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Credenciais inválidas\"}"
   },
   {
    "req": "POST /api/auth/login {\"email\":\"ADMIN@example.com\",\"password\":\"admin123\"}",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":1,\"role\":\"admin\"}}}}"
+   "body": "{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":1,\"role\":\"admin\"}}}"
   },
   {
    "req": "POST /api/auth/login {\"email\":\"user@example.com\",\"password\":\"user123\"}",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":2,\"role\":\"user\"}}}}"
+   "body": "{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":2,\"role\":\"user\"}}}"
   },
   {
    "req": "POST /api/auth/login {\"email\":\"viewer@example.com\",\"password\":\"viewer123\"}",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":4,\"role\":\"viewer\"}}}}"
+   "body": "{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":4,\"role\":\"viewer\"}}}"
   },
   {
    "req": "GET /api/auth/me",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}"
   },
   {
    "req": "GET /api/auth/me (as user)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"userId\":2,\"role\":\"user\",\"expiresAt\":\"<DATE>\"}}}"
+   "body": "{\"success\":true,\"data\":{\"userId\":2,\"role\":\"user\",\"expiresAt\":\"<DATE>\"}}"
   },
   {
    "req": "GET /api/auth/me {\"authorization\":\"Bearer invalido\"}",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token inválido ou expirado\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token inválido ou expirado\"}"
   },
   {
    "req": "POST /api/auth/validate (as admin)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"valid\":true,\"data\":{\"userId\":1,\"role\":\"admin\",\"expiresAt\":\"<DATE>\"}}}"
+   "body": "{\"success\":true,\"valid\":true,\"data\":{\"userId\":1,\"role\":\"admin\",\"expiresAt\":\"<DATE>\"}}"
   },
   {
    "req": "POST /api/auth/validate {}",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}"
   },
   {
    "req": "GET /api/users",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação não fornecido\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação não fornecido\"}"
   },
   {
    "req": "GET /api/users (as admin)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"name\":\"Maria Santos\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"name\":\"Pedro Oliveira\",\"email\":\"pedro.oliveira@example.com\",\"role\":\"user\",\"active\":false,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"name\":\"Ana Costa\",\"email\":\"ana.costa@example.com\",\"role\":\"viewer\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"name\":\"Carlos Ferreira\",\"email\":\"carlos.ferreira@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}}"
+   "body": "{\"success\":true,\"data\":[{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"name\":\"Maria Santos\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"name\":\"Pedro Oliveira\",\"email\":\"pedro.oliveira@example.com\",\"role\":\"user\",\"active\":false,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"name\":\"Ana Costa\",\"email\":\"ana.costa@example.com\",\"role\":\"viewer\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"name\":\"Carlos Ferreira\",\"email\":\"carlos.ferreira@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}"
   },
   {
    "req": "GET /api/users (as user)",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para listar usuários\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para listar usuários\"}"
   },
   {
    "req": "GET /api/users (as viewer)",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para listar usuários\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para listar usuários\"}"
   },
   {
    "req": "GET /api/users/1 (as admin)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+   "body": "{\"success\":true,\"data\":{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}"
   },
   {
    "req": "GET /api/users/1 (as user)",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este recurso\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este recurso\"}"
   },
   {
    "req": "GET /api/users/999 (as admin)",
-   "status": 200,
-   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}}"
+   "status": 404,
+   "body": "{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}"
   },
   {
    "req": "GET /api/users/abc (as admin)",
@@ -479,133 +489,133 @@
   },
   {
    "req": "POST /api/users (as user) {\"name\":\"X\",\"email\":\"x@x.com\"}",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para criar usuários\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para criar usuários\"}"
   },
   {
    "req": "POST /api/users (as admin) {\"name\":\"Sem email\"}",
-   "status": 200,
-   "body": "{\"statusCode\":400,\"body\":{\"error\":\"Bad Request\",\"message\":\"Nome e email são obrigatórios\"}}"
+   "status": 400,
+   "body": "{\"error\":\"Bad Request\",\"message\":\"Nome e email são obrigatórios\"}"
   },
   {
    "req": "POST /api/users (as admin) {\"name\":\"Dup\",\"email\":\"user@example.com\"}",
-   "status": 200,
-   "body": "{\"statusCode\":201,\"body\":{\"success\":true,\"data\":{\"id\":6,\"name\":\"Dup\",\"email\":\"user@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+   "status": 201,
+   "body": "{\"success\":true,\"data\":{\"id\":6,\"name\":\"Dup\",\"email\":\"user@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}"
   },
   {
    "req": "POST /api/users (as admin) {\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\"}",
-   "status": 200,
-   "body": "{\"statusCode\":201,\"body\":{\"success\":true,\"data\":{\"id\":7,\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+   "status": 201,
+   "body": "{\"success\":true,\"data\":{\"id\":7,\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}"
   },
   {
    "req": "PUT /api/users/2 (as admin) {\"name\":\"Editado\"}",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"id\":2,\"name\":\"Editado\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+   "body": "{\"success\":true,\"data\":{\"id\":2,\"name\":\"Editado\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}"
   },
   {
    "req": "PUT /api/users/2 (as viewer) {\"name\":\"Hack\"}",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para atualizar este usuário\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para atualizar este usuário\"}"
   },
   {
    "req": "PUT /api/users/999 (as admin) {\"name\":\"X\"}",
-   "status": 200,
-   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}}"
+   "status": 404,
+   "body": "{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}"
   },
   {
    "req": "DELETE /api/users/3 (as user)",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para deletar usuários\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para deletar usuários\"}"
   },
   {
    "req": "DELETE /api/users/3 (as admin)",
-   "status": 200,
-   "body": "{\"statusCode\":204,\"body\":null}"
+   "status": 204,
+   "body": ""
   },
   {
    "req": "DELETE /api/users/3 (as admin)",
-   "status": 200,
-   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}}"
+   "status": 404,
+   "body": "{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}"
   },
   {
    "req": "GET /api/orders",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação não fornecido\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação não fornecido\"}"
   },
   {
    "req": "GET /api/orders (as admin)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"userId\":2,\"items\":[{\"productId\":103,\"productName\":\"Teclado\",\"quantity\":1,\"price\":150}],\"total\":150,\"status\":\"shipped\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"userId\":5,\"items\":[{\"productId\":104,\"productName\":\"Monitor\",\"quantity\":2,\"price\":800}],\"total\":1600,\"status\":\"processing\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"userId\":1,\"items\":[{\"productId\":105,\"productName\":\"Webcam\",\"quantity\":1,\"price\":200}],\"total\":200,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"userId\":3,\"items\":[{\"productId\":106,\"productName\":\"Headset\",\"quantity\":1,\"price\":300}],\"total\":300,\"status\":\"cancelled\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}}"
+   "body": "{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"userId\":2,\"items\":[{\"productId\":103,\"productName\":\"Teclado\",\"quantity\":1,\"price\":150}],\"total\":150,\"status\":\"shipped\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"userId\":5,\"items\":[{\"productId\":104,\"productName\":\"Monitor\",\"quantity\":2,\"price\":800}],\"total\":1600,\"status\":\"processing\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"userId\":1,\"items\":[{\"productId\":105,\"productName\":\"Webcam\",\"quantity\":1,\"price\":200}],\"total\":200,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"userId\":3,\"items\":[{\"productId\":106,\"productName\":\"Headset\",\"quantity\":1,\"price\":300}],\"total\":300,\"status\":\"cancelled\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}"
   },
   {
    "req": "GET /api/orders (as user)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"userId\":2,\"items\":[{\"productId\":103,\"productName\":\"Teclado\",\"quantity\":1,\"price\":150}],\"total\":150,\"status\":\"shipped\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":2}}"
+   "body": "{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"userId\":2,\"items\":[{\"productId\":103,\"productName\":\"Teclado\",\"quantity\":1,\"price\":150}],\"total\":150,\"status\":\"shipped\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":2}"
   },
   {
    "req": "GET /api/orders/1 (as user)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+   "body": "{\"success\":true,\"data\":{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}"
   },
   {
    "req": "GET /api/orders/1 (as viewer)",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este pedido\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este pedido\"}"
   },
   {
    "req": "GET /api/orders/999 (as admin)",
-   "status": 200,
-   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Pedido não encontrado\"}}"
+   "status": 404,
+   "body": "{\"error\":\"Not Found\",\"message\":\"Pedido não encontrado\"}"
   },
   {
    "req": "POST /api/orders (as user) {}",
-   "status": 200,
-   "body": "{\"statusCode\":400,\"body\":{\"error\":\"Bad Request\",\"message\":\"Items são obrigatórios e devem ser um array não vazio\"}}"
+   "status": 400,
+   "body": "{\"error\":\"Bad Request\",\"message\":\"Items são obrigatórios e devem ser um array não vazio\"}"
   },
   {
    "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1}]}",
-   "status": 200,
-   "body": "{\"statusCode\":422,\"body\":{\"error\":\"Unprocessable Entity\",\"message\":\"Cada item deve conter productId, productName, quantity e price\",\"details\":{\"item\":\"Campos obrigatórios: productId, productName, quantity, price\"}}}"
+   "status": 422,
+   "body": "{\"error\":\"Unprocessable Entity\",\"message\":\"Cada item deve conter productId, productName, quantity e price\",\"details\":{\"item\":\"Campos obrigatórios: productId, productName, quantity, price\"}}"
   },
   {
    "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":-1,\"price\":10}]}",
-   "status": 200,
-   "body": "{\"statusCode\":422,\"body\":{\"error\":\"Unprocessable Entity\",\"message\":\"Quantidade deve ser maior que zero\",\"details\":{\"quantity\":\"Quantidade deve ser um número positivo\"}}}"
+   "status": 422,
+   "body": "{\"error\":\"Unprocessable Entity\",\"message\":\"Quantidade deve ser maior que zero\",\"details\":{\"quantity\":\"Quantidade deve ser um número positivo\"}}"
   },
   {
    "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":-1}]}",
-   "status": 200,
-   "body": "{\"statusCode\":422,\"body\":{\"error\":\"Unprocessable Entity\",\"message\":\"Preço não pode ser negativo\",\"details\":{\"price\":\"Preço deve ser um número positivo ou zero\"}}}"
+   "status": 422,
+   "body": "{\"error\":\"Unprocessable Entity\",\"message\":\"Preço não pode ser negativo\",\"details\":{\"price\":\"Preço deve ser um número positivo ou zero\"}}"
   },
   {
    "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}]}",
-   "status": 200,
-   "body": "{\"statusCode\":201,\"body\":{\"success\":true,\"data\":{\"id\":6,\"userId\":2,\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}],\"total\":20,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+   "status": 201,
+   "body": "{\"success\":true,\"data\":{\"id\":6,\"userId\":2,\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}],\"total\":20,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}"
   },
   {
    "req": "PUT /api/orders/1 (as admin) {\"status\":\"shipped\"}",
-   "status": 200,
-   "body": "{\"statusCode\":409,\"body\":{\"error\":\"Conflict\",\"message\":\"Não é possível atualizar um pedido cancelado ou entregue\"}}"
+   "status": 409,
+   "body": "{\"error\":\"Conflict\",\"message\":\"Não é possível atualizar um pedido cancelado ou entregue\"}"
   },
   {
    "req": "PUT /api/orders/1 (as viewer) {\"status\":\"cancelled\"}",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para atualizar este pedido\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para atualizar este pedido\"}"
   },
   {
    "req": "PUT /api/orders/1 (as admin) {\"status\":\"invalido\"}",
-   "status": 200,
-   "body": "{\"statusCode\":409,\"body\":{\"error\":\"Conflict\",\"message\":\"Não é possível atualizar um pedido cancelado ou entregue\"}}"
+   "status": 409,
+   "body": "{\"error\":\"Conflict\",\"message\":\"Não é possível atualizar um pedido cancelado ou entregue\"}"
   },
   {
    "req": "DELETE /api/orders/2 (as user)",
-   "status": 200,
-   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para deletar pedidos\"}}"
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para deletar pedidos\"}"
   },
   {
    "req": "DELETE /api/orders/2 (as admin)",
-   "status": 200,
-   "body": "{\"statusCode\":204,\"body\":null}"
+   "status": 204,
+   "body": ""
   },
   {
    "req": "GET /api/users?scenario=error-400 (as admin)",
@@ -700,27 +710,37 @@
   {
    "req": "GET /api/users?scenario=inexistente (as admin)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"name\":\"Editado\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"name\":\"Ana Costa\",\"email\":\"ana.costa@example.com\",\"role\":\"viewer\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"name\":\"Carlos Ferreira\",\"email\":\"carlos.ferreira@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":6,\"name\":\"Dup\",\"email\":\"user@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":7,\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":6}}"
+   "body": "{\"success\":true,\"data\":[{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"name\":\"Editado\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"name\":\"Ana Costa\",\"email\":\"ana.costa@example.com\",\"role\":\"viewer\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"name\":\"Carlos Ferreira\",\"email\":\"carlos.ferreira@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":6,\"name\":\"Dup\",\"email\":\"user@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":7,\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":6}"
   },
   {
    "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"inexistente\"}",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"userId\":5,\"items\":[{\"productId\":104,\"productName\":\"Monitor\",\"quantity\":2,\"price\":800}],\"total\":1600,\"status\":\"processing\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"userId\":1,\"items\":[{\"productId\":105,\"productName\":\"Webcam\",\"quantity\":1,\"price\":200}],\"total\":200,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"userId\":3,\"items\":[{\"productId\":106,\"productName\":\"Headset\",\"quantity\":1,\"price\":300}],\"total\":300,\"status\":\"cancelled\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":6,\"userId\":2,\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}],\"total\":20,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}}"
+   "body": "{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"userId\":5,\"items\":[{\"productId\":104,\"productName\":\"Monitor\",\"quantity\":2,\"price\":800}],\"total\":1600,\"status\":\"processing\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"userId\":1,\"items\":[{\"productId\":105,\"productName\":\"Webcam\",\"quantity\":1,\"price\":200}],\"total\":200,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"userId\":3,\"items\":[{\"productId\":106,\"productName\":\"Headset\",\"quantity\":1,\"price\":300}],\"total\":300,\"status\":\"cancelled\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":6,\"userId\":2,\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}],\"total\":20,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}"
+  },
+  {
+   "req": "POST /api/users (as admin) raw:{\"name\": \"Teste\",}",
+   "status": 400,
+   "body": "{\"error\":\"Bad Request\",\"message\":\"Nome e email são obrigatórios\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=timeout (as admin)",
+   "status": 504,
+   "body": "{\"error\":\"Gateway Timeout\",\"message\":\"A requisição demorou muito para ser processada\",\"details\":\"Tente novamente com uma requisição mais simples\"}"
   },
   {
    "req": "POST /api/auth/logout (as user)",
    "status": 200,
-   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"message\":\"Logout realizado com sucesso\"}}"
+   "body": "{\"success\":true,\"message\":\"Logout realizado com sucesso\"}"
   },
   {
    "req": "GET /api/auth/me (as user)",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token inválido ou expirado\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token inválido ou expirado\"}"
   },
   {
    "req": "POST /api/auth/logout",
-   "status": 200,
-   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}}"
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}"
   }
  ]
 }

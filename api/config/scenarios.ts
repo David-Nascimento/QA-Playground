@@ -145,8 +145,9 @@ export async function applyScenario(
     await new Promise((resolve) => setTimeout(resolve, config.delay));
   }
 
-  // Para cenários de erro, retorna erro direto
-  if (scenario.startsWith('error-')) {
+  // Qualquer cenário diferente de 'success' (erros e timeout) responde direto,
+  // sem executar a lógica da rota
+  if (scenario !== 'success') {
     const statusCode = config.statusCode;
     const errorMessages: Record<number, any> = {
       400: {
@@ -214,10 +215,6 @@ export async function applyScenario(
     };
   }
 
-  // Para sucesso, executa o handler
-  const result = await handler();
-  return {
-    statusCode: config.statusCode,
-    body: result,
-  };
+  // Para sucesso, executa o handler e devolve o status/corpo que ele definiu
+  return handler();
 }

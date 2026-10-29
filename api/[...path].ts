@@ -81,7 +81,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (pathWithoutQuery === '/postman-collection') {
       res.setHeader('Content-Type', 'application/json');
       res.setHeader('Content-Disposition', 'attachment; filename="QA-Playground-API.postman_collection.json"');
-      return res.json(postmanCollection);
+      return res.json((postmanCollection as any).default ?? postmanCollection);
     }
     
     // Cria objetos compatíveis com Express Request/Response
