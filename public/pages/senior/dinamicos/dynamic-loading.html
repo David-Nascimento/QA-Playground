@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Dynamic Loading — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -29,18 +29,18 @@
               <button id="btn-reset-loading" class="btn btn-secondary" data-testid="btn-reset-loading">Resetar</button>
             </div>
 
-            <div id="loading-area" data-testid="loading-area" style="min-height: 200px; padding: var(--spacing-lg); background: var(--surface); border: 2px dashed rgba(122, 168, 116, 0.3); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md); text-align: center;">
+            <div id="loading-area" data-testid="loading-area" style="min-height: 200px; padding: var(--spacing-lg); background: var(--surface); border: 2px dashed color-mix(in srgb, var(--level) 30%, transparent); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md); text-align: center;">
               <p class="muted" style="margin: 0;">Clique no botão acima para carregar conteúdo.</p>
             </div>
 
-            <div id="loading-status" data-testid="loading-status" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+            <div id="loading-status" data-testid="loading-status" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 60px;">
               <p class="muted" style="margin: 0;">Aguardando carregamento...</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Testar carregamento de conteúdo após delay</li>
@@ -144,7 +144,7 @@ Aguardar carregamento
         btnCarregar.disabled = true;
         
         loadingArea.innerHTML = `
-          <div data-testid="loading-indicator" style="color: var(--accent);">
+          <div data-testid="loading-indicator" style="color: var(--level);">
             <p style="margin: 0; font-size: var(--font-size-lg);">⏳</p>
             <p style="margin: var(--spacing-sm) 0 0 0;">Carregando...</p>
           </div>
@@ -154,8 +154,8 @@ Aguardar carregamento
 
         setTimeout(function() {
           loadingArea.innerHTML = `
-            <div data-testid="conteudo-carregado" style="padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-md);">
-              <p style="margin: 0 0 var(--spacing-sm) 0; color: var(--accent); font-size: var(--font-size-lg); font-weight: 600;">✅ Conteúdo carregado dinamicamente!</p>
+            <div data-testid="conteudo-carregado" style="padding: var(--spacing-md); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-md);">
+              <p style="margin: 0 0 var(--spacing-sm) 0; color: var(--level); font-size: var(--font-size-lg); font-weight: 600;">✅ Conteúdo carregado dinamicamente!</p>
               <p style="margin: 0; color: var(--muted);">Este conteúdo foi carregado após um delay de 2 segundos.</p>
               <p style="margin: var(--spacing-sm) 0 0 0; color: var(--muted); font-size: var(--font-size-sm);">Horário: ${new Date().toLocaleTimeString('pt-BR')}</p>
             </div>

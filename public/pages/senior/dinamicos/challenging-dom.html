@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Challenging DOM — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -45,14 +45,14 @@
               </div>
             </div>
 
-            <div id="result" data-testid="resultado-acao" style="min-height: 60px; padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div id="result" data-testid="resultado-acao" style="min-height: 60px; padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p class="muted" style="margin: 0;">Nenhuma ação realizada ainda. Clique nos botões ou boxes acima.</p>
             </div>
           </div>
 
           <div class="subsection">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Desafios de Automação:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Elementos com classes dinâmicas que mudam a cada interação</li>
@@ -167,7 +167,7 @@ Testar botão B
       .box {
         padding: var(--spacing-lg);
         background: var(--surface);
-        border: 2px solid rgba(122, 168, 116, 0.2);
+        border: 2px solid color-mix(in srgb, var(--level) 20%, transparent);
         border-radius: var(--border-radius-md);
         text-align: center;
         cursor: pointer;
@@ -179,21 +179,21 @@ Testar botão B
       }
       
       .box:hover {
-        border-color: var(--accent);
+        border-color: var(--level);
         transform: translateY(-2px);
         box-shadow: var(--shadow-md);
       }
       
       .box.highlight {
-        background: linear-gradient(135deg, rgba(122, 168, 116, 0.1), rgba(214, 163, 95, 0.1));
-        border-color: var(--accent);
+        background: linear-gradient(135deg, color-mix(in srgb, var(--level) 10%, transparent), color-mix(in srgb, var(--accent-2) 10%, transparent));
+        border-color: var(--level);
         font-weight: 600;
       }
       
       .box.active {
-        background: var(--accent);
-        color: white;
-        border-color: var(--accent);
+        background: var(--level);
+        color: var(--on-accent);
+        border-color: var(--level);
       }
       
       .btn-dynamic.active {

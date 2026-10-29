@@ -1,6 +1,25 @@
 // ========================================
-// Navigation - Componentes de Navegação
+// Navigation - Navegação dentro do conteúdo
+// ----------------------------------------
+// (O menu principal fica em layout/_header.scss.)
 // ========================================
 
-// Navegação já coberta em layout/_header.scss
-// Este arquivo reservado para componentes de navegação adicionais
+// Links "Voltar" e de navegação no fim das páginas: o bloco centralizado
+// com .btn-secondary vira uma barra de navegação discreta.
+main .btn-secondary:only-child {
+  min-width: 220px;
+}
+
+// Breadcrumbs (páginas de acessibilidade)
+.a11y-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: var(--font-size-sm);
+  color: var(--muted);
+  margin-bottom: var(--spacing-md);
+
+  a {
+    color: var(--accent);
+  }
+}

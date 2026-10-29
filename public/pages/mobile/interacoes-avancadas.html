@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Interações Avançadas — Mobile — QA Playground</title>
     <link rel="stylesheet" href="../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -48,12 +48,12 @@
             <h3>Pinch e Zoom</h3>
             <p class="muted" style="margin-bottom: var(--spacing-md);">Teste gestos de pinch (apertar) e zoom em imagens.</p>
             
-            <div id="pinch-zoom-container" data-testid="pinch-zoom-container" style="background: var(--surface); border: 1px solid rgba(0, 0, 0, 0.1); border-radius: var(--border-radius-md); padding: var(--spacing-md); overflow: hidden; position: relative;">
+            <div id="pinch-zoom-container" data-testid="pinch-zoom-container" style="background: var(--surface); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent); border-radius: var(--border-radius-md); padding: var(--spacing-md); overflow: hidden; position: relative;">
               <div id="pinch-zoom-info" data-testid="pinch-zoom-info" style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--muted);">
                 <strong>Zoom:</strong> <span id="zoom-level" data-testid="zoom-level">100%</span> | 
                 <strong>Toques:</strong> <span id="touch-count" data-testid="touch-count">0</span>
               </div>
-              <div id="pinch-zoom-area" data-testid="pinch-zoom-area" style="width: 100%; height: 300px; background: linear-gradient(135deg, rgba(122, 168, 116, 0.1) 0%, rgba(122, 168, 116, 0.3) 100%); border-radius: var(--border-radius-sm); display: flex; align-items: center; justify-content: center; position: relative; touch-action: none; cursor: grab;">
+              <div id="pinch-zoom-area" data-testid="pinch-zoom-area" style="width: 100%; height: 300px; background: linear-gradient(135deg, color-mix(in srgb, var(--level) 10%, transparent) 0%, color-mix(in srgb, var(--level) 30%, transparent) 100%); border-radius: var(--border-radius-sm); display: flex; align-items: center; justify-content: center; position: relative; touch-action: none; cursor: grab;">
                 <img 
                   src="../../assets/img/image-bug.png" 
                   alt="Imagem para zoom"
@@ -73,8 +73,8 @@
             <h3>Pull to Refresh</h3>
             <p class="muted" style="margin-bottom: var(--spacing-md);">Puxe para baixo para atualizar o conteúdo.</p>
             
-            <div id="pull-refresh-container" data-testid="pull-refresh-container" style="background: var(--surface); border: 1px solid rgba(0, 0, 0, 0.1); border-radius: var(--border-radius-md); overflow: hidden; position: relative; touch-action: pan-y;">
-              <div id="pull-refresh-indicator" data-testid="pull-refresh-indicator" style="position: absolute; top: 0; left: 0; right: 0; height: 60px; display: flex; align-items: center; justify-content: center; background: var(--accent); color: white; transform: translateY(-100%); transition: transform 0.3s;">
+            <div id="pull-refresh-container" data-testid="pull-refresh-container" style="background: var(--surface); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent); border-radius: var(--border-radius-md); overflow: hidden; position: relative; touch-action: pan-y;">
+              <div id="pull-refresh-indicator" data-testid="pull-refresh-indicator" style="position: absolute; top: 0; left: 0; right: 0; height: 60px; display: flex; align-items: center; justify-content: center; background: var(--level); color: var(--on-accent); transform: translateY(-100%); transition: transform 0.3s;">
                 <span id="pull-refresh-text" data-testid="pull-refresh-text">⬇️ Solte para atualizar</span>
               </div>
               <div id="pull-refresh-content" data-testid="pull-refresh-content" style="padding: var(--spacing-md); min-height: 200px;">
@@ -82,9 +82,9 @@
                   Última atualização: <span id="last-refresh" data-testid="last-refresh">-</span>
                 </div>
                 <div style="display: grid; gap: var(--spacing-sm);">
-                  <div style="padding: var(--spacing-sm); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm);">Item 1</div>
-                  <div style="padding: var(--spacing-sm); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm);">Item 2</div>
-                  <div style="padding: var(--spacing-sm); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm);">Item 3</div>
+                  <div style="padding: var(--spacing-sm); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-sm);">Item 1</div>
+                  <div style="padding: var(--spacing-sm); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-sm);">Item 2</div>
+                  <div style="padding: var(--spacing-sm); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-sm);">Item 3</div>
                 </div>
               </div>
             </div>
@@ -94,7 +94,7 @@
             <h3>Scroll Infinito</h3>
             <p class="muted" style="margin-bottom: var(--spacing-md);">Role até o final para carregar mais conteúdo automaticamente.</p>
             
-            <div id="infinite-scroll-container" data-testid="infinite-scroll-container" style="background: var(--surface); border: 1px solid rgba(0, 0, 0, 0.1); border-radius: var(--border-radius-md); max-height: 400px; overflow-y: auto; padding: var(--spacing-md);">
+            <div id="infinite-scroll-container" data-testid="infinite-scroll-container" style="background: var(--surface); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent); border-radius: var(--border-radius-md); max-height: 400px; overflow-y: auto; padding: var(--spacing-md);">
               <div id="infinite-scroll-content" data-testid="infinite-scroll-content">
                 <!-- Conteúdo será adicionado dinamicamente -->
               </div>
@@ -114,7 +114,7 @@
             <h3>Multi-Touch</h3>
             <p class="muted" style="margin-bottom: var(--spacing-md);">Teste gestos com múltiplos toques simultâneos.</p>
             
-            <div id="multi-touch-area" data-testid="multi-touch-area" style="background: var(--surface); border: 2px dashed var(--accent); border-radius: var(--border-radius-md); padding: var(--spacing-lg); min-height: 250px; position: relative; touch-action: none;">
+            <div id="multi-touch-area" data-testid="multi-touch-area" style="background: var(--surface); border: 2px dashed var(--level); border-radius: var(--border-radius-md); padding: var(--spacing-lg); min-height: 250px; position: relative; touch-action: none;">
               <div id="multi-touch-info" data-testid="multi-touch-info" style="margin-bottom: var(--spacing-md); text-align: center;">
                 <div style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-xs);">👆</div>
                 <div style="color: var(--muted); font-size: var(--font-size-sm);">Toque com múltiplos dedos</div>
@@ -133,9 +133,9 @@
             <h3>Shake Detection</h3>
             <p class="muted" style="margin-bottom: var(--spacing-md);">Simulação de detecção de agitação do dispositivo (shake).</p>
             
-            <div id="shake-container" data-testid="shake-container" style="background: var(--surface); border: 1px solid rgba(0, 0, 0, 0.1); border-radius: var(--border-radius-md); padding: var(--spacing-lg); text-align: center;">
+            <div id="shake-container" data-testid="shake-container" style="background: var(--surface); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent); border-radius: var(--border-radius-md); padding: var(--spacing-lg); text-align: center;">
               <div id="shake-icon" data-testid="shake-icon" style="font-size: var(--font-size-4xl); margin-bottom: var(--spacing-md);">📱</div>
-              <div id="shake-status" data-testid="shake-status" style="font-size: var(--font-size-lg); font-weight: 600; color: var(--accent); margin-bottom: var(--spacing-sm);">
+              <div id="shake-status" data-testid="shake-status" style="font-size: var(--font-size-lg); font-weight: 600; color: var(--level); margin-bottom: var(--spacing-sm);">
                 Aguardando shake...
               </div>
               <div style="font-size: var(--font-size-sm); color: var(--muted); margin-bottom: var(--spacing-md);">

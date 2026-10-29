@@ -1,0 +1,87 @@
+// ========================================
+// Feedback - Toast, alertas e estados
+// ========================================
+
+.toast {
+  position: fixed;
+  right: var(--gutter);
+  bottom: var(--spacing-lg);
+  max-width: min(420px, calc(100vw - 2 * var(--gutter)));
+  background: var(--text);
+  color: var(--bg);
+  padding: 12px 16px;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-lg);
+  font-size: var(--font-size-sm);
+  font-weight: $font-weight-medium;
+  display: none;
+  z-index: z-index('tooltip');
+  animation: toast-in 0.25s ease;
+
+  &.show {
+    display: block;
+  }
+}
+
+@keyframes toast-in {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Mensagens de status usadas nas páginas de prática
+.success,
+.alert-success {
+  color: var(--success);
+}
+
+.alert,
+.alert-success,
+.alert-danger,
+.alert-warning,
+.alert-info {
+  border-radius: var(--border-radius-md);
+  padding: 12px 16px;
+  border: 1px solid currentColor;
+  background: color-mix(in srgb, currentColor 8%, var(--surface));
+}
+
+.alert-danger { color: var(--danger); }
+.alert-warning { color: var(--warning); }
+.alert-info { color: var(--info); }
+
+// === Notas e destaques ===
+.notes-transparent {
+  margin: var(--spacing-xl) auto 0;
+  max-width: 680px;
+  @include card-surface;
+  padding: var(--spacing-lg);
+  text-align: center;
+}
+
+.highlight-text {
+  background: color-mix(in srgb, var(--pleno-fill) 22%, transparent);
+  color: var(--text);
+  padding: 0.05em 0.3em;
+  border-radius: 4px;
+}
+
+.demo-note {
+  font-size: var(--font-size-sm);
+  color: var(--muted);
+}
+
+// === Utilitários ===
+.center {
+  text-align: center;
+}
+
+.sr-only {
+  @include visually-hidden;
+}

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>ID Dinâmico — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -29,21 +29,21 @@
               <button id="btn-reset" class="btn btn-secondary" data-testid="btn-reset">Resetar</button>
             </div>
 
-            <div id="container-dinamico" data-testid="container-dinamico" style="padding: var(--spacing-lg); background: var(--surface); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
-              <div id="elemento-dinamico" data-testid="elemento-dinamico" style="padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm); text-align: center;">
+            <div id="container-dinamico" data-testid="container-dinamico" style="padding: var(--spacing-lg); background: var(--surface); border: 2px solid color-mix(in srgb, var(--level) 20%, transparent); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <div id="elemento-dinamico" data-testid="elemento-dinamico" style="padding: var(--spacing-md); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-sm); text-align: center;">
                 <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>Elemento com ID Dinâmico</strong></p>
                 <p id="id-display" data-testid="id-display" style="margin: 0; color: var(--muted); font-size: var(--font-size-sm);">ID atual: elemento-dinamico</p>
               </div>
             </div>
 
-            <div id="id-result" data-testid="id-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+            <div id="id-result" data-testid="id-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 60px;">
               <p class="muted" style="margin: 0;">ID inicial: elemento-dinamico</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Desafios de Automação:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>IDs que mudam a cada renderização ou interação</li>
@@ -165,7 +165,7 @@ Testar elemento com ID dinâmico
           <p style="margin: 0; color: var(--muted);">ID anterior foi alterado</p>
           <p style="margin: 0; color: var(--muted); font-family: monospace; font-size: var(--font-size-sm);">Novo ID: ${novoId}</p>
           <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
-          <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--accent);">💡 Dica: Use data-testid para seleção estável!</p>
+          <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--level);">💡 Dica: Use data-testid para seleção estável!</p>
         `;
         
         window.showToast('Novo ID gerado!');

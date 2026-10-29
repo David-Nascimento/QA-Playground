@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>XPath e CSS Tester — Ferramentas QA — QA Playground</title>
     <link rel="stylesheet" href="../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -575,7 +575,7 @@
           
           <!-- Formulário Completo -->
           <div style="margin-bottom: var(--spacing-xl);">
-            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Formulário de Registro</h4>
+            <h4 style="color: var(--level); margin-bottom: var(--spacing-md);">Formulário de Registro</h4>
             <form id="demo-form" data-testid="demo-form" class="form-grid">
               <div class="form-group">
                 <label for="demo-email" data-testid="email-label">Email:</label>
@@ -719,7 +719,7 @@
           
           <!-- Cards -->
           <div style="margin-bottom: var(--spacing-xl);">
-            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Cards de Produtos</h4>
+            <h4 style="color: var(--level); margin-bottom: var(--spacing-md);">Cards de Produtos</h4>
             <div class="card-grid">
               <div class="card card-primary" data-testid="card-1" data-product-id="prod-001">
                 <h3>Produto 1</h3>
@@ -753,11 +753,11 @@
           
           <!-- Listas e Navegação -->
           <div style="margin-bottom: var(--spacing-xl);">
-            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Listas e Navegação</h4>
+            <h4 style="color: var(--level); margin-bottom: var(--spacing-md);">Listas e Navegação</h4>
             
             <!-- Lista Não Ordenada Simples -->
             <div style="margin-bottom: var(--spacing-lg);">
-              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista Não Ordenada (ul)</h5>
+              <h5 style="color: var(--level); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista Não Ordenada (ul)</h5>
               <ul id="demo-list" data-testid="unordered-list" style="margin-bottom: var(--spacing-md); list-style: disc; padding-left: var(--spacing-lg);">
                 <li data-testid="list-item-1" data-category="tech" data-priority="high">Item 1 da lista - Tecnologia</li>
                 <li data-testid="list-item-2" data-category="design" data-priority="medium">Item 2 da lista - Design</li>
@@ -770,7 +770,7 @@
             
             <!-- Lista Ordenada -->
             <div style="margin-bottom: var(--spacing-lg);">
-              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista Ordenada (ol)</h5>
+              <h5 style="color: var(--level); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista Ordenada (ol)</h5>
               <ol id="demo-ordered-list" data-testid="ordered-list" style="margin-bottom: var(--spacing-md); padding-left: var(--spacing-lg);">
                 <li data-testid="ordered-item-1" data-step="1">Primeiro item ordenado</li>
                 <li data-testid="ordered-item-2" data-step="2">Segundo item ordenado</li>
@@ -782,7 +782,7 @@
             
             <!-- Lista Aninhada -->
             <div style="margin-bottom: var(--spacing-lg);">
-              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista Aninhada</h5>
+              <h5 style="color: var(--level); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista Aninhada</h5>
               <ul id="demo-nested-list" data-testid="nested-list" style="margin-bottom: var(--spacing-md); list-style: disc; padding-left: var(--spacing-lg);">
                 <li data-testid="nested-parent-1">Categoria A
                   <ul style="margin-top: var(--spacing-xs); margin-bottom: var(--spacing-xs);">
@@ -803,7 +803,7 @@
             
             <!-- Menu de Navegação -->
             <div style="margin-bottom: var(--spacing-lg);">
-              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Menu de Navegação</h5>
+              <h5 style="color: var(--level); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Menu de Navegação</h5>
               <nav data-testid="navigation-menu" aria-label="Menu de navegação principal">
                 <ul class="et-nav-list" style="display: flex; flex-wrap: wrap; gap: var(--spacing-md); list-style: none; padding: 0; margin: 0;">
                   <li data-testid="nav-item-home">
@@ -827,7 +827,7 @@
             
             <!-- Lista de Definição -->
             <div style="margin-bottom: var(--spacing-lg);">
-              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista de Definição (dl)</h5>
+              <h5 style="color: var(--level); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista de Definição (dl)</h5>
               <dl id="demo-definition-list" data-testid="definition-list" style="margin-bottom: var(--spacing-md);">
                 <dt data-testid="term-1" data-category="tech">HTML</dt>
                 <dd data-testid="definition-1">HyperText Markup Language - Linguagem de marcação para web</dd>
@@ -840,7 +840,7 @@
             
             <!-- Lista com Links -->
             <div style="margin-bottom: var(--spacing-lg);">
-              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista com Links</h5>
+              <h5 style="color: var(--level); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista com Links</h5>
               <ul id="demo-link-list" data-testid="link-list" style="list-style: none; padding: 0; margin: 0;">
                 <li data-testid="link-list-item-1">
                   <a href="https://www.google.com" data-testid="list-link-1" data-link-category="external">Link Externo 1</a>
@@ -859,7 +859,7 @@
             
             <!-- Breadcrumb -->
             <div style="margin-bottom: var(--spacing-lg);">
-              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Breadcrumb (Navegação Hierárquica)</h5>
+              <h5 style="color: var(--level); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Breadcrumb (Navegação Hierárquica)</h5>
               <nav aria-label="Breadcrumb" data-testid="breadcrumb-nav">
                 <ol id="demo-breadcrumb" data-testid="breadcrumb-list" style="display: flex; list-style: none; padding: 0; margin: 0; gap: var(--spacing-sm); flex-wrap: wrap;">
                   <li data-testid="breadcrumb-item-1">
@@ -877,7 +877,7 @@
             
             <!-- Lista com Classes e Estados -->
             <div style="margin-bottom: var(--spacing-lg);">
-              <h5 style="color: var(--accent); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista com Classes e Estados</h5>
+              <h5 style="color: var(--level); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm);">Lista com Classes e Estados</h5>
               <ul id="demo-styled-list" data-testid="styled-list" style="list-style: none; padding: 0; margin: 0;">
                 <li class="list-item active" data-testid="styled-item-1" data-state="active">Item Ativo</li>
                 <li class="list-item" data-testid="styled-item-2" data-state="inactive">Item Inativo</li>
@@ -890,7 +890,7 @@
           
           <!-- Tabela -->
           <div style="margin-bottom: var(--spacing-xl);">
-            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Tabela de Dados</h4>
+            <h4 style="color: var(--level); margin-bottom: var(--spacing-md);">Tabela de Dados</h4>
             <table class="table" data-testid="demo-table">
               <thead>
                 <tr>
@@ -925,20 +925,20 @@
           
           <!-- Badges e Tags -->
           <div style="margin-bottom: var(--spacing-xl);">
-            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Badges e Tags</h4>
+            <h4 style="color: var(--level); margin-bottom: var(--spacing-md);">Badges e Tags</h4>
             <div>
               <span class="badge badge-primary" data-testid="badge-1" data-tag="primary">Badge Primário</span>
               <span class="badge badge-secondary" data-testid="badge-2" data-tag="secondary">Badge Secundário</span>
               <span class="badge badge-success" data-testid="badge-3" data-tag="success">Badge Sucesso</span>
-              <span class="badge" style="background: var(--danger); color: white;" data-testid="badge-4" data-tag="danger">Badge Erro</span>
-              <span class="badge" style="background: var(--warning); color: var(--text);" data-testid="badge-5" data-tag="warning">Badge Aviso</span>
-              <span class="badge" style="background: var(--info); color: white;" data-testid="badge-6" data-tag="info">Badge Info</span>
+              <span class="badge" style="background: var(--danger); color: var(--on-accent);" data-testid="badge-4" data-tag="danger">Badge Erro</span>
+              <span class="badge" style="background: var(--warning); color: var(--on-accent);" data-testid="badge-5" data-tag="warning">Badge Aviso</span>
+              <span class="badge" style="background: var(--info); color: var(--on-accent);" data-testid="badge-6" data-tag="info">Badge Info</span>
             </div>
           </div>
           
           <!-- Links e Navegação -->
           <div style="margin-bottom: var(--spacing-xl);">
-            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Links e Navegação</h4>
+            <h4 style="color: var(--level); margin-bottom: var(--spacing-md);">Links e Navegação</h4>
             <div>
               <a href="#" class="btn" data-testid="link-primary" data-link-type="internal">Link Interno</a>
               <a href="https://exemplo.com" target="_blank" class="btn" data-testid="link-external" data-link-type="external">Link Externo</a>
@@ -950,7 +950,7 @@
           
           <!-- Elementos Especiais -->
           <div style="margin-bottom: var(--spacing-xl);">
-            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Elementos Especiais</h4>
+            <h4 style="color: var(--level); margin-bottom: var(--spacing-md);">Elementos Especiais</h4>
             <p style="margin-bottom: var(--spacing-md); color: var(--muted); font-size: var(--font-size-sm);">
               Use os botões ao lado de cada elemento para alternar entre estados habilitado e desabilitado:
             </p>
@@ -975,8 +975,8 @@
               <span id="input-status" style="font-size: var(--font-size-sm); color: var(--success); font-weight: 600;">Habilitado</span>
             </div>
             
-            <div style="margin-top: var(--spacing-lg); padding-top: var(--spacing-lg); border-top: 1px solid rgba(0, 0, 0, 0.1);">
-              <h5 style="color: var(--accent); margin-bottom: var(--spacing-sm);">Exemplos Estáticos (sempre desabilitados/readonly):</h5>
+            <div style="margin-top: var(--spacing-lg); padding-top: var(--spacing-lg); border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">
+              <h5 style="color: var(--level); margin-bottom: var(--spacing-sm);">Exemplos Estáticos (sempre desabilitados/readonly):</h5>
               <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap; align-items: center;">
                 <button type="button" class="btn" disabled data-testid="btn-disabled">Botão Desabilitado</button>
                 <input type="text" class="form-input" readonly value="Campo somente leitura" data-testid="input-readonly" style="max-width: 300px;" />
@@ -987,7 +987,7 @@
           
           <!-- Divs com Classes Múltiplas -->
           <div style="margin-bottom: var(--spacing-xl);">
-            <h4 style="color: var(--accent); margin-bottom: var(--spacing-md);">Elementos com Múltiplas Classes</h4>
+            <h4 style="color: var(--level); margin-bottom: var(--spacing-md);">Elementos com Múltiplas Classes</h4>
             <div>
               <div class="card btn primary large" data-testid="multi-class-1">Card com classes: card, btn, primary, large</div>
               <div class="badge badge-primary success active" data-testid="multi-class-2">Badge com múltiplas classes</div>

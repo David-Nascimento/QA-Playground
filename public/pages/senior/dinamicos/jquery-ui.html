@@ -6,7 +6,7 @@
     <title>JQuery UI — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -25,19 +25,19 @@
               Teste os widgets jQuery UI abaixo. Arraste o elemento arrastável até a zona de soltura.
             </p>
 
-            <div style="margin-bottom: var(--spacing-lg); padding: var(--spacing-lg); background: var(--surface); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md);">
-              <div id="draggable" data-testid="draggable-jquery" style="width: 120px; height: 60px; background: var(--accent); color: white; line-height: 60px; text-align: center; border-radius: var(--border-radius-sm); cursor: move; margin-bottom: var(--spacing-md);">Arraste-me</div>
-              <div id="droppable" data-testid="droppable-jquery" style="width: 200px; height: 100px; background: rgba(122, 168, 116, 0.2); line-height: 100px; text-align: center; border-radius: var(--border-radius-sm); border: 2px dashed rgba(122, 168, 116, 0.5);">Solte aqui</div>
+            <div style="margin-bottom: var(--spacing-lg); padding: var(--spacing-lg); background: var(--surface); border: 2px solid color-mix(in srgb, var(--level) 20%, transparent); border-radius: var(--border-radius-md);">
+              <div id="draggable" data-testid="draggable-jquery" style="width: 120px; height: 60px; background: var(--level); color: var(--on-accent); line-height: 60px; text-align: center; border-radius: var(--border-radius-sm); cursor: move; margin-bottom: var(--spacing-md);">Arraste-me</div>
+              <div id="droppable" data-testid="droppable-jquery" style="width: 200px; height: 100px; background: color-mix(in srgb, var(--level) 20%, transparent); line-height: 100px; text-align: center; border-radius: var(--border-radius-sm); border: 2px dashed color-mix(in srgb, var(--level) 50%, transparent);">Solte aqui</div>
             </div>
 
-            <div id="jquery-result" data-testid="jquery-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+            <div id="jquery-result" data-testid="jquery-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 60px;">
               <p class="muted" style="margin: 0;">Arraste o elemento acima até a zona de soltura.</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Testar drag and drop com jQuery UI</li>
@@ -136,7 +136,7 @@ Drag and drop jQuery UI
             $(this).html('<strong>Soltou!</strong>');
             $(this).css('background', 'rgba(122, 168, 116, 0.3)');
             document.getElementById('jquery-result').innerHTML = `
-              <p style="margin: 0; color: var(--accent);"><strong>✅ Drop realizado com sucesso!</strong></p>
+              <p style="margin: 0; color: var(--level);"><strong>✅ Drop realizado com sucesso!</strong></p>
               <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${new Date().toLocaleTimeString('pt-BR')}</p>
             `;
             window.showToast('Drop realizado!');

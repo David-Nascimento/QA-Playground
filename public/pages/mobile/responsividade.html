@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Responsividade — Mobile — QA Playground</title>
     <link rel="stylesheet" href="../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -48,10 +48,10 @@
             <h3>Layout Responsivo</h3>
             <p class="muted" style="margin-bottom: var(--spacing-md);">Redimensione a janela para ver a adaptação do layout.</p>
             
-            <div id="viewport-info" data-testid="viewport-info" style="background: rgba(0, 0, 0, 0.03); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+            <div id="viewport-info" data-testid="viewport-info" style="background: color-mix(in srgb, var(--text) 3%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
               <strong>Viewport Atual:</strong>
               <div id="viewport-size" data-testid="viewport-size" style="margin-top: var(--spacing-xs); font-family: monospace;"></div>
-              <div id="breakpoint" data-testid="breakpoint" style="margin-top: var(--spacing-xs); color: var(--accent); font-weight: 600;"></div>
+              <div id="breakpoint" data-testid="breakpoint" style="margin-top: var(--spacing-xs); color: var(--level); font-weight: 600;"></div>
             </div>
 
             <div class="responsive-grid" data-testid="responsive-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-md);">
@@ -74,7 +74,7 @@
             <h3>Menu Responsivo</h3>
             <p class="muted" style="margin-bottom: var(--spacing-md);">Menu que se adapta ao tamanho da tela.</p>
             
-            <div id="mobile-menu" data-testid="mobile-menu" style="background: var(--surface); border: 1px solid rgba(0, 0, 0, 0.1); border-radius: var(--border-radius-md); padding: var(--spacing-md);">
+            <div id="mobile-menu" data-testid="mobile-menu" style="background: var(--surface); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent); border-radius: var(--border-radius-md); padding: var(--spacing-md);">
               <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h4 style="margin: 0;">Menu Principal</h4>
                 <button id="menu-toggle" data-testid="menu-toggle" class="btn btn-secondary" style="display: none;">☰</button>

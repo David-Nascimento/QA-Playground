@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>API Playground — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -43,8 +43,8 @@
               A API suporta controle de cenários via query parameter ou header para testar diferentes comportamentos:
             </p>
             <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
-              <li><strong>Query Parameter:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">?scenario=&lt;tipo&gt;</code></li>
-              <li><strong>Header:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">x-mock-scenario: &lt;tipo&gt;</code></li>
+              <li><strong>Query Parameter:</strong> <code>?scenario=&lt;tipo&gt;</code></li>
+              <li><strong>Header:</strong> <code>x-mock-scenario: &lt;tipo&gt;</code></li>
             </ul>
             <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm);">
               <strong>Cenários disponíveis:</strong> success, error-400, error-401, error-403, error-404, error-409, error-422, error-429, error-500, error-503, timeout
@@ -292,7 +292,7 @@ Content-Type: application/json
           <!-- Tabs para navegação -->
           <div style="margin-bottom: var(--spacing-md);">
             <div class="tabs" style="display: flex; gap: var(--spacing-xs); border-bottom: 2px solid var(--border); margin-bottom: var(--spacing-md);">
-              <button class="tab-btn active" data-tab="endpoints" style="padding: var(--spacing-sm) var(--spacing-md); background: transparent; border: none; border-bottom: 2px solid var(--accent); color: var(--text); cursor: pointer; font-size: var(--font-size-sm); transition: all 0.2s;">Endpoints</button>
+              <button class="tab-btn active" data-tab="endpoints" style="padding: var(--spacing-sm) var(--spacing-md); background: transparent; border: none; border-bottom: 2px solid var(--level); color: var(--text); cursor: pointer; font-size: var(--font-size-sm); transition: all 0.2s;">Endpoints</button>
               <button class="tab-btn" data-tab="karate" style="padding: var(--spacing-sm) var(--spacing-md); background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--muted); cursor: pointer; font-size: var(--font-size-sm); transition: all 0.2s;">Karate DSL</button>
               <button class="tab-btn" data-tab="postman" style="padding: var(--spacing-sm) var(--spacing-md); background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--muted); cursor: pointer; font-size: var(--font-size-sm); transition: all 0.2s;">Postman (Newman)</button>
               <button class="tab-btn" data-tab="restassured" style="padding: var(--spacing-sm) var(--spacing-md); background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--muted); cursor: pointer; font-size: var(--font-size-sm); transition: all 0.2s;">REST Assured</button>
@@ -302,7 +302,7 @@ Content-Type: application/json
           </div>
 
           <!-- Conteúdo das Tabs -->
-          <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+          <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
             
             <!-- Tab: Endpoints -->
             <div class="tab-content active" data-tab-content="endpoints">
@@ -319,36 +319,36 @@ Content-Type: application/json
               <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Endpoints Disponíveis:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--text); font-size: var(--font-size-sm); margin-bottom: var(--spacing-md);">
                 <li><strong>Autenticação:</strong></li>
-                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">POST /api/auth/login</code> - Faz login</li>
-                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">POST /api/auth/logout</code> - Faz logout</li>
-                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">GET /api/auth/me</code> - Informações do usuário</li>
-                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">POST /api/auth/validate</code> - Valida token</li>
+                <li style="margin-left: var(--spacing-xl);"><code>POST /api/auth/login</code> - Faz login</li>
+                <li style="margin-left: var(--spacing-xl);"><code>POST /api/auth/logout</code> - Faz logout</li>
+                <li style="margin-left: var(--spacing-xl);"><code>GET /api/auth/me</code> - Informações do usuário</li>
+                <li style="margin-left: var(--spacing-xl);"><code>POST /api/auth/validate</code> - Valida token</li>
                 <li><strong>Usuários:</strong></li>
-                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">GET /api/users</code> - Lista usuários (admin)</li>
-                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">GET /api/users/:id</code> - Busca usuário</li>
-                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">POST /api/users</code> - Cria usuário (admin)</li>
-                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">PUT /api/users/:id</code> - Atualiza usuário</li>
-                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">DELETE /api/users/:id</code> - Deleta usuário (admin)</li>
+                <li style="margin-left: var(--spacing-xl);"><code>GET /api/users</code> - Lista usuários (admin)</li>
+                <li style="margin-left: var(--spacing-xl);"><code>GET /api/users/:id</code> - Busca usuário</li>
+                <li style="margin-left: var(--spacing-xl);"><code>POST /api/users</code> - Cria usuário (admin)</li>
+                <li style="margin-left: var(--spacing-xl);"><code>PUT /api/users/:id</code> - Atualiza usuário</li>
+                <li style="margin-left: var(--spacing-xl);"><code>DELETE /api/users/:id</code> - Deleta usuário (admin)</li>
                 <li><strong>Pedidos:</strong></li>
-                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">GET /api/orders</code> - Lista pedidos</li>
-                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">GET /api/orders/:id</code> - Busca pedido</li>
-                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">POST /api/orders</code> - Cria pedido</li>
-                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">PUT /api/orders/:id</code> - Atualiza pedido</li>
-                <li style="margin-left: var(--spacing-xl);"><code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">DELETE /api/orders/:id</code> - Deleta pedido (admin)</li>
+                <li style="margin-left: var(--spacing-xl);"><code>GET /api/orders</code> - Lista pedidos</li>
+                <li style="margin-left: var(--spacing-xl);"><code>GET /api/orders/:id</code> - Busca pedido</li>
+                <li style="margin-left: var(--spacing-xl);"><code>POST /api/orders</code> - Cria pedido</li>
+                <li style="margin-left: var(--spacing-xl);"><code>PUT /api/orders/:id</code> - Atualiza pedido</li>
+                <li style="margin-left: var(--spacing-xl);"><code>DELETE /api/orders/:id</code> - Deleta pedido (admin)</li>
               </ul>
               
               <p style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);"><strong>Credenciais de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--text); font-size: var(--font-size-sm); margin-bottom: var(--spacing-md);">
-                <li><strong>Admin:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">admin@example.com</code> / <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">admin123</code></li>
-                <li><strong>User:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">user@example.com</code> / <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">user123</code></li>
-                <li><strong>Viewer:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">viewer@example.com</code> / <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">viewer123</code></li>
+                <li><strong>Admin:</strong> <code>admin@example.com</code> / <code>admin123</code></li>
+                <li><strong>User:</strong> <code>user@example.com</code> / <code>user123</code></li>
+                <li><strong>Viewer:</strong> <code>viewer@example.com</code> / <code>viewer123</code></li>
               </ul>
 
             </div>
 
             <!-- Tab: Karate DSL -->
             <div class="tab-content" data-tab-content="karate" style="display: none;">
-              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Karate DSL</h4>
+              <h4 style="color: var(--level); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Karate DSL</h4>
               <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>Feature: API Users Tests
 
 Background:
@@ -389,13 +389,13 @@ Scenario: GET /users com autenticação
   Then status 200
   And match response.data == '#[]'</code></pre>
               <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--text);">
-                <strong>Executar testes:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">mvn test -Dtest=UsersApiTest</code> ou <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">gradle test</code>
+                <strong>Executar testes:</strong> <code>mvn test -Dtest=UsersApiTest</code> ou <code>gradle test</code>
               </p>
             </div>
 
             <!-- Tab: Postman (Newman) -->
             <div class="tab-content" data-tab-content="postman" style="display: none;">
-              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Postman (Newman - CLI)</h4>
+              <h4 style="color: var(--level); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Postman (Newman - CLI)</h4>
               <p style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--text);">
                 Execute coleções Postman via linha de comando usando Newman.
               </p>
@@ -442,16 +442,16 @@ pm.test('Created user has correct data', function () {
 const userId = pm.response.json().data.id;
 pm.environment.set('createdUserId', userId);</code></pre>
               <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--text);">
-                <strong>Executar com Newman:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">newman run QA-Playground-API.postman_collection.json -e environment.json</code>
+                <strong>Executar com Newman:</strong> <code>newman run QA-Playground-API.postman_collection.json -e environment.json</code>
               </p>
               <p style="margin-top: var(--spacing-xs); font-size: var(--font-size-sm); color: var(--text);">
-                <strong>Com relatório HTML:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">newman run collection.json -r html --reporter-html-export report.html</code>
+                <strong>Com relatório HTML:</strong> <code>newman run collection.json -r html --reporter-html-export report.html</code>
               </p>
             </div>
 
             <!-- Tab: REST Assured -->
             <div class="tab-content" data-tab-content="restassured" style="display: none;">
-              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">REST Assured (Java)</h4>
+              <h4 style="color: var(--level); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">REST Assured (Java)</h4>
               <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
@@ -527,7 +527,7 @@ public class UsersApiTest {
 
             <!-- Tab: Robot Framework -->
             <div class="tab-content" data-tab-content="robot" style="display: none;">
-              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Robot Framework</h4>
+              <h4 style="color: var(--level); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Robot Framework</h4>
               <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>*** Settings ***
 Library    RequestsLibrary
 Library    Collections
@@ -575,18 +575,18 @@ POST Users Without Email Should Return 400
     ${json}=    Set Variable    ${response.json()}
     Dictionary Should Contain Key    ${json}    error</code></pre>
               <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--text);">
-                <strong>Executar testes:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">robot users_api_tests.robot</code>
+                <strong>Executar testes:</strong> <code>robot users_api_tests.robot</code>
               </p>
               <p style="margin-top: var(--spacing-xs); font-size: var(--font-size-sm); color: var(--text);">
-                <strong>Com relatório:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">robot --outputdir results users_api_tests.robot</code>
+                <strong>Com relatório:</strong> <code>robot --outputdir results users_api_tests.robot</code>
               </p>
             </div>
 
             <!-- Tab: Cypress -->
             <div class="tab-content" data-tab-content="cypress" style="display: none;">
-              <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Cypress (Testes de API)</h4>
+              <h4 style="color: var(--level); margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Cypress (Testes de API)</h4>
               <p style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--text);">
-                Testes de API usando <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">cy.request()</code> para requisições HTTP diretas, sem interação com interface.
+                Testes de API usando <code>cy.request()</code> para requisições HTTP diretas, sem interação com interface.
               </p>
               <pre style="background: var(--bg); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; font-size: var(--font-size-sm); margin-top: var(--spacing-sm);"><code>describe('API Users - Direct API Tests', () => {
   const baseURL = 'https://qa-playground-azure.vercel.app/api';
@@ -687,13 +687,13 @@ POST Users Without Email Should Return 400
   });
 });</code></pre>
               <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm); color: var(--text);">
-                <strong>Executar testes:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">npx cypress run --spec "cypress/e2e/api/users.cy.js"</code>
+                <strong>Executar testes:</strong> <code>npx cypress run --spec "cypress/e2e/api/users.cy.js"</code>
               </p>
               <p style="margin-top: var(--spacing-xs); font-size: var(--font-size-sm); color: var(--text);">
-                <strong>Modo interativo:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">npx cypress open</code>
+                <strong>Modo interativo:</strong> <code>npx cypress open</code>
               </p>
               <p style="margin-top: var(--spacing-xs); font-size: var(--font-size-sm); color: var(--muted);">
-                <strong>Nota:</strong> Estes exemplos usam apenas <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">cy.request()</code> para testes de API. Não há interação com interface gráfica.
+                <strong>Nota:</strong> Estes exemplos usam apenas <code>cy.request()</code> para testes de API. Não há interação com interface gráfica.
               </p>
             </div>
           </div>

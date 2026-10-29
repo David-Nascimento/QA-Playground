@@ -6,7 +6,7 @@
     <title>QA Playground — Plataforma Educacional de Testes</title>
     <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg" />
     <link rel="stylesheet" href="css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- Header -->
@@ -15,17 +15,49 @@
     <main class="container">
       <!-- Hero Section -->
       <section class="hero">
-        <h1>QA Playground</h1>
-        <p class="hero-subtitle">
-          Aprenda testes de software na prática, do júnior ao sênior
-        </p>
-        <div class="hero-cta">
-          <a href="#areas" class="btn btn-primary">Explorar Conteúdo</a>
+        <div class="hero-copy">
+          <h1>QA Playground</h1>
+          <p class="hero-subtitle">
+            Aprenda testes de software na prática, do júnior ao sênior
+          </p>
+          <p class="hero-lead">
+            Páginas estáveis e bem identificadas para praticar testes manuais,
+            automação web, APIs e mobile, com cenários que imitam projetos reais.
+          </p>
+          <div class="hero-cta">
+            <a href="#areas" class="btn btn-primary">Explorar Conteúdo</a>
+            <a href="pages/junior/index.html" class="btn btn-secondary">Começar pelo Júnior</a>
+          </div>
+          <div class="hero-badges">
+            <span class="hero-badge">6 Áreas de Prática</span>
+            <span class="hero-badge">3 Níveis</span>
+            <span class="hero-badge">10+ Ferramentas</span>
+          </div>
         </div>
-        <div class="hero-badges">
-          <span class="hero-badge">6 Áreas de Prática</span>
-          <span class="hero-badge">3 Níveis</span>
-          <span class="hero-badge">10+ Ferramentas</span>
+
+        <!-- Ilustração: saída de um test runner com as trilhas do site -->
+        <div class="hero-runner" aria-hidden="true">
+          <div class="runner-bar">
+            <span class="runner-dot"></span><span class="runner-dot"></span><span class="runner-dot"></span>
+            <span class="runner-title">qa-playground — npm test</span>
+          </div>
+          <ol class="runner-lines">
+            <li class="runner-line lv-junior"><span class="runner-pass">PASS</span><span class="runner-suite">junior/formularios</span><span class="runner-count">9</span></li>
+            <li class="runner-line lv-junior"><span class="runner-pass">PASS</span><span class="runner-suite">junior/interacoes</span><span class="runner-count">3</span></li>
+            <li class="runner-line lv-pleno"><span class="runner-pass">PASS</span><span class="runner-suite">pleno/interacoes</span><span class="runner-count">8</span></li>
+            <li class="runner-line lv-pleno"><span class="runner-pass">PASS</span><span class="runner-suite">pleno/arquivos</span><span class="runner-count">4</span></li>
+            <li class="runner-line lv-senior"><span class="runner-pass">PASS</span><span class="runner-suite">senior/apis</span><span class="runner-count">9</span></li>
+            <li class="runner-line lv-senior"><span class="runner-pass">PASS</span><span class="runner-suite">senior/dinamicos</span><span class="runner-count">36</span></li>
+          </ol>
+          <div class="runner-summary">
+            <div class="runner-progress">
+              <span class="lv-junior" style="flex: 12"></span>
+              <span class="lv-pleno" style="flex: 12"></span>
+              <span class="lv-senior" style="flex: 45"></span>
+            </div>
+            <p><strong>Suítes:</strong> 6 passaram, 6 no total</p>
+            <p><strong>Páginas:</strong> 69 passaram, 0 falharam<span class="runner-cursor"></span></p>
+          </div>
         </div>
       </section>
 
@@ -98,7 +130,7 @@
       <!-- Progressão por senioridade -->
       <section class="section">
         <h2 class="section-title">Progressão por senioridade</h2>
-        <p style="text-align: center; color: var(--muted); margin-bottom: var(--spacing-xl); max-width: 800px; margin-left: auto; margin-right: auto;">
+        <p class="section-lead">
           Roadmaps estruturados que guiam o desenvolvimento de habilidades em cada nível de senioridade
         </p>
         <div class="progression-blocks">
@@ -153,7 +185,7 @@
       <!-- Playgrounds e ferramentas -->
       <section class="section">
         <h2 class="section-title">Playgrounds e ferramentas</h2>
-        <p style="text-align: center; color: var(--muted); margin-bottom: var(--spacing-xl); max-width: 800px; margin-left: auto; margin-right: auto;">
+        <p class="section-lead">
           Ferramentas interativas e playgrounds para prática e desenvolvimento de habilidades em diferentes áreas de QA
         </p>
         

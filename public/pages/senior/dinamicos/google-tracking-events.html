@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Google Tracking Events — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -31,14 +31,14 @@
               <button id="btn-track-custom" class="btn btn-secondary" data-testid="btn-track-custom">Custom Event</button>
             </div>
 
-            <div id="tracking-result" data-testid="tracking-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 150px;">
+            <div id="tracking-result" data-testid="tracking-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 150px;">
               <p class="muted" style="margin: 0;">Nenhum evento disparado ainda.</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Testar captura de eventos de pageview</li>
@@ -149,8 +149,8 @@ Verificar eventos de tracking
         const timestamp = new Date().toLocaleTimeString('pt-BR');
         const existing = resultEl.innerHTML;
         resultEl.innerHTML = `
-          <div style="margin-bottom: var(--spacing-sm); padding-bottom: var(--spacing-sm); border-bottom: 1px solid rgba(122, 168, 116, 0.2);">
-            <p style="margin: 0 0 var(--spacing-xs) 0;"><strong style="color: var(--accent);">Evento #${eventCount}:</strong> ${eventName}</p>
+          <div style="margin-bottom: var(--spacing-sm); padding-bottom: var(--spacing-sm); border-bottom: 1px solid color-mix(in srgb, var(--level) 20%, transparent);">
+            <p style="margin: 0 0 var(--spacing-xs) 0;"><strong style="color: var(--level);">Evento #${eventCount}:</strong> ${eventName}</p>
             <pre style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted); background: var(--bg); padding: var(--spacing-xs); border-radius: var(--border-radius-sm); overflow-x: auto;">${JSON.stringify(eventParams, null, 2)}</pre>
             <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
           </div>

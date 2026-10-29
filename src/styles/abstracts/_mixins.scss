@@ -1,3 +1,4 @@
+@use "sass:list";
 // ========================================
 // Mixins - Funções Reutilizáveis
 // ========================================
@@ -10,6 +11,10 @@
     }
   } @else if $breakpoint == md {
     @media (max-width: #{$breakpoint-md - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == nav {
+    @media (max-width: #{$breakpoint-nav - 1px}) {
       @content;
     }
   } @else if $breakpoint == lg {
@@ -42,7 +47,7 @@
 @mixin transition($properties...) {
   $transitions: ();
   @each $property in $properties {
-    $transitions: append($transitions, #{$property} $transition-base, comma);
+    $transitions: list.append($transitions, #{$property} $transition-base, comma);
   }
   transition: $transitions;
 }
@@ -50,7 +55,7 @@
 // === Estados Visuais ===
 @mixin focus-ring($color: var(--accent), $offset: 3px) {
   &:focus-visible {
-    outline: 3px solid $color;
+    outline: 2px solid $color;
     outline-offset: $offset;
     border-radius: var(--border-radius-sm);
   }
@@ -68,9 +73,16 @@
 
 // === Layout ===
 @mixin container {
-  max-width: $container-max-width;
+  max-width: calc(#{$container-max-width} + var(--gutter) * 2);
   margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+  padding: 0 var(--gutter);
+}
+
+// Respiro mínimo-a-partir-de (mobile first)
+@mixin from($min) {
+  @media (min-width: $min) {
+    @content;
+  }
 }
 
 @mixin flex-center {
@@ -88,7 +100,7 @@
 // === Cards e Superfícies ===
 @mixin card-surface {
   background: var(--surface);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-sm);
 }
@@ -98,8 +110,13 @@
   transition: transform $transition-base, box-shadow $transition-base;
   
   @include hover-state {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: none !important;
   }
 }
 
@@ -112,7 +129,6 @@
 
 @mixin text-muted {
   color: var(--muted);
-  font-size: var(--font-size-base);
 }
 
 // === Grid Responsivo ===

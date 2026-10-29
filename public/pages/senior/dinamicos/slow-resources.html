@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Slow Resources — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -31,18 +31,18 @@
               <button id="btn-load-very-slow" class="btn" data-testid="btn-load-very-slow" style="background: var(--danger);">Carregar Muito Lento (10s)</button>
             </div>
 
-            <div id="slow-loading-area" data-testid="slow-loading-area" style="min-height: 200px; padding: var(--spacing-lg); background: var(--surface); border: 2px dashed rgba(122, 168, 116, 0.3); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md); text-align: center;">
+            <div id="slow-loading-area" data-testid="slow-loading-area" style="min-height: 200px; padding: var(--spacing-lg); background: var(--surface); border: 2px dashed color-mix(in srgb, var(--level) 30%, transparent); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md); text-align: center;">
               <p class="muted" style="margin: 0;">Clique em um botão acima para carregar um recurso.</p>
             </div>
 
-            <div id="slow-result" data-testid="slow-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+            <div id="slow-result" data-testid="slow-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 60px;">
               <p class="muted" style="margin: 0;">Aguardando carregamento...</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Testar recursos que carregam rapidamente</li>
@@ -136,7 +136,7 @@ Aguardar recurso lento
 
       function carregarRecurso(delay, tipo) {
         loadingArea.innerHTML = `
-          <div data-testid="loading-indicator-slow" style="color: var(--accent);">
+          <div data-testid="loading-indicator-slow" style="color: var(--level);">
             <p style="margin: 0; font-size: var(--font-size-lg);">⏳</p>
             <p style="margin: var(--spacing-sm) 0 0 0;">Carregando recurso ${tipo}...</p>
             <p style="margin: var(--spacing-xs) 0 0 0; color: var(--muted); font-size: var(--font-size-sm);">Aguarde ${delay/1000} segundos</p>
@@ -147,8 +147,8 @@ Aguardar recurso lento
 
         setTimeout(() => {
           loadingArea.innerHTML = `
-            <div data-testid="conteudo-carregado" style="padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-md);">
-              <p style="margin: 0 0 var(--spacing-sm) 0; color: var(--accent); font-size: var(--font-size-lg); font-weight: 600;">✅ Recurso ${tipo} carregado!</p>
+            <div data-testid="conteudo-carregado" style="padding: var(--spacing-md); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-md);">
+              <p style="margin: 0 0 var(--spacing-sm) 0; color: var(--level); font-size: var(--font-size-lg); font-weight: 600;">✅ Recurso ${tipo} carregado!</p>
               <p style="margin: 0; color: var(--muted);">Tempo de carregamento: ${delay/1000} segundos</p>
               <p style="margin: var(--spacing-sm) 0 0 0; color: var(--muted); font-size: var(--font-size-sm);">Horário: ${new Date().toLocaleTimeString('pt-BR')}</p>
             </div>
@@ -156,7 +156,7 @@ Aguardar recurso lento
           
           const timestamp = new Date().toLocaleTimeString('pt-BR');
           resultEl.innerHTML = `
-            <p style="margin: 0 0 var(--spacing-sm) 0; color: var(--accent);"><strong>✅ Carregamento concluído</strong></p>
+            <p style="margin: 0 0 var(--spacing-sm) 0; color: var(--level);"><strong>✅ Carregamento concluído</strong></p>
             <p style="margin: 0; color: var(--muted);">Recurso ${tipo} carregado em ${delay/1000}s</p>
             <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
           `;

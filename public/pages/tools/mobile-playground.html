@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Mobile Playground — Documentação e Simuladores — QA Playground</title>
     <link rel="stylesheet" href="../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
       .mobile-playground {
         max-width: 1400px;
@@ -52,13 +52,13 @@
       }
       
       .device-tab.active {
-        border-color: var(--accent);
-        background: rgba(122, 168, 116, 0.1);
-        color: var(--accent);
+        border-color: var(--level);
+        background: color-mix(in srgb, var(--level) 10%, transparent);
+        color: var(--level);
       }
       
       .device-tab:hover {
-        border-color: var(--accent);
+        border-color: var(--level);
         opacity: 0.8;
       }
       
@@ -94,7 +94,7 @@
         background: #000;
         border-radius: 30px;
         padding: 15px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 10px 40px color-mix(in srgb, var(--text) 30%, transparent);
       }
       
       .device-frame.ios {
@@ -132,7 +132,7 @@
       .device-content {
         padding: var(--spacing-sm);
         min-height: 300px;
-        background: #f5f5f5;
+        background: var(--surface-2);
       }
       
       @media (min-width: 768px) {
@@ -153,7 +153,7 @@
         transform: translateX(-50%);
         width: 134px;
         height: 5px;
-        background: rgba(0, 0, 0, 0.3);
+        background: color-mix(in srgb, var(--text) 30%, transparent);
         border-radius: 3px;
       }
       
@@ -174,7 +174,7 @@
         display: flex;
         gap: var(--spacing-xs);
         margin-bottom: var(--spacing-md);
-        border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+        border-bottom: 2px solid color-mix(in srgb, var(--text) 10%, transparent);
         flex-wrap: wrap;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
@@ -202,12 +202,12 @@
       }
       
       .config-tab.active {
-        color: var(--accent);
-        border-bottom-color: var(--accent);
+        color: var(--level);
+        border-bottom-color: var(--level);
       }
       
       .config-tab:hover {
-        color: var(--accent);
+        color: var(--level);
         opacity: 0.8;
       }
       
@@ -255,7 +255,7 @@
       .code-example .function { color: #dcdcaa; }
       
       .capability-item {
-        background: rgba(122, 168, 116, 0.05);
+        background: color-mix(in srgb, var(--level) 5%, transparent);
         padding: var(--spacing-xs) var(--spacing-sm);
         border-radius: var(--border-radius-sm);
         margin-bottom: var(--spacing-xs);
@@ -273,7 +273,7 @@
       }
       
       .capability-key {
-        color: var(--accent);
+        color: var(--level);
         font-weight: 600;
       }
       
@@ -296,15 +296,15 @@
       }
       
       .info-card {
-        background: rgba(122, 168, 116, 0.05);
+        background: color-mix(in srgb, var(--level) 5%, transparent);
         padding: var(--spacing-md);
         border-radius: var(--border-radius-md);
-        border-left: 4px solid var(--accent);
+        border-left: 4px solid var(--level);
       }
       
       .info-card h4 {
         margin-top: 0;
-        color: var(--accent);
+        color: var(--level);
       }
     </style>
   </head>
@@ -460,7 +460,7 @@ adb devices
 <span class="comment"># Appium mostra logs no terminal</span></pre>
               </div>
 
-              <div class="info-card" style="background: rgba(122, 168, 116, 0.1); margin-top: var(--spacing-lg);">
+              <div class="info-card" style="background: color-mix(in srgb, var(--level) 10%, transparent); margin-top: var(--spacing-lg);">
                 <h4>Dica para Iniciantes</h4>
                 <p>Siga os passos na ordem: Instalação → Preparar Projeto → Capabilities → Exemplos. 
                 Não pule etapas, cada uma é importante para o sucesso da automação.</p>
@@ -592,7 +592,7 @@ emulator -avd NomeDoEmulador
 adb devices</pre>
               </div>
 
-              <div class="info-card" style="background: rgba(40, 167, 69, 0.1); margin-top: var(--spacing-lg);">
+              <div class="info-card" style="background: color-mix(in srgb, var(--success) 10%, transparent); margin-top: var(--spacing-lg);">
                 <h4>Verificação Final</h4>
                 <p>Execute estes comandos para confirmar que tudo está instalado:</p>
                 <div class="code-example" style="margin-top: var(--spacing-sm);">
@@ -741,7 +741,7 @@ gem 'rspec', '~> 3.12'
 gem 'selenium-webdriver', '~> 4.0'</pre>
               </div>
 
-              <div class="info-card" style="background: rgba(122, 168, 116, 0.1); margin-top: var(--spacing-lg);">
+              <div class="info-card" style="background: color-mix(in srgb, var(--level) 10%, transparent); margin-top: var(--spacing-lg);">
                 <h4>Próximos Passos</h4>
                 <p>Após preparar o projeto, você está pronto para configurar as Capabilities e escrever seus primeiros testes. 
                 Veja a seção "Capabilities" para entender como configurar a conexão com dispositivos Android.</p>
@@ -756,13 +756,13 @@ gem 'selenium-webdriver', '~> 4.0'</pre>
               Pense nelas como "instruções" para o Appium.</p>
 
               <h4>Capabilities Obrigatórias</h4>
-              <div class="capability-item" style="background: rgba(220, 53, 69, 0.1);">
+              <div class="capability-item" style="background: color-mix(in srgb, var(--danger) 10%, transparent);">
                 <span class="capability-key">platformName:</span> <span class="capability-value">"Android"</span>
                 <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
                   <strong>Obrigatório.</strong> Define a plataforma. Sempre "Android" para dispositivos Android.
                 </p>
               </div>
-              <div class="capability-item" style="background: rgba(220, 53, 69, 0.1);">
+              <div class="capability-item" style="background: color-mix(in srgb, var(--danger) 10%, transparent);">
                 <span class="capability-key">automationName:</span> <span class="capability-value">"UiAutomator2"</span>
                 <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
                   <strong>Obrigatório.</strong> Driver de automação. UiAutomator2 é o padrão moderno para Android.
@@ -869,7 +869,7 @@ caps = {
 }</pre>
               </div>
 
-              <div class="info-card" style="background: rgba(255, 193, 7, 0.1); margin-top: var(--spacing-lg);">
+              <div class="info-card" style="background: color-mix(in srgb, var(--warning) 10%, transparent); margin-top: var(--spacing-lg);">
                 <h4>Dicas Importantes</h4>
                 <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg);">
                   <li>Sempre use caminhos absolutos para o APK</li>
@@ -1152,36 +1152,36 @@ ScreenOrientation orientation = driver.getOrientation();</pre>
                 </ul>
               </div>
 
-              <div class="info-card" style="background: rgba(122, 168, 116, 0.1); margin-top: var(--spacing-lg);">
+              <div class="info-card" style="background: color-mix(in srgb, var(--level) 10%, transparent); margin-top: var(--spacing-lg);">
                 <h4>Resumo das Principais Diferenças</h4>
                 <table style="width: 100%; border-collapse: collapse; margin-top: var(--spacing-sm);">
                   <thead>
-                    <tr style="background: rgba(0, 0, 0, 0.05);">
-                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--accent);">Aspecto</th>
-                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--accent);">Web</th>
-                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--accent);">Mobile</th>
+                    <tr style="background: color-mix(in srgb, var(--text) 5%, transparent);">
+                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--level);">Aspecto</th>
+                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--level);">Web</th>
+                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--level);">Mobile</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Seletores</strong></td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">CSS, XPath completos</td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Resource ID, Accessibility ID</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);"><strong>Seletores</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">CSS, XPath completos</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Resource ID, Accessibility ID</td>
                     </tr>
                     <tr>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Interações</strong></td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Click, Type</td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Tap, Swipe, Pinch, Long Press</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);"><strong>Interações</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Click, Type</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Tap, Swipe, Pinch, Long Press</td>
                     </tr>
                     <tr>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Contextos</strong></td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Único (página)</td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Múltiplos (Native, WebView)</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);"><strong>Contextos</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Único (página)</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Múltiplos (Native, WebView)</td>
                     </tr>
                     <tr>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Apps</strong></td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Não aplicável</td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Instalar, Desinstalar, Gerenciar</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);"><strong>Apps</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Não aplicável</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Instalar, Desinstalar, Gerenciar</td>
                     </tr>
                     <tr>
                       <td style="padding: var(--spacing-xs);"><strong>Orientacao</strong></td>
@@ -1314,7 +1314,7 @@ adb shell input tap x y  <span class="comment"># Simular toque</span></pre>
             <div id="ios-start" class="config-content active">
               <h3>Primeiros Passos na Automação Mobile iOS</h3>
               
-              <div class="info-card" style="background: rgba(220, 53, 69, 0.1); margin-bottom: var(--spacing-lg);">
+              <div class="info-card" style="background: color-mix(in srgb, var(--danger) 10%, transparent); margin-bottom: var(--spacing-lg);">
                 <h4>Requisito Importante</h4>
                 <p><strong>Automação iOS requer macOS.</strong> Não é possível automatizar iOS em Windows ou Linux. 
                 Você precisa de um Mac com Xcode instalado.</p>
@@ -1380,7 +1380,7 @@ open -a Simulator
 <span class="comment"># Appium mostra logs no terminal</span></pre>
               </div>
 
-              <div class="info-card" style="background: rgba(122, 168, 116, 0.1); margin-top: var(--spacing-lg);">
+              <div class="info-card" style="background: color-mix(in srgb, var(--level) 10%, transparent); margin-top: var(--spacing-lg);">
                 <h4>Dica para Iniciantes</h4>
                 <p>Siga os passos na ordem: Instalação → Preparar Projeto → Capabilities → Exemplos. 
                 iOS tem requisitos mais específicos que Android, então preste atenção aos detalhes de instalação.</p>
@@ -1391,7 +1391,7 @@ open -a Simulator
             <div id="ios-install" class="config-content">
               <h3>Guia Completo de Instalação iOS</h3>
               
-              <div class="info-card" style="background: rgba(220, 53, 69, 0.1); margin-bottom: var(--spacing-lg);">
+              <div class="info-card" style="background: color-mix(in srgb, var(--danger) 10%, transparent); margin-bottom: var(--spacing-lg);">
                 <h4>Aviso Importante</h4>
                 <p>Automação iOS <strong>só funciona em macOS</strong>. Se você está em Windows ou Linux, 
                 considere usar serviços em nuvem como BrowserStack, Sauce Labs ou AWS Device Farm.</p>
@@ -1490,7 +1490,7 @@ appium-doctor --ios</pre>
                 </p>
               </div>
 
-              <div class="info-card" style="background: rgba(40, 167, 69, 0.1); margin-top: var(--spacing-lg);">
+              <div class="info-card" style="background: color-mix(in srgb, var(--success) 10%, transparent); margin-top: var(--spacing-lg);">
                 <h4>Verificação Final</h4>
                 <p>Execute estes comandos para confirmar que tudo está instalado:</p>
                 <div class="code-example" style="margin-top: var(--spacing-sm);">
@@ -1637,7 +1637,7 @@ gem 'rspec', '~> 3.12'
 gem 'selenium-webdriver', '~> 4.0'</pre>
               </div>
 
-              <div class="info-card" style="background: rgba(122, 168, 116, 0.1); margin-top: var(--spacing-lg);">
+              <div class="info-card" style="background: color-mix(in srgb, var(--level) 10%, transparent); margin-top: var(--spacing-lg);">
                 <h4>Próximos Passos</h4>
                 <p>Após preparar o projeto, você está pronto para configurar as Capabilities e escrever seus primeiros testes. 
                 Veja a seção "Capabilities" para entender como configurar a conexão com simuladores ou dispositivos iOS.</p>
@@ -1652,13 +1652,13 @@ gem 'selenium-webdriver', '~> 4.0'</pre>
               Pense nelas como "instruções" para o Appium.</p>
 
               <h4>Capabilities Obrigatórias</h4>
-              <div class="capability-item" style="background: rgba(220, 53, 69, 0.1);">
+              <div class="capability-item" style="background: color-mix(in srgb, var(--danger) 10%, transparent);">
                 <span class="capability-key">platformName:</span> <span class="capability-value">"iOS"</span>
                 <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
                   <strong>Obrigatório.</strong> Define a plataforma. Sempre "iOS" para dispositivos iOS.
                 </p>
               </div>
-              <div class="capability-item" style="background: rgba(220, 53, 69, 0.1);">
+              <div class="capability-item" style="background: color-mix(in srgb, var(--danger) 10%, transparent);">
                 <span class="capability-key">automationName:</span> <span class="capability-value">"XCUITest"</span>
                 <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">
                   <strong>Obrigatório.</strong> Driver de automação. XCUITest é o padrão moderno para iOS.
@@ -1763,7 +1763,7 @@ caps = {
 }</pre>
               </div>
 
-              <div class="info-card" style="background: rgba(255, 193, 7, 0.1); margin-top: var(--spacing-lg);">
+              <div class="info-card" style="background: color-mix(in srgb, var(--warning) 10%, transparent); margin-top: var(--spacing-lg);">
                 <h4>Dicas Importantes</h4>
                 <ul style="margin: var(--spacing-sm) 0; padding-left: var(--spacing-lg);">
                   <li>Para simuladores, use arquivo <code>.app</code>. Para dispositivos físicos, use <code>.ipa</code></li>
@@ -2065,36 +2065,36 @@ String alertText = driver.switchTo().alert().getText();</pre>
                 </div>
               </div>
 
-              <div class="info-card" style="background: rgba(122, 168, 116, 0.1); margin-top: var(--spacing-lg);">
+              <div class="info-card" style="background: color-mix(in srgb, var(--level) 10%, transparent); margin-top: var(--spacing-lg);">
                 <h4>Resumo das Principais Diferenças iOS</h4>
                 <table style="width: 100%; border-collapse: collapse; margin-top: var(--spacing-sm);">
                   <thead>
-                    <tr style="background: rgba(0, 0, 0, 0.05);">
-                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--accent);">Aspecto</th>
-                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--accent);">Web</th>
-                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--accent);">Mobile iOS</th>
+                    <tr style="background: color-mix(in srgb, var(--text) 5%, transparent);">
+                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--level);">Aspecto</th>
+                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--level);">Web</th>
+                      <th style="padding: var(--spacing-xs); text-align: left; border-bottom: 2px solid var(--level);">Mobile iOS</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Seletores</strong></td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">CSS, XPath completos</td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Accessibility ID, Predicate</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);"><strong>Seletores</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">CSS, XPath completos</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Accessibility ID, Predicate</td>
                     </tr>
                     <tr>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Interações</strong></td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Click, Type</td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Tap, Swipe, Pinch, Long Press</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);"><strong>Interações</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Click, Type</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Tap, Swipe, Pinch, Long Press</td>
                     </tr>
                     <tr>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Contextos</strong></td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Único (página)</td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Múltiplos (Native, WebView)</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);"><strong>Contextos</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Único (página)</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Múltiplos (Native, WebView)</td>
                     </tr>
                     <tr>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>Apps</strong></td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">Não aplicável</td>
-                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid rgba(0,0,0,0.1);">.app (simulador) ou .ipa (físico)</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);"><strong>Apps</strong></td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">Não aplicável</td>
+                      <td style="padding: var(--spacing-xs); border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent);">.app (simulador) ou .ipa (físico)</td>
                     </tr>
                     <tr>
                       <td style="padding: var(--spacing-xs);"><strong>Requisitos</strong></td>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Validação de Formulário — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -364,7 +364,7 @@
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Tipos de Validação:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li><strong>HTML5 Nativa:</strong> required, type, pattern, min, max, minlength</li>
@@ -601,7 +601,7 @@ Validar formulario
         ];
         
         reqDiv.innerHTML = requirements.map(req => 
-          `<span style="color: ${req.test ? 'var(--accent)' : 'var(--muted)'}; margin-right: var(--spacing-sm);">${req.test ? '✓' : '○'} ${req.text}</span>`
+          `<span style="color: ${req.test ? 'var(--level)' : 'var(--muted)'}; margin-right: var(--spacing-sm);">${req.test ? '✓' : '○'} ${req.text}</span>`
         ).join('');
       });
 
@@ -646,7 +646,7 @@ Validar formulario
           statusDiv.innerHTML = '<span style="color: var(--muted);">Caracteres inválidos</span>';
         } else {
           window.clearFieldError('realtime-username');
-          statusDiv.innerHTML = '<span style="color: var(--accent);">✓ Válido</span>';
+          statusDiv.innerHTML = '<span style="color: var(--level);">✓ Válido</span>';
         }
       });
 

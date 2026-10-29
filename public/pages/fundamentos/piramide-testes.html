@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Módulo 4: A Pirâmide de Testes — Fundamentos de Testes</title>
     <link rel="stylesheet" href="../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -39,19 +39,19 @@
           <div style="margin: var(--spacing-xl) 0; display: flex; justify-content: center; align-items: flex-end; min-height: 300px;">
             <div style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 500px;">
               <!-- Topo: Testes E2E -->
-              <div style="background: var(--accent); color: white; padding: var(--spacing-md) var(--spacing-lg); border-radius: var(--border-radius-md) var(--border-radius-md) 0 0; width: 200px; text-align: center; margin-bottom: 2px;">
+              <div style="background: var(--level); color: var(--on-accent); padding: var(--spacing-md) var(--spacing-lg); border-radius: var(--border-radius-md) var(--border-radius-md) 0 0; width: 200px; text-align: center; margin-bottom: 2px;">
                 <strong>Testes E2E</strong>
                 <div style="font-size: var(--font-size-sm); margin-top: var(--spacing-xs);">Poucos</div>
               </div>
               
               <!-- Meio: Testes de Integração -->
-              <div style="background: var(--accent-2); color: white; padding: var(--spacing-md) var(--spacing-lg); width: 300px; text-align: center; margin-bottom: 2px;">
+              <div style="background: var(--accent-2); color: var(--on-accent); padding: var(--spacing-md) var(--spacing-lg); width: 300px; text-align: center; margin-bottom: 2px;">
                 <strong>Testes de Integração</strong>
                 <div style="font-size: var(--font-size-sm); margin-top: var(--spacing-xs);">Alguns</div>
               </div>
               
               <!-- Base: Testes de Unidade -->
-              <div style="background: var(--success); color: white; padding: var(--spacing-md) var(--spacing-lg); border-radius: 0 0 var(--border-radius-md) var(--border-radius-md); width: 400px; text-align: center;">
+              <div style="background: var(--success); color: var(--on-accent); padding: var(--spacing-md) var(--spacing-lg); border-radius: 0 0 var(--border-radius-md) var(--border-radius-md); width: 400px; text-align: center;">
                 <strong>Testes de Unidade</strong>
                 <div style="font-size: var(--font-size-sm); margin-top: var(--spacing-xs);">Muitos</div>
               </div>
@@ -111,7 +111,7 @@
           </div>
 
           <div class="content-card">
-            <h3 style="color: var(--accent);">Topo: Testes End-to-End</h3>
+            <h3 style="color: var(--level);">Topo: Testes End-to-End</h3>
             <ul>
               <li><strong>Quantidade:</strong> Poucos (5-10% dos testes)</li>
               <li><strong>Velocidade:</strong> Lentos (minutos)</li>

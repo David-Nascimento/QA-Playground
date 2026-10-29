@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>A/B Testing — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -30,18 +30,18 @@
               <button id="btn-forcar-variante-b" class="btn btn-secondary" data-testid="btn-forcar-variante-b">Forçar Variante B</button>
             </div>
 
-            <div id="ab-container" data-testid="ab-container" style="padding: var(--spacing-lg); background: var(--surface); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+            <div id="ab-container" data-testid="ab-container" style="padding: var(--spacing-lg); background: var(--surface); border: 2px solid color-mix(in srgb, var(--level) 20%, transparent); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
               <div id="ab-variant" data-testid="ab-variant"></div>
             </div>
 
-            <div id="ab-result" data-testid="ab-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+            <div id="ab-result" data-testid="ab-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 60px;">
               <p class="muted" style="margin: 0;">Aguardando seleção de variante...</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Testar detecção de variante A ou B</li>
@@ -154,9 +154,9 @@ Detectar variante A/B
         if (variant === 'A') {
           abVariant.innerHTML = `
             <div style="text-align: center;">
-              <h3 style="margin-top: 0; color: var(--accent);">Variante A</h3>
+              <h3 style="margin-top: 0; color: var(--level);">Variante A</h3>
               <p style="color: var(--muted);">Esta é a versão A da interface.</p>
-              <button class="btn" data-testid="btn-variante-a" style="background: var(--accent);">Botão da Variante A</button>
+              <button class="btn" data-testid="btn-variante-a" style="background: var(--level);">Botão da Variante A</button>
             </div>
           `;
         } else {

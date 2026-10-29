@@ -1,98 +1,175 @@
 // ========================================
-// Design Tokens - CSS Variables
+// Design Tokens - CSS Custom Properties
+// ----------------------------------------
+// Componentes usam SOMENTE estas variáveis (nunca cores fixas), para que
+// os temas claro/escuro e a cor do nível funcionem em todo o site.
 // ========================================
 
-:root {
-  // === Cores Tema Claro ===
+@mixin theme-light {
   --bg: #{$color-bg-light};
   --surface: #{$color-surface-light};
+  --surface-2: #{$color-surface-2-light};
+  --border: #{$color-border-light};
+  --border-strong: #{$color-border-strong-light};
+  --input-border: #{$color-input-border-light};
   --text: #{$color-text-light};
   --muted: #{$color-muted-light};
-  --accent: #{$color-accent-primary};
-  --accent-2: #{$color-accent-secondary};
-  
-  // === Cores Funcionais ===
+
+  --accent: #{$color-accent-light};
+  --accent-strong: #{$color-accent-strong-light};
+  --accent-soft: #{$color-accent-soft-light};
+  --on-accent: #{$color-on-accent-light};
+  --accent-2: #{$color-accent-2-light};
+
+  --junior: #{$level-junior-ink-light};
+  --junior-fill: #{$level-junior-fill-light};
+  --junior-soft: #{$level-junior-soft-light};
+  --pleno: #{$level-pleno-ink-light};
+  --pleno-fill: #{$level-pleno-fill-light};
+  --pleno-soft: #{$level-pleno-soft-light};
+  --senior: #{$level-senior-ink-light};
+  --senior-fill: #{$level-senior-fill-light};
+  --senior-soft: #{$level-senior-soft-light};
+
   --danger: #{$color-danger};
   --success: #{$color-success};
   --warning: #{$color-warning};
   --info: #{$color-info};
-  
+
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+
+  --header-bg: rgba(255, 255, 255, 0.86);
+  color-scheme: light;
+}
+
+@mixin theme-dark {
+  --bg: #{$color-bg-dark};
+  --surface: #{$color-surface-dark};
+  --surface-2: #{$color-surface-2-dark};
+  --border: #{$color-border-dark};
+  --border-strong: #{$color-border-strong-dark};
+  --input-border: #{$color-input-border-dark};
+  --text: #{$color-text-dark};
+  --muted: #{$color-muted-dark};
+
+  --accent: #{$color-accent-dark};
+  --accent-strong: #{$color-accent-strong-dark};
+  --accent-soft: #{$color-accent-soft-dark};
+  --on-accent: #{$color-on-accent-dark};
+  --accent-2: #{$color-accent-2-dark};
+
+  --junior: #{$level-junior-ink-dark};
+  --junior-fill: #{$level-junior-fill-dark};
+  --junior-soft: #{$level-junior-soft-dark};
+  --pleno: #{$level-pleno-ink-dark};
+  --pleno-fill: #{$level-pleno-fill-dark};
+  --pleno-soft: #{$level-pleno-soft-dark};
+  --senior: #{$level-senior-ink-dark};
+  --senior-fill: #{$level-senior-fill-dark};
+  --senior-soft: #{$level-senior-soft-dark};
+
+  --danger: #{$color-danger-dark};
+  --success: #{$color-success-dark};
+  --warning: #{$color-warning-dark};
+  --info: #{$color-info-dark};
+
+  --shadow-sm: #{$shadow-sm-dark};
+  --shadow-md: #{$shadow-md-dark};
+  --shadow-lg: #{$shadow-lg-dark};
+
+  --header-bg: rgba(13, 16, 34, 0.86);
+  color-scheme: dark;
+}
+
+:root {
+  @include theme-light;
+
+  // === Código (mesmo painel nos dois temas) ===
+  --code-bg: #{$color-code-bg};
+  --code-text: #{$color-code-text};
+  --code-muted: #{$color-code-muted};
+
+  // === Cor do nível da página (definida em body[data-level]) ===
+  --level: var(--accent);
+  --level-fill: var(--accent);
+  --level-soft: var(--accent-soft);
+
   // === Espaçamento ===
   --spacing-xs: #{$spacing-xs};
   --spacing-sm: #{$spacing-sm};
   --spacing-md: #{$spacing-md};
   --spacing-lg: #{$spacing-lg};
   --spacing-xl: #{$spacing-xl};
-  
+  --spacing-2xl: #{$spacing-2xl};
+  --spacing-3xl: #{$spacing-3xl};
+  --gutter: clamp(16px, 4vw, 40px);
+
   // === Tipografia ===
   --font-family: #{$font-family-base};
+  --font-display: #{$font-family-display};
+  --font-mono: #{$font-family-mono};
   --font-size-xs: #{$font-size-xs};
   --font-size-sm: #{$font-size-sm};
   --font-size-base: #{$font-size-base};
+  --font-size-prose: #{$font-size-prose};
   --font-size-lg: #{$font-size-lg};
   --font-size-xl: #{$font-size-xl};
   --font-size-2xl: #{$font-size-2xl};
   --font-size-3xl: #{$font-size-3xl};
-  
-  // === Sombras ===
-  --shadow-sm: #{$shadow-sm};
-  --shadow-md: #{$shadow-md};
-  --shadow-lg: #{$shadow-lg};
-  
+  --measure: #{$measure};
+
   // === Bordas ===
   --border-radius-sm: #{$border-radius-sm};
   --border-radius-md: #{$border-radius-md};
   --border-radius-lg: #{$border-radius-lg};
   --border-radius-xl: #{$border-radius-xl};
-  
+  --border-radius-pill: #{$border-radius-pill};
+
   // === Transições ===
   --transition: #{$transition-base};
   --transition-fast: #{$transition-fast};
-  
+
   // === Layout ===
   --header-height: #{$header-height};
 }
 
-// === Tema Escuro (Preferência do Sistema) ===
+// === Tema Escuro (preferência do sistema) ===
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --bg: #{$color-bg-dark};
-    --surface: #{$color-surface-dark};
-    --text: #{$color-text-dark};
-    --muted: #{$color-muted-dark};
-    --accent: #{$color-accent-primary-dark};
-    --accent-2: #{$color-accent-secondary-dark};
-    --shadow-sm: #{$shadow-sm-dark};
-    --shadow-md: #{$shadow-md-dark};
-    --shadow-lg: #{$shadow-lg-dark};
+  :root:not([data-theme='light']) {
+    @include theme-dark;
   }
 }
 
-// === Tema Escuro (Forçado) ===
-:root[data-theme="dark"],
-html[data-theme="dark"],
-body[data-theme="dark"] {
-  --bg: #{$color-bg-dark};
-  --surface: #{$color-surface-dark};
-  --text: #{$color-text-dark};
-  --muted: #{$color-muted-dark};
-  --accent: #{$color-accent-primary-dark};
-  --accent-2: #{$color-accent-secondary-dark};
-  --shadow-sm: #{$shadow-sm-dark};
-  --shadow-md: #{$shadow-md-dark};
-  --shadow-lg: #{$shadow-lg-dark};
+// === Tema forçado pelo botão de tema (ThemeUI aplica data-theme) ===
+:root[data-theme='dark'],
+html[data-theme='dark'],
+body[data-theme='dark'] {
+  @include theme-dark;
 }
 
-// === Tema Claro (Forçado) ===
-:root[data-theme="light"],
-html[data-theme="light"] {
-  --bg: #{$color-bg-light};
-  --surface: #{$color-surface-light};
-  --text: #{$color-text-light};
-  --muted: #{$color-muted-light};
-  --accent: #{$color-accent-primary};
-  --accent-2: #{$color-accent-secondary};
-  --shadow-sm: #{$shadow-sm};
-  --shadow-md: #{$shadow-md};
-  --shadow-lg: #{$shadow-lg};
+:root[data-theme='light'],
+html[data-theme='light'] {
+  @include theme-light;
+}
+
+// === Cor do nível ===
+// O build marca <body data-level="..."> pelo caminho da página.
+body[data-level='junior'] {
+  --level: var(--junior);
+  --level-fill: var(--junior-fill);
+  --level-soft: var(--junior-soft);
+}
+
+body[data-level='pleno'] {
+  --level: var(--pleno);
+  --level-fill: var(--pleno-fill);
+  --level-soft: var(--pleno-soft);
+}
+
+body[data-level='senior'] {
+  --level: var(--senior);
+  --level-fill: var(--senior-fill);
+  --level-soft: var(--senior-soft);
 }

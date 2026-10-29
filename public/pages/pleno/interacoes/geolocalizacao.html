@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Geolocalização — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -20,7 +20,7 @@
         <div class="subsections subsections-vertical">
           <div class="subsection">
             <h3>Sobre esta Seção</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Testar solicitação de permissão de geolocalização</li>
@@ -55,7 +55,7 @@
               <p class="muted">Clique no botão para obter sua localização...</p>
             </div>
 
-            <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="font-size: var(--font-size-sm); color: var(--muted);">
                 <strong>Nota:</strong> Em testes automatizados, você precisará mockar a API de geolocalização, pois os navegadores podem não permitir acesso real à localização em ambientes de teste.
               </p>
@@ -64,7 +64,7 @@
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Solicitar permissão de geolocalização</li>
@@ -203,7 +203,7 @@ Testar geolocalização (requer mock)
               
               geoResult.innerHTML = `
                 <div style="margin-bottom: var(--spacing-sm);">
-                  <strong style="color: var(--accent);">✅ Localização obtida com sucesso!</strong>
+                  <strong style="color: var(--level);">✅ Localização obtida com sucesso!</strong>
                 </div>
                 <div style="font-size: var(--font-size-sm); line-height: 1.8;">
                   <div><strong>Latitude:</strong> <code>${lat.toFixed(6)}</code></div>
@@ -231,7 +231,7 @@ Testar geolocalização (requer mock)
               }
               
               geoResult.innerHTML = `
-                <div style="color: var(--error, #dc3545);">
+                <div style="color: var(--error, var(--danger));">
                   <strong>❌ ${errorMsg}</strong>
                 </div>
               `;
@@ -240,7 +240,7 @@ Testar geolocalização (requer mock)
           );
         } else {
           geoResult.innerHTML = `
-            <div style="color: var(--error, #dc3545);">
+            <div style="color: var(--error, var(--danger));">
               <strong>❌ Geolocalização não é suportada por este navegador.</strong>
             </div>
           `;

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Fundamentos de Testes de API — APIs e Autenticação — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -34,21 +34,21 @@
           <h3>REST vs SOAP vs GraphQL (Visão QA)</h3>
           
           <div style="margin-top: var(--spacing-md);">
-            <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm);">REST</h4>
+            <h4 style="color: var(--level); margin-bottom: var(--spacing-sm);">REST</h4>
             <p><strong>Características:</strong> Arquitetura baseada em HTTP, stateless, cacheável, múltiplos formatos de dados (JSON, XML).</p>
             <p><strong>Foco de testes:</strong> Métodos HTTP e semântica, códigos de status, estrutura de payloads, headers HTTP, idempotência, cache.</p>
             <p><strong>Vantagens para QA:</strong> Ferramentas maduras (Postman, Insomnia, curl), documentação OpenAPI/Swagger, testes simples e diretos.</p>
           </div>
 
           <div style="margin-top: var(--spacing-md);">
-            <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm);">SOAP</h4>
+            <h4 style="color: var(--level); margin-bottom: var(--spacing-sm);">SOAP</h4>
             <p><strong>Características:</strong> Protocolo baseado em XML, contrato rígido via WSDL, transporte independente (HTTP, SMTP, etc.).</p>
             <p><strong>Foco de testes:</strong> Estrutura de envelopes SOAP, namespaces XML, validação contra schema XSD, headers SOAP (Action, To), fault codes.</p>
             <p><strong>Vantagens para QA:</strong> Contrato formal (WSDL) define estrutura completa, validação forte de tipos, ferramentas de geração de testes.</p>
           </div>
 
           <div style="margin-top: var(--spacing-md);">
-            <h4 style="color: var(--accent); margin-bottom: var(--spacing-sm);">GraphQL</h4>
+            <h4 style="color: var(--level); margin-bottom: var(--spacing-sm);">GraphQL</h4>
             <p><strong>Características:</strong> Query language, endpoint único, cliente especifica campos necessários, schema tipado.</p>
             <p><strong>Foco de testes:</strong> Estrutura de queries/mutations, validação de schema, depth limiting (prevenção de queries complexas), rate limiting por query, fragmentos e variáveis.</p>
             <p><strong>Vantagens para QA:</strong> Introspection permite descobrir schema, flexibilidade para testar diferentes combinações de campos, validação de tipos em tempo de execução.</p>
@@ -78,7 +78,7 @@
             <h4 style="margin-bottom: var(--spacing-sm);">Headers (Cabeçalhos HTTP)</h4>
             <p>Metadados que fornecem contexto sobre a requisição. Headers essenciais: Content-Type (formato do body), Authorization (credenciais), Accept (formato esperado na resposta), User-Agent (identificação do cliente).</p>
             <p><strong>Exemplo:</strong></p>
-            <pre style="background: rgba(0,0,0,0.05); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; margin-top: var(--spacing-sm);"><code>Content-Type: application/json
+            <pre style="background: color-mix(in srgb, var(--text) 5%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; margin-top: var(--spacing-sm);"><code>Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 Accept: application/json
 X-API-Key: abc123def456</code></pre>
@@ -99,7 +99,7 @@ X-API-Key: abc123def456</code></pre>
             <h4 style="margin-bottom: var(--spacing-sm);">Request Body</h4>
             <p>Dados enviados no corpo da requisição. Formato definido pelo Content-Type. Comum: application/json, application/xml, application/x-www-form-urlencoded, multipart/form-data.</p>
             <p><strong>Exemplo JSON:</strong></p>
-            <pre style="background: rgba(0,0,0,0.05); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; margin-top: var(--spacing-sm);"><code>{
+            <pre style="background: color-mix(in srgb, var(--text) 5%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-sm); overflow-x: auto; margin-top: var(--spacing-sm);"><code>{
   "name": "João Silva",
   "email": "joao@example.com",
   "age": 30,

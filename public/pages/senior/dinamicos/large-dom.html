@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Large & Deep DOM — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -30,18 +30,18 @@
               <button id="btn-generate-more" class="btn btn-secondary" data-testid="btn-gerar-mais">Gerar Mais Elementos</button>
             </div>
 
-            <div id="large-dom" data-testid="large-dom" style="max-height: 500px; overflow-y: auto; padding: var(--spacing-md); background: var(--surface); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+            <div id="large-dom" data-testid="large-dom" style="max-height: 500px; overflow-y: auto; padding: var(--spacing-md); background: var(--surface); border: 2px solid color-mix(in srgb, var(--level) 20%, transparent); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
               <!-- DOM será gerado via JavaScript -->
             </div>
 
-            <div id="dom-result" data-testid="dom-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+            <div id="dom-result" data-testid="dom-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 60px;">
               <p class="muted" style="margin: 0;">Aguardando ação...</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Desafios de Automação:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>DOMs com muitos elementos (1000+)</li>

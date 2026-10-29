@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Drag and Drop — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -20,7 +20,7 @@
         <div class="subsections subsections-vertical">
           <div class="subsection">
             <h3>Sobre esta Seção</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Testar arrastar elementos de uma posição para outra</li>
@@ -53,7 +53,7 @@
                 id="drag-item" 
                 draggable="true"
                 data-testid="item-arrastavel"
-                style="padding: var(--spacing-lg); background: var(--accent); color: white; border-radius: var(--border-radius-md); cursor: grab; user-select: none; min-width: 150px; text-align: center; font-weight: 600; transition: all 0.3s ease;"
+                style="padding: var(--spacing-lg); background: var(--level); color: var(--on-accent); border-radius: var(--border-radius-md); cursor: grab; user-select: none; min-width: 150px; text-align: center; font-weight: 600; transition: all 0.3s ease;"
               >
                 Arraste-me
               </div>
@@ -61,7 +61,7 @@
               <div 
                 id="drop-zone" 
                 data-testid="zona-soltura"
-                style="padding: var(--spacing-xl); border: 2px dashed rgba(122, 168, 116, 0.3); border-radius: var(--border-radius-md); min-width: 250px; text-align: center; background: var(--surface); transition: all 0.3s ease;"
+                style="padding: var(--spacing-xl); border: 2px dashed color-mix(in srgb, var(--level) 30%, transparent); border-radius: var(--border-radius-md); min-width: 250px; text-align: center; background: var(--surface); transition: all 0.3s ease;"
               >
                 <div id="drop-text" data-testid="drop-text">Solte aqui</div>
               </div>
@@ -80,7 +80,7 @@
               <div 
                 id="hover-box" 
                 data-testid="box-hover"
-                style="padding: var(--spacing-lg); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md); text-align: center; cursor: pointer; transition: all 0.3s ease; background: var(--surface);"
+                style="padding: var(--spacing-lg); border: 2px solid color-mix(in srgb, var(--level) 20%, transparent); border-radius: var(--border-radius-md); text-align: center; cursor: pointer; transition: all 0.3s ease; background: var(--surface);"
               >
                 <strong>Passe o mouse aqui</strong>
                 <div id="hover-status" data-testid="hover-status" class="muted" style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm);"></div>
@@ -89,7 +89,7 @@
               <div 
                 id="dbl" 
                 data-testid="box-double-click"
-                style="padding: var(--spacing-lg); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md); text-align: center; cursor: pointer; transition: all 0.3s ease; background: var(--surface);"
+                style="padding: var(--spacing-lg); border: 2px solid color-mix(in srgb, var(--level) 20%, transparent); border-radius: var(--border-radius-md); text-align: center; cursor: pointer; transition: all 0.3s ease; background: var(--surface);"
               >
                 <strong>Dê dois cliques aqui</strong>
                 <div id="dbl-status" data-testid="dbl-status" class="muted" style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm);"></div>
@@ -98,7 +98,7 @@
               <div 
                 id="ctx" 
                 data-testid="box-right-click"
-                style="padding: var(--spacing-lg); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md); text-align: center; cursor: pointer; transition: all 0.3s ease; background: var(--surface);"
+                style="padding: var(--spacing-lg); border: 2px solid color-mix(in srgb, var(--level) 20%, transparent); border-radius: var(--border-radius-md); text-align: center; cursor: pointer; transition: all 0.3s ease; background: var(--surface);"
               >
                 <strong>Clique com o botão direito</strong>
                 <div id="ctx-status" data-testid="ctx-status" class="muted" style="margin-top: var(--spacing-sm); font-size: var(--font-size-sm);"></div>
@@ -108,7 +108,7 @@
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Arrastar elemento de origem para zona de soltura</li>
@@ -280,7 +280,7 @@ Testar double click
         dropText.textContent = 'Item solto! ✅';
         dropText.style.color = 'var(--accent)';
         dropText.style.fontWeight = '600';
-        dropStatus.innerHTML = '<strong style="color: var(--accent);">✅ Drop detectado com sucesso!</strong>';
+        dropStatus.innerHTML = '<strong style="color: var(--level);">✅ Drop detectado com sucesso!</strong>';
         window.showToast('Drop detectado com sucesso!');
       });
 

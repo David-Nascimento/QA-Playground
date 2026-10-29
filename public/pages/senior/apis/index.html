@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>APIs e Autenticação — Nível Sênior — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -64,7 +64,7 @@
         <!-- Playgrounds e Ferramentas -->
         <h3 class="section-title" style="margin-top: var(--spacing-2xl);">Playgrounds e Ferramentas</h3>
         
-        <div style="margin-bottom: var(--spacing-lg); padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-md); border-left: 4px solid var(--success);">
+        <div style="margin-bottom: var(--spacing-lg); padding: var(--spacing-md); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-md); border-left: 4px solid var(--success);">
           <p style="margin-bottom: var(--spacing-sm);"><strong>API Mockada Disponível</strong></p>
           <p style="font-size: var(--font-size-sm); color: var(--text); margin-bottom: var(--spacing-sm);">
             Todas as páginas abaixo estão conectadas à API mockada real. A API está disponível automaticamente em produção.
@@ -73,23 +73,23 @@
           <div style="margin-top: var(--spacing-md); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.1); border-radius: var(--border-radius-sm); margin-bottom: var(--spacing-sm);">
             <p style="font-size: var(--font-size-sm); margin-bottom: var(--spacing-xs); color: var(--text);"><strong>URLs da API:</strong></p>
             <ul style="margin-left: var(--spacing-lg); font-size: var(--font-size-sm); color: var(--text); margin-bottom: var(--spacing-sm);">
-              <li style="margin-bottom: var(--spacing-xs);">Base: <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">https://qa-playground-azure.vercel.app/api</code></li>
-              <li style="margin-bottom: var(--spacing-xs);">Health Check: <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">GET https://qa-playground-azure.vercel.app/api/health</code></li>
-              <li style="margin-bottom: var(--spacing-xs);">Documentação: <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">GET https://qa-playground-azure.vercel.app/api</code></li>
+              <li style="margin-bottom: var(--spacing-xs);">Base: <code>https://qa-playground-azure.vercel.app/api</code></li>
+              <li style="margin-bottom: var(--spacing-xs);">Health Check: <code>GET https://qa-playground-azure.vercel.app/api/health</code></li>
+              <li style="margin-bottom: var(--spacing-xs);">Documentação: <code>GET https://qa-playground-azure.vercel.app/api</code></li>
             </ul>
           </div>
           
           <p style="font-size: var(--font-size-sm); color: var(--text); margin-bottom: var(--spacing-sm);">
-            <strong>Credenciais de teste:</strong> <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">admin@example.com / admin123</code> | <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">user@example.com / user123</code> | <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">viewer@example.com / viewer123</code>
+            <strong>Credenciais de teste:</strong> <code>admin@example.com / admin123</code> | <code>user@example.com / user123</code> | <code>viewer@example.com / viewer123</code>
           </p>
           
-          <div style="margin-top: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1px solid rgba(122, 168, 116, 0.3);">
+          <div style="margin-top: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1px solid color-mix(in srgb, var(--level) 30%, transparent);">
             <p style="font-size: var(--font-size-sm); margin-bottom: var(--spacing-sm); color: var(--text);"><strong>Testando com Postman ou Insomnia?</strong></p>
             <p style="font-size: var(--font-size-sm); color: var(--text); margin-bottom: var(--spacing-sm);">
-              <strong>Documentação completa:</strong> Acesse <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">GET https://qa-playground-azure.vercel.app/api</code> ou <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">GET https://qa-playground-azure.vercel.app/api/docs</code> para ver o guia completo com instruções passo a passo, exemplos de requisições e como configurar variáveis de ambiente.
+              <strong>Documentação completa:</strong> Acesse <code>GET https://qa-playground-azure.vercel.app/api</code> ou <code>GET https://qa-playground-azure.vercel.app/api/docs</code> para ver o guia completo com instruções passo a passo, exemplos de requisições e como configurar variáveis de ambiente.
             </p>
             <p style="font-size: var(--font-size-sm); color: var(--text);">
-              <strong>Coleção Postman pronta:</strong> <a href="https://qa-playground-azure.vercel.app/api/postman-collection" download="QA-Playground-API.postman_collection.json" style="color: var(--accent); text-decoration: underline;">Baixar coleção Postman</a> ou importe diretamente no Postman usando o link: <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">https://qa-playground-azure.vercel.app/api/postman-collection</code>
+              <strong>Coleção Postman pronta:</strong> <a href="https://qa-playground-azure.vercel.app/api/postman-collection" download="QA-Playground-API.postman_collection.json" style="color: var(--level); text-decoration: underline;">Baixar coleção Postman</a> ou importe diretamente no Postman usando o link: <code>https://qa-playground-azure.vercel.app/api/postman-collection</code>
             </p>
           </div>
         </div>
@@ -133,7 +133,7 @@
         </div>
 
         <!-- Informações sobre a API -->
-        <div style="margin-top: var(--spacing-xl); padding: var(--spacing-lg); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+        <div style="margin-top: var(--spacing-xl); padding: var(--spacing-lg); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
           <h3 style="margin-bottom: var(--spacing-md);">Sobre a API Mockada</h3>
           <p style="margin-bottom: var(--spacing-md);">
             A API mockada foi criada especificamente para prática de testes QA. Ela simula comportamentos reais de backend,
@@ -180,7 +180,7 @@
           </div>
 
           <p style="font-size: var(--font-size-sm); color: var(--text);">
-            <strong>Dica:</strong> Use query param <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">?scenario=&lt;tipo&gt;</code> ou header <code style="background: rgba(0, 0, 0, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--accent);">x-mock-scenario</code> 
+            <strong>Dica:</strong> Use query param <code>?scenario=&lt;tipo&gt;</code> ou header <code>x-mock-scenario</code> 
             para controlar o comportamento da API em cada requisição. Perfeito para testar diferentes cenários sem modificar código!
           </p>
         </div>

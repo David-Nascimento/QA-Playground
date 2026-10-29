@@ -1,5 +1,7 @@
 // ========================================
-// Tipografia - Estilos de Texto
+// Tipografia
+// ----------------------------------------
+// Manrope (títulos) · Inter (texto e interface) · JetBrains Mono (código)
 // ========================================
 
 body {
@@ -9,18 +11,26 @@ body {
   color: var(--text);
   background: var(--bg);
   margin: 0;
+  font-feature-settings: 'cv11', 'ss01'; // Inter: "a" e "1" mais legíveis
+  text-size-adjust: 100%;
 }
 
 // === Cabeçalhos ===
 h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
   font-weight: $font-weight-bold;
   line-height: $line-height-tight;
+  letter-spacing: -0.01em;
   margin-bottom: var(--spacing-md);
   color: var(--text);
+  text-wrap: balance;
 }
 
 h1 {
   font-size: var(--font-size-3xl);
+  font-weight: $font-weight-heavy;
+  letter-spacing: -0.02em;
+
   @include respond-to(md) {
     font-size: var(--font-size-2xl);
   }
@@ -28,70 +38,167 @@ h1 {
 
 h2 {
   font-size: var(--font-size-2xl);
+  font-weight: $font-weight-heavy;
+  letter-spacing: -0.015em;
+
   @include respond-to(md) {
-    font-size: var(--font-size-xl);
+    font-size: 1.5rem;
   }
 }
 
 h3 {
   font-size: var(--font-size-xl);
+
+  @include respond-to(md) {
+    font-size: var(--font-size-lg);
+  }
 }
 
 h4 {
   font-size: var(--font-size-lg);
 }
 
+h5,
+h6 {
+  font-size: var(--font-size-base);
+}
+
 // === Parágrafos ===
 p {
   margin-bottom: var(--spacing-md);
-  color: var(--text);
   line-height: $line-height-base;
-  
+  text-wrap: pretty;
+
   &:last-child {
     margin-bottom: 0;
   }
 }
 
+strong,
+b {
+  font-weight: $font-weight-semibold;
+}
+
 // === Links ===
 a {
   color: var(--accent);
-  @include transition(color);
-  
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+  @include transition(color, text-decoration-color);
+}
+
+:where(main p, main li, main td) a:where(:not([class])) {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+
   @include hover-state {
-    opacity: 0.8;
-  }
-  
-  @include focus-visible {
-    outline-color: var(--accent);
+    text-decoration-color: currentColor;
   }
 }
 
 // === Código ===
-code {
-  background: rgba(0, 0, 0, 0.05);
-  color: var(--accent);
+code,
+kbd,
+samp {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+:not(pre) > code {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
   border-radius: var(--border-radius-sm);
-  padding: 2px 6px;
-  font-size: 0.9em;
-  font-family: $font-family-mono;
+  padding: 0.1em 0.4em;
+  overflow-wrap: anywhere;
+}
+
+kbd {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--border-radius-sm);
+  padding: 0.1em 0.45em;
 }
 
 pre {
-  font-family: $font-family-mono;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
   overflow-x: auto;
-  
+  -webkit-overflow-scrolling: touch;
+  tab-size: 2;
+
   code {
     background: transparent;
     padding: 0;
+    border: 0;
+    color: inherit;
+    font-size: inherit;
   }
 }
 
-// === Texto Muted ===
+// === Listas de conteúdo ===
+// O reset remove marcadores de todas as listas; listas sem classe dentro
+// do conteúdo voltam a ter marcadores. :where() zera a especificidade para
+// que qualquer componente (.progression-block ul, etc.) possa sobrescrever.
+:where(main ul:not([class]), main ol:not([class])) {
+  padding-left: 1.4em;
+  margin-bottom: var(--spacing-md);
+}
+
+:where(main ul:not([class]), main ol:not([class])) > li {
+  margin-bottom: 0.35em;
+  padding-left: 0.2em;
+  line-height: $line-height-base;
+}
+
+:where(main ul:not([class]), main ol:not([class])) > li::marker {
+  color: var(--level);
+}
+
+:where(main li) > :where(ul, ol) {
+  margin: 0.35em 0 0;
+}
+
+:where(main ul:not([class])) {
+  list-style: disc;
+}
+
+:where(main ul:not([class]) ul) {
+  list-style: circle;
+}
+
+:where(main ol:not([class])) {
+  list-style: decimal;
+}
+
+:where(main ol:not([class])) > li::marker {
+  font-weight: $font-weight-semibold;
+}
+
+// === Texto auxiliar ===
 .muted {
   color: var(--muted);
 }
 
-// === Texto Truncado ===
 .truncate {
   @include text-truncate;
+}
+
+small {
+  font-size: var(--font-size-sm);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: var(--spacing-xl) 0;
+}
+
+blockquote {
+  border-left: 3px solid var(--level);
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--muted);
+  margin: var(--spacing-md) 0;
 }

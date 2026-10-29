@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>App de Notas (React) — QA Playground</title>
     <link rel="stylesheet" href="../../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -45,7 +45,7 @@
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Adicionar novas notas</li>
@@ -187,7 +187,7 @@ Click Button    [data-testid="btn-salvar-0"]</code></pre>
         listEl.innerHTML = notes.map(note => {
           if (editingId === note.id) {
             return `
-              <div id="nota-item-${note.id}" data-testid="nota-item-${note.id}" style="padding: var(--spacing-md); background: var(--surface); border: 2px solid var(--accent); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-sm);">
+              <div id="nota-item-${note.id}" data-testid="nota-item-${note.id}" style="padding: var(--spacing-md); background: var(--surface); border: 2px solid var(--level); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-sm);">
                 <input 
                   type="text" 
                   id="edit-input-${note.id}" 
@@ -204,7 +204,7 @@ Click Button    [data-testid="btn-salvar-0"]</code></pre>
           }
           
           return `
-            <div id="nota-item-${note.id}" data-testid="nota-item-${note.id}" style="padding: var(--spacing-md); background: var(--surface); border: 1px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-sm); display: flex; justify-content: space-between; align-items: center;">
+            <div id="nota-item-${note.id}" data-testid="nota-item-${note.id}" style="padding: var(--spacing-md); background: var(--surface); border: 1px solid color-mix(in srgb, var(--level) 20%, transparent); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-sm); display: flex; justify-content: space-between; align-items: center;">
               <span style="flex: 1;">${note.text}</span>
               <div style="display: flex; gap: var(--spacing-sm);">
                 <button class="btn btn-secondary" data-testid="btn-editar-${note.id}" onclick="editNote(${note.id})" style="padding: var(--spacing-xs) var(--spacing-sm);">✏️ Editar</button>

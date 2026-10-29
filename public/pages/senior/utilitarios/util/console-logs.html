@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Console Logs — QA Playground</title>
     <link rel="stylesheet" href="../../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -32,14 +32,14 @@
               <button id="btn-debug" class="btn btn-secondary" data-testid="btn-debug">console.debug()</button>
             </div>
 
-            <div id="console-result" data-testid="console-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 100px;">
+            <div id="console-result" data-testid="console-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 100px;">
               <p class="muted" style="margin: 0;">Nenhum log gerado ainda. Abra o DevTools (F12) para ver os logs no console.</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Capturar e validar logs do console</li>
@@ -162,7 +162,7 @@ Capturar logs do console
         
         const existing = resultEl.innerHTML;
         resultEl.innerHTML = `
-          <div style="margin-bottom: var(--spacing-sm); padding-bottom: var(--spacing-sm); border-bottom: 1px solid rgba(122, 168, 116, 0.2);">
+          <div style="margin-bottom: var(--spacing-sm); padding-bottom: var(--spacing-sm); border-bottom: 1px solid color-mix(in srgb, var(--level) 20%, transparent);">
             <strong style="color: ${typeColors[type]};">[${type.toUpperCase()}]</strong> ${message}
             <span style="color: var(--muted); font-size: var(--font-size-sm); margin-left: var(--spacing-sm);">${timestamp}</span>
           </div>

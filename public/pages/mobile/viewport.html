@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Viewport e Orientação — Mobile — QA Playground</title>
     <link rel="stylesheet" href="../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -48,23 +48,23 @@
             <h3>Informações do Viewport</h3>
             <p class="muted" style="margin-bottom: var(--spacing-md);">Informações em tempo real sobre o viewport atual.</p>
             
-            <div id="viewport-details" data-testid="viewport-details" style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div id="viewport-details" data-testid="viewport-details" style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-md);">
                 <div>
                   <strong>Largura:</strong>
-                  <div id="viewport-width" data-testid="viewport-width" style="font-family: monospace; color: var(--accent); margin-top: var(--spacing-xs);">-</div>
+                  <div id="viewport-width" data-testid="viewport-width" style="font-family: monospace; color: var(--level); margin-top: var(--spacing-xs);">-</div>
                 </div>
                 <div>
                   <strong>Altura:</strong>
-                  <div id="viewport-height" data-testid="viewport-height" style="font-family: monospace; color: var(--accent); margin-top: var(--spacing-xs);">-</div>
+                  <div id="viewport-height" data-testid="viewport-height" style="font-family: monospace; color: var(--level); margin-top: var(--spacing-xs);">-</div>
                 </div>
                 <div>
                   <strong>Orientação:</strong>
-                  <div id="viewport-orientation" data-testid="viewport-orientation" style="font-family: monospace; color: var(--accent); margin-top: var(--spacing-xs);">-</div>
+                  <div id="viewport-orientation" data-testid="viewport-orientation" style="font-family: monospace; color: var(--level); margin-top: var(--spacing-xs);">-</div>
                 </div>
                 <div>
                   <strong>Pixel Ratio:</strong>
-                  <div id="device-pixel-ratio" data-testid="device-pixel-ratio" style="font-family: monospace; color: var(--accent); margin-top: var(--spacing-xs);">-</div>
+                  <div id="device-pixel-ratio" data-testid="device-pixel-ratio" style="font-family: monospace; color: var(--level); margin-top: var(--spacing-xs);">-</div>
                 </div>
               </div>
             </div>
@@ -74,17 +74,17 @@
             <h3>Layout Adaptativo</h3>
             <p class="muted" style="margin-bottom: var(--spacing-md);">Layout que se adapta ao viewport e orientação.</p>
             
-            <div id="adaptive-layout" data-testid="adaptive-layout" style="background: var(--surface); border: 1px solid rgba(0, 0, 0, 0.1); border-radius: var(--border-radius-md); padding: var(--spacing-lg);">
+            <div id="adaptive-layout" data-testid="adaptive-layout" style="background: var(--surface); border: 1px solid color-mix(in srgb, var(--text) 10%, transparent); border-radius: var(--border-radius-md); padding: var(--spacing-lg);">
               <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--spacing-md);" id="layout-grid" data-testid="layout-grid">
-                <div style="background: rgba(122, 168, 116, 0.1); padding: var(--spacing-md); border-radius: var(--border-radius-sm); text-align: center;">
+                <div style="background: color-mix(in srgb, var(--level) 10%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-sm); text-align: center;">
                   <strong>Item 1</strong>
                   <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">Adapta-se ao viewport</p>
                 </div>
-                <div style="background: rgba(122, 168, 116, 0.1); padding: var(--spacing-md); border-radius: var(--border-radius-sm); text-align: center;">
+                <div style="background: color-mix(in srgb, var(--level) 10%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-sm); text-align: center;">
                   <strong>Item 2</strong>
                   <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">Grid responsivo</p>
                 </div>
-                <div style="background: rgba(122, 168, 116, 0.1); padding: var(--spacing-md); border-radius: var(--border-radius-sm); text-align: center;">
+                <div style="background: color-mix(in srgb, var(--level) 10%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-sm); text-align: center;">
                   <strong>Item 3</strong>
                   <p style="font-size: var(--font-size-sm); color: var(--muted); margin-top: var(--spacing-xs);">Auto-fit columns</p>
                 </div>
@@ -98,9 +98,9 @@
             
             <div id="media-queries" data-testid="media-queries" style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md);">
               <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
-                <span id="mq-mobile" data-testid="mq-mobile" class="badge" style="background: var(--accent); color: white; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius-sm);">Mobile (&lt; 768px)</span>
-                <span id="mq-tablet" data-testid="mq-tablet" class="badge" style="background: var(--muted); color: white; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius-sm);">Tablet (768px - 1024px)</span>
-                <span id="mq-desktop" data-testid="mq-desktop" class="badge" style="background: var(--muted); color: white; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius-sm);">Desktop (&gt; 1024px)</span>
+                <span id="mq-mobile" data-testid="mq-mobile" class="badge" style="background: var(--level); color: var(--on-accent); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius-sm);">Mobile (&lt; 768px)</span>
+                <span id="mq-tablet" data-testid="mq-tablet" class="badge" style="background: var(--muted); color: var(--on-accent); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius-sm);">Tablet (768px - 1024px)</span>
+                <span id="mq-desktop" data-testid="mq-desktop" class="badge" style="background: var(--muted); color: var(--on-accent); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius-sm);">Desktop (&gt; 1024px)</span>
               </div>
             </div>
           </div>
@@ -109,9 +109,9 @@
             <h3>Orientação</h3>
             <p class="muted" style="margin-bottom: var(--spacing-md);">Teste comportamento em portrait e landscape.</p>
             
-            <div id="orientation-info" data-testid="orientation-info" style="background: var(--surface); padding: var(--spacing-lg); border-radius: var(--border-radius-md); text-align: center; border: 2px solid var(--accent);">
+            <div id="orientation-info" data-testid="orientation-info" style="background: var(--surface); padding: var(--spacing-lg); border-radius: var(--border-radius-md); text-align: center; border: 2px solid var(--level);">
               <div id="orientation-display" data-testid="orientation-display" style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-sm);">📱</div>
-              <div id="orientation-text" data-testid="orientation-text" style="font-size: var(--font-size-lg); font-weight: 600; color: var(--accent);">Portrait</div>
+              <div id="orientation-text" data-testid="orientation-text" style="font-size: var(--font-size-lg); font-weight: 600; color: var(--level);">Portrait</div>
               <p style="color: var(--muted); font-size: var(--font-size-sm); margin-top: var(--spacing-xs);">Gire o dispositivo ou redimensione a janela</p>
             </div>
           </div>

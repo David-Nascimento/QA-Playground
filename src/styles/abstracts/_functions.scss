@@ -1,3 +1,5 @@
+@use "sass:map";
+@use "sass:math";
 // ========================================
 // Funções SCSS - Cálculos e Utilitários
 // ========================================
@@ -9,12 +11,12 @@
 
 // === Conversão de Pixels para Rem ===
 @function rem($pixels, $base: 16) {
-  @return ($pixels / $base) * 1rem;
+  @return math.div($pixels, $base) * 1rem;
 }
 
 // === Conversão de Pixels para Em ===
 @function em($pixels, $context: 16) {
-  @return ($pixels / $context) * 1em;
+  @return math.div($pixels, $context) * 1em;
 }
 
 // === Cálculo de Opacidade ===
@@ -43,5 +45,5 @@
     'tooltip': 1070,
   );
   
-  @return map-get($z-indexes, $level);
+  @return map.get($z-indexes, $level);
 }

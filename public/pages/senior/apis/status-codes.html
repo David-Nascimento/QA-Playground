@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Status Codes HTTP — APIs e Autenticação — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -44,7 +44,7 @@
             <p><strong>Validações:</strong> Body obrigatoriamente vazio, headers relevantes presentes (ETag, Last-Modified se aplicável), operação realmente executada (verificar estado do recurso), Content-Length: 0 ou header ausente.</p>
           </div>
 
-          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm);">
+          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-sm);">
             <p><strong>O que validar além do status:</strong></p>
             <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
               <li>Estrutura do JSON conforme schema</li>
@@ -77,7 +77,7 @@
             <p><strong>O que validar:</strong> ETag ou If-None-Match funcionando, body vazio, headers de cache corretos.</p>
           </div>
 
-          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: rgba(255, 193, 7, 0.1); border-radius: var(--border-radius-sm);">
+          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: color-mix(in srgb, var(--warning) 10%, transparent); border-radius: var(--border-radius-sm);">
             <p><strong>Quando testar:</strong> Migrações de endpoints, mudanças de domínio, otimizações de cache.</p>
             <p><strong>Riscos:</strong> Loops de redirecionamento, perda de dados em redirects, cache incorreto.</p>
           </div>
@@ -134,7 +134,7 @@
             <p><strong>Validações:</strong> Headers X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset presentes, header Retry-After indicando quando retentar, mensagem clara sobre limite excedido, comportamento após limite (bloqueio temporário, throttling, etc.).</p>
           </div>
 
-          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: rgba(220, 53, 69, 0.1); border-radius: var(--border-radius-sm);">
+          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: color-mix(in srgb, var(--danger) 10%, transparent); border-radius: var(--border-radius-sm);">
             <p><strong>Cenários reais de teste:</strong></p>
             <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
               <li>Payload inválido (JSON malformado, tipos errados)</li>
@@ -173,7 +173,7 @@
             <p><strong>Validações:</strong> Timeout configurado e documentado, distinção entre upstream lento vs inacessível, Retry-After quando aplicável, logs indicando qual upstream falhou, mensagem indica que requisição pode ser retentada.</p>
           </div>
 
-          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: rgba(220, 53, 69, 0.1); border-radius: var(--border-radius-sm);">
+          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: color-mix(in srgb, var(--danger) 10%, transparent); border-radius: var(--border-radius-sm);">
             <p><strong>Como simular:</strong> Forçar erros no servidor, desconectar serviços upstream, simular timeouts, sobrecarga.</p>
             <p><strong>Como reportar:</strong> Incluir timestamp, request completo (method, endpoint, headers, body), resposta recebida, logs do servidor (se disponível), frequência do erro.</p>
           </div>
@@ -208,10 +208,10 @@
 
           <pre 
             id="status-code-result"
-            style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); overflow-x: auto; font-size: var(--font-size-sm); min-height: 100px;"
+            style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); overflow-x: auto; font-size: var(--font-size-sm); min-height: 100px;"
           ><span class="muted">Selecione um cenário e clique em "Testar Status Code" para ver a resposta.</span></pre>
 
-          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm);">
+          <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-sm);">
             <p style="margin-bottom: var(--spacing-sm);"><strong>💡 Como usar:</strong></p>
             <ul style="margin-left: var(--spacing-lg); font-size: var(--font-size-sm);">
               <li>Selecione um cenário de status code acima</li>

@@ -1,84 +1,145 @@
 // ========================================
-// Design Tokens - Variáveis Semânticas
+// Design Tokens - Variáveis SCSS (fonte das CSS custom properties)
+// ----------------------------------------
+// Paleta "test run": tinta azul-escura, azul-cobalto como marca e uma
+// cor por nível de senioridade (Júnior esmeralda, Pleno âmbar, Sênior
+// violeta). Todos os pares texto/fundo foram verificados para WCAG AA.
 // ========================================
 
 // === Cores Base ===
 $color-white: #ffffff;
 $color-black: #000000;
 
-// === Cores Tema Claro ===
-$color-bg-light: #fbf9f6;
+// === Tema Claro ===
+$color-bg-light: #f4f6fb;        // papel (cinza-azulado, não creme)
 $color-surface-light: #ffffff;
-$color-text-light: #2b2b2b;
-$color-muted-light: #6b6b6b;
+$color-surface-2-light: #eef1f8; // áreas rebaixadas (inputs, trilhos)
+$color-border-light: #dde2ee;
+$color-border-strong-light: #c7cede;
+$color-input-border-light: #8a93ae; // 3:1 sobre branco (WCAG 1.4.11)
+$color-text-light: #161a33;      // tinta
+$color-muted-light: #525a75;     // 6.8:1 sobre branco
 
-// === Cores Tema Escuro ===
-$color-bg-dark: #0f1112;
-$color-surface-dark: #111416;
-$color-text-dark: #e6e6e6;
-$color-muted-dark: #9a9a9a;
+$color-accent-light: #2f55e4;        // azul-cobalto (marca)
+$color-accent-strong-light: #2443bf;
+$color-accent-soft-light: #e8edff;
+$color-on-accent-light: #ffffff;
+$color-accent-2-light: #c3245e;      // magenta: destaque pontual
 
-// === Cores de Acento ===
-$color-accent-primary: #7aa874;
-$color-accent-primary-dark: #6fb56f;
-$color-accent-secondary: #d6a35f;
-$color-accent-secondary-dark: #cfa16a;
+// === Tema Escuro ===
+$color-bg-dark: #0d1022;
+$color-surface-dark: #151a31;
+$color-surface-2-dark: #1c2240;
+$color-border-dark: #2a3152;
+$color-border-strong-dark: #3a4370;
+$color-input-border-dark: #5e6788;
+$color-text-dark: #e7eaf6;
+$color-muted-dark: #a3abc9;
 
-// === Cores Funcionais ===
-$color-danger: #dc3545;
-$color-success: #28a745;
-$color-warning: #ffc107;
-$color-info: #17a2b8;
+$color-accent-dark: #8ea2ff;
+$color-accent-strong-dark: #b3c0ff;
+$color-accent-soft-dark: #20284d;
+$color-on-accent-dark: #0d1022;
+$color-accent-2-dark: #ff7ba5;
+
+// === Níveis de senioridade ===
+// *-ink: texto/ícones/botões (AA sobre surface e sobre *-soft)
+// *-fill: preenchimentos decorativos (barras, marcadores)
+// *-soft: fundos de chips e destaques
+$level-junior-ink-light: #047857;
+$level-junior-fill-light: #10b981;
+$level-junior-soft-light: #e6f7f0;
+$level-pleno-ink-light: #b45309;
+$level-pleno-fill-light: #f59e0b;
+$level-pleno-soft-light: #fef3e2;
+$level-senior-ink-light: #6d28d9;
+$level-senior-fill-light: #8b5cf6;
+$level-senior-soft-light: #f1ebfe;
+
+$level-junior-ink-dark: #34d399;
+$level-junior-fill-dark: #10b981;
+$level-junior-soft-dark: #10302a;
+$level-pleno-ink-dark: #fbbf24;
+$level-pleno-fill-dark: #f59e0b;
+$level-pleno-soft-dark: #33270f;
+$level-senior-ink-dark: #b79bff;
+$level-senior-fill-dark: #8b5cf6;
+$level-senior-soft-dark: #2a2150;
+
+// === Cores Funcionais (texto AA sobre surface) ===
+$color-danger: #b42318;
+$color-success: #0f7b55;
+$color-warning: #b54708;
+$color-info: #0e6a82;
+
+$color-danger-dark: #ff8a80;
+$color-success-dark: #4ade80;
+$color-warning-dark: #fbbf24;
+$color-info-dark: #67d4f0;
+
+// === Código (painel escuro nos dois temas) ===
+$color-code-bg: #0f1329;
+$color-code-text: #e2e8ff;
+$color-code-muted: #8b93b8;
 
 // === Espaçamento ===
 $spacing-base: 4px;
-$spacing-xs: $spacing-base;      // 4px
-$spacing-sm: $spacing-base * 2;  // 8px
-$spacing-md: $spacing-base * 4;  // 16px
-$spacing-lg: $spacing-base * 6;  // 24px
-$spacing-xl: $spacing-base * 8;  // 32px
+$spacing-xs: $spacing-base;       // 4px
+$spacing-sm: $spacing-base * 2;   // 8px
+$spacing-md: $spacing-base * 4;   // 16px
+$spacing-lg: $spacing-base * 6;   // 24px
+$spacing-xl: $spacing-base * 8;   // 32px
 $spacing-2xl: $spacing-base * 12; // 48px
+$spacing-3xl: $spacing-base * 20; // 80px
 
 // === Tipografia ===
 $font-family-base: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-$font-family-mono: 'Courier New', monospace;
+$font-family-display: 'Manrope', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+$font-family-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
 
-$font-size-xs: 0.75rem;   // 12px
-$font-size-sm: 0.875rem;  // 14px
-$font-size-base: 1rem;    // 16px
-$font-size-lg: 1.125rem;  // 18px
-$font-size-xl: 1.25rem;   // 20px
-$font-size-2xl: 1.5rem;   // 24px
-$font-size-3xl: 1.875rem; // 30px
+// Escala modular ~1.25 (Elements of Typographic Style: poucos tamanhos, bem separados)
+$font-size-xs: 0.8125rem;  // 13px
+$font-size-sm: 0.875rem;   // 14px
+$font-size-base: 1rem;     // 16px (interface)
+$font-size-prose: 1.0625rem; // 17px (texto corrido)
+$font-size-lg: 1.1875rem;  // 19px
+$font-size-xl: 1.375rem;   // 22px
+$font-size-2xl: 1.75rem;   // 28px
+$font-size-3xl: 2.25rem;   // 36px
+$font-size-display: clamp(2.5rem, 1.6rem + 3.6vw, 4.25rem); // 40 → 68px
 
 $font-weight-normal: 400;
 $font-weight-medium: 500;
 $font-weight-semibold: 600;
 $font-weight-bold: 700;
+$font-weight-heavy: 800;
 
-$line-height-base: 1.6;
+$line-height-base: 1.65;
 $line-height-tight: 1.2;
-$line-height-relaxed: 1.8;
+$line-height-relaxed: 1.75;
 
-// === Bordas ===
+$measure: 70ch; // comprimento ideal de linha para leitura
+
+// === Bordas (hierarquia: contêiner > interno > pílula) ===
 $border-radius-sm: 6px;
-$border-radius-md: 8px;
-$border-radius-lg: 12px;
-$border-radius-xl: 16px;
+$border-radius-md: 10px;
+$border-radius-lg: 14px;
+$border-radius-xl: 20px;
+$border-radius-pill: 999px;
 $border-radius-full: 50%;
 
 $border-width-base: 1px;
 $border-width-thick: 2px;
 $border-width-thickest: 4px;
 
-// === Sombras ===
-$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-$shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
-$shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.12);
+// === Sombras (azuladas, discretas) ===
+$shadow-sm: 0 1px 2px rgba(22, 26, 51, 0.06);
+$shadow-md: 0 6px 16px -6px rgba(22, 26, 51, 0.16);
+$shadow-lg: 0 18px 40px -12px rgba(22, 26, 51, 0.24);
 
-$shadow-sm-dark: 0 1px 2px rgba(0, 0, 0, 0.2);
-$shadow-md-dark: 0 4px 8px rgba(0, 0, 0, 0.3);
-$shadow-lg-dark: 0 12px 24px rgba(0, 0, 0, 0.4);
+$shadow-sm-dark: 0 1px 2px rgba(0, 0, 0, 0.4);
+$shadow-md-dark: 0 6px 16px -6px rgba(0, 0, 0, 0.6);
+$shadow-lg-dark: 0 18px 40px -12px rgba(0, 0, 0, 0.7);
 
 // === Transições ===
 $transition-fast: 0.15s ease;
@@ -86,11 +147,12 @@ $transition-base: 0.2s ease;
 $transition-slow: 0.3s ease;
 
 // === Layout ===
-$container-max-width: 1200px;
+$container-max-width: 1180px;
 $header-height: 64px;
 
 // === Breakpoints ===
 $breakpoint-sm: 576px;
 $breakpoint-md: 768px;
+$breakpoint-nav: 960px; // abaixo disso o menu vira gaveta
 $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;

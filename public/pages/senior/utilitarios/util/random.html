@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Número Aleatório — QA Playground</title>
     <link rel="stylesheet" href="../../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -40,14 +40,14 @@
               <button id="btn-generate-multiple" class="btn btn-secondary" data-testid="btn-generate-multiple">Gerar 10 Números</button>
             </div>
 
-            <div id="random-result" data-testid="random-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 100px;">
+            <div id="random-result" data-testid="random-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 100px;">
               <p class="muted" style="margin: 0;">Nenhum número gerado ainda.</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Testar geração de números aleatórios</li>
@@ -180,7 +180,7 @@ Should Be True    ${number} <= 50</code></pre>
         
         document.getElementById('random-result').innerHTML = `
           <div style="text-align: center;">
-            <div id="random-number" data-testid="random-number" style="font-size: var(--font-size-2xl); font-weight: 700; color: var(--accent); margin: var(--spacing-md) 0;">${random}</div>
+            <div id="random-number" data-testid="random-number" style="font-size: var(--font-size-2xl); font-weight: 700; color: var(--level); margin: var(--spacing-md) 0;">${random}</div>
             <p style="color: var(--muted); font-size: var(--font-size-sm); margin: 0;">Intervalo: ${min} - ${max}</p>
             <p style="color: var(--muted); font-size: var(--font-size-sm); margin: var(--spacing-xs) 0 0 0;">Horário: ${timestamp}</p>
           </div>
@@ -208,7 +208,7 @@ Should Be True    ${number} <= 50</code></pre>
           <div>
             <p style="margin-bottom: var(--spacing-sm);"><strong>10 números gerados:</strong></p>
             <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm);">
-              ${numbers.map((num, idx) => `<span id="random-number-${idx}" data-testid="random-number-${idx}" style="padding: var(--spacing-xs) var(--spacing-sm); background: rgba(122, 168, 116, 0.1); border-radius: var(--border-radius-sm); font-weight: 600; color: var(--accent);">${num}</span>`).join('')}
+              ${numbers.map((num, idx) => `<span id="random-number-${idx}" data-testid="random-number-${idx}" style="padding: var(--spacing-xs) var(--spacing-sm); background: color-mix(in srgb, var(--level) 10%, transparent); border-radius: var(--border-radius-sm); font-weight: 600; color: var(--level);">${num}</span>`).join('')}
             </div>
             <p style="color: var(--muted); font-size: var(--font-size-sm); margin: 0;">Intervalo: ${min} - ${max} | Horário: ${timestamp}</p>
           </div>

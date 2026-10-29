@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Cars Showroom — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -39,14 +39,14 @@
               <!-- Carros serão gerados via JavaScript -->
             </div>
 
-            <div id="detalhes-carro" data-testid="detalhes-carro" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 100px;">
+            <div id="detalhes-carro" data-testid="detalhes-carro" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 100px;">
               <p class="muted" style="margin: 0;">Selecione um carro para ver os detalhes.</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Filtrar carros por categoria</li>
@@ -153,10 +153,10 @@ Filtrar e selecionar carro
         const carrosFiltrados = categoriaFiltro ? carros.filter(c => c.categoria === categoriaFiltro) : carros;
         
         grid.innerHTML = carrosFiltrados.map(carro => `
-          <div id="carro-${carro.categoria.toLowerCase()}-${carro.id}" data-testid="carro-${carro.categoria.toLowerCase()}-${carro.id}" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border: 1px solid rgba(122, 168, 116, 0.2);">
+          <div id="carro-${carro.categoria.toLowerCase()}-${carro.id}" data-testid="carro-${carro.categoria.toLowerCase()}-${carro.id}" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border: 1px solid color-mix(in srgb, var(--level) 20%, transparent);">
             <h4 style="margin-top: 0;">${carro.modelo}</h4>
             <p style="margin: var(--spacing-xs) 0; color: var(--muted); font-size: var(--font-size-sm);">Categoria: ${carro.categoria}</p>
-            <p style="margin: var(--spacing-xs) 0; color: var(--accent); font-size: var(--font-size-lg); font-weight: 600;">R$ ${carro.preco.toLocaleString('pt-BR')}</p>
+            <p style="margin: var(--spacing-xs) 0; color: var(--level); font-size: var(--font-size-lg); font-weight: 600;">R$ ${carro.preco.toLocaleString('pt-BR')}</p>
             <p style="margin: var(--spacing-xs) 0 var(--spacing-sm) 0; color: var(--muted); font-size: var(--font-size-sm);">Ano: ${carro.ano}</p>
             <button class="btn" data-testid="btn-selecionar-${carro.categoria.toLowerCase()}-${carro.id}" onclick="mostrarDetalhes(${carro.id})">Ver Detalhes</button>
           </div>
@@ -168,10 +168,10 @@ Filtrar e selecionar carro
         if (carro) {
           const detalhesEl = document.getElementById('detalhes-carro');
           detalhesEl.innerHTML = `
-            <h4 style="margin-top: 0; color: var(--accent);">${carro.modelo}</h4>
+            <h4 style="margin-top: 0; color: var(--level);">${carro.modelo}</h4>
             <div style="margin-top: var(--spacing-sm);">
               <p style="margin: var(--spacing-xs) 0;"><strong>Categoria:</strong> ${carro.categoria}</p>
-              <p style="margin: var(--spacing-xs) 0;"><strong>Preço:</strong> <span style="color: var(--accent); font-weight: 600;">R$ ${carro.preco.toLocaleString('pt-BR')}</span></p>
+              <p style="margin: var(--spacing-xs) 0;"><strong>Preço:</strong> <span style="color: var(--level); font-weight: 600;">R$ ${carro.preco.toLocaleString('pt-BR')}</span></p>
               <p style="margin: var(--spacing-xs) 0;"><strong>Ano:</strong> ${carro.ano}</p>
               <p style="margin: var(--spacing-xs) 0;"><strong>Status:</strong> Disponível</p>
             </div>

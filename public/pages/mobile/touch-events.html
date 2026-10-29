@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Touch Events — Mobile — QA Playground</title>
     <link rel="stylesheet" href="../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -51,7 +51,7 @@
             <div 
               id="touch-area" 
               data-testid="touch-area"
-              style="background: var(--surface); border: 2px dashed var(--accent); border-radius: var(--border-radius-md); padding: var(--spacing-xl); min-height: 200px; text-align: center; display: flex; align-items: center; justify-content: center; cursor: pointer; user-select: none;"
+              style="background: var(--surface); border: 2px dashed var(--level); border-radius: var(--border-radius-md); padding: var(--spacing-xl); min-height: 200px; text-align: center; display: flex; align-items: center; justify-content: center; cursor: pointer; user-select: none;"
             >
               <div>
                 <strong>Toque aqui</strong>
@@ -59,7 +59,7 @@
               </div>
             </div>
             
-            <div id="touch-log" data-testid="touch-log" style="background: rgba(0, 0, 0, 0.03); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-top: var(--spacing-md); max-height: 200px; overflow-y: auto; font-family: monospace; font-size: var(--font-size-sm);">
+            <div id="touch-log" data-testid="touch-log" style="background: color-mix(in srgb, var(--text) 3%, transparent); padding: var(--spacing-md); border-radius: var(--border-radius-md); margin-top: var(--spacing-md); max-height: 200px; overflow-y: auto; font-family: monospace; font-size: var(--font-size-sm);">
               <strong>Eventos Touch:</strong>
               <div id="touch-events" style="margin-top: var(--spacing-sm);"></div>
             </div>
@@ -85,7 +85,7 @@
             <div 
               id="swipe-area" 
               data-testid="swipe-area"
-              style="background: var(--surface); border: 2px solid var(--accent); border-radius: var(--border-radius-md); padding: var(--spacing-lg); min-height: 150px; position: relative; overflow: hidden; touch-action: pan-x;"
+              style="background: var(--surface); border: 2px solid var(--level); border-radius: var(--border-radius-md); padding: var(--spacing-lg); min-height: 150px; position: relative; overflow: hidden; touch-action: pan-x;"
             >
               <div id="swipe-content" data-testid="swipe-content" style="text-align: center; padding: var(--spacing-lg); transition: transform 0.3s ease;">
                 <strong>Deslize para a esquerda ou direita</strong>

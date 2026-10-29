@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Menu de Contexto — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -27,28 +27,28 @@
             <div 
               id="context-area" 
               data-testid="context-area"
-              style="padding: var(--spacing-xl); border: 2px dashed rgba(122, 168, 116, 0.3); border-radius: var(--border-radius-md); background: var(--surface); min-height: 200px; text-align: center; cursor: context-menu; position: relative;"
+              style="padding: var(--spacing-xl); border: 2px dashed color-mix(in srgb, var(--level) 30%, transparent); border-radius: var(--border-radius-md); background: var(--surface); min-height: 200px; text-align: center; cursor: context-menu; position: relative;"
             >
               <p style="color: var(--muted); margin: 0;">Clique com o botão direito aqui</p>
             </div>
 
-            <div id="context-menu" data-testid="context-menu" style="display: none; position: absolute; background: var(--surface); border: 1px solid rgba(122, 168, 116, 0.3); border-radius: var(--border-radius-sm); box-shadow: var(--shadow-md); padding: var(--spacing-xs); min-width: 200px; z-index: 1000;">
+            <div id="context-menu" data-testid="context-menu" style="display: none; position: absolute; background: var(--surface); border: 1px solid color-mix(in srgb, var(--level) 30%, transparent); border-radius: var(--border-radius-sm); box-shadow: var(--shadow-md); padding: var(--spacing-xs); min-width: 200px; z-index: 1000;">
               <button class="context-menu-item" data-testid="menu-item-copiar" data-action="copiar">📋 Copiar</button>
               <button class="context-menu-item" data-testid="menu-item-colar" data-action="colar">📄 Colar</button>
               <button class="context-menu-item" data-testid="menu-item-recortar" data-action="recortar">✂️ Recortar</button>
-              <hr style="margin: var(--spacing-xs) 0; border: none; border-top: 1px solid rgba(122, 168, 116, 0.2);">
+              <hr style="margin: var(--spacing-xs) 0; border: none; border-top: 1px solid color-mix(in srgb, var(--level) 20%, transparent);">
               <button class="context-menu-item" data-testid="menu-item-inspecionar" data-action="inspecionar">🔍 Inspecionar</button>
               <button class="context-menu-item" data-testid="menu-item-propriedades" data-action="propriedades">⚙️ Propriedades</button>
             </div>
 
-            <div id="context-result" data-testid="context-result" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+            <div id="context-result" data-testid="context-result" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 60px;">
               <p class="muted" style="margin: 0;">Nenhuma ação do menu de contexto realizada ainda.</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Simular clique direito (contextmenu event)</li>
@@ -157,11 +157,11 @@ Simular clique direito
       }
       
       .context-menu-item:hover {
-        background: rgba(122, 168, 116, 0.1);
+        background: color-mix(in srgb, var(--level) 10%, transparent);
       }
       
       .context-menu-item:active {
-        background: rgba(122, 168, 116, 0.2);
+        background: color-mix(in srgb, var(--level) 20%, transparent);
       }
     </style>
     <script>

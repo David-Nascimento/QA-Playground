@@ -217,8 +217,13 @@ export class NavigationManager {
   }
 }
 
+/** Largura (px) abaixo da qual o menu principal vira gaveta. Igual a $breakpoint-nav no SCSS. */
+const NAV_BREAKPOINT = 960;
+
 /**
- * Inicializa menu responsivo (mobile hamburger)
+ * Menu responsivo: abaixo de NAV_BREAKPOINT o botão #nav-toggle abre e fecha
+ * o #main-nav (classe .open). Fecha com Escape, clique fora, clique em link
+ * ou ao voltar para a largura de desktop.
  */
 export function initResponsiveNav(): void {
   const navToggle = document.getElementById('nav-toggle');
@@ -226,87 +231,47 @@ export function initResponsiveNav(): void {
 
   if (!navToggle || !mainNav) return;
 
-  // Estado inicial
-  navToggle.setAttribute('aria-expanded', 'false');
-  navToggle.setAttribute('aria-label', 'Abrir menu de navegação');
+  const mobileQuery = window.matchMedia(`(max-width: ${NAV_BREAKPOINT - 0.02}px)`);
+  const isOpen = (): boolean => mainNav.classList.contains('open');
 
-  /**
-   * Alterna estado do menu
-   */
-  const toggleMenu = (): void => {
-    const isOpen = mainNav.classList.toggle('open');
-    const isExpanded = isOpen;
-    
-    navToggle.setAttribute('aria-expanded', String(isExpanded));
-    navToggle.setAttribute(
-      'aria-label',
-      isExpanded ? 'Fechar menu de navegação' : 'Abrir menu de navegação'
-    );
-
-    // Previne scroll do body quando menu está aberto em mobile
-    if (window.innerWidth < 768) {
-      if (isOpen) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
-      }
-    }
+  const setOpen = (open: boolean): void => {
+    mainNav.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Fechar menu de navegação' : 'Abrir menu de navegação');
+    document.documentElement.classList.toggle('nav-open', open && mobileQuery.matches);
   };
 
-  // Clique no botão
+  setOpen(false);
+
+  // Botão nativo: Enter/Espaço já disparam click
   navToggle.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
-    toggleMenu();
+    setOpen(!isOpen());
   });
 
-  // Suporte a teclado
-  navToggle.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleMenu();
-    }
-    
-    if (e.key === 'Escape') {
-      const isOpen = mainNav.classList.contains('open');
-      if (isOpen) {
-        toggleMenu();
-        navToggle.focus();
-      }
-    }
-  });
-
-  // Fecha menu ao clicar fora (apenas mobile)
+  // Clique fora fecha (somente no modo gaveta)
   document.addEventListener('click', (e) => {
-    if (window.innerWidth >= 768) return;
-    
-    const target = e.target as HTMLElement;
-    const isClickInsideNav = mainNav.contains(target);
-    const isClickOnToggle = navToggle.contains(target);
-    const isMenuOpen = mainNav.classList.contains('open');
-
-    if (isMenuOpen && !isClickInsideNav && !isClickOnToggle) {
-      toggleMenu();
-    }
+    if (!mobileQuery.matches || !isOpen()) return;
+    const target = e.target as Node;
+    if (!mainNav.contains(target) && !navToggle.contains(target)) setOpen(false);
   });
 
-  // Fecha menu ao redimensionar para desktop
-  window.addEventListener('resize', () => {
-    if (window.innerWidth >= 768) {
-      mainNav.classList.remove('open');
-      navToggle.setAttribute('aria-expanded', 'false');
-      navToggle.setAttribute('aria-label', 'Abrir menu de navegação');
-      document.body.style.overflow = '';
-    }
+  // Navegar por um link fecha a gaveta
+  mainNav.addEventListener('click', (e) => {
+    if (mobileQuery.matches && (e.target as HTMLElement).closest('a')) setOpen(false);
   });
 
-  // Fecha menu ao pressionar Escape (mobile)
+  // Escape fecha e devolve o foco ao botão
   document.addEventListener('keydown', (e) => {
-    if (window.innerWidth >= 768) return;
-    
-    if (e.key === 'Escape' && mainNav.classList.contains('open')) {
-      toggleMenu();
+    if (e.key === 'Escape' && isOpen()) {
+      setOpen(false);
       navToggle.focus();
     }
+  });
+
+  // Voltou para desktop: garante menu fechado e rolagem liberada
+  mobileQuery.addEventListener('change', (e) => {
+    if (!e.matches) setOpen(false);
   });
 }

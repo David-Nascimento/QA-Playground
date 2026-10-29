@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Disappearing Elements — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -20,7 +20,7 @@
         <div class="subsections subsections-vertical">
           <div class="subsection">
             <h3>Sobre esta Seção</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Testar elementos que aparecem e desaparecem dinamicamente</li>
@@ -51,12 +51,12 @@
               <button id="toggle-btn" class="btn" data-testid="toggle-btn">Alternar Elemento</button>
             </div>
 
-            <div id="disappear-box" data-testid="disappear-box" style="padding: var(--spacing-lg); background: var(--surface); border: 2px solid var(--accent); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
-              <strong style="color: var(--accent);">Elemento Dinâmico</strong>
+            <div id="disappear-box" data-testid="disappear-box" style="padding: var(--spacing-lg); background: var(--surface); border: 2px solid var(--level); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+              <strong style="color: var(--level);">Elemento Dinâmico</strong>
               <p style="margin-top: var(--spacing-sm); color: var(--muted);">Este elemento aparece e desaparece ao clicar no botão.</p>
             </div>
 
-            <div id="auto-disappear" data-testid="auto-disappear" style="display: none; padding: var(--spacing-md); background: var(--accent); color: white; border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
+            <div id="auto-disappear" data-testid="auto-disappear" style="display: none; padding: var(--spacing-md); background: var(--level); color: var(--on-accent); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-md);">
               <strong>Mensagem Temporária</strong>
               <p style="margin-top: var(--spacing-xs); font-size: var(--font-size-sm);">Esta mensagem desaparece automaticamente após 3 segundos.</p>
             </div>
@@ -66,7 +66,7 @@
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Alternar visibilidade de elementos</li>

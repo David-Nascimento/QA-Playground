@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Cypress Spies, Stubs e Clocks — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -26,7 +26,7 @@
             <div class="controls" style="margin-bottom: var(--spacing-md);">
               <button id="btn-alert" class="btn" data-testid="btn-alert">Disparar alerta</button>
             </div>
-            <div id="alert-result" data-testid="alert-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 50px;">
+            <div id="alert-result" data-testid="alert-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 50px;">
               <p class="muted" style="margin: 0;">Nenhum alerta disparado ainda.</p>
             </div>
           </div>
@@ -53,14 +53,14 @@
               <button id="btn-timer" class="btn" data-testid="btn-timer">Iniciar timer de 3s</button>
               <button id="btn-reset-timer" class="btn btn-secondary" data-testid="btn-reset-timer">Resetar</button>
             </div>
-            <div id="timer-result" data-testid="timer-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 50px;">
+            <div id="timer-result" data-testid="timer-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 50px;">
               <p class="muted" style="margin: 0;">Timer não iniciado.</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Espionar chamadas de funções (window.alert, console.log, etc.)</li>

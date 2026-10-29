@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Meu Endereço IP — QA Playground</title>
     <link rel="stylesheet" href="../../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -29,14 +29,14 @@
               <button id="btn-copy-ip" class="btn btn-secondary" data-testid="btn-copy-ip" style="display: none;">Copiar IP</button>
             </div>
 
-            <div id="ip-result" data-testid="ip-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 100px;">
+            <div id="ip-result" data-testid="ip-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 100px;">
               <p class="muted" style="margin: 0;">Nenhum IP buscado ainda.</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Testar busca de IP público via API</li>
@@ -149,9 +149,9 @@ Buscar e validar IP
           resultEl.innerHTML = `
             <div style="margin-bottom: var(--spacing-sm);">
               <strong>Endereço IP:</strong>
-              <div id="ip-address" data-testid="ip-address" style="color: var(--accent); font-size: var(--font-size-lg); font-weight: 600; margin-top: var(--spacing-xs);">${mockData.ip}</div>
+              <div id="ip-address" data-testid="ip-address" style="color: var(--level); font-size: var(--font-size-lg); font-weight: 600; margin-top: var(--spacing-xs);">${mockData.ip}</div>
             </div>
-            <div style="margin-top: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1px solid rgba(122, 168, 116, 0.2);">
+            <div style="margin-top: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1px solid color-mix(in srgb, var(--level) 20%, transparent);">
               <div style="margin-bottom: var(--spacing-xs);"><strong>País:</strong> <span style="color: var(--muted);">${mockData.country}</span></div>
               <div style="margin-bottom: var(--spacing-xs);"><strong>Cidade:</strong> <span style="color: var(--muted);">${mockData.city}</span></div>
               <div style="margin-bottom: var(--spacing-xs);"><strong>Timezone:</strong> <span style="color: var(--muted);">${mockData.timezone}</span></div>

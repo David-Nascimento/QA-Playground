@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Typos — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -40,14 +40,14 @@
               </div>
             </form>
 
-            <div id="typo-feedback" data-testid="typo-feedback" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+            <div id="typo-feedback" data-testid="typo-feedback" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 60px;">
               <p class="muted" style="margin: 0;">Aguardando validação...</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Testar digitação correta e validação de sucesso</li>
@@ -152,7 +152,7 @@ Validar typos
         
         if (val === 'QA Playground') {
           feedback.innerHTML = `
-            <p style="margin: 0; color: var(--accent);"><strong>✅ Correto!</strong></p>
+            <p style="margin: 0; color: var(--level);"><strong>✅ Correto!</strong></p>
             <p style="margin: var(--spacing-xs) 0 0 0; color: var(--muted); font-size: var(--font-size-sm);">Você digitou corretamente.</p>
           `;
           feedback.style.borderLeftColor = 'var(--accent)';

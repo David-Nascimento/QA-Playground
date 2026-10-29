@@ -6,7 +6,7 @@
     <title>JQuery UI Menus — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -25,7 +25,7 @@
               Clique nos itens do menu abaixo para abrir submenus. Teste a navegação e interação com menus jQuery UI.
             </p>
 
-            <div style="margin-bottom: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border: 2px solid rgba(122, 168, 116, 0.2); border-radius: var(--border-radius-md);">
+            <div style="margin-bottom: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border: 2px solid color-mix(in srgb, var(--level) 20%, transparent); border-radius: var(--border-radius-md);">
               <ul id="menu" data-testid="menu-jquery" style="list-style: none; padding: 0; margin: 0;">
                 <li data-testid="menu-item-arquivo">Arquivo
                   <ul>
@@ -51,14 +51,14 @@
               </ul>
             </div>
 
-            <div id="menu-result" data-testid="menu-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+            <div id="menu-result" data-testid="menu-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 60px;">
               <p class="muted" style="margin: 0;">Clique em um item do menu para ver o resultado.</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Testar abertura de menus e submenus</li>
@@ -161,7 +161,7 @@ Clicar em item de menu
             const itemText = ui.item.text();
             const timestamp = new Date().toLocaleTimeString('pt-BR');
             document.getElementById('menu-result').innerHTML = `
-              <p style="margin: 0; color: var(--accent);"><strong>✅ Item selecionado: ${itemText}</strong></p>
+              <p style="margin: 0; color: var(--level);"><strong>✅ Item selecionado: ${itemText}</strong></p>
               <p style="margin: var(--spacing-xs) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
             `;
             window.showToast(`Menu "${itemText}" selecionado!`);

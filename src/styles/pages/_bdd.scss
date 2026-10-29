@@ -52,7 +52,7 @@
 .session-selector {
   margin-bottom: var(--spacing-lg);
   padding: var(--spacing-md);
-  background: rgba(122, 168, 116, 0.1);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
   border-radius: var(--border-radius-md);
   border: 2px solid var(--accent);
 
@@ -66,7 +66,7 @@
   select {
     width: 100%;
     padding: var(--spacing-sm);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
     border-radius: var(--border-radius-sm);
     font-size: var(--font-size-base);
     background: var(--surface);
@@ -76,7 +76,7 @@
 
     &:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(122, 168, 116, 0.1);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 10%, transparent);
     }
   }
 }
@@ -84,7 +84,7 @@
 .session-info {
   margin-top: var(--spacing-sm);
   padding: var(--spacing-sm);
-  background: rgba(122, 168, 116, 0.05);
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
   border-radius: var(--border-radius-sm);
   font-size: var(--font-size-sm);
   @include text-muted;
@@ -93,7 +93,7 @@
 .session-tips {
   margin-top: var(--spacing-md);
   padding: var(--spacing-sm);
-  background: rgba(122, 168, 116, 0.05);
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
   border-radius: var(--border-radius-sm);
 
   h4 {
@@ -119,7 +119,7 @@
   width: 100%;
   min-height: 400px;
   padding: var(--spacing-md);
-  border: 2px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid color-mix(in srgb, var(--text) 10%, transparent);
   border-radius: var(--border-radius-md);
   font-family: $font-family-mono;
   font-size: var(--font-size-sm);
@@ -132,7 +132,7 @@
 
   &:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(122, 168, 116, 0.1);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 10%, transparent);
   }
 }
 
@@ -140,7 +140,7 @@
   width: 100%;
   padding: var(--spacing-md);
   background: var(--accent);
-  color: $color-white;
+  color: var(--on-accent);
   border: none;
   border-radius: var(--border-radius-md);
   font-size: var(--font-size-base);
@@ -151,7 +151,7 @@
 
   @include hover-state {
     &:not(:disabled) {
-      background: #6a9664;
+      background: var(--accent-strong);
       transform: translateY(-2px);
       box-shadow: var(--shadow-md);
     }
@@ -170,7 +170,7 @@
 .score-display {
   @include flex-between;
   padding: var(--spacing-lg);
-  background: linear-gradient(135deg, rgba(122, 168, 116, 0.1), rgba(122, 168, 116, 0.05));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, transparent), color-mix(in srgb, var(--accent) 5%, transparent));
   border-radius: var(--border-radius-md);
   margin-bottom: var(--spacing-md);
 }
@@ -195,7 +195,7 @@
 
 .breakdown-item {
   padding: var(--spacing-sm);
-  background: rgba(0, 0, 0, 0.03);
+  background: color-mix(in srgb, var(--text) 3%, transparent);
   border-radius: var(--border-radius-sm);
   font-size: var(--font-size-sm);
 
@@ -221,7 +221,7 @@
 .error-item {
   padding: var(--spacing-sm);
   margin-bottom: var(--spacing-sm);
-  background: rgba(220, 53, 69, 0.1);
+  background: color-mix(in srgb, var(--danger) 10%, transparent);
   border-left: 4px solid var(--danger);
   border-radius: var(--border-radius-sm);
 
@@ -249,7 +249,7 @@
 .suggestion-item {
   padding: var(--spacing-sm);
   margin-bottom: var(--spacing-sm);
-  background: rgba(255, 193, 7, 0.1);
+  background: color-mix(in srgb, var(--warning) 10%, transparent);
   border-left: 4px solid var(--warning);
   border-radius: var(--border-radius-sm);
   font-size: var(--font-size-sm);
@@ -267,7 +267,7 @@
 .explanation-item {
   padding: var(--spacing-md);
   margin-bottom: var(--spacing-md);
-  background: rgba(122, 168, 116, 0.1);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
   border-left: 4px solid var(--accent);
   border-radius: var(--border-radius-sm);
 
@@ -286,7 +286,7 @@
 
 .general-feedback {
   padding: var(--spacing-md);
-  background: rgba(122, 168, 116, 0.15);
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
   border-radius: var(--border-radius-md);
   margin-top: var(--spacing-md);
 
@@ -306,7 +306,7 @@
   display: inline-block;
   margin-top: var(--spacing-sm);
   padding: var(--spacing-xs) var(--spacing-sm);
-  background: rgba(122, 168, 116, 0.1);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
   color: var(--accent);
   text-decoration: none;
   border-radius: var(--border-radius-sm);
@@ -314,7 +314,7 @@
   @include transition(background);
 
   @include hover-state {
-    background: rgba(122, 168, 116, 0.2);
+    background: color-mix(in srgb, var(--accent) 20%, transparent);
   }
 }
 
@@ -322,7 +322,7 @@
   display: inline-block;
   padding: var(--spacing-xs) var(--spacing-sm);
   background: var(--success);
-  color: $color-white;
+  color: var(--on-accent);
   border-radius: var(--border-radius-sm);
   font-size: var(--font-size-sm);
   font-weight: $font-weight-semibold;
@@ -333,7 +333,7 @@
   display: inline-block;
   padding: var(--spacing-xs) var(--spacing-sm);
   background: var(--danger);
-  color: $color-white;
+  color: var(--on-accent);
   border-radius: var(--border-radius-sm);
   font-size: var(--font-size-sm);
   font-weight: $font-weight-semibold;

@@ -8,7 +8,9 @@
  *   LICENSE                 -> dist/public/LICENSE (linkado no rodapé das páginas)
  *
  * Arquivos .html de public/ passam pelos partials de src/partials
- * (<!-- @include header -->); ver src/partials/README.md.
+ * (<!-- @include header -->); ver src/partials/README.md. Páginas que usam
+ * css/main.css também recebem <body data-level> (cor do nível) e o script
+ * que aplica o tema salvo antes da primeira pintura.
  *
  * O TypeScript (tsc) e o SCSS (sass) escrevem direto em dist/public/js e
  * dist/public/css; este script cuida apenas do que é copiado.
@@ -64,7 +66,7 @@ export function renderPage(html, pagePath) {
   /** {{root}}alvo -> caminho relativo mínimo da página até o alvo */
   const resolve = (target) => path.posix.relative(dir, target) || path.posix.basename(target);
 
-  return html.replace(INCLUDE_RE, (_line, indent, name) =>
+  let out = html.replace(INCLUDE_RE, (_line, indent, name) =>
     loadPartial(name)
       .replace(/(href|src)="\{\{root\}\}([^"]*)"/g, (_m, attr, target) => {
         const current = attr === 'href' && target === pagePath ? ' aria-current="page"' : '';
@@ -76,6 +78,28 @@ export function renderPage(html, pagePath) {
       .trimStart() // a indentação da 1ª linha já vem da linha do comentário
       .replace(/^/, indent)
   );
+
+  // Somente páginas do site (que usam o CSS principal) recebem os ajustes abaixo
+  if (!/href="[^"]*css\/main\.css"/.test(out)) return out;
+
+  // Tema salvo aplicado antes da primeira pintura (evita "piscar" claro -> escuro)
+  out = out.replace(/(\s*)<\/head>/, `$1  ${THEME_BOOT}$1</head>`);
+
+  // Cor do nível: <body data-level="..."> (apenas o primeiro <body> do documento)
+  const level = levelOf(pagePath);
+  if (level) out = out.replace(/<body(\s|>)/, `<body data-level="${level}"$1`);
+
+  return out;
+}
+
+/** Script mínimo que aplica o tema salvo pelo StateManager ('qaplay-theme'). */
+const THEME_BOOT =
+  "<script>try{var t=localStorage.getItem('qaplay-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>";
+
+/** Nível de senioridade pelo caminho da página (define a cor de destaque). */
+export function levelOf(pagePath) {
+  const m = pagePath.match(/^pages\/(?:(junior|pleno|senior)\/|desafio\/(junior|pleno|senior)\.html$)/);
+  return m ? m[1] || m[2] : null;
 }
 
 function copyFile(src, dest) {

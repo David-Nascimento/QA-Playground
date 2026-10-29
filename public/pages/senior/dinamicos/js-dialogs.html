@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>JavaScript Dialogs — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -30,14 +30,14 @@
               <button id="btn-prompt" class="btn" data-testid="btn-prompt">Disparar Prompt</button>
             </div>
 
-            <div id="dialog-result" data-testid="dialog-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 100px;">
+            <div id="dialog-result" data-testid="dialog-result" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 100px;">
               <p class="muted" style="margin: 0;">Nenhum diálogo disparado ainda. Clique nos botões acima.</p>
             </div>
           </div>
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Testar automação de alert()</li>
@@ -158,7 +158,7 @@ Aceitar confirm
         resultEl.innerHTML = `
           <p style="margin: 0 0 var(--spacing-sm) 0;"><strong>Diálogo #${dialogCount} - ${type}:</strong></p>
           <p style="margin: 0; color: var(--muted);">${message}</p>
-          ${userAction ? `<p style="margin: var(--spacing-xs) 0 0 0; color: var(--accent);">Ação do usuário: ${userAction}</p>` : ''}
+          ${userAction ? `<p style="margin: var(--spacing-xs) 0 0 0; color: var(--level);">Ação do usuário: ${userAction}</p>` : ''}
           <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
         `;
       }

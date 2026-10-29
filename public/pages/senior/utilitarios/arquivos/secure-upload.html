@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Upload Seguro — QA Playground</title>
     <link rel="stylesheet" href="../../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -39,7 +39,7 @@
               <button id="btn-login-upload" class="btn" data-testid="btn-login-upload">Fazer Login</button>
             </div>
 
-            <div id="upload-auth-status" data-testid="upload-auth-status" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px; display: none;">
+            <div id="upload-auth-status" data-testid="upload-auth-status" style="padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 60px; display: none;">
               <p class="muted" style="margin: 0;">Não autenticado.</p>
             </div>
           </div>
@@ -74,7 +74,7 @@
 
                 <div id="upload-progress" data-testid="upload-progress" style="display: none; margin-top: var(--spacing-md);">
                   <div style="background: var(--bg); border-radius: var(--border-radius-sm); padding: var(--spacing-sm); margin-bottom: var(--spacing-xs);">
-                    <div id="progress-bar" style="background: var(--accent); height: 20px; border-radius: var(--border-radius-sm); width: 0%; transition: width 0.3s;"></div>
+                    <div id="progress-bar" style="background: var(--level); height: 20px; border-radius: var(--border-radius-sm); width: 0%; transition: width 0.3s;"></div>
                   </div>
                   <p id="progress-text" style="text-align: center; color: var(--muted); font-size: var(--font-size-sm); margin: 0;">0%</p>
                 </div>
@@ -89,7 +89,7 @@
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Testar autenticação antes do upload</li>
@@ -227,7 +227,7 @@ Wait Until Element Is Visible    [data-testid="upload-result"]    timeout=10s</c
 
         if (isAuthenticated) {
           statusEl.style.display = 'block';
-          statusEl.innerHTML = '<p style="margin: 0; color: var(--accent);"><strong>✅ Autenticado</strong> - Você pode fazer upload de arquivos</p>';
+          statusEl.innerHTML = '<p style="margin: 0; color: var(--level);"><strong>✅ Autenticado</strong> - Você pode fazer upload de arquivos</p>';
           formEl.style.display = 'block';
           loginRequiredEl.style.display = 'none';
         } else {
@@ -326,7 +326,7 @@ Wait Until Element Is Visible    [data-testid="upload-result"]    timeout=10s</c
             const timestamp = new Date().toLocaleTimeString('pt-BR');
             resultEl.style.display = 'block';
             resultEl.innerHTML = `
-              <p style="margin: 0 0 var(--spacing-sm) 0; color: var(--accent);"><strong>✅ Upload concluído com sucesso!</strong></p>
+              <p style="margin: 0 0 var(--spacing-sm) 0; color: var(--level);"><strong>✅ Upload concluído com sucesso!</strong></p>
               <p style="margin: 0; color: var(--muted);">Arquivo: ${currentFile.name}</p>
               <p style="margin: var(--spacing-sm) 0 0 0; font-size: var(--font-size-sm); color: var(--muted);">Horário: ${timestamp}</p>
             `;

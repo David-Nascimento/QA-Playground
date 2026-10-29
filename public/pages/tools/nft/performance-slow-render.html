@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Performance - Renderização Lenta — Cenários NFT — QA Playground</title>
     <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
       .performance-controls {
         background: var(--surface);
@@ -16,7 +16,7 @@
       }
       .performance-controls h3 {
         margin-top: 0;
-        color: var(--accent);
+        color: var(--level);
       }
       .control-group {
         display: flex;
@@ -31,13 +31,13 @@
       }
       .control-group input[type="number"] {
         padding: var(--spacing-sm);
-        border: 1px solid rgba(0, 0, 0, 0.1);
+        border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
         border-radius: var(--border-radius-sm);
         width: 100px;
       }
       .render-area {
         background: var(--surface);
-        border: 2px solid rgba(0, 0, 0, 0.1);
+        border: 2px solid color-mix(in srgb, var(--text) 10%, transparent);
         border-radius: var(--border-radius-lg);
         padding: var(--spacing-lg);
         min-height: 400px;
@@ -49,8 +49,8 @@
         display: inline-block;
         padding: var(--spacing-xs) var(--spacing-sm);
         margin: var(--spacing-xs);
-        background: var(--accent);
-        color: white;
+        background: var(--level);
+        color: var(--on-accent);
         border-radius: var(--border-radius-sm);
         font-size: var(--font-size-sm);
         animation: fadeIn 0.2s ease;
@@ -66,15 +66,15 @@
         margin-top: var(--spacing-lg);
       }
       .metric-card {
-        background: rgba(0, 0, 0, 0.03);
+        background: color-mix(in srgb, var(--text) 3%, transparent);
         padding: var(--spacing-md);
         border-radius: var(--border-radius-md);
-        border-left: 3px solid var(--accent);
+        border-left: 3px solid var(--level);
       }
       .metric-value {
         font-size: 1.5em;
         font-weight: 700;
-        color: var(--accent);
+        color: var(--level);
         margin: var(--spacing-xs) 0;
       }
       .metric-label {

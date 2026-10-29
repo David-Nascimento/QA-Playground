@@ -1,0 +1,70 @@
+// ========================================
+// Tables
+// ========================================
+
+.table,
+main table:not([class]) {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  font-size: var(--font-size-sm);
+
+  th,
+  td {
+    padding: 12px var(--spacing-md);
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--border);
+  }
+
+  thead th {
+    background: var(--surface-2);
+    color: var(--text);
+    font-weight: $font-weight-bold;
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    @include transition(background);
+
+    @include hover-state {
+      background: color-mix(in srgb, var(--accent) 5%, transparent);
+    }
+
+    &:last-child td {
+      border-bottom: none;
+    }
+  }
+}
+
+// Em telas estreitas, tabelas rolam dentro do próprio bloco em vez de
+// estourar a página (sem alterar o DOM das tabelas de prática).
+@include respond-to(md) {
+  .table,
+  main table:not([class]) {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+}
+
+.sortable-header {
+  cursor: pointer;
+  user-select: none;
+
+  @include hover-state {
+    color: var(--accent);
+  }
+}
+
+.sort-indicator {
+  color: var(--accent);
+  margin-left: 4px;
+}

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hovers — QA Playground</title>
   <link rel="stylesheet" href="../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- @include header -->
@@ -20,7 +20,7 @@
         <div class="subsections subsections-vertical">
           <div class="subsection">
             <h3>Sobre esta Seção</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Atividades do Dia a Dia:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Testar eventos de hover (mouseenter/mouseleave)</li>
@@ -72,7 +72,7 @@
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Cenários de Teste:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Fazer hover sobre elementos e validar informações que aparecem</li>
@@ -240,10 +240,10 @@ Testar hover em botão
       }
 
       .hover-box:hover {
-        background: var(--accent);
-        color: white;
+        background: var(--level);
+        color: var(--on-accent);
         transform: translateY(-5px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 12px color-mix(in srgb, var(--text) 15%, transparent);
       }
 
       .hover-info {
@@ -253,7 +253,7 @@ Testar hover em botão
         left: 50%;
         transform: translateX(-50%);
         background: var(--text);
-        color: white;
+        color: var(--on-accent);
         padding: var(--spacing-sm) var(--spacing-md);
         border-radius: var(--border-radius-sm);
         font-size: var(--font-size-sm);
@@ -268,8 +268,8 @@ Testar hover em botão
       .hover-button {
         display: inline-block;
         padding: var(--spacing-md) var(--spacing-lg);
-        background: var(--accent);
-        color: white;
+        background: var(--level);
+        color: var(--on-accent);
         border-radius: var(--border-radius-md);
         cursor: pointer;
         position: relative;
@@ -288,7 +288,7 @@ Testar hover em botão
         left: 50%;
         transform: translateX(-50%);
         background: var(--text);
-        color: white;
+        color: var(--on-accent);
         padding: var(--spacing-sm) var(--spacing-md);
         border-radius: var(--border-radius-sm);
         font-size: var(--font-size-sm);

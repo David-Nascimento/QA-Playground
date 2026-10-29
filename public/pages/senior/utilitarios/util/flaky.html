@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Teste Flaky — QA Playground</title>
     <link rel="stylesheet" href="../../../../css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- @include header -->
@@ -28,11 +28,11 @@
               <button id="btn-trigger-flaky" class="btn" data-testid="btn-trigger-flaky">Disparar Elemento Flaky</button>
             </div>
 
-            <div id="flaky-container" data-testid="flaky-container" style="min-height: 150px; padding: var(--spacing-md); border: 2px dashed rgba(122, 168, 116, 0.3); border-radius: var(--border-radius-md); background: var(--surface); position: relative;">
+            <div id="flaky-container" data-testid="flaky-container" style="min-height: 150px; padding: var(--spacing-md); border: 2px dashed color-mix(in srgb, var(--level) 30%, transparent); border-radius: var(--border-radius-md); background: var(--surface); position: relative;">
               <p class="muted" style="margin: 0; text-align: center; padding-top: 50px;">Aguardando elemento aparecer...</p>
             </div>
 
-            <div id="flaky-result" data-testid="flaky-result" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent); min-height: 60px;">
+            <div id="flaky-result" data-testid="flaky-result" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--border-radius-md); border-left: 4px solid var(--level); min-height: 60px;">
               <p class="muted" style="margin: 0;">Nenhum elemento flaky detectado ainda.</p>
             </div>
           </div>
@@ -54,7 +54,7 @@
 
           <div class="subsection" style="margin-top: var(--spacing-lg);">
             <h3>Informações para Testes</h3>
-            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--accent);">
+            <div style="background: var(--surface); padding: var(--spacing-md); border-radius: var(--border-radius-md); border-left: 4px solid var(--level);">
               <p style="margin-bottom: var(--spacing-sm);"><strong>Características de Testes Flaky:</strong></p>
               <ul style="margin-left: var(--spacing-lg); color: var(--muted); font-size: var(--font-size-sm);">
                 <li>Elementos que aparecem/disparecem aleatoriamente</li>
