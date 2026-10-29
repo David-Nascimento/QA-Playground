@@ -2,9 +2,12 @@
 /**
  * Verifica href/src locais de todas as páginas HTML.
  * Uso: node tools/qa/check-links.mjs [--root <dir>]
+ *
+ * Links quebrados de propósito (exercícios) ficam em tools/qa/links-allowlist.txt.
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const rootArg = process.argv.indexOf('--root');
 const ROOT = path.resolve(rootArg > -1 ? process.argv[rootArg + 1] : '.');
@@ -18,6 +21,16 @@ function listHtml(dir) {
   });
 }
 
+const allowFile = path.join(path.dirname(fileURLToPath(import.meta.url)), 'links-allowlist.txt');
+const allowed = new Set(
+  fs.existsSync(allowFile)
+    ? fs.readFileSync(allowFile, 'utf8').split(/\r?\n/)
+        .map((l) => l.replace(/#.*$/, '').trim())
+        .filter(Boolean)
+        .map((l) => l.replace(/\s+->\s+/, ' -> '))
+    : []
+);
+
 const broken = [];
 for (const file of listHtml(ROOT)) {
   const html = fs.readFileSync(file, 'utf8').replace(/<!--[\s\S]*?-->/g, '');
@@ -29,7 +42,8 @@ for (const file of listHtml(ROOT)) {
     const clean = url.split(/[?#]/)[0];
     if (!clean) continue;
     const target = clean.startsWith('/') ? path.join(ROOT, clean) : path.join(path.dirname(file), clean);
-    if (!fs.existsSync(target)) broken.push(`${path.relative(ROOT, file)} -> ${url}`);
+    const entry = `${path.relative(ROOT, file).split(path.sep).join('/')} -> ${url}`;
+    if (!fs.existsSync(target) && !allowed.has(entry)) broken.push(entry);
   }
 }
 

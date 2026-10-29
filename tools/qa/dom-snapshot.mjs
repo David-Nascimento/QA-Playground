@@ -10,13 +10,16 @@
  * Uso:
  *   node tools/qa/dom-snapshot.mjs --root <dir> --out <arquivo.json>
  *   node tools/qa/dom-snapshot.mjs --root <dir> --compare <baseline.json>
+ *
+ * --ignore-layout   ignora header.et-header e footer.site-footer (layout
+ *                   compartilhado), para comparar só o conteúdo de cada página.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 
 const args = Object.fromEntries(
   process.argv.slice(2).reduce((acc, cur, i, arr) => {
-    if (cur.startsWith('--')) acc.push([cur.slice(2), arr[i + 1]]);
+    if (cur.startsWith('--')) acc.push([cur.slice(2), arr[i + 1]?.startsWith('--') ? true : arr[i + 1]]);
     return acc;
   }, [])
 );
@@ -50,6 +53,11 @@ function snapshot(file) {
     .replace(/<!--[\s\S]*?-->/g, '')
     .replace(/<script\b[\s\S]*?<\/script>/gi, '')
     .replace(/<style\b[\s\S]*?<\/style>/gi, '');
+  if ('ignore-layout' in args) {
+    html = html
+      .replace(/<header\s+class="et-header"[\s\S]*?<\/header>/gi, '')
+      .replace(/<footer\s+class="site-footer"[\s\S]*?<\/footer>/gi, '');
+  }
 
   const elements = [];
   const tagRe = /<([a-zA-Z][a-zA-Z0-9-]*)(\s[^>]*)?>/g;

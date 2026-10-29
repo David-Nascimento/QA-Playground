@@ -1,0 +1,3 @@
+# Links quebrados DE PROPÓSITO (fazem parte de um exercício).
+# Formato: <página relativa à raiz do site> -> <href exato>   # motivo
+pages/senior/dinamicos/broken-images.html -> ../../../assets/img/nao-existe.png   # exercício "Broken Images"

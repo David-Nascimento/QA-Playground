@@ -7,6 +7,9 @@
  *   src/styles/legacy/      -> dist/public/css/    (CSS ainda não migrado para SCSS)
  *   LICENSE                 -> dist/public/LICENSE (linkado no rodapé das páginas)
  *
+ * Arquivos .html de public/ passam pelos partials de src/partials
+ * (<!-- @include header -->); ver src/partials/README.md.
+ *
  * O TypeScript (tsc) e o SCSS (sass) escrevem direto em dist/public/js e
  * dist/public/css; este script cuida apenas do que é copiado.
  *
@@ -22,9 +25,12 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const OUT = path.join(ROOT, 'dist', 'public');
 
+const PUBLIC_DIR = path.join(ROOT, 'public');
+const PARTIALS_DIR = path.join(ROOT, 'src', 'partials');
+
 /** Pares origem -> destino copiados para o site. */
 export const COPY_RULES = [
-  { from: path.join(ROOT, 'public'), to: OUT },
+  { from: PUBLIC_DIR, to: OUT },
   { from: path.join(ROOT, 'src', 'client', 'legacy'), to: path.join(OUT, 'js') },
   { from: path.join(ROOT, 'src', 'styles', 'legacy'), to: path.join(OUT, 'css') },
   { from: path.join(ROOT, 'LICENSE'), to: path.join(OUT, 'LICENSE') },
@@ -32,9 +38,63 @@ export const COPY_RULES = [
 
 const rel = (p) => path.relative(ROOT, p).split(path.sep).join('/');
 
+// ---------------------------------------------------------------------------
+// Partials
+// ---------------------------------------------------------------------------
+
+// O lookahead preserva o \r da linha original (arquivos CRLF)
+const INCLUDE_RE = /^([ \t]*)<!-- @include ([\w-]+) -->[ \t]*(?=\r?$)/gm;
+
+function loadPartial(name) {
+  const file = path.join(PARTIALS_DIR, `${name}.html`);
+  if (!fs.existsSync(file)) throw new Error(`partial inexistente: src/partials/${name}.html`);
+  return fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n').trimEnd();
+}
+
+/**
+ * Renderiza uma página de public/: injeta partials, ajusta {{root}} e marca
+ * o link da página atual com aria-current="page".
+ * @param {string} html conteúdo da página
+ * @param {string} pagePath caminho da página relativo a public/ (ex.: pages/junior/index.html)
+ */
+export function renderPage(html, pagePath) {
+  const dir = path.posix.dirname(pagePath);
+  const eol = html.includes('\r\n') ? '\r\n' : '\n';
+
+  /** {{root}}alvo -> caminho relativo mínimo da página até o alvo */
+  const resolve = (target) => path.posix.relative(dir, target) || path.posix.basename(target);
+
+  return html.replace(INCLUDE_RE, (_line, indent, name) =>
+    loadPartial(name)
+      .replace(/(href|src)="\{\{root\}\}([^"]*)"/g, (_m, attr, target) => {
+        const current = attr === 'href' && target === pagePath ? ' aria-current="page"' : '';
+        return `${attr}="${resolve(target)}"${current}`;
+      })
+      .split('\n')
+      .map((line) => (line ? indent + line : line))
+      .join(eol)
+      .trimStart() // a indentação da 1ª linha já vem da linha do comentário
+      .replace(/^/, indent)
+  );
+}
+
 function copyFile(src, dest) {
   fs.mkdirSync(path.dirname(dest), { recursive: true });
-  fs.copyFileSync(src, dest);
+  if (src.endsWith('.html') && src.startsWith(PUBLIC_DIR + path.sep)) {
+    const pagePath = path.relative(PUBLIC_DIR, src).split(path.sep).join('/');
+    fs.writeFileSync(dest, renderPage(fs.readFileSync(src, 'utf8'), pagePath));
+  } else {
+    fs.copyFileSync(src, dest);
+  }
+}
+
+/** Re-renderiza todas as páginas (quando um partial muda). */
+function renderAllPages(dir = PUBLIC_DIR) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const src = path.join(dir, entry.name);
+    if (entry.isDirectory()) renderAllPages(src);
+    else if (entry.name.endsWith('.html')) copyFile(src, path.join(OUT, path.relative(PUBLIC_DIR, src)));
+  }
 }
 
 function copyTree(from, to) {
@@ -82,7 +142,15 @@ function watch() {
       }
     });
   }
-  console.log('[site] observando public/ e pastas legacy...');
+  fs.watch(PARTIALS_DIR, () => {
+    try {
+      renderAllPages();
+      console.log('[site] partial alterado: páginas re-renderizadas');
+    } catch (err) {
+      console.error('[site] erro ao renderizar partials:', err.message);
+    }
+  });
+  console.log('[site] observando public/, src/partials e pastas legacy...');
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
