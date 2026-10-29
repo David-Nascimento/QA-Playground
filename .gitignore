@@ -3,28 +3,15 @@ node_modules/
 package-lock.json
 yarn.lock
 
-# Arquivos compilados TypeScript
-# Nota: Para deploy na Vercel, os arquivos são gerados durante o build
-# Mantenha comentado se quiser rastrear no Git, ou descomente para ignorar
-js/core/
-js/ui/
-js/features/
-js/index.js
-js/index.js.map
-js/index.d.ts
-js/index.d.ts.map
-
-# Saída de build (API em dist/server)
+# Saída de build: tudo que é gerado vai para dist/
+#   dist/public  -> site estático (publicado na Vercel)
+#   dist/server  -> API compilada para uso local
 dist/
 
-# Build antigo da API (antes de server/)
+# Saídas antigas (antes da reestruturação), caso existam localmente
+js/
+css/
 api/js/
-
-# CSS compilado
-# Nota: Para deploy na Vercel, o arquivo é gerado durante o build
-# Mantenha comentado se quiser rastrear no Git, ou descomente para ignorar
-css/main.css
-css/main.css.map
 
 # TypeScript
 *.tsbuildinfo

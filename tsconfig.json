@@ -11,10 +11,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
-    "outDir": "./js",
-    "rootDir": "./src",
-    "declaration": true,
-    "declarationMap": true,
+    "rootDir": "./src/client",
+    "outDir": "./dist/public/js",
+    "declaration": false,
     "sourceMap": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -22,12 +21,6 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "js",
-    "dist"
-  ]
+  "include": ["src/client/**/*.ts"],
+  "exclude": ["node_modules", "dist", "src/client/legacy"]
 }
