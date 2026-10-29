@@ -27,7 +27,11 @@ Thumbs.db
 *.tsbuildinfo
 
 # Scripts de migração (não necessários no deploy)
-scripts/
+# A barra inicial limita à raiz: sem ela, "scripts/" ignoraria qualquer pasta
+# com esse nome no projeto.
+/scripts/
 
-# Documentação de desenvolvimento
-docs/
+# Documentação de desenvolvimento (só a pasta da raiz).
+# Atenção: "docs/" sem barra inicial também ignorava server/docs/, que é
+# código da API (documentação servida em GET /api e coleção Postman).
+/docs/
