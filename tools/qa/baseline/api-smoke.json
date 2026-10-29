@@ -1,0 +1,726 @@
+{
+ "express": [
+  {
+   "req": "GET /api/health",
+   "status": 200,
+   "body": "{\"status\":\"ok\",\"timestamp\":\"<DATE>\",\"service\":\"QA Playground API Mock\"}"
+  },
+  {
+   "req": "GET /api",
+   "status": 200,
+   "body": "{\"name\":\"QA Playground API Mock\",\"version\":\"1.0.0\",\"description\":\"API mockada para prática de testes QA\",\"baseUrl\":{\"local\":\"http://localhost:3001/api\",\"production\":\"https://qa-playground-azure.vercel.app/api\"},\"credentials\":{\"admin\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"},\"user\":{\"email\":\"user@example.com\",\"password\":\"user123\"},\"viewer\":{\"email\":\"viewer@example.com\",\"password\":\"viewer123\"}},\"endpoints\":{\"health\":{\"method\":\"GET\",\"path\":\"/api/health\",\"description\":\"Verifica o status da API\",\"auth\":false,\"example\":{\"request\":\"GET /api/health\",\"response\":{\"status\":\"ok\",\"timestamp\":\"<DATE>\",\"service\":\"QA Playground API Mock\"}}},\"documentation\":{\"method\":\"GET\",\"path\":\"/api ou /api/docs\",\"description\":\"Retorna esta documentação completa\",\"auth\":false},\"auth\":{\"login\":{\"method\":\"POST\",\"path\":\"/api/auth/login\",\"description\":\"Faz login e retorna token JWT\",\"auth\":false,\"body\":{\"email\":\"string (obrigatório)\",\"password\":\"string (obrigatório)\"},\"example\":{\"request\":{\"url\":\"POST /api/auth/login\",\"headers\":{\"Content-Type\":\"application/json\"},\"body\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"}},\"response\":{\"success\":true,\"data\":{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\"user\":{\"id\":1,\"name\":\"Admin User\",\"email\":\"admin@example.com\",\"role\":\"admin\"}}}}},\"logout\":{\"method\":\"POST\",\"path\":\"/api/auth/logout\",\"description\":\"Faz logout e invalida token\",\"auth\":true,\"example\":{\"request\":{\"url\":\"POST /api/auth/logout\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"me\":{\"method\":\"GET\",\"path\":\"/api/auth/me\",\"description\":\"Retorna informações do usuário autenticado\",\"auth\":true,\"example\":{\"request\":{\"url\":\"GET /api/auth/me\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"validate\":{\"method\":\"POST\",\"path\":\"/api/auth/validate\",\"description\":\"Valida um token JWT\",\"auth\":false,\"body\":{\"token\":\"string (obrigatório)\"}}},\"users\":{\"list\":{\"method\":\"GET\",\"path\":\"/api/users\",\"description\":\"Lista todos os usuários (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"],\"example\":{\"request\":{\"url\":\"GET /api/users\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"getById\":{\"method\":\"GET\",\"path\":\"/api/users/:id\",\"description\":\"Retorna um usuário específico\",\"auth\":true,\"example\":{\"request\":{\"url\":\"GET /api/users/1\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"create\":{\"method\":\"POST\",\"path\":\"/api/users\",\"description\":\"Cria um novo usuário (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"],\"body\":{\"name\":\"string (obrigatório)\",\"email\":\"string (obrigatório, único)\",\"role\":\"string (admin|user|viewer)\",\"active\":\"boolean\"},\"example\":{\"request\":{\"url\":\"POST /api/users\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\",\"Content-Type\":\"application/json\"},\"body\":{\"name\":\"Novo Usuário\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true}}}},\"update\":{\"method\":\"PUT\",\"path\":\"/api/users/:id\",\"description\":\"Atualiza um usuário\",\"auth\":true,\"body\":{\"name\":\"string (opcional)\",\"email\":\"string (opcional)\",\"role\":\"string (opcional)\",\"active\":\"boolean (opcional)\"}},\"delete\":{\"method\":\"DELETE\",\"path\":\"/api/users/:id\",\"description\":\"Deleta um usuário (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"]}},\"orders\":{\"list\":{\"method\":\"GET\",\"path\":\"/api/orders\",\"description\":\"Lista pedidos (próprios ou todos se admin)\",\"auth\":true,\"example\":{\"request\":{\"url\":\"GET /api/orders\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"getById\":{\"method\":\"GET\",\"path\":\"/api/orders/:id\",\"description\":\"Retorna um pedido específico\",\"auth\":true},\"create\":{\"method\":\"POST\",\"path\":\"/api/orders\",\"description\":\"Cria um novo pedido\",\"auth\":true,\"body\":{\"items\":\"array (obrigatório)\"},\"example\":{\"request\":{\"url\":\"POST /api/orders\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\",\"Content-Type\":\"application/json\"},\"body\":{\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}]}}}},\"update\":{\"method\":\"PUT\",\"path\":\"/api/orders/:id\",\"description\":\"Atualiza um pedido\",\"auth\":true},\"delete\":{\"method\":\"DELETE\",\"path\":\"/api/orders/:id\",\"description\":\"Deleta um pedido (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"]}}},\"scenarios\":{\"description\":\"Use ?scenario=<tipo> ou header x-mock-scenario para controlar comportamentos da API\",\"usage\":{\"queryParam\":\"GET /api/users?scenario=error-401\",\"header\":\"x-mock-scenario: error-500\"},\"types\":[{\"name\":\"success\",\"description\":\"Resposta de sucesso (padrão)\",\"statusCode\":200},{\"name\":\"error-400\",\"description\":\"Bad Request - Payload inválido\",\"statusCode\":400},{\"name\":\"error-401\",\"description\":\"Unauthorized - Não autenticado\",\"statusCode\":401},{\"name\":\"error-403\",\"description\":\"Forbidden - Sem permissão\",\"statusCode\":403},{\"name\":\"error-404\",\"description\":\"Not Found - Recurso inexistente\",\"statusCode\":404},{\"name\":\"error-409\",\"description\":\"Conflict - Conflito de dados\",\"statusCode\":409},{\"name\":\"error-422\",\"description\":\"Unprocessable Entity - Erro de validação\",\"statusCode\":422},{\"name\":\"error-429\",\"description\":\"Too Many Requests - Rate limit\",\"statusCode\":429},{\"name\":\"error-500\",\"description\":\"Internal Server Error - Erro inesperado\",\"statusCode\":500},{\"name\":\"error-503\",\"description\":\"Service Unavailable - Serviço indisponível\",\"statusCode\":503},{\"name\":\"timeout\",\"description\":\"Gateway Timeout - Requisição demorada (10 segundos)\",\"statusCode\":504}]},\"postman\":{\"title\":\"Como usar com Postman\",\"steps\":[{\"step\":1,\"title\":\"Importar Coleção\",\"description\":\"Importe a coleção pronta: api/QA-Playground-API.postman_collection.json\",\"details\":[\"Abra o Postman\",\"Clique em Import\",\"Selecione o arquivo QA-Playground-API.postman_collection.json\",\"A coleção será importada com todas as requisições prontas\"]},{\"step\":2,\"title\":\"Configurar Variáveis de Ambiente\",\"description\":\"Crie um ambiente para facilitar a troca entre local e produção\",\"environments\":{\"local\":{\"name\":\"QA Playground Local\",\"variables\":{\"base_url\":\"http://localhost:3001/api\",\"token\":\"(será preenchido após login)\"}},\"production\":{\"name\":\"QA Playground Production\",\"variables\":{\"base_url\":\"https://qa-playground-azure.vercel.app/api\",\"token\":\"(será preenchido após login)\"}}},\"instructions\":[\"Clique em Environments → +\",\"Crie um novo ambiente\",\"Adicione as variáveis base_url e token\",\"Selecione o ambiente antes de fazer requisições\"]},{\"step\":3,\"title\":\"Fazer Login\",\"description\":\"Execute a requisição de login para obter o token\",\"example\":{\"method\":\"POST\",\"url\":\"{{base_url}}/auth/login\",\"body\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"}},\"note\":\"A coleção já inclui um script que salva o token automaticamente após o login\"},{\"step\":4,\"title\":\"Usar Token nas Requisições\",\"description\":\"O token será usado automaticamente nas requisições que requerem autenticação\",\"example\":{\"method\":\"GET\",\"url\":\"{{base_url}}/users\",\"headers\":{\"Authorization\":\"Bearer {{token}}\"}}},{\"step\":5,\"title\":\"Testar Cenários de Erro\",\"description\":\"Use query params ou headers para simular diferentes cenários\",\"examples\":[\"GET {{base_url}}/users?scenario=error-401\",\"GET {{base_url}}/users?scenario=error-500\",\"Header: x-mock-scenario: error-403\"]}]},\"insomnia\":{\"title\":\"Como usar com Insomnia\",\"steps\":[{\"step\":1,\"title\":\"Criar Novo Projeto\",\"instructions\":[\"Abra o Insomnia\",\"Clique em Create → New Design Document\",\"Nomeie como: QA Playground API\"]},{\"step\":2,\"title\":\"Configurar Variáveis de Ambiente\",\"instructions\":[\"Clique no ícone de Environment (canto superior direito)\",\"Clique em Manage Environments → Create Environment\",\"Nomeie como: Local\",\"Adicione as variáveis:\"],\"variables\":{\"base_url\":\"http://localhost:3001/api\",\"token\":\"\"}},{\"step\":3,\"title\":\"Criar Requisições\",\"examples\":[{\"name\":\"Health Check\",\"method\":\"GET\",\"url\":\"{{ _.base_url }}/health\"},{\"name\":\"Login\",\"method\":\"POST\",\"url\":\"{{ _.base_url }}/auth/login\",\"body\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"}},{\"name\":\"Get Users\",\"method\":\"GET\",\"url\":\"{{ _.base_url }}/users\",\"auth\":\"Bearer Token: {{ _.token }}\"}]}]},\"examples\":{\"login\":{\"description\":\"Login e obter token\",\"request\":\"POST /api/auth/login\\nContent-Type: application/json\\n\\n{\\n  \\\"email\\\": \\\"admin@example.com\\\",\\n  \\\"password\\\": \\\"admin123\\\"\\n}\",\"response\":\"{\\n  \\\"success\\\": true,\\n  \\\"data\\\": {\\n    \\\"token\\\": \\\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\\\",\\n    \\\"user\\\": {\\n      \\\"id\\\": 1,\\n      \\\"name\\\": \\\"Admin User\\\",\\n      \\\"email\\\": \\\"admin@example.com\\\",\\n      \\\"role\\\": \\\"admin\\\"\\n    }\\n  }\\n}\"},\"listUsers\":{\"description\":\"Listar usuários (requer autenticação)\",\"request\":\"GET /api/users\\nAuthorization: Bearer SEU_TOKEN_AQUI\",\"response\":\"{\\n  \\\"success\\\": true,\\n  \\\"data\\\": [\\n    {\\n      \\\"id\\\": 1,\\n      \\\"name\\\": \\\"Admin User\\\",\\n      \\\"email\\\": \\\"admin@example.com\\\",\\n      \\\"role\\\": \\\"admin\\\"\\n    }\\n  ]\\n}\"},\"createUser\":{\"description\":\"Criar novo usuário\",\"request\":\"POST /api/users\\nAuthorization: Bearer SEU_TOKEN_AQUI\\nContent-Type: application/json\\n\\n{\\n  \\\"name\\\": \\\"João Silva\\\",\\n  \\\"email\\\": \\\"joao@example.com\\\",\\n  \\\"role\\\": \\\"user\\\",\\n  \\\"active\\\": true\\n}\"},\"errorScenario\":{\"description\":\"Simular erro 401\",\"request\":\"GET /api/users?scenario=error-401\\nAuthorization: Bearer token-invalido\",\"response\":\"{\\n  \\\"error\\\": \\\"Unauthorized\\\",\\n  \\\"message\\\": \\\"Token de autenticação inválido ou ausente\\\",\\n  \\\"details\\\": \\\"Faça login novamente para obter um token válido\\\"\\n}\"}},\"troubleshooting\":{\"title\":\"Solução de Problemas\",\"issues\":[{\"problem\":\"API não inicia\",\"solutions\":[\"Verifique se a porta 3001 está livre\",\"Verifique se as dependências foram instaladas: npm install\",\"Verifique se o TypeScript foi compilado: npm run build:ts:api\"]},{\"problem\":\"Erro de conexão no Postman/Insomnia\",\"solutions\":[\"Verifique se a API está rodando: GET http://localhost:3001/api/health\",\"Verifique se a URL está correta\",\"Verifique se não há firewall bloqueando\"]},{\"problem\":\"Token inválido\",\"solutions\":[\"Faça login novamente para obter um novo token\",\"Tokens expiram após 1 hora\",\"Verifique se está usando Bearer antes do token no header\"]},{\"problem\":\"Erro 401 Unauthorized\",\"solutions\":[\"Verifique se o token está sendo enviado no header Authorization\",\"Use o formato: Authorization: Bearer SEU_TOKEN\",\"Faça login novamente se o token expirou\"]},{\"problem\":\"Erro 403 Forbidden\",\"solutions\":[\"Verifique se o usuário tem permissão (role) adequada\",\"Algumas rotas requerem role admin\",\"Use as credenciais de admin para testes\"]},{\"problem\":\"CORS Errors\",\"solutions\":[\"A API já está configurada com CORS habilitado\",\"Use http://localhost:3001 e não http://127.0.0.1:3001\"]}]},\"tips\":[\"Sempre faça login primeiro para obter o token\",\"Use variáveis de ambiente para facilitar a troca entre ambientes\",\"Teste cenários de erro usando o parâmetro scenario\",\"Salve o token automaticamente usando scripts de teste no Postman\",\"Use a documentação da API (GET /api) para ver todos os endpoints disponíveis\",\"A coleção do Postman já inclui todas as requisições prontas\"]}"
+  },
+  {
+   "req": "GET /api/docs",
+   "status": 200,
+   "body": "{\"name\":\"QA Playground API Mock\",\"version\":\"1.0.0\",\"description\":\"API mockada para prática de testes QA\",\"baseUrl\":{\"local\":\"http://localhost:3001/api\",\"production\":\"https://qa-playground-azure.vercel.app/api\"},\"credentials\":{\"admin\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"},\"user\":{\"email\":\"user@example.com\",\"password\":\"user123\"},\"viewer\":{\"email\":\"viewer@example.com\",\"password\":\"viewer123\"}},\"endpoints\":{\"health\":{\"method\":\"GET\",\"path\":\"/api/health\",\"description\":\"Verifica o status da API\",\"auth\":false,\"example\":{\"request\":\"GET /api/health\",\"response\":{\"status\":\"ok\",\"timestamp\":\"<DATE>\",\"service\":\"QA Playground API Mock\"}}},\"documentation\":{\"method\":\"GET\",\"path\":\"/api ou /api/docs\",\"description\":\"Retorna esta documentação completa\",\"auth\":false},\"auth\":{\"login\":{\"method\":\"POST\",\"path\":\"/api/auth/login\",\"description\":\"Faz login e retorna token JWT\",\"auth\":false,\"body\":{\"email\":\"string (obrigatório)\",\"password\":\"string (obrigatório)\"},\"example\":{\"request\":{\"url\":\"POST /api/auth/login\",\"headers\":{\"Content-Type\":\"application/json\"},\"body\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"}},\"response\":{\"success\":true,\"data\":{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\"user\":{\"id\":1,\"name\":\"Admin User\",\"email\":\"admin@example.com\",\"role\":\"admin\"}}}}},\"logout\":{\"method\":\"POST\",\"path\":\"/api/auth/logout\",\"description\":\"Faz logout e invalida token\",\"auth\":true,\"example\":{\"request\":{\"url\":\"POST /api/auth/logout\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"me\":{\"method\":\"GET\",\"path\":\"/api/auth/me\",\"description\":\"Retorna informações do usuário autenticado\",\"auth\":true,\"example\":{\"request\":{\"url\":\"GET /api/auth/me\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"validate\":{\"method\":\"POST\",\"path\":\"/api/auth/validate\",\"description\":\"Valida um token JWT\",\"auth\":false,\"body\":{\"token\":\"string (obrigatório)\"}}},\"users\":{\"list\":{\"method\":\"GET\",\"path\":\"/api/users\",\"description\":\"Lista todos os usuários (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"],\"example\":{\"request\":{\"url\":\"GET /api/users\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"getById\":{\"method\":\"GET\",\"path\":\"/api/users/:id\",\"description\":\"Retorna um usuário específico\",\"auth\":true,\"example\":{\"request\":{\"url\":\"GET /api/users/1\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"create\":{\"method\":\"POST\",\"path\":\"/api/users\",\"description\":\"Cria um novo usuário (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"],\"body\":{\"name\":\"string (obrigatório)\",\"email\":\"string (obrigatório, único)\",\"role\":\"string (admin|user|viewer)\",\"active\":\"boolean\"},\"example\":{\"request\":{\"url\":\"POST /api/users\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\",\"Content-Type\":\"application/json\"},\"body\":{\"name\":\"Novo Usuário\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true}}}},\"update\":{\"method\":\"PUT\",\"path\":\"/api/users/:id\",\"description\":\"Atualiza um usuário\",\"auth\":true,\"body\":{\"name\":\"string (opcional)\",\"email\":\"string (opcional)\",\"role\":\"string (opcional)\",\"active\":\"boolean (opcional)\"}},\"delete\":{\"method\":\"DELETE\",\"path\":\"/api/users/:id\",\"description\":\"Deleta um usuário (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"]}},\"orders\":{\"list\":{\"method\":\"GET\",\"path\":\"/api/orders\",\"description\":\"Lista pedidos (próprios ou todos se admin)\",\"auth\":true,\"example\":{\"request\":{\"url\":\"GET /api/orders\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"getById\":{\"method\":\"GET\",\"path\":\"/api/orders/:id\",\"description\":\"Retorna um pedido específico\",\"auth\":true},\"create\":{\"method\":\"POST\",\"path\":\"/api/orders\",\"description\":\"Cria um novo pedido\",\"auth\":true,\"body\":{\"items\":\"array (obrigatório)\"},\"example\":{\"request\":{\"url\":\"POST /api/orders\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\",\"Content-Type\":\"application/json\"},\"body\":{\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}]}}}},\"update\":{\"method\":\"PUT\",\"path\":\"/api/orders/:id\",\"description\":\"Atualiza um pedido\",\"auth\":true},\"delete\":{\"method\":\"DELETE\",\"path\":\"/api/orders/:id\",\"description\":\"Deleta um pedido (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"]}}},\"scenarios\":{\"description\":\"Use ?scenario=<tipo> ou header x-mock-scenario para controlar comportamentos da API\",\"usage\":{\"queryParam\":\"GET /api/users?scenario=error-401\",\"header\":\"x-mock-scenario: error-500\"},\"types\":[{\"name\":\"success\",\"description\":\"Resposta de sucesso (padrão)\",\"statusCode\":200},{\"name\":\"error-400\",\"description\":\"Bad Request - Payload inválido\",\"statusCode\":400},{\"name\":\"error-401\",\"description\":\"Unauthorized - Não autenticado\",\"statusCode\":401},{\"name\":\"error-403\",\"description\":\"Forbidden - Sem permissão\",\"statusCode\":403},{\"name\":\"error-404\",\"description\":\"Not Found - Recurso inexistente\",\"statusCode\":404},{\"name\":\"error-409\",\"description\":\"Conflict - Conflito de dados\",\"statusCode\":409},{\"name\":\"error-422\",\"description\":\"Unprocessable Entity - Erro de validação\",\"statusCode\":422},{\"name\":\"error-429\",\"description\":\"Too Many Requests - Rate limit\",\"statusCode\":429},{\"name\":\"error-500\",\"description\":\"Internal Server Error - Erro inesperado\",\"statusCode\":500},{\"name\":\"error-503\",\"description\":\"Service Unavailable - Serviço indisponível\",\"statusCode\":503},{\"name\":\"timeout\",\"description\":\"Gateway Timeout - Requisição demorada (10 segundos)\",\"statusCode\":504}]},\"postman\":{\"title\":\"Como usar com Postman\",\"steps\":[{\"step\":1,\"title\":\"Importar Coleção\",\"description\":\"Importe a coleção pronta: api/QA-Playground-API.postman_collection.json\",\"details\":[\"Abra o Postman\",\"Clique em Import\",\"Selecione o arquivo QA-Playground-API.postman_collection.json\",\"A coleção será importada com todas as requisições prontas\"]},{\"step\":2,\"title\":\"Configurar Variáveis de Ambiente\",\"description\":\"Crie um ambiente para facilitar a troca entre local e produção\",\"environments\":{\"local\":{\"name\":\"QA Playground Local\",\"variables\":{\"base_url\":\"http://localhost:3001/api\",\"token\":\"(será preenchido após login)\"}},\"production\":{\"name\":\"QA Playground Production\",\"variables\":{\"base_url\":\"https://qa-playground-azure.vercel.app/api\",\"token\":\"(será preenchido após login)\"}}},\"instructions\":[\"Clique em Environments → +\",\"Crie um novo ambiente\",\"Adicione as variáveis base_url e token\",\"Selecione o ambiente antes de fazer requisições\"]},{\"step\":3,\"title\":\"Fazer Login\",\"description\":\"Execute a requisição de login para obter o token\",\"example\":{\"method\":\"POST\",\"url\":\"{{base_url}}/auth/login\",\"body\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"}},\"note\":\"A coleção já inclui um script que salva o token automaticamente após o login\"},{\"step\":4,\"title\":\"Usar Token nas Requisições\",\"description\":\"O token será usado automaticamente nas requisições que requerem autenticação\",\"example\":{\"method\":\"GET\",\"url\":\"{{base_url}}/users\",\"headers\":{\"Authorization\":\"Bearer {{token}}\"}}},{\"step\":5,\"title\":\"Testar Cenários de Erro\",\"description\":\"Use query params ou headers para simular diferentes cenários\",\"examples\":[\"GET {{base_url}}/users?scenario=error-401\",\"GET {{base_url}}/users?scenario=error-500\",\"Header: x-mock-scenario: error-403\"]}]},\"insomnia\":{\"title\":\"Como usar com Insomnia\",\"steps\":[{\"step\":1,\"title\":\"Criar Novo Projeto\",\"instructions\":[\"Abra o Insomnia\",\"Clique em Create → New Design Document\",\"Nomeie como: QA Playground API\"]},{\"step\":2,\"title\":\"Configurar Variáveis de Ambiente\",\"instructions\":[\"Clique no ícone de Environment (canto superior direito)\",\"Clique em Manage Environments → Create Environment\",\"Nomeie como: Local\",\"Adicione as variáveis:\"],\"variables\":{\"base_url\":\"http://localhost:3001/api\",\"token\":\"\"}},{\"step\":3,\"title\":\"Criar Requisições\",\"examples\":[{\"name\":\"Health Check\",\"method\":\"GET\",\"url\":\"{{ _.base_url }}/health\"},{\"name\":\"Login\",\"method\":\"POST\",\"url\":\"{{ _.base_url }}/auth/login\",\"body\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"}},{\"name\":\"Get Users\",\"method\":\"GET\",\"url\":\"{{ _.base_url }}/users\",\"auth\":\"Bearer Token: {{ _.token }}\"}]}]},\"examples\":{\"login\":{\"description\":\"Login e obter token\",\"request\":\"POST /api/auth/login\\nContent-Type: application/json\\n\\n{\\n  \\\"email\\\": \\\"admin@example.com\\\",\\n  \\\"password\\\": \\\"admin123\\\"\\n}\",\"response\":\"{\\n  \\\"success\\\": true,\\n  \\\"data\\\": {\\n    \\\"token\\\": \\\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\\\",\\n    \\\"user\\\": {\\n      \\\"id\\\": 1,\\n      \\\"name\\\": \\\"Admin User\\\",\\n      \\\"email\\\": \\\"admin@example.com\\\",\\n      \\\"role\\\": \\\"admin\\\"\\n    }\\n  }\\n}\"},\"listUsers\":{\"description\":\"Listar usuários (requer autenticação)\",\"request\":\"GET /api/users\\nAuthorization: Bearer SEU_TOKEN_AQUI\",\"response\":\"{\\n  \\\"success\\\": true,\\n  \\\"data\\\": [\\n    {\\n      \\\"id\\\": 1,\\n      \\\"name\\\": \\\"Admin User\\\",\\n      \\\"email\\\": \\\"admin@example.com\\\",\\n      \\\"role\\\": \\\"admin\\\"\\n    }\\n  ]\\n}\"},\"createUser\":{\"description\":\"Criar novo usuário\",\"request\":\"POST /api/users\\nAuthorization: Bearer SEU_TOKEN_AQUI\\nContent-Type: application/json\\n\\n{\\n  \\\"name\\\": \\\"João Silva\\\",\\n  \\\"email\\\": \\\"joao@example.com\\\",\\n  \\\"role\\\": \\\"user\\\",\\n  \\\"active\\\": true\\n}\"},\"errorScenario\":{\"description\":\"Simular erro 401\",\"request\":\"GET /api/users?scenario=error-401\\nAuthorization: Bearer token-invalido\",\"response\":\"{\\n  \\\"error\\\": \\\"Unauthorized\\\",\\n  \\\"message\\\": \\\"Token de autenticação inválido ou ausente\\\",\\n  \\\"details\\\": \\\"Faça login novamente para obter um token válido\\\"\\n}\"}},\"troubleshooting\":{\"title\":\"Solução de Problemas\",\"issues\":[{\"problem\":\"API não inicia\",\"solutions\":[\"Verifique se a porta 3001 está livre\",\"Verifique se as dependências foram instaladas: npm install\",\"Verifique se o TypeScript foi compilado: npm run build:ts:api\"]},{\"problem\":\"Erro de conexão no Postman/Insomnia\",\"solutions\":[\"Verifique se a API está rodando: GET http://localhost:3001/api/health\",\"Verifique se a URL está correta\",\"Verifique se não há firewall bloqueando\"]},{\"problem\":\"Token inválido\",\"solutions\":[\"Faça login novamente para obter um novo token\",\"Tokens expiram após 1 hora\",\"Verifique se está usando Bearer antes do token no header\"]},{\"problem\":\"Erro 401 Unauthorized\",\"solutions\":[\"Verifique se o token está sendo enviado no header Authorization\",\"Use o formato: Authorization: Bearer SEU_TOKEN\",\"Faça login novamente se o token expirou\"]},{\"problem\":\"Erro 403 Forbidden\",\"solutions\":[\"Verifique se o usuário tem permissão (role) adequada\",\"Algumas rotas requerem role admin\",\"Use as credenciais de admin para testes\"]},{\"problem\":\"CORS Errors\",\"solutions\":[\"A API já está configurada com CORS habilitado\",\"Use http://localhost:3001 e não http://127.0.0.1:3001\"]}]},\"tips\":[\"Sempre faça login primeiro para obter o token\",\"Use variáveis de ambiente para facilitar a troca entre ambientes\",\"Teste cenários de erro usando o parâmetro scenario\",\"Salve o token automaticamente usando scripts de teste no Postman\",\"Use a documentação da API (GET /api) para ver todos os endpoints disponíveis\",\"A coleção do Postman já inclui todas as requisições prontas\"]}"
+  },
+  {
+   "req": "GET /api/postman-collection",
+   "status": 200,
+   "body": "{\"info\":{\"name\":\"QA Playground API\",\"description\":\"Coleção completa para testar a API Mockada do QA Playground\",\"schema\":\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\"},\"variable\":[{\"key\":\"base_url\",\"value\":\"http://localhost:3001/api\",\"type\":\"string\"},{\"key\":\"token\",\"value\":\"\",\"type\":\"string\"}],\"item\":[{\"name\":\"Health Check\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}/health\",\"host\":[\"{{base_url}}\"],\"path\":[\"health\"]},\"description\":\"Verifica se a API está rodando\"}},{\"name\":\"Autenticação\",\"item\":[{\"name\":\"Login (Admin)\",\"event\":[{\"listen\":\"test\",\"script\":{\"exec\":[\"if (pm.response.code === 200) {\",\"    const jsonData = pm.response.json();\",\"    if (jsonData.data && jsonData.data.token) {\",\"        pm.collectionVariables.set('token', jsonData.data.token);\",\"        console.log('Token salvo:', jsonData.data.token);\",\"    }\",\"}\"],\"type\":\"text/javascript\"}}],\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"email\\\": \\\"admin@example.com\\\",\\n  \\\"password\\\": \\\"admin123\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/auth/login\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"login\"]},\"description\":\"Faz login como admin e salva o token automaticamente\"}},{\"name\":\"Login (User)\",\"event\":[{\"listen\":\"test\",\"script\":{\"exec\":[\"if (pm.response.code === 200) {\",\"    const jsonData = pm.response.json();\",\"    if (jsonData.data && jsonData.data.token) {\",\"        pm.collectionVariables.set('token', jsonData.data.token);\",\"    }\",\"}\"],\"type\":\"text/javascript\"}}],\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"email\\\": \\\"user@example.com\\\",\\n  \\\"password\\\": \\\"user123\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/auth/login\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"login\"]}}},{\"name\":\"Logout\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/logout\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"logout\"]}}},{\"name\":\"Me (Informações do usuário)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/me\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"me\"]}}},{\"name\":\"Validar Token\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/validate\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"validate\"]}}}]},{\"name\":\"Usuários\",\"item\":[{\"name\":\"Listar Usuários (Admin)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"]}}},{\"name\":\"Listar Usuários - Erro 401\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-401\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-401\"}]},\"description\":\"Testa cenário de erro 401 (não autenticado)\"}},{\"name\":\"Buscar Usuário por ID\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}},{\"name\":\"Criar Usuário\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"name\\\": \\\"Novo Usuário\\\",\\n  \\\"email\\\": \\\"novo@example.com\\\",\\n  \\\"role\\\": \\\"user\\\",\\n  \\\"active\\\": true\\n}\"},\"url\":{\"raw\":\"{{base_url}}/users\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"]}}},{\"name\":\"Atualizar Usuário\",\"request\":{\"method\":\"PUT\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"name\\\": \\\"Usuário Atualizado\\\",\\n  \\\"email\\\": \\\"atualizado@example.com\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}},{\"name\":\"Deletar Usuário\",\"request\":{\"method\":\"DELETE\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}}]},{\"name\":\"Pedidos\",\"item\":[{\"name\":\"Listar Pedidos\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\"]}}},{\"name\":\"Buscar Pedido por ID\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}},{\"name\":\"Criar Pedido\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"items\\\": [\\n    {\\n      \\\"productId\\\": 101,\\n      \\\"productName\\\": \\\"Notebook\\\",\\n      \\\"quantity\\\": 1,\\n      \\\"price\\\": 2500.0\\n    },\\n    {\\n      \\\"productId\\\": 102,\\n      \\\"productName\\\": \\\"Mouse\\\",\\n      \\\"quantity\\\": 2,\\n      \\\"price\\\": 50.0\\n    }\\n  ]\\n}\"},\"url\":{\"raw\":\"{{base_url}}/orders\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\"]}}},{\"name\":\"Atualizar Pedido\",\"request\":{\"method\":\"PUT\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"status\\\": \\\"processing\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}},{\"name\":\"Deletar Pedido\",\"request\":{\"method\":\"DELETE\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}}]},{\"name\":\"Cenários de Erro\",\"item\":[{\"name\":\"Erro 400 - Bad Request\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-400\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-400\"}]}}},{\"name\":\"Erro 403 - Forbidden\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-403\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-403\"}]}}},{\"name\":\"Erro 404 - Not Found\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-404\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-404\"}]}}},{\"name\":\"Erro 500 - Internal Server Error\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-500\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-500\"}]}}},{\"name\":\"Timeout (504)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=timeout\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"timeout\"}]},\"description\":\"Aguarda 10 segundos antes de retornar timeout\"}}]},{\"name\":\"Documentação\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}\",\"host\":[\"{{base_url}}\"]},\"description\":\"Retorna documentação completa da API\"}}]}"
+  },
+  {
+   "req": "GET /api/nao-existe",
+   "status": 404,
+   "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/nao-existe</pre>\n</body>\n</html>\n"
+  },
+  {
+   "req": "POST /api/auth/login {}",
+   "status": 200,
+   "body": "{\"statusCode\":400,\"body\":{\"error\":\"Bad Request\",\"message\":\"Email e senha são obrigatórios\"}}"
+  },
+  {
+   "req": "POST /api/auth/login {\"email\":\"admin@example.com\",\"password\":\"errada\"}",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Credenciais inválidas\"}}"
+  },
+  {
+   "req": "POST /api/auth/login {\"email\":\"ADMIN@example.com\",\"password\":\"admin123\"}",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":1,\"role\":\"admin\"}}}}"
+  },
+  {
+   "req": "POST /api/auth/login {\"email\":\"user@example.com\",\"password\":\"user123\"}",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":2,\"role\":\"user\"}}}}"
+  },
+  {
+   "req": "POST /api/auth/login {\"email\":\"viewer@example.com\",\"password\":\"viewer123\"}",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":4,\"role\":\"viewer\"}}}}"
+  },
+  {
+   "req": "GET /api/auth/me",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}}"
+  },
+  {
+   "req": "GET /api/auth/me (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"userId\":2,\"role\":\"user\",\"expiresAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "GET /api/auth/me {\"authorization\":\"Bearer invalido\"}",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token inválido ou expirado\"}}"
+  },
+  {
+   "req": "POST /api/auth/validate (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"valid\":true,\"data\":{\"userId\":1,\"role\":\"admin\",\"expiresAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "POST /api/auth/validate {}",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}}"
+  },
+  {
+   "req": "GET /api/users",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação não fornecido\"}}"
+  },
+  {
+   "req": "GET /api/users (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"name\":\"Maria Santos\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"name\":\"Pedro Oliveira\",\"email\":\"pedro.oliveira@example.com\",\"role\":\"user\",\"active\":false,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"name\":\"Ana Costa\",\"email\":\"ana.costa@example.com\",\"role\":\"viewer\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"name\":\"Carlos Ferreira\",\"email\":\"carlos.ferreira@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}}"
+  },
+  {
+   "req": "GET /api/users (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para listar usuários\"}}"
+  },
+  {
+   "req": "GET /api/users (as viewer)",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para listar usuários\"}}"
+  },
+  {
+   "req": "GET /api/users/1 (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "GET /api/users/1 (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este recurso\"}}"
+  },
+  {
+   "req": "GET /api/users/999 (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}}"
+  },
+  {
+   "req": "GET /api/users/abc (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}}"
+  },
+  {
+   "req": "POST /api/users (as user) {\"name\":\"X\",\"email\":\"x@x.com\"}",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para criar usuários\"}}"
+  },
+  {
+   "req": "POST /api/users (as admin) {\"name\":\"Sem email\"}",
+   "status": 200,
+   "body": "{\"statusCode\":400,\"body\":{\"error\":\"Bad Request\",\"message\":\"Nome e email são obrigatórios\"}}"
+  },
+  {
+   "req": "POST /api/users (as admin) {\"name\":\"Dup\",\"email\":\"user@example.com\"}",
+   "status": 200,
+   "body": "{\"statusCode\":201,\"body\":{\"success\":true,\"data\":{\"id\":6,\"name\":\"Dup\",\"email\":\"user@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "POST /api/users (as admin) {\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\"}",
+   "status": 200,
+   "body": "{\"statusCode\":201,\"body\":{\"success\":true,\"data\":{\"id\":7,\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "PUT /api/users/2 (as admin) {\"name\":\"Editado\"}",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"id\":2,\"name\":\"Editado\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "PUT /api/users/2 (as viewer) {\"name\":\"Hack\"}",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para atualizar este usuário\"}}"
+  },
+  {
+   "req": "PUT /api/users/999 (as admin) {\"name\":\"X\"}",
+   "status": 200,
+   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}}"
+  },
+  {
+   "req": "DELETE /api/users/3 (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para deletar usuários\"}}"
+  },
+  {
+   "req": "DELETE /api/users/3 (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":204,\"body\":null}"
+  },
+  {
+   "req": "DELETE /api/users/3 (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}}"
+  },
+  {
+   "req": "GET /api/orders",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação não fornecido\"}}"
+  },
+  {
+   "req": "GET /api/orders (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"userId\":2,\"items\":[{\"productId\":103,\"productName\":\"Teclado\",\"quantity\":1,\"price\":150}],\"total\":150,\"status\":\"shipped\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"userId\":5,\"items\":[{\"productId\":104,\"productName\":\"Monitor\",\"quantity\":2,\"price\":800}],\"total\":1600,\"status\":\"processing\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"userId\":1,\"items\":[{\"productId\":105,\"productName\":\"Webcam\",\"quantity\":1,\"price\":200}],\"total\":200,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"userId\":3,\"items\":[{\"productId\":106,\"productName\":\"Headset\",\"quantity\":1,\"price\":300}],\"total\":300,\"status\":\"cancelled\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}}"
+  },
+  {
+   "req": "GET /api/orders (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"userId\":2,\"items\":[{\"productId\":103,\"productName\":\"Teclado\",\"quantity\":1,\"price\":150}],\"total\":150,\"status\":\"shipped\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":2}}"
+  },
+  {
+   "req": "GET /api/orders/1 (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "GET /api/orders/1 (as viewer)",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este pedido\"}}"
+  },
+  {
+   "req": "GET /api/orders/999 (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Pedido não encontrado\"}}"
+  },
+  {
+   "req": "POST /api/orders (as user) {}",
+   "status": 200,
+   "body": "{\"statusCode\":400,\"body\":{\"error\":\"Bad Request\",\"message\":\"Items são obrigatórios e devem ser um array não vazio\"}}"
+  },
+  {
+   "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1}]}",
+   "status": 200,
+   "body": "{\"statusCode\":422,\"body\":{\"error\":\"Unprocessable Entity\",\"message\":\"Cada item deve conter productId, productName, quantity e price\",\"details\":{\"item\":\"Campos obrigatórios: productId, productName, quantity, price\"}}}"
+  },
+  {
+   "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":-1,\"price\":10}]}",
+   "status": 200,
+   "body": "{\"statusCode\":422,\"body\":{\"error\":\"Unprocessable Entity\",\"message\":\"Quantidade deve ser maior que zero\",\"details\":{\"quantity\":\"Quantidade deve ser um número positivo\"}}}"
+  },
+  {
+   "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":-1}]}",
+   "status": 200,
+   "body": "{\"statusCode\":422,\"body\":{\"error\":\"Unprocessable Entity\",\"message\":\"Preço não pode ser negativo\",\"details\":{\"price\":\"Preço deve ser um número positivo ou zero\"}}}"
+  },
+  {
+   "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}]}",
+   "status": 200,
+   "body": "{\"statusCode\":201,\"body\":{\"success\":true,\"data\":{\"id\":6,\"userId\":2,\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}],\"total\":20,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "PUT /api/orders/1 (as admin) {\"status\":\"shipped\"}",
+   "status": 200,
+   "body": "{\"statusCode\":409,\"body\":{\"error\":\"Conflict\",\"message\":\"Não é possível atualizar um pedido cancelado ou entregue\"}}"
+  },
+  {
+   "req": "PUT /api/orders/1 (as viewer) {\"status\":\"cancelled\"}",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para atualizar este pedido\"}}"
+  },
+  {
+   "req": "PUT /api/orders/1 (as admin) {\"status\":\"invalido\"}",
+   "status": 200,
+   "body": "{\"statusCode\":409,\"body\":{\"error\":\"Conflict\",\"message\":\"Não é possível atualizar um pedido cancelado ou entregue\"}}"
+  },
+  {
+   "req": "DELETE /api/orders/2 (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para deletar pedidos\"}}"
+  },
+  {
+   "req": "DELETE /api/orders/2 (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":204,\"body\":null}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-400 (as admin)",
+   "status": 400,
+   "body": "{\"error\":\"Bad Request\",\"message\":\"Payload inválido ou malformado\",\"details\":\"Verifique os dados enviados na requisição\"}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-400\"}",
+   "status": 400,
+   "body": "{\"error\":\"Bad Request\",\"message\":\"Payload inválido ou malformado\",\"details\":\"Verifique os dados enviados na requisição\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-401 (as admin)",
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação inválido ou ausente\",\"details\":\"Faça login novamente para obter um token válido\"}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-401\"}",
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação inválido ou ausente\",\"details\":\"Faça login novamente para obter um token válido\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-403 (as admin)",
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este recurso\",\"details\":\"Contate o administrador para solicitar acesso\"}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-403\"}",
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este recurso\",\"details\":\"Contate o administrador para solicitar acesso\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-404 (as admin)",
+   "status": 404,
+   "body": "{\"error\":\"Not Found\",\"message\":\"Recurso não encontrado\",\"details\":\"O recurso solicitado não existe ou foi removido\"}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-404\"}",
+   "status": 404,
+   "body": "{\"error\":\"Not Found\",\"message\":\"Recurso não encontrado\",\"details\":\"O recurso solicitado não existe ou foi removido\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-409 (as admin)",
+   "status": 409,
+   "body": "{\"error\":\"Conflict\",\"message\":\"Conflito de dados\",\"details\":\"Já existe um recurso com os mesmos dados\"}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-409\"}",
+   "status": 409,
+   "body": "{\"error\":\"Conflict\",\"message\":\"Conflito de dados\",\"details\":\"Já existe um recurso com os mesmos dados\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-422 (as admin)",
+   "status": 422,
+   "body": "{\"error\":\"Unprocessable Entity\",\"message\":\"Erro de validação\",\"details\":{\"email\":\"Email inválido\",\"password\":\"Senha deve ter no mínimo 8 caracteres\"}}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-422\"}",
+   "status": 422,
+   "body": "{\"error\":\"Unprocessable Entity\",\"message\":\"Erro de validação\",\"details\":{\"email\":\"Email inválido\",\"password\":\"Senha deve ter no mínimo 8 caracteres\"}}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-429 (as admin)",
+   "status": 429,
+   "body": "{\"error\":\"Too Many Requests\",\"message\":\"Limite de requisições excedido\",\"details\":\"Tente novamente em alguns minutos\",\"retryAfter\":60}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-429\"}",
+   "status": 429,
+   "body": "{\"error\":\"Too Many Requests\",\"message\":\"Limite de requisições excedido\",\"details\":\"Tente novamente em alguns minutos\",\"retryAfter\":60}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-500 (as admin)",
+   "status": 500,
+   "body": "{\"error\":\"Internal Server Error\",\"message\":\"Erro inesperado no servidor\",\"details\":\"Nossa equipe foi notificada. Tente novamente mais tarde\"}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-500\"}",
+   "status": 500,
+   "body": "{\"error\":\"Internal Server Error\",\"message\":\"Erro inesperado no servidor\",\"details\":\"Nossa equipe foi notificada. Tente novamente mais tarde\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-503 (as admin)",
+   "status": 503,
+   "body": "{\"error\":\"Service Unavailable\",\"message\":\"Serviço temporariamente indisponível\",\"details\":\"Estamos em manutenção. Tente novamente em breve\"}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-503\"}",
+   "status": 503,
+   "body": "{\"error\":\"Service Unavailable\",\"message\":\"Serviço temporariamente indisponível\",\"details\":\"Estamos em manutenção. Tente novamente em breve\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=inexistente (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"name\":\"Editado\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"name\":\"Ana Costa\",\"email\":\"ana.costa@example.com\",\"role\":\"viewer\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"name\":\"Carlos Ferreira\",\"email\":\"carlos.ferreira@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":6,\"name\":\"Dup\",\"email\":\"user@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":7,\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":6}}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"inexistente\"}",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"userId\":5,\"items\":[{\"productId\":104,\"productName\":\"Monitor\",\"quantity\":2,\"price\":800}],\"total\":1600,\"status\":\"processing\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"userId\":1,\"items\":[{\"productId\":105,\"productName\":\"Webcam\",\"quantity\":1,\"price\":200}],\"total\":200,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"userId\":3,\"items\":[{\"productId\":106,\"productName\":\"Headset\",\"quantity\":1,\"price\":300}],\"total\":300,\"status\":\"cancelled\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":6,\"userId\":2,\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}],\"total\":20,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}}"
+  },
+  {
+   "req": "POST /api/auth/logout (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"message\":\"Logout realizado com sucesso\"}}"
+  },
+  {
+   "req": "GET /api/auth/me (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token inválido ou expirado\"}}"
+  },
+  {
+   "req": "POST /api/auth/logout",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}}"
+  }
+ ],
+ "vercel": [
+  {
+   "req": "GET /api/health",
+   "status": 200,
+   "body": "{\"status\":\"ok\",\"timestamp\":\"<DATE>\",\"service\":\"QA Playground API Mock\"}"
+  },
+  {
+   "req": "GET /api",
+   "status": 200,
+   "body": "{\"name\":\"QA Playground API Mock\",\"version\":\"1.0.0\",\"description\":\"API mockada para prática de testes QA\",\"baseUrl\":{\"local\":\"http://localhost:3001/api\",\"production\":\"https://qa-playground-azure.vercel.app/api\"},\"credentials\":{\"admin\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"},\"user\":{\"email\":\"user@example.com\",\"password\":\"user123\"},\"viewer\":{\"email\":\"viewer@example.com\",\"password\":\"viewer123\"}},\"endpoints\":{\"health\":{\"method\":\"GET\",\"path\":\"/api/health\",\"description\":\"Verifica o status da API\",\"auth\":false,\"example\":{\"request\":\"GET /api/health\",\"response\":{\"status\":\"ok\",\"timestamp\":\"<DATE>\",\"service\":\"QA Playground API Mock\"}}},\"documentation\":{\"method\":\"GET\",\"path\":\"/api ou /api/docs\",\"description\":\"Retorna esta documentação completa\",\"auth\":false},\"auth\":{\"login\":{\"method\":\"POST\",\"path\":\"/api/auth/login\",\"description\":\"Faz login e retorna token JWT\",\"auth\":false,\"body\":{\"email\":\"string (obrigatório)\",\"password\":\"string (obrigatório)\"},\"example\":{\"request\":{\"url\":\"POST /api/auth/login\",\"headers\":{\"Content-Type\":\"application/json\"},\"body\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"}},\"response\":{\"success\":true,\"data\":{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\"user\":{\"id\":1,\"name\":\"Admin User\",\"email\":\"admin@example.com\",\"role\":\"admin\"}}}}},\"logout\":{\"method\":\"POST\",\"path\":\"/api/auth/logout\",\"description\":\"Faz logout e invalida token\",\"auth\":true,\"example\":{\"request\":{\"url\":\"POST /api/auth/logout\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"me\":{\"method\":\"GET\",\"path\":\"/api/auth/me\",\"description\":\"Retorna informações do usuário autenticado\",\"auth\":true,\"example\":{\"request\":{\"url\":\"GET /api/auth/me\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"validate\":{\"method\":\"POST\",\"path\":\"/api/auth/validate\",\"description\":\"Valida um token JWT\",\"auth\":false,\"body\":{\"token\":\"string (obrigatório)\"}}},\"users\":{\"list\":{\"method\":\"GET\",\"path\":\"/api/users\",\"description\":\"Lista todos os usuários (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"],\"example\":{\"request\":{\"url\":\"GET /api/users\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"getById\":{\"method\":\"GET\",\"path\":\"/api/users/:id\",\"description\":\"Retorna um usuário específico\",\"auth\":true,\"example\":{\"request\":{\"url\":\"GET /api/users/1\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"create\":{\"method\":\"POST\",\"path\":\"/api/users\",\"description\":\"Cria um novo usuário (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"],\"body\":{\"name\":\"string (obrigatório)\",\"email\":\"string (obrigatório, único)\",\"role\":\"string (admin|user|viewer)\",\"active\":\"boolean\"},\"example\":{\"request\":{\"url\":\"POST /api/users\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\",\"Content-Type\":\"application/json\"},\"body\":{\"name\":\"Novo Usuário\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true}}}},\"update\":{\"method\":\"PUT\",\"path\":\"/api/users/:id\",\"description\":\"Atualiza um usuário\",\"auth\":true,\"body\":{\"name\":\"string (opcional)\",\"email\":\"string (opcional)\",\"role\":\"string (opcional)\",\"active\":\"boolean (opcional)\"}},\"delete\":{\"method\":\"DELETE\",\"path\":\"/api/users/:id\",\"description\":\"Deleta um usuário (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"]}},\"orders\":{\"list\":{\"method\":\"GET\",\"path\":\"/api/orders\",\"description\":\"Lista pedidos (próprios ou todos se admin)\",\"auth\":true,\"example\":{\"request\":{\"url\":\"GET /api/orders\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"getById\":{\"method\":\"GET\",\"path\":\"/api/orders/:id\",\"description\":\"Retorna um pedido específico\",\"auth\":true},\"create\":{\"method\":\"POST\",\"path\":\"/api/orders\",\"description\":\"Cria um novo pedido\",\"auth\":true,\"body\":{\"items\":\"array (obrigatório)\"},\"example\":{\"request\":{\"url\":\"POST /api/orders\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\",\"Content-Type\":\"application/json\"},\"body\":{\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}]}}}},\"update\":{\"method\":\"PUT\",\"path\":\"/api/orders/:id\",\"description\":\"Atualiza um pedido\",\"auth\":true},\"delete\":{\"method\":\"DELETE\",\"path\":\"/api/orders/:id\",\"description\":\"Deleta um pedido (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"]}}},\"scenarios\":{\"description\":\"Use ?scenario=<tipo> ou header x-mock-scenario para controlar comportamentos da API\",\"usage\":{\"queryParam\":\"GET /api/users?scenario=error-401\",\"header\":\"x-mock-scenario: error-500\"},\"types\":[{\"name\":\"success\",\"description\":\"Resposta de sucesso (padrão)\",\"statusCode\":200},{\"name\":\"error-400\",\"description\":\"Bad Request - Payload inválido\",\"statusCode\":400},{\"name\":\"error-401\",\"description\":\"Unauthorized - Não autenticado\",\"statusCode\":401},{\"name\":\"error-403\",\"description\":\"Forbidden - Sem permissão\",\"statusCode\":403},{\"name\":\"error-404\",\"description\":\"Not Found - Recurso inexistente\",\"statusCode\":404},{\"name\":\"error-409\",\"description\":\"Conflict - Conflito de dados\",\"statusCode\":409},{\"name\":\"error-422\",\"description\":\"Unprocessable Entity - Erro de validação\",\"statusCode\":422},{\"name\":\"error-429\",\"description\":\"Too Many Requests - Rate limit\",\"statusCode\":429},{\"name\":\"error-500\",\"description\":\"Internal Server Error - Erro inesperado\",\"statusCode\":500},{\"name\":\"error-503\",\"description\":\"Service Unavailable - Serviço indisponível\",\"statusCode\":503},{\"name\":\"timeout\",\"description\":\"Gateway Timeout - Requisição demorada (10 segundos)\",\"statusCode\":504}]},\"postman\":{\"title\":\"Como usar com Postman\",\"steps\":[{\"step\":1,\"title\":\"Importar Coleção\",\"description\":\"Importe a coleção pronta: api/QA-Playground-API.postman_collection.json\",\"details\":[\"Abra o Postman\",\"Clique em Import\",\"Selecione o arquivo QA-Playground-API.postman_collection.json\",\"A coleção será importada com todas as requisições prontas\"]},{\"step\":2,\"title\":\"Configurar Variáveis de Ambiente\",\"description\":\"Crie um ambiente para facilitar a troca entre local e produção\",\"environments\":{\"local\":{\"name\":\"QA Playground Local\",\"variables\":{\"base_url\":\"http://localhost:3001/api\",\"token\":\"(será preenchido após login)\"}},\"production\":{\"name\":\"QA Playground Production\",\"variables\":{\"base_url\":\"https://qa-playground-azure.vercel.app/api\",\"token\":\"(será preenchido após login)\"}}},\"instructions\":[\"Clique em Environments → +\",\"Crie um novo ambiente\",\"Adicione as variáveis base_url e token\",\"Selecione o ambiente antes de fazer requisições\"]},{\"step\":3,\"title\":\"Fazer Login\",\"description\":\"Execute a requisição de login para obter o token\",\"example\":{\"method\":\"POST\",\"url\":\"{{base_url}}/auth/login\",\"body\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"}},\"note\":\"A coleção já inclui um script que salva o token automaticamente após o login\"},{\"step\":4,\"title\":\"Usar Token nas Requisições\",\"description\":\"O token será usado automaticamente nas requisições que requerem autenticação\",\"example\":{\"method\":\"GET\",\"url\":\"{{base_url}}/users\",\"headers\":{\"Authorization\":\"Bearer {{token}}\"}}},{\"step\":5,\"title\":\"Testar Cenários de Erro\",\"description\":\"Use query params ou headers para simular diferentes cenários\",\"examples\":[\"GET {{base_url}}/users?scenario=error-401\",\"GET {{base_url}}/users?scenario=error-500\",\"Header: x-mock-scenario: error-403\"]}]},\"insomnia\":{\"title\":\"Como usar com Insomnia\",\"steps\":[{\"step\":1,\"title\":\"Criar Novo Projeto\",\"instructions\":[\"Abra o Insomnia\",\"Clique em Create → New Design Document\",\"Nomeie como: QA Playground API\"]},{\"step\":2,\"title\":\"Configurar Variáveis de Ambiente\",\"instructions\":[\"Clique no ícone de Environment (canto superior direito)\",\"Clique em Manage Environments → Create Environment\",\"Nomeie como: Local\",\"Adicione as variáveis:\"],\"variables\":{\"base_url\":\"http://localhost:3001/api\",\"token\":\"\"}},{\"step\":3,\"title\":\"Criar Requisições\",\"examples\":[{\"name\":\"Health Check\",\"method\":\"GET\",\"url\":\"{{ _.base_url }}/health\"},{\"name\":\"Login\",\"method\":\"POST\",\"url\":\"{{ _.base_url }}/auth/login\",\"body\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"}},{\"name\":\"Get Users\",\"method\":\"GET\",\"url\":\"{{ _.base_url }}/users\",\"auth\":\"Bearer Token: {{ _.token }}\"}]}]},\"examples\":{\"login\":{\"description\":\"Login e obter token\",\"request\":\"POST /api/auth/login\\nContent-Type: application/json\\n\\n{\\n  \\\"email\\\": \\\"admin@example.com\\\",\\n  \\\"password\\\": \\\"admin123\\\"\\n}\",\"response\":\"{\\n  \\\"success\\\": true,\\n  \\\"data\\\": {\\n    \\\"token\\\": \\\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\\\",\\n    \\\"user\\\": {\\n      \\\"id\\\": 1,\\n      \\\"name\\\": \\\"Admin User\\\",\\n      \\\"email\\\": \\\"admin@example.com\\\",\\n      \\\"role\\\": \\\"admin\\\"\\n    }\\n  }\\n}\"},\"listUsers\":{\"description\":\"Listar usuários (requer autenticação)\",\"request\":\"GET /api/users\\nAuthorization: Bearer SEU_TOKEN_AQUI\",\"response\":\"{\\n  \\\"success\\\": true,\\n  \\\"data\\\": [\\n    {\\n      \\\"id\\\": 1,\\n      \\\"name\\\": \\\"Admin User\\\",\\n      \\\"email\\\": \\\"admin@example.com\\\",\\n      \\\"role\\\": \\\"admin\\\"\\n    }\\n  ]\\n}\"},\"createUser\":{\"description\":\"Criar novo usuário\",\"request\":\"POST /api/users\\nAuthorization: Bearer SEU_TOKEN_AQUI\\nContent-Type: application/json\\n\\n{\\n  \\\"name\\\": \\\"João Silva\\\",\\n  \\\"email\\\": \\\"joao@example.com\\\",\\n  \\\"role\\\": \\\"user\\\",\\n  \\\"active\\\": true\\n}\"},\"errorScenario\":{\"description\":\"Simular erro 401\",\"request\":\"GET /api/users?scenario=error-401\\nAuthorization: Bearer token-invalido\",\"response\":\"{\\n  \\\"error\\\": \\\"Unauthorized\\\",\\n  \\\"message\\\": \\\"Token de autenticação inválido ou ausente\\\",\\n  \\\"details\\\": \\\"Faça login novamente para obter um token válido\\\"\\n}\"}},\"troubleshooting\":{\"title\":\"Solução de Problemas\",\"issues\":[{\"problem\":\"API não inicia\",\"solutions\":[\"Verifique se a porta 3001 está livre\",\"Verifique se as dependências foram instaladas: npm install\",\"Verifique se o TypeScript foi compilado: npm run build:ts:api\"]},{\"problem\":\"Erro de conexão no Postman/Insomnia\",\"solutions\":[\"Verifique se a API está rodando: GET http://localhost:3001/api/health\",\"Verifique se a URL está correta\",\"Verifique se não há firewall bloqueando\"]},{\"problem\":\"Token inválido\",\"solutions\":[\"Faça login novamente para obter um novo token\",\"Tokens expiram após 1 hora\",\"Verifique se está usando Bearer antes do token no header\"]},{\"problem\":\"Erro 401 Unauthorized\",\"solutions\":[\"Verifique se o token está sendo enviado no header Authorization\",\"Use o formato: Authorization: Bearer SEU_TOKEN\",\"Faça login novamente se o token expirou\"]},{\"problem\":\"Erro 403 Forbidden\",\"solutions\":[\"Verifique se o usuário tem permissão (role) adequada\",\"Algumas rotas requerem role admin\",\"Use as credenciais de admin para testes\"]},{\"problem\":\"CORS Errors\",\"solutions\":[\"A API já está configurada com CORS habilitado\",\"Use http://localhost:3001 e não http://127.0.0.1:3001\"]}]},\"tips\":[\"Sempre faça login primeiro para obter o token\",\"Use variáveis de ambiente para facilitar a troca entre ambientes\",\"Teste cenários de erro usando o parâmetro scenario\",\"Salve o token automaticamente usando scripts de teste no Postman\",\"Use a documentação da API (GET /api) para ver todos os endpoints disponíveis\",\"A coleção do Postman já inclui todas as requisições prontas\"]}"
+  },
+  {
+   "req": "GET /api/docs",
+   "status": 200,
+   "body": "{\"name\":\"QA Playground API Mock\",\"version\":\"1.0.0\",\"description\":\"API mockada para prática de testes QA\",\"baseUrl\":{\"local\":\"http://localhost:3001/api\",\"production\":\"https://qa-playground-azure.vercel.app/api\"},\"credentials\":{\"admin\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"},\"user\":{\"email\":\"user@example.com\",\"password\":\"user123\"},\"viewer\":{\"email\":\"viewer@example.com\",\"password\":\"viewer123\"}},\"endpoints\":{\"health\":{\"method\":\"GET\",\"path\":\"/api/health\",\"description\":\"Verifica o status da API\",\"auth\":false,\"example\":{\"request\":\"GET /api/health\",\"response\":{\"status\":\"ok\",\"timestamp\":\"<DATE>\",\"service\":\"QA Playground API Mock\"}}},\"documentation\":{\"method\":\"GET\",\"path\":\"/api ou /api/docs\",\"description\":\"Retorna esta documentação completa\",\"auth\":false},\"auth\":{\"login\":{\"method\":\"POST\",\"path\":\"/api/auth/login\",\"description\":\"Faz login e retorna token JWT\",\"auth\":false,\"body\":{\"email\":\"string (obrigatório)\",\"password\":\"string (obrigatório)\"},\"example\":{\"request\":{\"url\":\"POST /api/auth/login\",\"headers\":{\"Content-Type\":\"application/json\"},\"body\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"}},\"response\":{\"success\":true,\"data\":{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\"user\":{\"id\":1,\"name\":\"Admin User\",\"email\":\"admin@example.com\",\"role\":\"admin\"}}}}},\"logout\":{\"method\":\"POST\",\"path\":\"/api/auth/logout\",\"description\":\"Faz logout e invalida token\",\"auth\":true,\"example\":{\"request\":{\"url\":\"POST /api/auth/logout\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"me\":{\"method\":\"GET\",\"path\":\"/api/auth/me\",\"description\":\"Retorna informações do usuário autenticado\",\"auth\":true,\"example\":{\"request\":{\"url\":\"GET /api/auth/me\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"validate\":{\"method\":\"POST\",\"path\":\"/api/auth/validate\",\"description\":\"Valida um token JWT\",\"auth\":false,\"body\":{\"token\":\"string (obrigatório)\"}}},\"users\":{\"list\":{\"method\":\"GET\",\"path\":\"/api/users\",\"description\":\"Lista todos os usuários (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"],\"example\":{\"request\":{\"url\":\"GET /api/users\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"getById\":{\"method\":\"GET\",\"path\":\"/api/users/:id\",\"description\":\"Retorna um usuário específico\",\"auth\":true,\"example\":{\"request\":{\"url\":\"GET /api/users/1\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"create\":{\"method\":\"POST\",\"path\":\"/api/users\",\"description\":\"Cria um novo usuário (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"],\"body\":{\"name\":\"string (obrigatório)\",\"email\":\"string (obrigatório, único)\",\"role\":\"string (admin|user|viewer)\",\"active\":\"boolean\"},\"example\":{\"request\":{\"url\":\"POST /api/users\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\",\"Content-Type\":\"application/json\"},\"body\":{\"name\":\"Novo Usuário\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true}}}},\"update\":{\"method\":\"PUT\",\"path\":\"/api/users/:id\",\"description\":\"Atualiza um usuário\",\"auth\":true,\"body\":{\"name\":\"string (opcional)\",\"email\":\"string (opcional)\",\"role\":\"string (opcional)\",\"active\":\"boolean (opcional)\"}},\"delete\":{\"method\":\"DELETE\",\"path\":\"/api/users/:id\",\"description\":\"Deleta um usuário (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"]}},\"orders\":{\"list\":{\"method\":\"GET\",\"path\":\"/api/orders\",\"description\":\"Lista pedidos (próprios ou todos se admin)\",\"auth\":true,\"example\":{\"request\":{\"url\":\"GET /api/orders\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\"}}}},\"getById\":{\"method\":\"GET\",\"path\":\"/api/orders/:id\",\"description\":\"Retorna um pedido específico\",\"auth\":true},\"create\":{\"method\":\"POST\",\"path\":\"/api/orders\",\"description\":\"Cria um novo pedido\",\"auth\":true,\"body\":{\"items\":\"array (obrigatório)\"},\"example\":{\"request\":{\"url\":\"POST /api/orders\",\"headers\":{\"Authorization\":\"Bearer SEU_TOKEN\",\"Content-Type\":\"application/json\"},\"body\":{\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}]}}}},\"update\":{\"method\":\"PUT\",\"path\":\"/api/orders/:id\",\"description\":\"Atualiza um pedido\",\"auth\":true},\"delete\":{\"method\":\"DELETE\",\"path\":\"/api/orders/:id\",\"description\":\"Deleta um pedido (requer role admin)\",\"auth\":true,\"roles\":[\"admin\"]}}},\"scenarios\":{\"description\":\"Use ?scenario=<tipo> ou header x-mock-scenario para controlar comportamentos da API\",\"usage\":{\"queryParam\":\"GET /api/users?scenario=error-401\",\"header\":\"x-mock-scenario: error-500\"},\"types\":[{\"name\":\"success\",\"description\":\"Resposta de sucesso (padrão)\",\"statusCode\":200},{\"name\":\"error-400\",\"description\":\"Bad Request - Payload inválido\",\"statusCode\":400},{\"name\":\"error-401\",\"description\":\"Unauthorized - Não autenticado\",\"statusCode\":401},{\"name\":\"error-403\",\"description\":\"Forbidden - Sem permissão\",\"statusCode\":403},{\"name\":\"error-404\",\"description\":\"Not Found - Recurso inexistente\",\"statusCode\":404},{\"name\":\"error-409\",\"description\":\"Conflict - Conflito de dados\",\"statusCode\":409},{\"name\":\"error-422\",\"description\":\"Unprocessable Entity - Erro de validação\",\"statusCode\":422},{\"name\":\"error-429\",\"description\":\"Too Many Requests - Rate limit\",\"statusCode\":429},{\"name\":\"error-500\",\"description\":\"Internal Server Error - Erro inesperado\",\"statusCode\":500},{\"name\":\"error-503\",\"description\":\"Service Unavailable - Serviço indisponível\",\"statusCode\":503},{\"name\":\"timeout\",\"description\":\"Gateway Timeout - Requisição demorada (10 segundos)\",\"statusCode\":504}]},\"postman\":{\"title\":\"Como usar com Postman\",\"steps\":[{\"step\":1,\"title\":\"Importar Coleção\",\"description\":\"Importe a coleção pronta: api/QA-Playground-API.postman_collection.json\",\"details\":[\"Abra o Postman\",\"Clique em Import\",\"Selecione o arquivo QA-Playground-API.postman_collection.json\",\"A coleção será importada com todas as requisições prontas\"]},{\"step\":2,\"title\":\"Configurar Variáveis de Ambiente\",\"description\":\"Crie um ambiente para facilitar a troca entre local e produção\",\"environments\":{\"local\":{\"name\":\"QA Playground Local\",\"variables\":{\"base_url\":\"http://localhost:3001/api\",\"token\":\"(será preenchido após login)\"}},\"production\":{\"name\":\"QA Playground Production\",\"variables\":{\"base_url\":\"https://qa-playground-azure.vercel.app/api\",\"token\":\"(será preenchido após login)\"}}},\"instructions\":[\"Clique em Environments → +\",\"Crie um novo ambiente\",\"Adicione as variáveis base_url e token\",\"Selecione o ambiente antes de fazer requisições\"]},{\"step\":3,\"title\":\"Fazer Login\",\"description\":\"Execute a requisição de login para obter o token\",\"example\":{\"method\":\"POST\",\"url\":\"{{base_url}}/auth/login\",\"body\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"}},\"note\":\"A coleção já inclui um script que salva o token automaticamente após o login\"},{\"step\":4,\"title\":\"Usar Token nas Requisições\",\"description\":\"O token será usado automaticamente nas requisições que requerem autenticação\",\"example\":{\"method\":\"GET\",\"url\":\"{{base_url}}/users\",\"headers\":{\"Authorization\":\"Bearer {{token}}\"}}},{\"step\":5,\"title\":\"Testar Cenários de Erro\",\"description\":\"Use query params ou headers para simular diferentes cenários\",\"examples\":[\"GET {{base_url}}/users?scenario=error-401\",\"GET {{base_url}}/users?scenario=error-500\",\"Header: x-mock-scenario: error-403\"]}]},\"insomnia\":{\"title\":\"Como usar com Insomnia\",\"steps\":[{\"step\":1,\"title\":\"Criar Novo Projeto\",\"instructions\":[\"Abra o Insomnia\",\"Clique em Create → New Design Document\",\"Nomeie como: QA Playground API\"]},{\"step\":2,\"title\":\"Configurar Variáveis de Ambiente\",\"instructions\":[\"Clique no ícone de Environment (canto superior direito)\",\"Clique em Manage Environments → Create Environment\",\"Nomeie como: Local\",\"Adicione as variáveis:\"],\"variables\":{\"base_url\":\"http://localhost:3001/api\",\"token\":\"\"}},{\"step\":3,\"title\":\"Criar Requisições\",\"examples\":[{\"name\":\"Health Check\",\"method\":\"GET\",\"url\":\"{{ _.base_url }}/health\"},{\"name\":\"Login\",\"method\":\"POST\",\"url\":\"{{ _.base_url }}/auth/login\",\"body\":{\"email\":\"admin@example.com\",\"password\":\"admin123\"}},{\"name\":\"Get Users\",\"method\":\"GET\",\"url\":\"{{ _.base_url }}/users\",\"auth\":\"Bearer Token: {{ _.token }}\"}]}]},\"examples\":{\"login\":{\"description\":\"Login e obter token\",\"request\":\"POST /api/auth/login\\nContent-Type: application/json\\n\\n{\\n  \\\"email\\\": \\\"admin@example.com\\\",\\n  \\\"password\\\": \\\"admin123\\\"\\n}\",\"response\":\"{\\n  \\\"success\\\": true,\\n  \\\"data\\\": {\\n    \\\"token\\\": \\\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\\\",\\n    \\\"user\\\": {\\n      \\\"id\\\": 1,\\n      \\\"name\\\": \\\"Admin User\\\",\\n      \\\"email\\\": \\\"admin@example.com\\\",\\n      \\\"role\\\": \\\"admin\\\"\\n    }\\n  }\\n}\"},\"listUsers\":{\"description\":\"Listar usuários (requer autenticação)\",\"request\":\"GET /api/users\\nAuthorization: Bearer SEU_TOKEN_AQUI\",\"response\":\"{\\n  \\\"success\\\": true,\\n  \\\"data\\\": [\\n    {\\n      \\\"id\\\": 1,\\n      \\\"name\\\": \\\"Admin User\\\",\\n      \\\"email\\\": \\\"admin@example.com\\\",\\n      \\\"role\\\": \\\"admin\\\"\\n    }\\n  ]\\n}\"},\"createUser\":{\"description\":\"Criar novo usuário\",\"request\":\"POST /api/users\\nAuthorization: Bearer SEU_TOKEN_AQUI\\nContent-Type: application/json\\n\\n{\\n  \\\"name\\\": \\\"João Silva\\\",\\n  \\\"email\\\": \\\"joao@example.com\\\",\\n  \\\"role\\\": \\\"user\\\",\\n  \\\"active\\\": true\\n}\"},\"errorScenario\":{\"description\":\"Simular erro 401\",\"request\":\"GET /api/users?scenario=error-401\\nAuthorization: Bearer token-invalido\",\"response\":\"{\\n  \\\"error\\\": \\\"Unauthorized\\\",\\n  \\\"message\\\": \\\"Token de autenticação inválido ou ausente\\\",\\n  \\\"details\\\": \\\"Faça login novamente para obter um token válido\\\"\\n}\"}},\"troubleshooting\":{\"title\":\"Solução de Problemas\",\"issues\":[{\"problem\":\"API não inicia\",\"solutions\":[\"Verifique se a porta 3001 está livre\",\"Verifique se as dependências foram instaladas: npm install\",\"Verifique se o TypeScript foi compilado: npm run build:ts:api\"]},{\"problem\":\"Erro de conexão no Postman/Insomnia\",\"solutions\":[\"Verifique se a API está rodando: GET http://localhost:3001/api/health\",\"Verifique se a URL está correta\",\"Verifique se não há firewall bloqueando\"]},{\"problem\":\"Token inválido\",\"solutions\":[\"Faça login novamente para obter um novo token\",\"Tokens expiram após 1 hora\",\"Verifique se está usando Bearer antes do token no header\"]},{\"problem\":\"Erro 401 Unauthorized\",\"solutions\":[\"Verifique se o token está sendo enviado no header Authorization\",\"Use o formato: Authorization: Bearer SEU_TOKEN\",\"Faça login novamente se o token expirou\"]},{\"problem\":\"Erro 403 Forbidden\",\"solutions\":[\"Verifique se o usuário tem permissão (role) adequada\",\"Algumas rotas requerem role admin\",\"Use as credenciais de admin para testes\"]},{\"problem\":\"CORS Errors\",\"solutions\":[\"A API já está configurada com CORS habilitado\",\"Use http://localhost:3001 e não http://127.0.0.1:3001\"]}]},\"tips\":[\"Sempre faça login primeiro para obter o token\",\"Use variáveis de ambiente para facilitar a troca entre ambientes\",\"Teste cenários de erro usando o parâmetro scenario\",\"Salve o token automaticamente usando scripts de teste no Postman\",\"Use a documentação da API (GET /api) para ver todos os endpoints disponíveis\",\"A coleção do Postman já inclui todas as requisições prontas\"]}"
+  },
+  {
+   "req": "GET /api/postman-collection",
+   "status": 200,
+   "body": "{\"info\":{\"name\":\"QA Playground API\",\"description\":\"Coleção completa para testar a API Mockada do QA Playground\",\"schema\":\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\"},\"variable\":[{\"key\":\"base_url\",\"value\":\"http://localhost:3001/api\",\"type\":\"string\"},{\"key\":\"token\",\"value\":\"\",\"type\":\"string\"}],\"item\":[{\"name\":\"Health Check\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}/health\",\"host\":[\"{{base_url}}\"],\"path\":[\"health\"]},\"description\":\"Verifica se a API está rodando\"}},{\"name\":\"Autenticação\",\"item\":[{\"name\":\"Login (Admin)\",\"event\":[{\"listen\":\"test\",\"script\":{\"exec\":[\"if (pm.response.code === 200) {\",\"    const jsonData = pm.response.json();\",\"    if (jsonData.data && jsonData.data.token) {\",\"        pm.collectionVariables.set('token', jsonData.data.token);\",\"        console.log('Token salvo:', jsonData.data.token);\",\"    }\",\"}\"],\"type\":\"text/javascript\"}}],\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"email\\\": \\\"admin@example.com\\\",\\n  \\\"password\\\": \\\"admin123\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/auth/login\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"login\"]},\"description\":\"Faz login como admin e salva o token automaticamente\"}},{\"name\":\"Login (User)\",\"event\":[{\"listen\":\"test\",\"script\":{\"exec\":[\"if (pm.response.code === 200) {\",\"    const jsonData = pm.response.json();\",\"    if (jsonData.data && jsonData.data.token) {\",\"        pm.collectionVariables.set('token', jsonData.data.token);\",\"    }\",\"}\"],\"type\":\"text/javascript\"}}],\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"email\\\": \\\"user@example.com\\\",\\n  \\\"password\\\": \\\"user123\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/auth/login\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"login\"]}}},{\"name\":\"Logout\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/logout\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"logout\"]}}},{\"name\":\"Me (Informações do usuário)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/me\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"me\"]}}},{\"name\":\"Validar Token\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/validate\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"validate\"]}}}]},{\"name\":\"Usuários\",\"item\":[{\"name\":\"Listar Usuários (Admin)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"]}}},{\"name\":\"Listar Usuários - Erro 401\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-401\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-401\"}]},\"description\":\"Testa cenário de erro 401 (não autenticado)\"}},{\"name\":\"Buscar Usuário por ID\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}},{\"name\":\"Criar Usuário\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"name\\\": \\\"Novo Usuário\\\",\\n  \\\"email\\\": \\\"novo@example.com\\\",\\n  \\\"role\\\": \\\"user\\\",\\n  \\\"active\\\": true\\n}\"},\"url\":{\"raw\":\"{{base_url}}/users\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"]}}},{\"name\":\"Atualizar Usuário\",\"request\":{\"method\":\"PUT\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"name\\\": \\\"Usuário Atualizado\\\",\\n  \\\"email\\\": \\\"atualizado@example.com\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}},{\"name\":\"Deletar Usuário\",\"request\":{\"method\":\"DELETE\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}}]},{\"name\":\"Pedidos\",\"item\":[{\"name\":\"Listar Pedidos\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\"]}}},{\"name\":\"Buscar Pedido por ID\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}},{\"name\":\"Criar Pedido\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"items\\\": [\\n    {\\n      \\\"productId\\\": 101,\\n      \\\"productName\\\": \\\"Notebook\\\",\\n      \\\"quantity\\\": 1,\\n      \\\"price\\\": 2500.0\\n    },\\n    {\\n      \\\"productId\\\": 102,\\n      \\\"productName\\\": \\\"Mouse\\\",\\n      \\\"quantity\\\": 2,\\n      \\\"price\\\": 50.0\\n    }\\n  ]\\n}\"},\"url\":{\"raw\":\"{{base_url}}/orders\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\"]}}},{\"name\":\"Atualizar Pedido\",\"request\":{\"method\":\"PUT\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"status\\\": \\\"processing\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}},{\"name\":\"Deletar Pedido\",\"request\":{\"method\":\"DELETE\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}}]},{\"name\":\"Cenários de Erro\",\"item\":[{\"name\":\"Erro 400 - Bad Request\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-400\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-400\"}]}}},{\"name\":\"Erro 403 - Forbidden\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-403\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-403\"}]}}},{\"name\":\"Erro 404 - Not Found\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-404\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-404\"}]}}},{\"name\":\"Erro 500 - Internal Server Error\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-500\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-500\"}]}}},{\"name\":\"Timeout (504)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=timeout\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"timeout\"}]},\"description\":\"Aguarda 10 segundos antes de retornar timeout\"}}]},{\"name\":\"Documentação\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}\",\"host\":[\"{{base_url}}\"]},\"description\":\"Retorna documentação completa da API\"}}],\"default\":{\"info\":{\"name\":\"QA Playground API\",\"description\":\"Coleção completa para testar a API Mockada do QA Playground\",\"schema\":\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\"},\"variable\":[{\"key\":\"base_url\",\"value\":\"http://localhost:3001/api\",\"type\":\"string\"},{\"key\":\"token\",\"value\":\"\",\"type\":\"string\"}],\"item\":[{\"name\":\"Health Check\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}/health\",\"host\":[\"{{base_url}}\"],\"path\":[\"health\"]},\"description\":\"Verifica se a API está rodando\"}},{\"name\":\"Autenticação\",\"item\":[{\"name\":\"Login (Admin)\",\"event\":[{\"listen\":\"test\",\"script\":{\"exec\":[\"if (pm.response.code === 200) {\",\"    const jsonData = pm.response.json();\",\"    if (jsonData.data && jsonData.data.token) {\",\"        pm.collectionVariables.set('token', jsonData.data.token);\",\"        console.log('Token salvo:', jsonData.data.token);\",\"    }\",\"}\"],\"type\":\"text/javascript\"}}],\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"email\\\": \\\"admin@example.com\\\",\\n  \\\"password\\\": \\\"admin123\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/auth/login\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"login\"]},\"description\":\"Faz login como admin e salva o token automaticamente\"}},{\"name\":\"Login (User)\",\"event\":[{\"listen\":\"test\",\"script\":{\"exec\":[\"if (pm.response.code === 200) {\",\"    const jsonData = pm.response.json();\",\"    if (jsonData.data && jsonData.data.token) {\",\"        pm.collectionVariables.set('token', jsonData.data.token);\",\"    }\",\"}\"],\"type\":\"text/javascript\"}}],\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"email\\\": \\\"user@example.com\\\",\\n  \\\"password\\\": \\\"user123\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/auth/login\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"login\"]}}},{\"name\":\"Logout\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/logout\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"logout\"]}}},{\"name\":\"Me (Informações do usuário)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/me\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"me\"]}}},{\"name\":\"Validar Token\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/auth/validate\",\"host\":[\"{{base_url}}\"],\"path\":[\"auth\",\"validate\"]}}}]},{\"name\":\"Usuários\",\"item\":[{\"name\":\"Listar Usuários (Admin)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"]}}},{\"name\":\"Listar Usuários - Erro 401\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-401\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-401\"}]},\"description\":\"Testa cenário de erro 401 (não autenticado)\"}},{\"name\":\"Buscar Usuário por ID\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}},{\"name\":\"Criar Usuário\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"name\\\": \\\"Novo Usuário\\\",\\n  \\\"email\\\": \\\"novo@example.com\\\",\\n  \\\"role\\\": \\\"user\\\",\\n  \\\"active\\\": true\\n}\"},\"url\":{\"raw\":\"{{base_url}}/users\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"]}}},{\"name\":\"Atualizar Usuário\",\"request\":{\"method\":\"PUT\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"name\\\": \\\"Usuário Atualizado\\\",\\n  \\\"email\\\": \\\"atualizado@example.com\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}},{\"name\":\"Deletar Usuário\",\"request\":{\"method\":\"DELETE\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\",\"1\"]}}}]},{\"name\":\"Pedidos\",\"item\":[{\"name\":\"Listar Pedidos\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\"]}}},{\"name\":\"Buscar Pedido por ID\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}},{\"name\":\"Criar Pedido\",\"request\":{\"method\":\"POST\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"items\\\": [\\n    {\\n      \\\"productId\\\": 101,\\n      \\\"productName\\\": \\\"Notebook\\\",\\n      \\\"quantity\\\": 1,\\n      \\\"price\\\": 2500.0\\n    },\\n    {\\n      \\\"productId\\\": 102,\\n      \\\"productName\\\": \\\"Mouse\\\",\\n      \\\"quantity\\\": 2,\\n      \\\"price\\\": 50.0\\n    }\\n  ]\\n}\"},\"url\":{\"raw\":\"{{base_url}}/orders\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\"]}}},{\"name\":\"Atualizar Pedido\",\"request\":{\"method\":\"PUT\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"}],\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n  \\\"status\\\": \\\"processing\\\"\\n}\"},\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}},{\"name\":\"Deletar Pedido\",\"request\":{\"method\":\"DELETE\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/orders/1\",\"host\":[\"{{base_url}}\"],\"path\":[\"orders\",\"1\"]}}}]},{\"name\":\"Cenários de Erro\",\"item\":[{\"name\":\"Erro 400 - Bad Request\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-400\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-400\"}]}}},{\"name\":\"Erro 403 - Forbidden\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-403\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-403\"}]}}},{\"name\":\"Erro 404 - Not Found\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-404\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-404\"}]}}},{\"name\":\"Erro 500 - Internal Server Error\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=error-500\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"error-500\"}]}}},{\"name\":\"Timeout (504)\",\"request\":{\"method\":\"GET\",\"header\":[{\"key\":\"Authorization\",\"value\":\"Bearer {{token}}\"}],\"url\":{\"raw\":\"{{base_url}}/users?scenario=timeout\",\"host\":[\"{{base_url}}\"],\"path\":[\"users\"],\"query\":[{\"key\":\"scenario\",\"value\":\"timeout\"}]},\"description\":\"Aguarda 10 segundos antes de retornar timeout\"}}]},{\"name\":\"Documentação\",\"request\":{\"method\":\"GET\",\"header\":[],\"url\":{\"raw\":\"{{base_url}}\",\"host\":[\"{{base_url}}\"]},\"description\":\"Retorna documentação completa da API\"}}]}}"
+  },
+  {
+   "req": "GET /api/nao-existe",
+   "status": 404,
+   "body": "{\"error\":\"Not Found\",\"message\":\"Rota não encontrada\"}"
+  },
+  {
+   "req": "POST /api/auth/login {}",
+   "status": 200,
+   "body": "{\"statusCode\":400,\"body\":{\"error\":\"Bad Request\",\"message\":\"Email e senha são obrigatórios\"}}"
+  },
+  {
+   "req": "POST /api/auth/login {\"email\":\"admin@example.com\",\"password\":\"errada\"}",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Credenciais inválidas\"}}"
+  },
+  {
+   "req": "POST /api/auth/login {\"email\":\"ADMIN@example.com\",\"password\":\"admin123\"}",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":1,\"role\":\"admin\"}}}}"
+  },
+  {
+   "req": "POST /api/auth/login {\"email\":\"user@example.com\",\"password\":\"user123\"}",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":2,\"role\":\"user\"}}}}"
+  },
+  {
+   "req": "POST /api/auth/login {\"email\":\"viewer@example.com\",\"password\":\"viewer123\"}",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"token\":\"<TOKEN>\",\"expiresAt\":\"<DATE>\",\"user\":{\"id\":4,\"role\":\"viewer\"}}}}"
+  },
+  {
+   "req": "GET /api/auth/me",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}}"
+  },
+  {
+   "req": "GET /api/auth/me (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"userId\":2,\"role\":\"user\",\"expiresAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "GET /api/auth/me {\"authorization\":\"Bearer invalido\"}",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token inválido ou expirado\"}}"
+  },
+  {
+   "req": "POST /api/auth/validate (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"valid\":true,\"data\":{\"userId\":1,\"role\":\"admin\",\"expiresAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "POST /api/auth/validate {}",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}}"
+  },
+  {
+   "req": "GET /api/users",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação não fornecido\"}}"
+  },
+  {
+   "req": "GET /api/users (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"name\":\"Maria Santos\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"name\":\"Pedro Oliveira\",\"email\":\"pedro.oliveira@example.com\",\"role\":\"user\",\"active\":false,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"name\":\"Ana Costa\",\"email\":\"ana.costa@example.com\",\"role\":\"viewer\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"name\":\"Carlos Ferreira\",\"email\":\"carlos.ferreira@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}}"
+  },
+  {
+   "req": "GET /api/users (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para listar usuários\"}}"
+  },
+  {
+   "req": "GET /api/users (as viewer)",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para listar usuários\"}}"
+  },
+  {
+   "req": "GET /api/users/1 (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "GET /api/users/1 (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este recurso\"}}"
+  },
+  {
+   "req": "GET /api/users/999 (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}}"
+  },
+  {
+   "req": "GET /api/users/abc (as admin)",
+   "status": 404,
+   "body": "{\"error\":\"Not Found\",\"message\":\"Rota não encontrada\"}"
+  },
+  {
+   "req": "POST /api/users (as user) {\"name\":\"X\",\"email\":\"x@x.com\"}",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para criar usuários\"}}"
+  },
+  {
+   "req": "POST /api/users (as admin) {\"name\":\"Sem email\"}",
+   "status": 200,
+   "body": "{\"statusCode\":400,\"body\":{\"error\":\"Bad Request\",\"message\":\"Nome e email são obrigatórios\"}}"
+  },
+  {
+   "req": "POST /api/users (as admin) {\"name\":\"Dup\",\"email\":\"user@example.com\"}",
+   "status": 200,
+   "body": "{\"statusCode\":201,\"body\":{\"success\":true,\"data\":{\"id\":6,\"name\":\"Dup\",\"email\":\"user@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "POST /api/users (as admin) {\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\"}",
+   "status": 200,
+   "body": "{\"statusCode\":201,\"body\":{\"success\":true,\"data\":{\"id\":7,\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "PUT /api/users/2 (as admin) {\"name\":\"Editado\"}",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"id\":2,\"name\":\"Editado\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "PUT /api/users/2 (as viewer) {\"name\":\"Hack\"}",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para atualizar este usuário\"}}"
+  },
+  {
+   "req": "PUT /api/users/999 (as admin) {\"name\":\"X\"}",
+   "status": 200,
+   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}}"
+  },
+  {
+   "req": "DELETE /api/users/3 (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para deletar usuários\"}}"
+  },
+  {
+   "req": "DELETE /api/users/3 (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":204,\"body\":null}"
+  },
+  {
+   "req": "DELETE /api/users/3 (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Usuário não encontrado\"}}"
+  },
+  {
+   "req": "GET /api/orders",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação não fornecido\"}}"
+  },
+  {
+   "req": "GET /api/orders (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"userId\":2,\"items\":[{\"productId\":103,\"productName\":\"Teclado\",\"quantity\":1,\"price\":150}],\"total\":150,\"status\":\"shipped\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"userId\":5,\"items\":[{\"productId\":104,\"productName\":\"Monitor\",\"quantity\":2,\"price\":800}],\"total\":1600,\"status\":\"processing\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"userId\":1,\"items\":[{\"productId\":105,\"productName\":\"Webcam\",\"quantity\":1,\"price\":200}],\"total\":200,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"userId\":3,\"items\":[{\"productId\":106,\"productName\":\"Headset\",\"quantity\":1,\"price\":300}],\"total\":300,\"status\":\"cancelled\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}}"
+  },
+  {
+   "req": "GET /api/orders (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"userId\":2,\"items\":[{\"productId\":103,\"productName\":\"Teclado\",\"quantity\":1,\"price\":150}],\"total\":150,\"status\":\"shipped\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":2}}"
+  },
+  {
+   "req": "GET /api/orders/1 (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "GET /api/orders/1 (as viewer)",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este pedido\"}}"
+  },
+  {
+   "req": "GET /api/orders/999 (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":404,\"body\":{\"error\":\"Not Found\",\"message\":\"Pedido não encontrado\"}}"
+  },
+  {
+   "req": "POST /api/orders (as user) {}",
+   "status": 200,
+   "body": "{\"statusCode\":400,\"body\":{\"error\":\"Bad Request\",\"message\":\"Items são obrigatórios e devem ser um array não vazio\"}}"
+  },
+  {
+   "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1}]}",
+   "status": 200,
+   "body": "{\"statusCode\":422,\"body\":{\"error\":\"Unprocessable Entity\",\"message\":\"Cada item deve conter productId, productName, quantity e price\",\"details\":{\"item\":\"Campos obrigatórios: productId, productName, quantity, price\"}}}"
+  },
+  {
+   "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":-1,\"price\":10}]}",
+   "status": 200,
+   "body": "{\"statusCode\":422,\"body\":{\"error\":\"Unprocessable Entity\",\"message\":\"Quantidade deve ser maior que zero\",\"details\":{\"quantity\":\"Quantidade deve ser um número positivo\"}}}"
+  },
+  {
+   "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":-1}]}",
+   "status": 200,
+   "body": "{\"statusCode\":422,\"body\":{\"error\":\"Unprocessable Entity\",\"message\":\"Preço não pode ser negativo\",\"details\":{\"price\":\"Preço deve ser um número positivo ou zero\"}}}"
+  },
+  {
+   "req": "POST /api/orders (as user) {\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}]}",
+   "status": 200,
+   "body": "{\"statusCode\":201,\"body\":{\"success\":true,\"data\":{\"id\":6,\"userId\":2,\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}],\"total\":20,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}}}"
+  },
+  {
+   "req": "PUT /api/orders/1 (as admin) {\"status\":\"shipped\"}",
+   "status": 200,
+   "body": "{\"statusCode\":409,\"body\":{\"error\":\"Conflict\",\"message\":\"Não é possível atualizar um pedido cancelado ou entregue\"}}"
+  },
+  {
+   "req": "PUT /api/orders/1 (as viewer) {\"status\":\"cancelled\"}",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para atualizar este pedido\"}}"
+  },
+  {
+   "req": "PUT /api/orders/1 (as admin) {\"status\":\"invalido\"}",
+   "status": 200,
+   "body": "{\"statusCode\":409,\"body\":{\"error\":\"Conflict\",\"message\":\"Não é possível atualizar um pedido cancelado ou entregue\"}}"
+  },
+  {
+   "req": "DELETE /api/orders/2 (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":403,\"body\":{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para deletar pedidos\"}}"
+  },
+  {
+   "req": "DELETE /api/orders/2 (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":204,\"body\":null}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-400 (as admin)",
+   "status": 400,
+   "body": "{\"error\":\"Bad Request\",\"message\":\"Payload inválido ou malformado\",\"details\":\"Verifique os dados enviados na requisição\"}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-400\"}",
+   "status": 400,
+   "body": "{\"error\":\"Bad Request\",\"message\":\"Payload inválido ou malformado\",\"details\":\"Verifique os dados enviados na requisição\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-401 (as admin)",
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação inválido ou ausente\",\"details\":\"Faça login novamente para obter um token válido\"}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-401\"}",
+   "status": 401,
+   "body": "{\"error\":\"Unauthorized\",\"message\":\"Token de autenticação inválido ou ausente\",\"details\":\"Faça login novamente para obter um token válido\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-403 (as admin)",
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este recurso\",\"details\":\"Contate o administrador para solicitar acesso\"}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-403\"}",
+   "status": 403,
+   "body": "{\"error\":\"Forbidden\",\"message\":\"Você não tem permissão para acessar este recurso\",\"details\":\"Contate o administrador para solicitar acesso\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-404 (as admin)",
+   "status": 404,
+   "body": "{\"error\":\"Not Found\",\"message\":\"Recurso não encontrado\",\"details\":\"O recurso solicitado não existe ou foi removido\"}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-404\"}",
+   "status": 404,
+   "body": "{\"error\":\"Not Found\",\"message\":\"Recurso não encontrado\",\"details\":\"O recurso solicitado não existe ou foi removido\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-409 (as admin)",
+   "status": 409,
+   "body": "{\"error\":\"Conflict\",\"message\":\"Conflito de dados\",\"details\":\"Já existe um recurso com os mesmos dados\"}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-409\"}",
+   "status": 409,
+   "body": "{\"error\":\"Conflict\",\"message\":\"Conflito de dados\",\"details\":\"Já existe um recurso com os mesmos dados\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-422 (as admin)",
+   "status": 422,
+   "body": "{\"error\":\"Unprocessable Entity\",\"message\":\"Erro de validação\",\"details\":{\"email\":\"Email inválido\",\"password\":\"Senha deve ter no mínimo 8 caracteres\"}}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-422\"}",
+   "status": 422,
+   "body": "{\"error\":\"Unprocessable Entity\",\"message\":\"Erro de validação\",\"details\":{\"email\":\"Email inválido\",\"password\":\"Senha deve ter no mínimo 8 caracteres\"}}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-429 (as admin)",
+   "status": 429,
+   "body": "{\"error\":\"Too Many Requests\",\"message\":\"Limite de requisições excedido\",\"details\":\"Tente novamente em alguns minutos\",\"retryAfter\":60}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-429\"}",
+   "status": 429,
+   "body": "{\"error\":\"Too Many Requests\",\"message\":\"Limite de requisições excedido\",\"details\":\"Tente novamente em alguns minutos\",\"retryAfter\":60}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-500 (as admin)",
+   "status": 500,
+   "body": "{\"error\":\"Internal Server Error\",\"message\":\"Erro inesperado no servidor\",\"details\":\"Nossa equipe foi notificada. Tente novamente mais tarde\"}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-500\"}",
+   "status": 500,
+   "body": "{\"error\":\"Internal Server Error\",\"message\":\"Erro inesperado no servidor\",\"details\":\"Nossa equipe foi notificada. Tente novamente mais tarde\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=error-503 (as admin)",
+   "status": 503,
+   "body": "{\"error\":\"Service Unavailable\",\"message\":\"Serviço temporariamente indisponível\",\"details\":\"Estamos em manutenção. Tente novamente em breve\"}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"error-503\"}",
+   "status": 503,
+   "body": "{\"error\":\"Service Unavailable\",\"message\":\"Serviço temporariamente indisponível\",\"details\":\"Estamos em manutenção. Tente novamente em breve\"}"
+  },
+  {
+   "req": "GET /api/users?scenario=inexistente (as admin)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"name\":\"João Silva\",\"email\":\"joao.silva@example.com\",\"role\":\"admin\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":2,\"name\":\"Editado\",\"email\":\"maria.santos@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"name\":\"Ana Costa\",\"email\":\"ana.costa@example.com\",\"role\":\"viewer\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"name\":\"Carlos Ferreira\",\"email\":\"carlos.ferreira@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":6,\"name\":\"Dup\",\"email\":\"user@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":7,\"name\":\"Novo\",\"email\":\"novo@example.com\",\"role\":\"user\",\"active\":true,\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":6}}"
+  },
+  {
+   "req": "GET /api/orders (as admin) {\"x-mock-scenario\":\"inexistente\"}",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"data\":[{\"id\":1,\"userId\":2,\"items\":[{\"productId\":101,\"productName\":\"Notebook\",\"quantity\":1,\"price\":2500},{\"productId\":102,\"productName\":\"Mouse\",\"quantity\":2,\"price\":50}],\"total\":2600,\"status\":\"delivered\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":3,\"userId\":5,\"items\":[{\"productId\":104,\"productName\":\"Monitor\",\"quantity\":2,\"price\":800}],\"total\":1600,\"status\":\"processing\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":4,\"userId\":1,\"items\":[{\"productId\":105,\"productName\":\"Webcam\",\"quantity\":1,\"price\":200}],\"total\":200,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":5,\"userId\":3,\"items\":[{\"productId\":106,\"productName\":\"Headset\",\"quantity\":1,\"price\":300}],\"total\":300,\"status\":\"cancelled\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"},{\"id\":6,\"userId\":2,\"items\":[{\"productId\":1,\"productName\":\"A\",\"quantity\":2,\"price\":10}],\"total\":20,\"status\":\"pending\",\"createdAt\":\"<DATE>\",\"updatedAt\":\"<DATE>\"}],\"count\":5}}"
+  },
+  {
+   "req": "POST /api/auth/logout (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":200,\"body\":{\"success\":true,\"message\":\"Logout realizado com sucesso\"}}"
+  },
+  {
+   "req": "GET /api/auth/me (as user)",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token inválido ou expirado\"}}"
+  },
+  {
+   "req": "POST /api/auth/logout",
+   "status": 200,
+   "body": "{\"statusCode\":401,\"body\":{\"error\":\"Unauthorized\",\"message\":\"Token não fornecido\"}}"
+  }
+ ]
+}
